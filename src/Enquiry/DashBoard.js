@@ -618,7 +618,7 @@ const fetchData = async (selectedYear) => {
         const response = await axios.get('http://localhost:8086/getYearlyEnquiryCountOfAllMonths', {
             params: {
                 year: selectedYear,
-                institutecode: 'adya'
+                institutecode: institutecode,
             }
         });
         const monthlyData = transformData(response.data);
