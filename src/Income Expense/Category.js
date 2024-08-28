@@ -597,23 +597,28 @@ const Category = () => {
         .join(" ");
     };
 
-    // Heading and Subheading
+    // Add Invoice Number
+    doc.setFontSize(10);
+    const invoiceNo = `Invoice No: ${row.invoiceNo}`;
+    doc.text(invoiceNo, 10, 10); // Position the invoice number at the top left corner
+
+    // Heading
     doc.setFontSize(16);
     const heading = "Pjsofttech Pvt. Ltd.";
     const headingWidth = doc.getTextWidth(heading);
-    doc.text(heading, (pageWidth - headingWidth) / 2, 10);
+    doc.text(heading, (pageWidth - headingWidth) / 2, 20); // Adjust y-position to account for invoice number
 
     // Date on the top right
     const date = new Date().toLocaleDateString();
     doc.setFontSize(10);
     const dateText = `Date Generated on: ${date}`;
     const dateTextWidth = doc.getTextWidth(dateText);
-    doc.text(dateText, pageWidth - dateTextWidth - 10, 5); // Adjust the `- 10` for right margin
+    doc.text(dateText, pageWidth - dateTextWidth - 10, 10); // Adjust the `- 10` for right margin
 
     doc.setFontSize(12);
     const subheading = `${row.user} ${row.type} Receipt`;
     const subheadingWidth = doc.getTextWidth(subheading);
-    doc.text(subheading, (pageWidth - subheadingWidth) / 2, 20);
+    doc.text(subheading, (pageWidth - subheadingWidth) / 2, 30); // Adjust y-position to account for heading
 
     // Convert total value to words
     const totalInWords = toTitleCase(numberToWords.toWords(row.total));
@@ -645,7 +650,7 @@ const Category = () => {
     doc.autoTable({
       columns: columns,
       body: data,
-      startY: 30, // Start position for the table
+      startY: 40, // Start position for the table, adjust to fit content
       theme: "grid", // Add grid lines
       margin: { top: 20 }, // Margin from the top
       styles: {
@@ -653,6 +658,7 @@ const Category = () => {
         fontSize: 10,
       },
     });
+
     const signatureY = doc.lastAutoTable.finalY + 40; // Position below the summary table
     const signatureX = pageWidth - 60; // Position on the right side
 
@@ -660,9 +666,11 @@ const Category = () => {
     doc.text("Authorized Signature", signatureX, signatureY);
     doc.setLineWidth(0.5);
     doc.line(signatureX, signatureY + 2, signatureX + 50, signatureY + 2); // Draw a line for the signature
+
     // Save the PDF
     doc.save(`${row.user} ${row.type} Receipt.pdf`);
-  };
+};
+
 
   return (
     <div>
@@ -948,8 +956,8 @@ const Category = () => {
             >
               Paid Using
             </StyledTableCell>
-            <StyledTableCell style={{ fontWeight: "bold" }}>
-              Perticuler
+            <StyledTableCell style={{ fontWeight: "bold", whiteSpace: "nowrap" }}>
+            Invoice No
             </StyledTableCell>
             <StyledTableCell style={{ fontWeight: "bold" }}>
               Status
@@ -987,7 +995,7 @@ const Category = () => {
                 <StyledTableCell>{row.billType}</StyledTableCell>
                 <StyledTableCell>{row.category}</StyledTableCell>
                 <StyledTableCell>{row.paidBy}</StyledTableCell>
-                <StyledTableCell>{row.particular}</StyledTableCell>
+                <StyledTableCell>{row.invoiceNo}</StyledTableCell>
                 <StyledTableCell
                   paymentMethod={row.paymentMethod}
                   style={{ fontWeight: "bold" }}

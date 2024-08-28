@@ -62,8 +62,6 @@ const PopTypography = styled(Typography)`
       transform: scale(1);
     }
   }
-
-  
 `;
 
 const AddIncomeExpense = () => {
@@ -225,17 +223,6 @@ const AddIncomeExpense = () => {
       debouncedSearch.cancel();
     };
   }, [searchTerm, users, debouncedSearch]);
-  // const validateFormData = (data) => {
-  //   return {
-  //     ...data,
-  //     amount: parseFloat(data.amount).toFixed(0),
-  //     gst: parseFloat(data.gst).toFixed(0),
-  //     total: parseFloat(data.total).toFixed(0),
-  //     payingAmount: parseFloat(data.payingAmount).toFixed(0),
-  //     pendingAmount: parseFloat(data.pendingAmount).toFixed(0),
-  //   };
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const integerFormData = {
