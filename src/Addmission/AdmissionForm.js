@@ -224,17 +224,15 @@ const AdmissionForm = () => {
           backgroundColor: "#24A0ED",
           borderRadius: "150px",
           padding: "10px",
-          marginBottom: "40px",
-          marginTop: "10px",
-          marginLeft: "40px",
-          marginRight: "40px",
+          marginBottom: "20px",
+        
         }}
       >
         Student Application Form
       </PopTypography>
-      <div maxWidth="lg">
+      <div maxWidth="lg" className="required-asterisk">
         <form onSubmit={handleFormSubmit}>
-          <Grid container spacing={3} className="textField-root">
+          <Grid container spacing={3} className="textField-root" >
             <Grid item xs={12} sm={6} md={4}>
               <TextField
                 fullWidth
@@ -243,6 +241,8 @@ const AdmissionForm = () => {
                 label="Full Name"
                 value={formData.name}
                 onChange={handleInputChange}
+                required
+                
               />
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
@@ -302,6 +302,7 @@ const AdmissionForm = () => {
                 value={formData.courses}
                 onChange={handleInputChange}
                 select
+                required
               >
                 {courses.map((course) => (
                   <MenuItem key={course.id} value={course.cname}>
@@ -329,6 +330,8 @@ const AdmissionForm = () => {
                 value={formData.duration}
                 onChange={handleInputChange}
                 select
+                required
+
               >
                 <MenuItem value="3 Months">3 Months</MenuItem>
                 <MenuItem value="6 Months">6 Months</MenuItem>
@@ -361,7 +364,7 @@ const AdmissionForm = () => {
               >
                 <MenuItem value="Pending">Pending</MenuItem>
                 <MenuItem value="Partial">Partial</MenuItem>
-                <MenuItem value="Paid">Full</MenuItem>
+                <MenuItem value="Complete">Complete</MenuItem>
               </TextField>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
@@ -372,6 +375,8 @@ const AdmissionForm = () => {
                 label="Paid Fees"
                 value={formData.paidFees}
                 onChange={handleInputChange}
+                required
+
               />
             </Grid>
             {formData.paymentMethod === "Pending" ||
@@ -387,6 +392,27 @@ const AdmissionForm = () => {
                 />
               </Grid>
             ) : null}
+           
+            <Grid item xs={12} sm={6} md={4}>
+              <TextField
+                fullWidth
+                id="paymentMode"
+                name="paymentMode"
+                label="Payment Mode"
+                value={formData.paymentMode}
+                onChange={handleInputChange}
+                select
+                required
+
+              >
+              <MenuItem value="Cheque">Cheque</MenuItem>
+              <MenuItem value="UPI">UPI</MenuItem>
+              <MenuItem value="Cash">Cash</MenuItem>
+              <MenuItem value="Bank Transfer">Bank Transfer</MenuItem>
+            
+              </TextField>
+            </Grid>
+            {formData.paymentMode !== "Cash" ? (
             <Grid item xs={12} sm={6} md={4}>
               <TextField
                 fullWidth
@@ -397,23 +423,7 @@ const AdmissionForm = () => {
                 onChange={handleInputChange}
               />
             </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <TextField
-                fullWidth
-                id="paymentMode"
-                name="paymentMode"
-                label="Payment Mode"
-                value={formData.paymentMode}
-                onChange={handleInputChange}
-                select
-              >
-                <MenuItem value="Gpay">Gpay</MenuItem>
-                <MenuItem value="Phonepay">Phonepay</MenuItem>
-                <MenuItem value="Cash">Cash</MenuItem>
-                <MenuItem value="Card">Credit Card</MenuItem>
-                <MenuItem value="Card">Debit Card</MenuItem>
-              </TextField>
-            </Grid>
+            ) : null}
             <Grid item xs={12} sm={6} md={4}>
               <TextField
                 fullWidth
@@ -423,6 +433,8 @@ const AdmissionForm = () => {
                 value={formData.sourceBy}
                 onChange={handleInputChange}
                 select
+                required
+
               >
                 {source.map((src) => (
                   <MenuItem key={src.id} value={src.sourceBy}>
@@ -440,6 +452,8 @@ const AdmissionForm = () => {
                 value={formData.guideName}
                 onChange={handleInputChange}
                 select
+                required
+
               >
                 {guide.map((g) => (
                   <MenuItem key={g.id} value={g.guideName}>
@@ -457,11 +471,15 @@ const AdmissionForm = () => {
                 value={formData.date}
                 onChange={handleInputChange}
                 type="date"
+                required
+
                 InputLabelProps={{
                   shrink: true,
                 }}
               />
             </Grid>
+            {formData.paymentMethod === "Pending" ||
+            formData.paymentMethod === "Partial" ? (
             <Grid item xs={12} sm={6} md={4}>
               <TextField
                 fullWidth
@@ -471,11 +489,14 @@ const AdmissionForm = () => {
                 value={formData.dueDate}
                 onChange={handleInputChange}
                 type="date"
+                required
+
                 InputLabelProps={{
                   shrink: true,
                 }}
               />
             </Grid>
+): null}
             <Grid item xs={12} sm={6} md={4}>
               <TextField
                 fullWidth
