@@ -7,10 +7,7 @@ import "jspdf-autotable";
 import {
   Button,
   Table,
-  FormControl,
-  InputLabel,
   MenuItem,
-  Select,
   TableContainer,
   TableHead,
   TableRow,
@@ -24,46 +21,48 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
 } from "@mui/material";
-import InfoIcon from "@mui/icons-material/Info";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import SmsIcon from "@mui/icons-material/Sms";
-import { styled } from "@mui/system";
 import EditIcon from "@mui/icons-material/Edit";
-
-import { Container } from "react-bootstrap";
+import { styled } from "@mui/system";
 
 export default function Report() {
   const navigate = useNavigate();
   const { id } = useParams();
+
+  // State management
   const [inquiries, setInquiries] = useState([]);
   const [examOptions, setExamOptions] = useState([]);
-  const [selectedExam, setSelectedExam] = useState("");
   const [sourceOptions, setSourceOptions] = useState([]);
-  const [selectedSource, setSelectedSource] = useState("");
   const [conductedBy, setConductedBy] = useState([]);
-  const [selectConduct, setSelectedConduct] = useState("");
+
+  // Filters state
+  const [selectedExam, setSelectedExam] = useState("");
+  const [selectedSource, setSelectedSource] = useState("");
+  const [selectedConduct, setSelectedConduct] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+
+
+  // New states for month and year
   const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
 
   const [smsDialogOpen, setSmsDialogOpen] = useState(false);
   const [smsData, setSmsData] = useState({ mobile: "", content: "" });
-  // const [adminemail, setAdminemail]=useState(localStorage.getItem('loggedInUserEmail') || '');
-  // const [institutecode, setInstituteCode] = useState(
-  //   localStorage.getItem("institutecode") || ""
-  // );
+
   const getInstituteCode = () => localStorage.getItem("institutecode");
+
+  // Load data on component mount
   useEffect(() => {
     loadUsers();
     loadExams();
     loadSources();
     loadConducts();
-  }, []); // Empty dependency array ensures this runs only once when the component mounts
+  }, []);
 
   useEffect(() => {
     if (startDate && endDate) {
@@ -73,18 +72,21 @@ export default function Report() {
 
   const loadUsers = async (start = "", end = "") => {
     let url = `http://localhost:8086/get/getALLEnquiryByInstitutecode?institutecode=${getInstituteCode()}`;
+
+    // Update URL based on date, month and year filters
     if (start && end) {
       url = `http://localhost:8086/enquiryBetweenDates?startDate=${start}&endDate=${end}&institutecode=${getInstituteCode()}`;
+    } else if (selectedYear && selectedMonth) {
+      url = `http://localhost:8086/enquiryByMonthAndYear?month=${selectedMonth}&year=${selectedYear}&institutecode=${getInstituteCode()}`;
     }
+
     const result = await axios.get(url);
     setInquiries(result.data);
   };
 
   const loadExams = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:8086/getAllExam?institutecode=${getInstituteCode()}`
-      );
+      const response = await axios.get(`http://localhost:8086/getAllExam?institutecode=${getInstituteCode()}`);
       setExamOptions(response.data);
     } catch (error) {
       console.error("Error fetching exam options:", error);
@@ -93,9 +95,7 @@ export default function Report() {
 
   const loadSources = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:8086/getAllSource?institutecode=${getInstituteCode()}`
-      );
+      const response = await axios.get(`http://localhost:8086/getAllSource?institutecode=${getInstituteCode()}`);
       setSourceOptions(response.data);
     } catch (error) {
       console.error("Error fetching sources:", error);
@@ -104,96 +104,71 @@ export default function Report() {
 
   const loadConducts = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:8086/get/getAllConductModels?institutecode=${getInstituteCode()}`
-      );
+      const response = await axios.get(`http://localhost:8086/get/getAllConductModels?institutecode=${getInstituteCode()}`);
       setConductedBy(response.data);
     } catch (error) {
       console.error("Error fetching conducts:", error);
     }
   };
 
-  const handleExamChange = async (event) => {
-    const selectedValue = event.target.value;
-    setSelectedExam(selectedValue);
-    if (selectedValue === "") {
-      await loadUsers(startDate, endDate);
-    } else {
-      try {
-        const response = await axios.get(
-          `http://localhost:8086/findByExam/${selectedValue}?institutecode=${getInstituteCode()}`
-        );
-        setInquiries(response.data);
-      } catch (error) {
-        console.error("Error fetching inquiries by exam:", error);
-      }
-    }
+  const handleExamChange = (e) => {
+    setSelectedExam(e.target.value);
+    loadUsers();
   };
 
-  const handleConductChange = async (e) => {
-    const selectedConductValue = e.target.value;
-    setSelectedConduct(selectedConductValue);
-    if (selectedConductValue === "") {
-      await loadUsers(startDate, endDate);
-    } else {
-      try {
-        const response = await axios.get(
-          `http://localhost:8086/findConductBy/${selectedConductValue}?institutecode=${getInstituteCode()}`
-        );
-        setInquiries(response.data);
-      } catch (error) {
-        console.error("Error fetching inquiries by conduct:", error);
-      }
-    }
+  const handleSourceChange = (e) => {
+    setSelectedSource(e.target.value);
+    loadUsers();
   };
 
-  const handleSourceChange = async (e) => {
-    const selectedSourceValue = e.target.value;
-    setSelectedSource(selectedSourceValue);
-    if (selectedSourceValue === "") {
-      await loadUsers(startDate, endDate);
-    } else {
-      try {
-        const response = await axios.get(
-          `http://localhost:8086/findBySourceByByInstitutecode/${selectedSourceValue}?institutecode=${getInstituteCode()}`
-        );
-        setInquiries(response.data);
-      } catch (error) {
-        console.error("Error fetching inquiries by source:", error);
-      }
-    }
+  const handleConductChange = (e) => {
+    setSelectedConduct(e.target.value);
+    loadUsers();
   };
 
-  const handleStatusChange = async (e) => {
-    const selectedStatusValue = e.target.value;
-    setSelectedStatus(selectedStatusValue);
-    if (selectedStatusValue === "") {
-      await loadUsers(startDate, endDate);
-    } else {
-      await loadStatus(selectedStatusValue);
-    }
+  const handleStatusChange = (e) => {
+    setSelectedStatus(e.target.value);
+    loadUsers();
   };
 
-  const loadStatus = async (status) => {
-    try {
-      const result = await axios.get(
-        `http://localhost:8086/get/getALLEnquiryByInstitutecode?institutecode=${getInstituteCode()}`
-      );
-      if (status) {
-        const filteredData = result.data.filter(
-          (Enquiry) => Enquiry.status1 === status
-        );
-        setInquiries(filteredData);
-      } else {
-        setInquiries(result.data);
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+  const handleStartDateChange = (e) => {
+    setStartDate(e.target.value);
   };
+
+  const handleEndDateChange = (e) => {
+    setEndDate(e.target.value);
+  };
+
+  // Month and year change handlers
+  const handleMonthChange = (e) => {
+    setSelectedMonth(e.target.value);
+    loadUsers();
+  };
+
+  const handleYearChange = (e) => {
+    setSelectedYear(e.target.value);
+    loadUsers();
+  };
+
+  const filterInquiries = () => {
+    return inquiries.filter((inquiry) => {
+      const matchesExam = selectedExam ? inquiry.exam === selectedExam : true;
+      const matchesSource = selectedSource ? inquiry.source_by === selectedSource : true;
+      const matchesConduct = selectedConduct ? inquiry.conduct_by === selectedConduct : true;
+      const matchesStatus = selectedStatus ? inquiry.status1 === selectedStatus : true;
+
+      // Filtering by month and year
+      const inquiryDate = new Date(inquiry.enquiryDate);
+      const matchesMonth = selectedMonth ? inquiryDate.getMonth() + 1 === parseInt(selectedMonth) : true;
+      const matchesYear = selectedYear ? inquiryDate.getFullYear() === parseInt(selectedYear) : true;
+
+      return matchesExam && matchesSource && matchesConduct && matchesStatus && matchesMonth && matchesYear;
+    });
+  };
+
 
   const handleDownloadPDF = () => {
-    const doc = new jsPDF("landscape"); // Set orientation to landscape
+    const doc = new jsPDF("landscape");
     doc.text("Inquiries Report", 10, 10);
 
     const tableColumn = [
@@ -210,22 +185,20 @@ export default function Report() {
     ];
     const tableRows = [];
 
-    inquiries.forEach((Enquiry) => {
-      const EnquiryData = [
-        Enquiry.id,
-        Enquiry.enquiryDate,
-        Enquiry.name,
-        Enquiry.mobile,
-        Enquiry.email,
-        Enquiry.exam,
-        Enquiry.source_by,
-        Enquiry.conduct_by,
-        Enquiry.status1 === "Call"
-          ? `${Enquiry.status1} - ${Enquiry.callBackDate} ${Enquiry.callBackTime}`
-          : Enquiry.status1,
-        Enquiry.remark,
+    filterInquiries().forEach((inquiry) => {
+      const inquiryData = [
+        inquiry.id,
+        inquiry.enquiryDate,
+        inquiry.name,
+        inquiry.mobile,
+        inquiry.email,
+        inquiry.exam,
+        inquiry.source_by,
+        inquiry.conduct_by,
+        inquiry.status1,
+        inquiry.remark,
       ];
-      tableRows.push(EnquiryData);
+      tableRows.push(inquiryData);
     });
 
     doc.autoTable({
@@ -241,101 +214,18 @@ export default function Report() {
   };
 
   const handleDownloadCSV = () => {
-    const csvContent = inquiries
-      .map((Enquiry) => {
-        return `${Enquiry.id},${Enquiry.enquiryDate},${Enquiry.name},${Enquiry.mobile},${Enquiry.email},${Enquiry.exam},${Enquiry.source_by},${Enquiry.conduct_by},${Enquiry.status1},${Enquiry.remark}`;
-      })
+    const csvContent = filterInquiries()
+      .map((inquiry) =>
+        `${inquiry.id},${inquiry.enquiryDate},${inquiry.name},${inquiry.mobile},${inquiry.email},${inquiry.exam},${inquiry.source_by},${inquiry.conduct_by},${inquiry.status1},${inquiry.remark}`
+      )
       .join("\n");
 
     const csvBlob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     saveAs(csvBlob, "report.csv");
   };
 
-  const handleMonthChange = async (e) => {
-    const month = e.target.value;
-    setSelectedMonth(month);
-
-    if (month) {
-      try {
-        const response = await axios.get(
-          `http://localhost:8086/getInquiriesByMonth/${month}?institutecode=${getInstituteCode()}`
-        );
-        setInquiries(response.data);
-      } catch (error) {
-        console.error("Error fetching inquiries by month:", error);
-      }
-    } else if (selectedYear) {
-      // If no month is selected but a year is
-      await loadUsers(startDate, selectedYear);
-    } else {
-      await loadUsers(startDate, endDate);
-    }
-  };
-
-  const handleYearChange = async (e) => {
-    const year = e.target.value;
-    setSelectedYear(year);
-
-    if (year) {
-      try {
-        const response = await axios.get(
-          `http://localhost:8086/getInquiriesByYearByInstitutecode/${year}?institutecode=${getInstituteCode()}`
-        );
-        setInquiries(response.data);
-      } catch (error) {
-        console.error("Error fetching inquiries by year:", error);
-      }
-    } else if (selectedMonth) {
-      // If no year is selected but a month is
-      await loadUsers(selectedMonth, endDate);
-    } else {
-      await loadUsers(startDate, endDate);
-    }
-  };
-
-  const handleInfoClick = (Enquiry) => {
-    const popupWindow = window.open("", "_blank", "width=600,height=400");
-
-    if (popupWindow) {
-      let htmlContent = `
-        <!DOCTYPE html>
-        <html>
-          <head>
-            <title>Enquiry Details</title>
-            <style>
-              body {
-                font-family: Arial, sans-serif;
-                line-height: 1.6;
-                margin: 20px;
-              }
-              h2 {
-                color: black;
-              }
-              .info-item {
-                margin-bottom: 10px;
-              }
-            </style>
-          </head>
-          <body>
-            <h2>Enquiry Details of Id : ${Enquiry.id}</h2>
-            <div class="info-item"><strong>Name:</strong> ${Enquiry.name}</div>
-            <div class="info-item"><strong>Phone:</strong> ${Enquiry.mobile}</div>
-            <div class="info-item"><strong>Email:</strong> ${Enquiry.email}</div>
-            <div class="info-item"><strong>Exam:</strong> ${Enquiry.exam}</div>
-            <div class="info-item"><strong>Source:</strong> ${Enquiry.source_by}</div>
-            <div class="info-item"><strong>Conducted By:</strong> ${Enquiry.conduct_by}</div>
-            <div class="info-item"><strong>Status:</strong> ${Enquiry.status1}</div>
-            <div class="info-item"><strong>Remark:</strong> ${Enquiry.remark}</div>
-          </body>
-        </html>
-      `;
-      popupWindow.document.write(htmlContent);
-      popupWindow.document.close();
-    }
-  };
-
-  const handleOpenSmsDialog = (Enquiry) => {
-    setSmsData({ mobile: Enquiry.mobile, content: "" });
+  const handleOpenSmsDialog = (inquiry) => {
+    setSmsData({ mobile: inquiry.mobile, content: "" });
     setSmsDialogOpen(true);
   };
 
@@ -345,7 +235,6 @@ export default function Report() {
 
   const handleSendSms = async () => {
     try {
-      // Assuming the endpoint for sending SMS is as follows:
       await axios.post("http://localhost:8086/sendSms", {
         mobile: smsData.mobile,
         content: smsData.content,
@@ -354,345 +243,248 @@ export default function Report() {
       handleCloseSmsDialog();
     } catch (error) {
       console.error("Error sending SMS:", error);
-      alert("SMS Sent");
+      alert("Error sending SMS");
     }
   };
 
   const PopTypography = styled(Typography)`
     @keyframes pop {
-      0% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.1);
-      }
-      100% {
-        transform: scale(1);
-      }
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
     }
-
- 
   `;
+
+  const currentYear = new Date().getFullYear();
+
+  // Generate an array of years from the past 7 to the next 7
+  const years = Array.from({ length: 15 }, (_, i) => currentYear - 7 + i);
+
+  const filteredInquiries = filterInquiries();
+  const inquiryCount = filteredInquiries.length;
 
   return (
     <div sx={{ padding: 2, width: "100%" }}>
       <Box textAlign="center" sx={{ width: "100%" }}>
-        <PopTypography
-          variant="h5"
-          gutterBottom
-          sx={{
-            fontWeight: "bold",
-            color: "#fff",
-            textAlign: "center",
-            backgroundColor: "#24A0ED",
-            borderRadius: "150px",
-            padding: "10px",
-            marginBottom: "-2px",
-          }}
-        >
+        <PopTypography variant="h5" gutterBottom sx={{ fontWeight: "bold", color: "#fff", textAlign: "center", backgroundColor: "#24A0ED", borderRadius: "150px", padding: "10px", marginBottom: "-2px" }}>
           Enquiry Report
         </PopTypography>
 
-        <div >
-          <Grid container spacing={2} className="textField-root" mt={2}>
-            <Grid item xs={12} md={3}>
-              <TextField
-                select
-                value={selectedExam}
-                onChange={handleExamChange}
-                label="Select Exam"
-                fullWidth
-                size="small"
-                variant="outlined"
-              >
-                <MenuItem value="">
-                  <em>
-                    <strong>All</strong>
-                  </em>
+        <Grid container spacing={2} className="textField-root" mt={2}>
+          <Grid item xs={12} md={3}>
+            <TextField
+              select
+              label="Select Exam"
+              value={selectedExam}
+              onChange={handleExamChange}
+              fullWidth
+              size="small"
+              variant="outlined"
+            >
+              <MenuItem value="">
+                <em><strong>All</strong></em>
+              </MenuItem>
+              {examOptions.map((exam) => (
+                <MenuItem key={exam.name} value={exam.name}>
+                  {exam.name}
                 </MenuItem>
-                {examOptions.map((exam) => (
-                  <MenuItem key={exam.name} value={exam.name}>
-                    {exam.name}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
-            <Grid item xs={12} md={3}>
-              <TextField
-                select
-                label="Select Conducts"
-                value={selectConduct}
-                onChange={handleConductChange}
-                fullWidth
-                size="small"
-                variant="outlined"
-              >
-                <MenuItem value="">
-                  <em>
-                    <strong>All</strong>
-                  </em>
-                </MenuItem>
-                {conductedBy.map((conduct) => (
-                  <MenuItem key={conduct.name} value={conduct.name}>
-                    {conduct.name}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
-            <Grid item xs={12} md={3}>
-              <TextField
-                select
-                value={selectedSource}
-                onChange={handleSourceChange}
-                label="Select Source"
-                fullWidth
-                size="small"
-                variant="outlined"
-              >
-                <MenuItem value="">
-                  <em>
-                    <strong>All</strong>
-                  </em>
-                </MenuItem>
-                {sourceOptions.map((source) => (
-                  <MenuItem key={source.name} value={source.name}>
-                    {source.name}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
-            <Grid item xs={12} md={3}>
-              <TextField
-                select
-                label="Select Status"
-                value={selectedStatus}
-                onChange={handleStatusChange}
-                fullWidth
-                size="small"
-                variant="outlined"
-              >
-                <MenuItem value="">
-                  <strong>All</strong>
-                </MenuItem>
-                <MenuItem value="Call">Call Back</MenuItem>
-                <MenuItem value="Interested">Interested</MenuItem>
-                <MenuItem value="Not Interested">Not Interested</MenuItem>
-                <MenuItem value="DND">DND</MenuItem>
-                <MenuItem value="Ringing">Ringing</MenuItem>
-                <MenuItem value="Switch Off">Switch Off</MenuItem>
-                <MenuItem value="Waiting">Waiting</MenuItem>
-              </TextField>
-            </Grid>
-            <Grid item xs={12} md={3}>
-              <TextField
-                select
-                label="Select Month"
-                value={selectedMonth}
-                onChange={handleMonthChange}
-                fullWidth
-                size="small"
-                variant="outlined"
-              >
-                <MenuItem value="">
-                  <em>
-                    <strong>All</strong>
-                  </em>
-                </MenuItem>
-                {[...Array(12)].map((_, index) => (
-                  <MenuItem
-                    key={index + 1}
-                    value={String(index + 1).padStart(2, "0")}
-                  >
-                    {new Date(0, index).toLocaleString("default", {
-                      month: "long",
-                    })}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
-            <Grid item xs={12} md={3}>
-              <TextField
-                select
-                label="Select Year"
-                value={selectedYear}
-                onChange={handleYearChange}
-                fullWidth
-                size="small"
-                variant="outlined"
-              >
-                <MenuItem value="">
-                  <em>
-                    <strong>All</strong>
-                  </em>
-                </MenuItem>
-                {[
-                  2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030,
-                ].map((year) => (
-                  <MenuItem key={year} value={year}>
-                    {year}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
-            <Grid item xs={12} md={3}>
-              <TextField
-                label="Start Date"
-                type="date"
-                fullWidth
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                size="small"
-                variant="outlined"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} md={3}>
-              <TextField
-                label="End Date"
-                type="date"
-                fullWidth
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                size="small"
-                variant="outlined"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            </Grid>
+              ))}
+            </TextField>
           </Grid>
-        </div>
+          <Grid item xs={12} md={3}>
+            <TextField
+              select
+              label="Select Conduct"
+              value={selectedConduct}
+              onChange={handleConductChange}
+              fullWidth
+              size="small"
+              variant="outlined"
+            >
+              <MenuItem value="">
+                <em><strong>All</strong></em>
+              </MenuItem>
+              {conductedBy.map((conduct) => (
+                <MenuItem key={conduct.name} value={conduct.name}>
+                  {conduct.name}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <TextField
+              select
+              label="Select Source"
+              value={selectedSource}
+              onChange={handleSourceChange}
+              fullWidth
+              size="small"
+              variant="outlined"
+            >
+              <MenuItem value="">
+                <em><strong>All</strong></em>
+              </MenuItem>
+              {sourceOptions.map((source) => (
+                <MenuItem key={source.name} value={source.name}>
+                  {source.name}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+          <Grid item xs={12} md={3}>
+          <TextField
+              select
+              label="Select Status"
+              value={selectedStatus}
+              onChange={handleStatusChange}
+              fullWidth
+              size="small"
+              variant="outlined"
+            >
+              <MenuItem value="">
+                <strong>All</strong>
+              </MenuItem>
+              <MenuItem value="Call" >
+        Call
+      </MenuItem>
+      <MenuItem value="Interested" >
+        Interested
+      </MenuItem>
+      <MenuItem value="Not Interested" >
+        Not Interested
+      </MenuItem>
+      <MenuItem value="DND" >
+       DND
+      </MenuItem>
+      <MenuItem value="Ringing" >
+        Ringing
+      </MenuItem>
+      <MenuItem value="Switch Off" >
+        Switch Off
+      </MenuItem>
+      <MenuItem value="Waiting" >
+        Waiting
+      </MenuItem>
+            </TextField>
+          </Grid>
+          <Grid item xs={12} md={3} className="textField-root">
+            <TextField
+              type="date"
+              value={startDate}
+              onChange={handleStartDateChange}
+              fullWidth
+              size="small"
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={12} md={3} className="textField-root">
+            <TextField
+              type="date"
+              value={endDate}
+              onChange={handleEndDateChange}
+              fullWidth
+              size="small"
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <TextField
+              select
+              label="Select Month"
+              value={selectedMonth}
+              onChange={handleMonthChange}
+              fullWidth
+              size="small"
+              variant="outlined"
+            >
+              <MenuItem value="">
+                <em><strong>All Months</strong></em>
+              </MenuItem>
+              {/* Add options for all months */}
+              {Array.from({ length: 12 }, (_, i) => (
+                <MenuItem key={i + 1} value={i + 1}>
+                  {new Date(0, i).toLocaleString("default", { month: "long" })}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <TextField
+              select
+              label="Select Year"
+              value={selectedYear}
+              onChange={handleYearChange}
+              fullWidth
+              size="small"
+              variant="outlined"
+            >
+              <MenuItem value="">
+                <em><strong>All Years</strong></em>
+              </MenuItem>
+              {/* Populate the year dropdown with the calculated years */}
+              {years.map(year => (
+                <MenuItem key={year} value={year}>
+                  {year}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+        </Grid>
 
-        <Box mt={4} maxWidth={"false"}>
+        <Box mt={4}>
           <TableContainer>
             <Table>
               <TableHead sx={{ backgroundColor: "#f2f2f2", align: "center" }}>
                 <TableRow sx={{ align: "center" }}>
-                  <TableCell sx={{ width: "50px", align: "center" }}>
-                    <strong>ID</strong>
-                  </TableCell>
-                  <TableCell sx={{ width: "100px", align: "center" }}>
-                    <strong>Date</strong>
-                  </TableCell>
-                  <TableCell sx={{ width: "150px", align: "center" }}>
-                    <strong>Name</strong>
-                  </TableCell>
-                  <TableCell sx={{ width: "100px", align: "center" }}>
-                    <strong>Phone</strong>
-                  </TableCell>
-                  <TableCell sx={{ width: "150px", align: "center" }}>
-                    <strong>Email</strong>
-                  </TableCell>
-                  <TableCell sx={{ width: "100px", align: "center" }}>
-                    <strong>Exam</strong>
-                  </TableCell>
-                  <TableCell sx={{ width: "100px", align: "center" }}>
-                    <strong>Source</strong>
-                  </TableCell>
-                  <TableCell sx={{ width: "150px", align: "center" ,whiteSpace:"nowrap"}}>
-                    <strong>Conduct By</strong>
-                  </TableCell>
-                  <TableCell sx={{ width: "100px", align: "center" }}>
-                    <strong>Status</strong>
-                  </TableCell>
-                  <TableCell sx={{ width: "150px", align: "center" ,whiteSpace:"nowrap"}}>
-                    <strong>Date & Time</strong>
-                  </TableCell>
-                  <TableCell sx={{ width: "200px", align: "center" }}>
-                    <strong>Remark</strong>
-                  </TableCell>
-                  <TableCell sx={{ width: "100px", align: "center" }}>
-                    <strong>Actions</strong>
-                  </TableCell>
+                  <TableCell><strong>ID</strong></TableCell>
+                  <TableCell><strong>Date</strong></TableCell>
+                  <TableCell><strong>Name</strong></TableCell>
+                  <TableCell><strong>Phone</strong></TableCell>
+                  <TableCell><strong>Email</strong></TableCell>
+                  <TableCell><strong>Exam</strong></TableCell>
+                  <TableCell><strong>Source</strong></TableCell>
+                  <TableCell><strong>Conduct By</strong></TableCell>
+                  <TableCell><strong>Status</strong></TableCell>
+                  <TableCell><strong>Date & Time</strong></TableCell>
+                  <TableCell><strong>Remark</strong></TableCell>
+                  <TableCell><strong>Actions</strong></TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody sx={{ align: "center" }} size="small">
-                {inquiries.map((Enquiry) => (
-                  <TableRow
-                    sx={{ align: "center" }}
-                    width={"fit-Content"}
-                    size="small"
-                    key={Enquiry.id}
-                  >
-                    <TableCell sx={{ align: "center" }}>{Enquiry.id}</TableCell>
-                    <TableCell sx={{ align: "center" }}>
-                      {Enquiry.enquiryDate}
-                    </TableCell>
-                    <TableCell sx={{ align: "center" }}>
-                      {Enquiry.name}
-                    </TableCell>
-                    <TableCell sx={{ align: "center" }}>
-                      {Enquiry.mobile}
-                    </TableCell>
-                    <TableCell sx={{ align: "center" }}>
-                      {Enquiry.email}
-                    </TableCell>
-                    <TableCell sx={{ align: "center" }}>
-                      {Enquiry.exam}
-                    </TableCell>
-                    <TableCell sx={{ align: "center" }}>
-                      {Enquiry.source_by}
-                    </TableCell>
-                    <TableCell sx={{ align: "center" }}>
-                      {Enquiry.conduct_by}
-                    </TableCell>
-                    <TableCell
-                      sx={{ align: "center" }}
-                      style={{
-                        color:
-                          Enquiry.status1 === "Call"
-                            ? "orange"
-                            : Enquiry.status1 === "Interested"
-                            ? "purple"
-                            : Enquiry.status1 === "Not Interested"
-                            ? "red"
-                            : Enquiry.status1 === "DND"
-                            ? "blue"
-                            : Enquiry.status1 === "Ringing"
-                            ? "brown"
-                            : Enquiry.status1 === "Switch Off"
-                            ? "green"
-                            : Enquiry.status1 === "Waiting"
-                            ? "magenta"
-                            : "magenta",
-                      }}
-                    >
-                      <b>
-                        <strong>{Enquiry.status1}</strong>
-                      </b>
-                    </TableCell>
-                    <TableCell
-                      sx={{ align: "center" }}
-                      style={{ alignItems: "center", flexDirection: "row" }}
-                    >
-                      <b>
-                        {Enquiry.status1 === "Call"
-                          ? `${Enquiry.callBackDate} ${Enquiry.callBackTime}`
-                          : "-----"}
-                      </b>
-                    </TableCell>
-                    <TableCell sx={{ align: "center" }}>
-                      {Enquiry.remark}
-                    </TableCell>
-                    <TableCell sx={{ align: "center" }}>
+              <TableBody>
+                {filterInquiries().map((inquiry) => (
+                  <TableRow key={inquiry.id}>
+                    <TableCell>{inquiry.id}</TableCell>
+                    <TableCell>{inquiry.enquiryDate}</TableCell>
+                    <TableCell>{inquiry.name}</TableCell>
+                    <TableCell>{inquiry.mobile}</TableCell>
+                    <TableCell>{inquiry.email}</TableCell>
+                    <TableCell>{inquiry.exam}</TableCell>
+                    <TableCell>{inquiry.source_by}</TableCell>
+                    <TableCell>{inquiry.conduct_by}</TableCell>
+                    <TableCell sx={{ align:'center'}} style={{
+  color: inquiry.status1 === 'Call' ? 'orange' :
+         inquiry.status1 === 'Interested' ? 'purple' :
+         inquiry.status1 === 'Not Interested' ? 'red' :
+         inquiry.status1 === 'DND' ? 'blue' :
+         inquiry.status1 === 'Ringing' ? 'brown' :
+         inquiry.status1 === 'Switch Off' ? 'green' :
+         inquiry.status1 === 'Waiting' ? 'magenta' : 'magenta'
+}}>
+  <b><strong>{inquiry.status1}</strong></b>
+</TableCell>
+<TableCell sx={{ align:'center'}} style={{  alignItems: 'center', flexDirection: 'row' }}>
+      <b>
+        {inquiry.status1 === 'Call' ? `${inquiry.callBackDate} ${inquiry.callBackTime}` : '-----'}
+      </b>
+    </TableCell>
+                    <TableCell>{inquiry.remark}</TableCell>
+                    <TableCell>
                       <Box display="flex" alignItems="center">
-                        {/* <IconButton
-    size="small"
-      onClick={() => handleInfoClick(Enquiry)}
-      color="danger"
-    >
-      <InfoIcon />
-    </IconButton> */}
                         <IconButton
                           size="small"
                           color="success"
                           onClick={() => {
-                            window.open(
-                              `https://wa.me/91${Enquiry.mobile}`,
-                              "_blank"
-                            );
+                            window.open(`https://wa.me/91${inquiry.mobile}`, "_blank");
                           }}
                         >
                           <WhatsAppIcon />
@@ -700,7 +492,7 @@ export default function Report() {
                         <IconButton
                           size="small"
                           color="warning"
-                          onClick={() => handleOpenSmsDialog(Enquiry)}
+                          onClick={() => handleOpenSmsDialog(inquiry)}
                         >
                           <SmsIcon />
                         </IconButton>
@@ -709,7 +501,7 @@ export default function Report() {
                           variant="contained"
                           color="primary"
                           component={Link}
-                          to={`/layout/manage/${Enquiry.id}`}
+                          to={`/layout/manage/${inquiry.id}`}
                         >
                           <EditIcon />
                         </IconButton>
@@ -722,33 +514,21 @@ export default function Report() {
           </TableContainer>
         </Box>
 
-        <Grid container spacing={2} justifyContent="flex-end" mt={2}>
-          <Box
-            mt={2}
-            textAlign="right"
-            border={"1px solid lightgray"}
-            padding={"1%"}
-          >
-            <Typography variant="h7" component="div">
-              <strong>Total Enquiries: {inquiries.length}</strong>
-            </Typography>
-          </Box>
+        
 
+        <Grid container spacing={2} justifyContent="flex-end" mt={1}>
+          <Grid item> 
+          <Typography variant="h6" gutterBottom>
+        Total Inquiries: {inquiryCount}
+      </Typography>
+          </Grid>
           <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleDownloadPDF}
-            >
+            <Button variant="contained" color="primary" onClick={handleDownloadPDF}>
               Download PDF
             </Button>
           </Grid>
           <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleDownloadCSV}
-            >
+            <Button variant="contained" color="primary" onClick={handleDownloadCSV}>
               Download CSV
             </Button>
           </Grid>
@@ -766,9 +546,7 @@ export default function Report() {
               fullWidth
               variant="standard"
               value={smsData.content}
-              onChange={(e) =>
-                setSmsData({ ...smsData, content: e.target.value })
-              }
+              onChange={(e) => setSmsData({ ...smsData, content: e.target.value })}
             />
           </DialogContent>
           <DialogActions>
