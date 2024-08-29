@@ -46,7 +46,6 @@ export default function Report() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
-
   // New states for month and year
   const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
@@ -86,7 +85,9 @@ export default function Report() {
 
   const loadExams = async () => {
     try {
-      const response = await axios.get(`http://localhost:8086/getAllExam?institutecode=${getInstituteCode()}`);
+      const response = await axios.get(
+        `http://localhost:8086/getAllExam?institutecode=${getInstituteCode()}`
+      );
       setExamOptions(response.data);
     } catch (error) {
       console.error("Error fetching exam options:", error);
@@ -95,7 +96,9 @@ export default function Report() {
 
   const loadSources = async () => {
     try {
-      const response = await axios.get(`http://localhost:8086/getAllSource?institutecode=${getInstituteCode()}`);
+      const response = await axios.get(
+        `http://localhost:8086/getAllSource?institutecode=${getInstituteCode()}`
+      );
       setSourceOptions(response.data);
     } catch (error) {
       console.error("Error fetching sources:", error);
@@ -104,7 +107,9 @@ export default function Report() {
 
   const loadConducts = async () => {
     try {
-      const response = await axios.get(`http://localhost:8086/get/getAllConductModels?institutecode=${getInstituteCode()}`);
+      const response = await axios.get(
+        `http://localhost:8086/get/getAllConductModels?institutecode=${getInstituteCode()}`
+      );
       setConductedBy(response.data);
     } catch (error) {
       console.error("Error fetching conducts:", error);
@@ -153,19 +158,35 @@ export default function Report() {
   const filterInquiries = () => {
     return inquiries.filter((inquiry) => {
       const matchesExam = selectedExam ? inquiry.exam === selectedExam : true;
-      const matchesSource = selectedSource ? inquiry.source_by === selectedSource : true;
-      const matchesConduct = selectedConduct ? inquiry.conduct_by === selectedConduct : true;
-      const matchesStatus = selectedStatus ? inquiry.status1 === selectedStatus : true;
+      const matchesSource = selectedSource
+        ? inquiry.source_by === selectedSource
+        : true;
+      const matchesConduct = selectedConduct
+        ? inquiry.conduct_by === selectedConduct
+        : true;
+      const matchesStatus = selectedStatus
+        ? inquiry.status1 === selectedStatus
+        : true;
 
       // Filtering by month and year
       const inquiryDate = new Date(inquiry.enquiryDate);
-      const matchesMonth = selectedMonth ? inquiryDate.getMonth() + 1 === parseInt(selectedMonth) : true;
-      const matchesYear = selectedYear ? inquiryDate.getFullYear() === parseInt(selectedYear) : true;
+      const matchesMonth = selectedMonth
+        ? inquiryDate.getMonth() + 1 === parseInt(selectedMonth)
+        : true;
+      const matchesYear = selectedYear
+        ? inquiryDate.getFullYear() === parseInt(selectedYear)
+        : true;
 
-      return matchesExam && matchesSource && matchesConduct && matchesStatus && matchesMonth && matchesYear;
+      return (
+        matchesExam &&
+        matchesSource &&
+        matchesConduct &&
+        matchesStatus &&
+        matchesMonth &&
+        matchesYear
+      );
     });
   };
-
 
   const handleDownloadPDF = () => {
     const doc = new jsPDF("landscape");
@@ -215,8 +236,9 @@ export default function Report() {
 
   const handleDownloadCSV = () => {
     const csvContent = filterInquiries()
-      .map((inquiry) =>
-        `${inquiry.id},${inquiry.enquiryDate},${inquiry.name},${inquiry.mobile},${inquiry.email},${inquiry.exam},${inquiry.source_by},${inquiry.conduct_by},${inquiry.status1},${inquiry.remark}`
+      .map(
+        (inquiry) =>
+          `${inquiry.id},${inquiry.enquiryDate},${inquiry.name},${inquiry.mobile},${inquiry.email},${inquiry.exam},${inquiry.source_by},${inquiry.conduct_by},${inquiry.status1},${inquiry.remark}`
       )
       .join("\n");
 
@@ -249,9 +271,15 @@ export default function Report() {
 
   const PopTypography = styled(Typography)`
     @keyframes pop {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+      }
     }
   `;
 
@@ -266,7 +294,19 @@ export default function Report() {
   return (
     <div sx={{ padding: 2, width: "100%" }}>
       <Box textAlign="center" sx={{ width: "100%" }}>
-        <PopTypography variant="h5" gutterBottom sx={{ fontWeight: "bold", color: "#fff", textAlign: "center", backgroundColor: "#24A0ED", borderRadius: "150px", padding: "10px", marginBottom: "-2px" }}>
+        <PopTypography
+          variant="h5"
+          gutterBottom
+          sx={{
+            fontWeight: "bold",
+            color: "#fff",
+            textAlign: "center",
+            backgroundColor: "#24A0ED",
+            borderRadius: "150px",
+            padding: "10px",
+            marginBottom: "-2px",
+          }}
+        >
           Enquiry Report
         </PopTypography>
 
@@ -282,7 +322,9 @@ export default function Report() {
               variant="outlined"
             >
               <MenuItem value="">
-                <em><strong>All</strong></em>
+                <em>
+                  <strong>All</strong>
+                </em>
               </MenuItem>
               {examOptions.map((exam) => (
                 <MenuItem key={exam.name} value={exam.name}>
@@ -302,7 +344,9 @@ export default function Report() {
               variant="outlined"
             >
               <MenuItem value="">
-                <em><strong>All</strong></em>
+                <em>
+                  <strong>All</strong>
+                </em>
               </MenuItem>
               {conductedBy.map((conduct) => (
                 <MenuItem key={conduct.name} value={conduct.name}>
@@ -322,7 +366,9 @@ export default function Report() {
               variant="outlined"
             >
               <MenuItem value="">
-                <em><strong>All</strong></em>
+                <em>
+                  <strong>All</strong>
+                </em>
               </MenuItem>
               {sourceOptions.map((source) => (
                 <MenuItem key={source.name} value={source.name}>
@@ -332,7 +378,7 @@ export default function Report() {
             </TextField>
           </Grid>
           <Grid item xs={12} md={3}>
-          <TextField
+            <TextField
               select
               label="Select Status"
               value={selectedStatus}
@@ -344,27 +390,13 @@ export default function Report() {
               <MenuItem value="">
                 <strong>All</strong>
               </MenuItem>
-              <MenuItem value="Call" >
-        Call
-      </MenuItem>
-      <MenuItem value="Interested" >
-        Interested
-      </MenuItem>
-      <MenuItem value="Not Interested" >
-        Not Interested
-      </MenuItem>
-      <MenuItem value="DND" >
-       DND
-      </MenuItem>
-      <MenuItem value="Ringing" >
-        Ringing
-      </MenuItem>
-      <MenuItem value="Switch Off" >
-        Switch Off
-      </MenuItem>
-      <MenuItem value="Waiting" >
-        Waiting
-      </MenuItem>
+              <MenuItem value="Call">Call</MenuItem>
+              <MenuItem value="Interested">Interested</MenuItem>
+              <MenuItem value="Not Interested">Not Interested</MenuItem>
+              <MenuItem value="DND">DND</MenuItem>
+              <MenuItem value="Ringing">Ringing</MenuItem>
+              <MenuItem value="Switch Off">Switch Off</MenuItem>
+              <MenuItem value="Waiting">Waiting</MenuItem>
             </TextField>
           </Grid>
           <Grid item xs={12} md={3} className="textField-root">
@@ -402,7 +434,9 @@ export default function Report() {
               variant="outlined"
             >
               <MenuItem value="">
-                <em><strong>All Months</strong></em>
+                <em>
+                  <strong>All Months</strong>
+                </em>
               </MenuItem>
               {/* Add options for all months */}
               {Array.from({ length: 12 }, (_, i) => (
@@ -423,10 +457,12 @@ export default function Report() {
               variant="outlined"
             >
               <MenuItem value="">
-                <em><strong>All Years</strong></em>
+                <em>
+                  <strong>All Years</strong>
+                </em>
               </MenuItem>
               {/* Populate the year dropdown with the calculated years */}
-              {years.map(year => (
+              {years.map((year) => (
                 <MenuItem key={year} value={year}>
                   {year}
                 </MenuItem>
@@ -440,47 +476,92 @@ export default function Report() {
             <Table>
               <TableHead sx={{ backgroundColor: "#f2f2f2", align: "center" }}>
                 <TableRow sx={{ align: "center" }}>
-                  <TableCell><strong>ID</strong></TableCell>
-                  <TableCell><strong>Date</strong></TableCell>
-                  <TableCell><strong>Name</strong></TableCell>
-                  <TableCell><strong>Phone</strong></TableCell>
-                  <TableCell><strong>Email</strong></TableCell>
-                  <TableCell><strong>Exam</strong></TableCell>
-                  <TableCell><strong>Source</strong></TableCell>
-                  <TableCell><strong>Conduct By</strong></TableCell>
-                  <TableCell><strong>Status</strong></TableCell>
-                  <TableCell><strong>Date & Time</strong></TableCell>
-                  <TableCell><strong>Remark</strong></TableCell>
-                  <TableCell><strong>Actions</strong></TableCell>
+                  <TableCell>
+                    <strong>ID</strong>
+                  </TableCell>
+                  <TableCell>
+                    <strong>Date</strong>
+                  </TableCell>
+                  <TableCell>
+                    <strong>Name</strong>
+                  </TableCell>
+                  <TableCell>
+                    <strong>Phone</strong>
+                  </TableCell>
+                  <TableCell>
+                    <strong>Email</strong>
+                  </TableCell>
+                  <TableCell>
+                    <strong>Exam</strong>
+                  </TableCell>
+                  <TableCell>
+                    <strong>Source</strong>
+                  </TableCell>
+                  <TableCell>
+                    <strong>Conduct By</strong>
+                  </TableCell>
+                  <TableCell>
+                    <strong>Status</strong>
+                  </TableCell>
+                  <TableCell>
+                    <strong>Date & Time</strong>
+                  </TableCell>
+                  <TableCell>
+                    <strong>Remark</strong>
+                  </TableCell>
+                  <TableCell>
+                    <strong>Actions</strong>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {filterInquiries().map((inquiry) => (
                   <TableRow key={inquiry.id}>
                     <TableCell>{inquiry.id}</TableCell>
-                    <TableCell>{inquiry.enquiryDate}</TableCell>
+                    <TableCell style={{ whiteSpace: "nowrap" }}>
+                      {inquiry.enquiryDate}
+                    </TableCell>
                     <TableCell>{inquiry.name}</TableCell>
                     <TableCell>{inquiry.mobile}</TableCell>
                     <TableCell>{inquiry.email}</TableCell>
                     <TableCell>{inquiry.exam}</TableCell>
                     <TableCell>{inquiry.source_by}</TableCell>
                     <TableCell>{inquiry.conduct_by}</TableCell>
-                    <TableCell sx={{ align:'center'}} style={{
-  color: inquiry.status1 === 'Call' ? 'orange' :
-         inquiry.status1 === 'Interested' ? 'purple' :
-         inquiry.status1 === 'Not Interested' ? 'red' :
-         inquiry.status1 === 'DND' ? 'blue' :
-         inquiry.status1 === 'Ringing' ? 'brown' :
-         inquiry.status1 === 'Switch Off' ? 'green' :
-         inquiry.status1 === 'Waiting' ? 'magenta' : 'magenta'
-}}>
-  <b><strong>{inquiry.status1}</strong></b>
-</TableCell>
-<TableCell sx={{ align:'center'}} style={{  alignItems: 'center', flexDirection: 'row' }}>
-      <b>
-        {inquiry.status1 === 'Call' ? `${inquiry.callBackDate} ${inquiry.callBackTime}` : '-----'}
-      </b>
-    </TableCell>
+                    <TableCell
+                      sx={{ align: "center" }}
+                      style={{
+                        color:
+                          inquiry.status1 === "Call"
+                            ? "orange"
+                            : inquiry.status1 === "Interested"
+                            ? "purple"
+                            : inquiry.status1 === "Not Interested"
+                            ? "red"
+                            : inquiry.status1 === "DND"
+                            ? "blue"
+                            : inquiry.status1 === "Ringing"
+                            ? "brown"
+                            : inquiry.status1 === "Switch Off"
+                            ? "green"
+                            : inquiry.status1 === "Waiting"
+                            ? "magenta"
+                            : "magenta",
+                      }}
+                    >
+                      <b>
+                        <strong>{inquiry.status1}</strong>
+                      </b>
+                    </TableCell>
+                    <TableCell
+                      sx={{ align: "center" }}
+                      style={{ alignItems: "center", flexDirection: "row" }}
+                    >
+                      <b>
+                        {inquiry.status1 === "Call"
+                          ? `${inquiry.callBackDate} ${inquiry.callBackTime}`
+                          : "-----"}
+                      </b>
+                    </TableCell>
                     <TableCell>{inquiry.remark}</TableCell>
                     <TableCell>
                       <Box display="flex" alignItems="center">
@@ -488,7 +569,10 @@ export default function Report() {
                           size="small"
                           color="success"
                           onClick={() => {
-                            window.open(`https://wa.me/91${inquiry.mobile}`, "_blank");
+                            window.open(
+                              `https://wa.me/91${inquiry.mobile}`,
+                              "_blank"
+                            );
                           }}
                         >
                           <WhatsAppIcon />
@@ -518,21 +602,27 @@ export default function Report() {
           </TableContainer>
         </Box>
 
-        
-
         <Grid container spacing={2} justifyContent="flex-end" mt={1}>
-          <Grid item> 
-          <Typography variant="h6" gutterBottom>
-        Total Inquiries: {inquiryCount}
-      </Typography>
+          <Grid item>
+            <Typography variant="h6" gutterBottom>
+              Total Inquiries: {inquiryCount}
+            </Typography>
           </Grid>
           <Grid item>
-            <Button variant="contained" color="primary" onClick={handleDownloadPDF}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleDownloadPDF}
+            >
               Download PDF
             </Button>
           </Grid>
           <Grid item>
-            <Button variant="contained" color="primary" onClick={handleDownloadCSV}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleDownloadCSV}
+            >
               Download CSV
             </Button>
           </Grid>
@@ -550,7 +640,9 @@ export default function Report() {
               fullWidth
               variant="standard"
               value={smsData.content}
-              onChange={(e) => setSmsData({ ...smsData, content: e.target.value })}
+              onChange={(e) =>
+                setSmsData({ ...smsData, content: e.target.value })
+              }
             />
           </DialogContent>
           <DialogActions>
