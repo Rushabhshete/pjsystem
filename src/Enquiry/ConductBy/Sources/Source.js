@@ -59,6 +59,7 @@ const SourceDialog = ({ open, onClose, source, onSave, isUpdate }) => {
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>{isUpdate ? "Update Source" : "Add New Source"}</DialogTitle>
       <DialogContent>
+        <Grid item className="textField-root" style={{marginTop:'10px'}}>
         <TextField
           label="Source Name"
           variant="outlined"
@@ -66,6 +67,7 @@ const SourceDialog = ({ open, onClose, source, onSave, isUpdate }) => {
           onChange={(e) => setName(e.target.value)}
           fullWidth
         />
+        </Grid>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">
@@ -197,7 +199,7 @@ const Source = () => {
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={2}>
+          <Grid item xs={12} sm={2} className="textField-root">
             <TextField
               label="Search Source"
               variant="outlined"
@@ -278,7 +280,7 @@ const Source = () => {
           onSave={handleSaveSource}
           isUpdate={isUpdate}
         />
-        <Snackbar
+        {/* <Snackbar
           open={snackbarOpen}
           autoHideDuration={2000}
           onClose={() => setSnackbarOpen(false)}
@@ -287,7 +289,7 @@ const Source = () => {
           ContentProps={{
             sx: { backgroundColor: snackbarMessage === "Error saving source" ? "red" : "green" },
           }}
-        />
+        /> */}
       </Box>
     </Container>
   );

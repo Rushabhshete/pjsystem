@@ -60,6 +60,7 @@ const ConductDialog = ({ open, onClose, onSave, conduct }) => {
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>{conduct ? "Update Conduct" : "Add New Conduct"}</DialogTitle>
       <DialogContent>
+        <Grid item className="textField-root">
         <TextField
           label="Conduct Name"
           variant="outlined"
@@ -68,6 +69,7 @@ const ConductDialog = ({ open, onClose, onSave, conduct }) => {
           onChange={(e) => setName(e.target.value)}
           margin="normal"
         />
+        </Grid>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">
@@ -196,7 +198,7 @@ const Conduct = () => {
             </Box>
           </Grid>
 
-          <Grid item xs={12} sm={1.6} mt={2}>
+          <Grid item xs={12} sm={1.6} mt={2} className="textField-root">
             <TextField
               label="Search Conduct"
               variant="outlined"

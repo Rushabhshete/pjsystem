@@ -237,7 +237,7 @@ const AddCourse = () => {
             marginBottom: "-2px",
           }}
         >
-          Add Course
+          Add Course / Exam
         </Typography>
 
         <Grid container spacing={1} alignItems="center" >
@@ -254,7 +254,7 @@ const AddCourse = () => {
 
           <Grid item xs={12} sm={1.6} mt={2} className="textfield-root">
             <TextField
-            label="Search Courses"
+            label="Search Course..."
               fullWidth
               variant="outlined"
               value={searchQuery}
@@ -269,7 +269,7 @@ const AddCourse = () => {
               onClick={handleOpenAddCourseDialog}
               sx={{ mt: 2,ml:-8 }}
             >
-              Add Course
+              Add Course / Exam
             </Button>
           </Grid>
 

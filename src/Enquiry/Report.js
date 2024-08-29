@@ -401,6 +401,8 @@ export default function Report() {
           </Grid>
           <Grid item xs={12} md={3} className="textField-root">
             <TextField
+            InputLabelProps={{shrink:true}}
+            label="Start Date"
               type="date"
               value={startDate}
               onChange={handleStartDateChange}
@@ -411,6 +413,8 @@ export default function Report() {
           </Grid>
           <Grid item xs={12} md={3} className="textField-root">
             <TextField
+            InputLabelProps={{shrink:true}}
+            label="End Date"
               type="date"
               value={endDate}
               onChange={handleEndDateChange}
