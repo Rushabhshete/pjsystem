@@ -297,7 +297,16 @@ const ManageNotification = () => {
           </DialogActions>
         </Dialog>
 
-        <ToastContainer />
+        <ToastContainer
+      autoClose={1000} // Toast will close automatically after 5 seconds
+      position="top-right" // Position of the toast
+      hideProgressBar={false} // Show or hide the progress bar
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover/>
       </Box>
     </>
   );

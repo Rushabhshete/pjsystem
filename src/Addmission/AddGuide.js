@@ -24,6 +24,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { styled } from "@mui/material/styles";
+import { toast, ToastContainer } from "react-toastify";
 
 const AddGuide = () => {
   const [guideName, setGuideName] = useState("");
@@ -76,6 +77,7 @@ const AddGuide = () => {
         `http://localhost:8085/api/conductBy/saveConductBy?institutecode=${institutecode}`,
         { guideName }
       );
+      toast.success("Guid Added Successfully");
       setGuideName("");
       fetchGuides(); // Refresh the guide list
       handleCloseAddDialog(); // Close the dialog
@@ -94,6 +96,7 @@ const AddGuide = () => {
         `http://localhost:8085/api/conductBy/updateConductBy/${selectedGuideId}?institutecode=${institutecode}`,
         { guideName: updateGuideName }
       );
+      toast.success("Guid Updated Successfully");
       fetchGuides(); // Refresh the guide list
       handleCloseUpdateDialog(); // Close the dialog
     } catch (error) {
@@ -106,6 +109,7 @@ const AddGuide = () => {
       await axios.delete(
         `http://localhost:8085/api/conductBy/deleteConductBy/${selectedGuideId}`
       );
+      toast.success("Guid Has Been Deleted Sucessfully");
       fetchGuides(); // Refresh the guide list
       handleCloseDeleteDialog(); // Close the dialog
     } catch (error) {
@@ -159,6 +163,17 @@ const AddGuide = () => {
 
   return (
     <Container maxWidth="false" sx={{ padding: 2, width: "100%" }}>
+      <ToastContainer
+      autoClose={1000} // Toast will close automatically after 5 seconds
+      position="top-right" // Position of the toast
+      hideProgressBar={false} // Show or hide the progress bar
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover/>
+
       <PopTypography
         variant="h5"
         gutterBottom

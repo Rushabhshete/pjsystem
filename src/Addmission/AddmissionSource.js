@@ -24,6 +24,7 @@ import {
 import { styled } from "@mui/system";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import { toast, ToastContainer } from "react-toastify";
 
 const StyledTableHeader = styled(TableCell)(({ theme }) => ({
   fontWeight: "bold",
@@ -80,6 +81,7 @@ const AddmissionSource = () => {
         `http://localhost:8085/api/sourceBy/saveSourceBy?institutecode=${institutecode}`,
         { sourceBy: sourceName }
       );
+      toast.success("Source Added Successfully");
       setSourceName("");
       fetchSources(); // Refresh the source list
       handleCloseAddDialog(); // Close the dialog
@@ -101,6 +103,7 @@ const AddmissionSource = () => {
           institutecode: institutecode // Include institutecode if required
         }
       );
+      toast.success("Source Updated Successfully");
       fetchSources(); // Refresh the source list
       handleCloseUpdateDialog(); // Close the dialog
     } catch (error) {
@@ -113,6 +116,7 @@ const AddmissionSource = () => {
       await axios.delete(
         `http://localhost:8085/api/sourceBy/deleteSourceBy/${selectedSourceId}`
       );
+      toast.success("Source Deleted Successfully");
       fetchSources(); // Refresh the source list
       handleCloseDeleteDialog(); // Close the dialog
     } catch (error) {
@@ -153,6 +157,16 @@ const AddmissionSource = () => {
 
   return (
     <div>
+      <ToastContainer
+      autoClose={1000} // Toast will close automatically after 5 seconds
+      position="top-right" // Position of the toast
+      hideProgressBar={false} // Show or hide the progress bar
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover/>
       <Typography
         variant="h5"
         gutterBottom

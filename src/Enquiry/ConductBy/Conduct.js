@@ -158,23 +158,28 @@ const Conduct = () => {
   const saveConduct = async (newConduct) => {
     try {
       if (conductToEdit) {
+        // Update existing conduct
         await axios.put(
           `http://localhost:8086/updateConduct/${conductToEdit.id}`,
           newConduct
         );
+        toast.success("Conduct Updated Successfully");
       } else {
+        // Create new conduct
         await axios.post(
           `http://localhost:8086/save/conduct_by?institutecode=${institutecode}`,
           newConduct
         );
+        toast.success("Conduct Added Successfully");
       }
-      toast.success("Conduct Added Successfully");
-      loadConducts();
-      handleCloseConductDialog();
+      loadConducts(); // Reload the list of conducts
+      handleCloseConductDialog(); // Close the dialog
     } catch (error) {
       console.error("Error saving conduct:", error);
+      toast.error("Error saving conduct"); // Optionally handle errors with a toast
     }
   };
+  
 
   const filteredConducts = conducts.filter((conduct) =>
     conduct.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -182,6 +187,16 @@ const Conduct = () => {
 
   return (
     <div>
+      <ToastContainer
+      autoClose={1000} // Toast will close automatically after 5 seconds
+      position="top-right" // Position of the toast
+      hideProgressBar={false} // Show or hide the progress bar
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover/>
     <PopTypography
       variant="h5"
       gutterBottom

@@ -20,6 +20,7 @@ import {
   Grid,
 } from "@mui/material";
 import { styled } from "@mui/system";
+import { toast, ToastContainer } from "react-toastify";
 
 const ConfirmDialog = ({ open, onClose, onConfirm, courseName }) => (
   <Dialog open={open} onClose={onClose}>
@@ -155,6 +156,7 @@ const AddCourse = () => {
         `http://localhost:8085/AddCourse?institutecode=${institutecode}`,
         { cname: courseName }
       );
+      toast.success("Course Added Successfully");
       console.log("Course added successfully");
       setCourseName(""); // Clear the input field
       fetchCourses(); // Refresh the course list
@@ -179,6 +181,7 @@ const AddCourse = () => {
       await axios.delete(
         `http://localhost:8085/deleteById/${selectedCourseId}`
       );
+      toast.success("Course Delete Successfully");
       console.log("Course deleted successfully");
       fetchCourses(); // Refresh the course list
       handleCloseDialog(); // Close the dialog
@@ -212,8 +215,9 @@ const AddCourse = () => {
         {
           cname: updateCourseName, // Only send course name in the request body
         }
+       
       );
-
+      toast.success("Course Updated Successfully");
       console.log("Course updated successfully");
       fetchCourses(); // Refresh the course list
       handleCloseUpdateDialog(); // Close the dialog
@@ -238,6 +242,16 @@ const AddCourse = () => {
 
   return (
     <div>
+      <ToastContainer
+      autoClose={1000} // Toast will close automatically after 5 seconds
+      position="top-right" // Position of the toast
+      hideProgressBar={false} // Show or hide the progress bar
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover/>
       <Typography
         variant="h5"
         gutterBottom
