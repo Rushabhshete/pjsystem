@@ -117,8 +117,9 @@ const Exam = () => {
     try {
       await axios.delete(`http://localhost:8086/deleteExam/${examToDelete.id}`);
       loadExams();
-      setSnackbarMessage("Exam deleted successfully");
-      setSnackbarColor("green");
+      // setSnackbarMessage("Exam deleted successfully");
+      // setSnackbarColor("green");
+      toast.success("Exam Deleted Successfully");
       setOpenConfirmDialog(false);
     } catch (error) {
       console.error("Error deleting exam:", error);
@@ -188,8 +189,9 @@ const Exam = () => {
         },
       });
 
-      setSnackbarMessage("Exam updated successfully");
-      setSnackbarColor("green");
+      // setSnackbarMessage("Exam updated successfully");
+      toast.success("Exam Updated Successfully");
+      // setSnackbarColor("green");
       handleCloseUpdateDialog();
       loadExams();
     } catch (error) {

@@ -128,6 +128,7 @@ const Source = () => {
       await axios.delete(
         `http://localhost:8086/delete/source/${sourceToDelete.id}`
       );
+      toast.success("Source Deleted Successfully");
       loadSources();
       handleCloseConfirmDialog();
     } catch (error) {
