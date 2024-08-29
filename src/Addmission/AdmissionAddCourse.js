@@ -44,6 +44,7 @@ const UpdateDialog = ({ open, onClose, onUpdate, courseName, setUpdateCourseName
   <Dialog open={open} onClose={onClose}>
     <DialogTitle>Update Course</DialogTitle>
     <DialogContent>
+      <Grid item className="textField-root">
       <TextField
         autoFocus
         margin="dense"
@@ -55,6 +56,7 @@ const UpdateDialog = ({ open, onClose, onUpdate, courseName, setUpdateCourseName
         value={courseName}
         onChange={(e) => setUpdateCourseName(e.target.value)}
       />
+      </Grid>
     </DialogContent>
     <DialogActions>
       <Button onClick={onClose} color="secondary">
@@ -71,6 +73,7 @@ const AddCourseDialog = ({ open, onClose, onAdd, courseName, setCourseName }) =>
   <Dialog open={open} onClose={onClose}>
     <DialogTitle>Add New Course</DialogTitle>
     <DialogContent>
+      <Grid item className="textField-root">
       <TextField
         autoFocus
         margin="dense"
@@ -82,6 +85,7 @@ const AddCourseDialog = ({ open, onClose, onAdd, courseName, setCourseName }) =>
         value={courseName}
         onChange={(e) => setCourseName(e.target.value)}
       />
+      </Grid>
     </DialogContent>
     <DialogActions>
       <Button onClick={onClose} color="secondary">
@@ -252,7 +256,7 @@ const AddCourse = () => {
             </Box>
           </Grid>
 
-          <Grid item xs={12} sm={1.6} mt={2} className="textfield-root">
+          <Grid item xs={12} sm={1.6} mt={2} className="textField-root">
             <TextField
             label="Search Course..."
               fullWidth

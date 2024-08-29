@@ -175,7 +175,7 @@ const AddGuide = () => {
           </Box>
         </Grid>
 
-        <Grid item xs={12} sm={1.6} mt={2} className="textfield-root">
+        <Grid item xs={12} sm={1.6} mt={2} className="textField-root">
           <TextField
             label="Search Guide"
             variant="outlined"
@@ -251,6 +251,7 @@ const AddGuide = () => {
       >
         <DialogTitle id="add-guide-dialog-title">Add New Guide</DialogTitle>
         <DialogContent>
+          <Grid item className="textField-root">
           <TextField
             autoFocus
             margin="dense"
@@ -260,6 +261,7 @@ const AddGuide = () => {
             value={guideName}
             onChange={(e) => setGuideName(e.target.value)}
           />
+          </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseAddDialog} color="primary">
@@ -279,6 +281,7 @@ const AddGuide = () => {
       >
         <DialogTitle id="update-guide-dialog-title">Update Guide</DialogTitle>
         <DialogContent>
+          <Grid item className="textField-root">
           <TextField
             autoFocus
             margin="dense"
@@ -288,6 +291,7 @@ const AddGuide = () => {
             value={updateGuideName}
             onChange={(e) => setUpdateGuideName(e.target.value)}
           />
+          </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseUpdateDialog} color="primary">
