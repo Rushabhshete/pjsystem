@@ -39,7 +39,7 @@ const HelpDeskForm = ({ open, onClose }) => {
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:8081/createTicket?institutecode=${institutecode()}`,
+        `http://13.233.43.240:8081/createTicket?institutecode=${institutecode()}`,
         formData
       );
       console.log("Ticket created:", response.data);

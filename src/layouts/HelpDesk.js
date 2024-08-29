@@ -35,7 +35,7 @@ const HelpDesk = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:8081/getAllTickets?institutecode=${institutecode()}`
+        `http://13.233.43.240:8081/getAllTickets?institutecode=${institutecode()}`
       );
       if (response.ok) {
         const data = await response.json();

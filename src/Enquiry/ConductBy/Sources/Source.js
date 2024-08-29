@@ -101,7 +101,7 @@ const Source = () => {
   const loadSources = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8086/getAllSource?institutecode=${institutecode}`
+        `http://13.233.43.240:8086/getAllSource?institutecode=${institutecode}`
       );
       setSources(response.data);
       setFilteredSources(response.data); // Initially set filtered sources to all sources
@@ -126,7 +126,7 @@ const Source = () => {
   const confirmDeleteSource = async () => {
     try {
       await axios.delete(
-        `http://localhost:8086/delete/source/${sourceToDelete.id}`
+        `http://13.233.43.240:8086/delete/source/${sourceToDelete.id}`
       );
       toast.success("Source Deleted Successfully");
       loadSources();
@@ -148,14 +148,14 @@ const Source = () => {
     try {
       if (isUpdate) {
         await axios.put(
-          `http://localhost:8086/update/source/${source.id}`,
+          `http://13.233.43.240:8086/update/source/${source.id}`,
           source
         );
         // setSnackbarMessage("Source updated successfully");
         toast.success("Source Updated Successfully");
       } else {
         await axios.post(
-          `http://localhost:8086/save/source?institutecode=${institutecode}`,
+          `http://13.233.43.240:8086/save/source?institutecode=${institutecode}`,
           source
         );
         toast.success("Source Added Successfully");

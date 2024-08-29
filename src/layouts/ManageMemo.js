@@ -40,7 +40,7 @@ const ManageMemo = () => {
 
   const fetchMemos = async () => {
     try {
-      const response = await fetch("http://localhost:8082/memos/all");
+      const response = await fetch("http://13.233.43.240:8082/memos/all");
       const data = await response.json();
       setMemos(data);
     } catch (error) {
@@ -60,7 +60,7 @@ const ManageMemo = () => {
   const handleDelete = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8082/memos/deletememo/${selectedMemo.mid}`,
+        `http://13.233.43.240:8082/memos/deletememo/${selectedMemo.mid}`,
         {
           method: "DELETE",
         }
@@ -84,7 +84,7 @@ const ManageMemo = () => {
   const handleUpdate = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8082/memos/updatememo/${selectedMemo.mid}`,
+        `http://13.233.43.240:8082/memos/updatememo/${selectedMemo.mid}`,
         {
           method: "PUT",
           headers: {

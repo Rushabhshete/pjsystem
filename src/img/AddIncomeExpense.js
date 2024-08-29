@@ -80,7 +80,7 @@
 //     const fetchUserData = async () => {
 //       try {
 //         const response = await axios.get(
-//           `http://localhost:8087/users/getAllUserByEmail?email=${getEmail()}`
+//           `http://13.233.43.240:8087/users/getAllUserByEmail?email=${getEmail()}`
 //         );
 //         setUsers(response.data);
 //         setFilteredUsers(response.data); // Initialize with all users
@@ -98,7 +98,7 @@
 //     const fetchCategories = async () => {
 //       try {
 //         const response = await axios.get(
-//           `http://localhost:8087/categories/getAllCategoriesByEmail?email=${getEmail()}`
+//           `http://13.233.43.240:8087/categories/getAllCategoriesByEmail?email=${getEmail()}`
 //         );
 //         setCategories(response.data);
 //       } catch (error) {
@@ -172,8 +172,8 @@
 
 //     const apiUrl =
 //       formData.type === "Income"
-//         ? `http://localhost:8087/incomes/save?adminemail=${getEmail()}`
-//         : `http://localhost:8087/expenses/save?adminemail=${getEmail()}`;
+//         ? `http://13.233.43.240:8087/incomes/save?adminemail=${getEmail()}`
+//         : `http://13.233.43.240:8087/expenses/save?adminemail=${getEmail()}`;
 
 //     try {
 //       await axios.post(apiUrl, formData);
@@ -700,7 +700,7 @@ const AddIncomeExpense = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8087/users/getAllUserByEmail?email=${getEmail()}`
+          `http://13.233.43.240:8087/users/getAllUserByEmail?email=${getEmail()}`
         );
         setUsers(response.data);
         setFilteredUsers(response.data); // Initialize with all users
@@ -718,7 +718,7 @@ const AddIncomeExpense = () => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8087/categories/getAllCategoriesByEmail?email=${getEmail()}`
+          `http://13.233.43.240:8087/categories/getAllCategoriesByEmail?email=${getEmail()}`
         );
         setCategories(response.data);
       } catch (error) {
@@ -832,8 +832,8 @@ const AddIncomeExpense = () => {
     };
     const apiUrl =
       formData.type === "Income"
-        ? `http://localhost:8087/incomes/save?adminemail=${getEmail()}`
-        : `http://localhost:8087/expenses/save?adminemail=${getEmail()}`;
+        ? `http://13.233.43.240:8087/incomes/save?adminemail=${getEmail()}`
+        : `http://13.233.43.240:8087/expenses/save?adminemail=${getEmail()}`;
 
     try {
       await axios.post(apiUrl, integerFormData);
@@ -1362,7 +1362,7 @@ export default AddIncomeExpense;
 //     const fetchUserData = async () => {
 //       try {
 //         const response = await axios.get(
-//           `http://localhost:8087/users/getAllUserByEmail?email=${getEmail()}`
+//           `http://13.233.43.240:8087/users/getAllUserByEmail?email=${getEmail()}`
 //         );
 //         setUsers(response.data);
 //         setFilteredUsers(response.data); // Initialize with all users
@@ -1380,7 +1380,7 @@ export default AddIncomeExpense;
 //     const fetchCategories = async () => {
 //       try {
 //         const response = await axios.get(
-//           `http://localhost:8087/categories/getAllCategoriesByEmail?email=${getEmail()}`
+//           `http://13.233.43.240:8087/categories/getAllCategoriesByEmail?email=${getEmail()}`
 //         );
 //         setCategories(response.data);
 //       } catch (error) {
@@ -1463,8 +1463,8 @@ export default AddIncomeExpense;
 
 //     const apiUrl =
 //       formData.type === "Income"
-//         ? `http://localhost:8087/incomes/save?adminemail=${getEmail()}`
-//         : `http://localhost:8087/expenses/save?adminemail=${getEmail()}`;
+//         ? `http://13.233.43.240:8087/incomes/save?adminemail=${getEmail()}`
+//         : `http://13.233.43.240:8087/expenses/save?adminemail=${getEmail()}`;
 
 //     try {
 //       await axios.post(apiUrl, formData);
@@ -1548,7 +1548,7 @@ export default AddIncomeExpense;
 //   const handleAddUserSubmit = async () => {
 //     try {
 //       await axios.post(
-//         `http://localhost:8087/users/save?adminemail=${getEmail()}`,
+//         `http://13.233.43.240:8087/users/save?adminemail=${getEmail()}`,
 //         { userName: newUserName }
 //       );
 //       setUsers((prevUsers) => [

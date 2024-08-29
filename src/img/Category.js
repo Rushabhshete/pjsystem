@@ -204,7 +204,7 @@ const Category = () => {
   // const fetchPaidByData = async (paidBy, type) => {
   //   try {
   //     const response = await axios.get(
-  //       `http://localhost:8087/${
+  //       `http://13.233.43.240:8087/${
   //         type === "Income" ? "income" : "expense"
   //       }/byPaidBy?paidBy=${paidBy}&email=${getEmail()}`
   //     );
@@ -218,7 +218,7 @@ const Category = () => {
   // const fetchCategoryData = async (categoryName, type) => {
   //   try {
   //     const response = await axios.get(
-  //       `http://localhost:8087/${
+  //       `http://13.233.43.240:8087/${
   //         type === "Income" ? "income" : "expense"
   //       }/byCategory?category=${categoryName}&email=${getEmail()}`
   //     );
@@ -232,7 +232,7 @@ const Category = () => {
   // const fetchBillTypeData = async (billType, type) => {
   //   try {
   //     const response = await axios.get(
-  //       `http://localhost:8087/${
+  //       `http://13.233.43.240:8087/${
   //         type === "Income" ? "income" : "expense"
   //       }/byBillType?billType=${billType}&email=${getEmail()}`
   //     );
@@ -246,7 +246,7 @@ const Category = () => {
   // const fetchPaymentMethodData = async (paymentMethod, type) => {
   //   try {
   //     const response = await axios.get(
-  //       `http://localhost:8087/dashboard/byPaymentMethod?paymentMethod=${paymentMethod}&email=${getEmail()}&type=${type}`
+  //       `http://13.233.43.240:8087/dashboard/byPaymentMethod?paymentMethod=${paymentMethod}&email=${getEmail()}&type=${type}`
   //     );
   //     return response.data;
   //   } catch (error) {
@@ -259,7 +259,7 @@ const Category = () => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8087/categories/getAllCategoriesByEmail?email=${getEmail()}`
+          `http://13.233.43.240:8087/categories/getAllCategoriesByEmail?email=${getEmail()}`
         );
         setCategories(response.data);
       } catch (error) {
@@ -273,7 +273,7 @@ const Category = () => {
   const fetchIncomeData = async (timeframe, startDate, endDate) => {
     try {
       const response = await axios.get(
-        `http://localhost:8087/income/${
+        `http://13.233.43.240:8087/income/${
           timeframe === "customdaterange"
             ? `customdaterange?email=${getEmail()}&startDate=${startDate}&endDate=${endDate}`
             : `getIncomeBy?email=${getEmail()}&timeframe=${timeframe}`
@@ -289,7 +289,7 @@ const Category = () => {
   const fetchExpenseData = async (timeframe, startDate, endDate) => {
     try {
       const response = await axios.get(
-        `http://localhost:8087/expense/${
+        `http://13.233.43.240:8087/expense/${
           timeframe === "customdaterange"
             ? `customdaterange?email=${getEmail()}&startDate=${startDate}&endDate=${endDate}`
             : `getByTimeframe?email=${getEmail()}&timeframe=${timeframe}`
@@ -315,8 +315,8 @@ const Category = () => {
     ) {
       const url =
         category === "Income"
-          ? `http://localhost:8087/incomes/getAllIncomesByEmail?email=${getEmail()}`
-          : `http://localhost:8087/expenses/getAllExpensesByEmail?email=${getEmail()}`;
+          ? `http://13.233.43.240:8087/incomes/getAllIncomesByEmail?email=${getEmail()}`
+          : `http://13.233.43.240:8087/expenses/getAllExpensesByEmail?email=${getEmail()}`;
 
       try {
         const response = await axios.get(url);
@@ -354,8 +354,8 @@ const Category = () => {
         default:
           const url =
             category === "Income"
-              ? `http://localhost:8087/incomes/getAllIncomesByEmail?email=${getEmail()}`
-              : `http://localhost:8087/expenses/getAllExpensesByEmail?email=${getEmail()}`;
+              ? `http://13.233.43.240:8087/incomes/getAllIncomesByEmail?email=${getEmail()}`
+              : `http://13.233.43.240:8087/expenses/getAllExpensesByEmail?email=${getEmail()}`;
 
           try {
             const response = await axios.get(url);
@@ -486,8 +486,8 @@ const Category = () => {
   const handleDelete = async (id) => {
     const url =
       category === "Income"
-        ? `http://localhost:8087/incomes/deleteIncome/${categoryIdToDelete}`
-        : `http://localhost:8087/expenses/deleteExpense/${categoryIdToDelete}`;
+        ? `http://13.233.43.240:8087/incomes/deleteIncome/${categoryIdToDelete}`
+        : `http://13.233.43.240:8087/expenses/deleteExpense/${categoryIdToDelete}`;
     try {
       await axios.delete(url);
       fetchData();

@@ -52,7 +52,7 @@ const AddGuide = () => {
         throw new Error("No institutecode found in local storage");
       }
       const response = await axios.get(
-        `http://localhost:8085/api/conductBy/getAllConductBy?institutecode=${institutecode}`
+        `http://13.233.43.240:8085/api/conductBy/getAllConductBy?institutecode=${institutecode}`
       );
       setGuides(response.data);
     } catch (error) {
@@ -74,7 +74,7 @@ const AddGuide = () => {
         throw new Error("No institutecode found in local storage");
       }
       await axios.post(
-        `http://localhost:8085/api/conductBy/saveConductBy?institutecode=${institutecode}`,
+        `http://13.233.43.240:8085/api/conductBy/saveConductBy?institutecode=${institutecode}`,
         { guideName }
       );
       toast.success("Guid Added Successfully");
@@ -93,7 +93,7 @@ const AddGuide = () => {
         throw new Error("No institutecode found in local storage");
       }
       await axios.put(
-        `http://localhost:8085/api/conductBy/updateConductBy/${selectedGuideId}?institutecode=${institutecode}`,
+        `http://13.233.43.240:8085/api/conductBy/updateConductBy/${selectedGuideId}?institutecode=${institutecode}`,
         { guideName: updateGuideName }
       );
       toast.success("Guid Updated Successfully");
@@ -107,7 +107,7 @@ const AddGuide = () => {
   const handleDeleteGuide = async () => {
     try {
       await axios.delete(
-        `http://localhost:8085/api/conductBy/deleteConductBy/${selectedGuideId}`
+        `http://13.233.43.240:8085/api/conductBy/deleteConductBy/${selectedGuideId}`
       );
       toast.success("Guid Has Been Deleted Sucessfully");
       fetchGuides(); // Refresh the guide list

@@ -73,7 +73,7 @@ const AddUser = () => {
     const fetchUsers = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
+          `http://13.233.43.240:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
         );
         const result = await response.json();
         setUsers(result);
@@ -124,7 +124,7 @@ const AddUser = () => {
     } else {
       try {
         const response = await fetch(
-          `http://localhost:8087/users/save?institutecode=${getInstituteCode()}`,
+          `http://13.233.43.240:8087/users/save?institutecode=${getInstituteCode()}`,
           {
             method: "POST",
             headers: {
@@ -139,7 +139,7 @@ const AddUser = () => {
   
           // Refresh Users list after adding new userName
           const updatedResponse = await fetch(
-            `http://localhost:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
+            `http://13.233.43.240:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
           );
           const updatedUser = await updatedResponse.json();
           setUsers(updatedUser);
@@ -160,7 +160,7 @@ const AddUser = () => {
 
   const handleEditClickOpen = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8087/users/getById/${id}`);
+      const response = await fetch(`http://13.233.43.240:8087/users/getById/${id}`);
       const result = await response.json();
       setEditUser(result);
       setEditOpen(true);
@@ -185,7 +185,7 @@ const AddUser = () => {
     } else {
       try {
         const response = await fetch(
-          `http://localhost:8087/users/update/${editUser.id}`,
+          `http://13.233.43.240:8087/users/update/${editUser.id}`,
           {
             method: "PUT",
             headers: {
@@ -199,7 +199,7 @@ const AddUser = () => {
         );
         if (response.ok) {
           const updatedResponse = await fetch(
-            `http://localhost:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
+            `http://13.233.43.240:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
           );
           const updatedUser = await updatedResponse.json();
           setUsers(updatedUser);
@@ -220,7 +220,7 @@ const AddUser = () => {
   const handleDelete = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8087/users/delete/${userIdToDelete}`,
+        `http://13.233.43.240:8087/users/delete/${userIdToDelete}`,
         {
           method: "DELETE",
         }
@@ -228,7 +228,7 @@ const AddUser = () => {
       if (response.ok) {
         // Refresh Users list after deleting user
         const updatedResponse = await fetch(
-          `http://localhost:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
+          `http://13.233.43.240:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
         );
         const updatedUser = await updatedResponse.json();
         setUsers(updatedUser);

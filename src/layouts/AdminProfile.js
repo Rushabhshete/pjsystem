@@ -156,7 +156,7 @@ const AdminProfile = () => {
         }
 
         const response = await axios.get(
-          `http://localhost:8081/findInstitutesby/email?emailaddress=${email}`
+          `http://13.233.43.240:8081/findInstitutesby/email?emailaddress=${email}`
         );
         setEmployeeDetails(response.data);
         setLoading(false);
@@ -198,7 +198,7 @@ const AdminProfile = () => {
 
     try {
       const response = await axios.patch(
-        `http://localhost:8081/saveadminPhoto?email=${email}`,
+        `http://13.233.43.240:8081/saveadminPhoto?email=${email}`,
         formData,
         {
           headers: {

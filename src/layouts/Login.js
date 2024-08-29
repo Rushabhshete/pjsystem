@@ -14,7 +14,7 @@
 // //   const handleSubmit = async (event) => {
 // //     event.preventDefault();
 // //     try {
-// //       const response = await axios.post('http://localhost:8081/login', {
+// //       const response = await axios.post('http://13.233.43.240:8081/login', {
 // //         email,
 // //         password,
 // //         confirmPassword: password, // Assuming the confirmPassword is same as password for login
@@ -72,8 +72,8 @@
 //   // const handleSubmit = async (event) => {
 //   //   event.preventDefault();
 //   //   try {
-//   //     const response = await axios.post('http://localhost:8081/login',
-//   //     //  const response = await axios.post('http://localhost:8081/student/adminLogin',
+//   //     const response = await axios.post('http://13.233.43.240:8081/login',
+//   //     //  const response = await axios.post('http://13.233.43.240:8081/student/adminLogin',
 //   //      {
 //   //       email,
 //   //       password,
@@ -211,7 +211,7 @@
 //     const navigate = useNavigate();
 
 //     const loginUser = async (institutecode,email, password) => {
-//       return axios.post('http://localhost:8081/login', { institutecode,email, password });
+//       return axios.post('http://13.233.43.240:8081/login', { institutecode,email, password });
 //     };
 
 //     // const handleSubmit = async (event) => {
@@ -471,7 +471,7 @@ function Login({ onLogin }) {
 
   const loginUser = async (institutecode, email, password) => {
     return axios.post(
-      `http://localhost:8081/institutelogin?institutecode=${institutecode}&emailaddress=${email}&password=${password}`
+      `http://13.233.43.240:8081/institutelogin?institutecode=${institutecode}&emailaddress=${email}&password=${password}`
     );
   };
 

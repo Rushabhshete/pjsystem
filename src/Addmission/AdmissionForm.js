@@ -50,7 +50,7 @@ const AdmissionForm = () => {
     const fetchGuide = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8085/api/conductBy/getAllConductBy?institutecode=${institutecode}`
+          `http://13.233.43.240:8085/api/conductBy/getAllConductBy?institutecode=${institutecode}`
         );
         setGuide(response.data);
       } catch (error) {
@@ -67,7 +67,7 @@ const AdmissionForm = () => {
     const fetchSources = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8085/api/sourceBy/getAll?institutecode=${institutecode}`
+          `http://13.233.43.240:8085/api/sourceBy/getAll?institutecode=${institutecode}`
         );
         setSources(response.data);
       } catch (error) {
@@ -84,7 +84,7 @@ const AdmissionForm = () => {
     const fetchCourses = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8085/getAllCourse?institutecode=${institutecode}`
+          `http://13.233.43.240:8085/getAllCourse?institutecode=${institutecode}`
         );
         setCourses(response.data);
       } catch (error) {
@@ -136,7 +136,7 @@ const AdmissionForm = () => {
     try {
       const { feesReceipt, studentPhoto, ...dataToSubmit } = formData; // exclude files from the initial submission
       await axios.post(
-        `http://localhost:8085/saveAdmission?institutecode=${institutecode}`,
+        `http://13.233.43.240:8085/saveAdmission?institutecode=${institutecode}`,
         dataToSubmit
       );
       toast.success("Admission form submitted successfully");
@@ -535,7 +535,7 @@ const AdmissionForm = () => {
                   onClick={() =>
                     handleFileUpload(
                       "feesReceipt",
-                      `http://localhost:8085/saveFeesRecipt/${formData.email}`
+                      `http://13.233.43.240:8085/saveFeesRecipt/${formData.email}`
                     )
                   }
                   disabled={!isFormSubmitted}
@@ -560,7 +560,7 @@ const AdmissionForm = () => {
                   onClick={() =>
                     handleFileUpload(
                       "studentPhoto",
-                      `http://localhost:8085/saveStudentPhoto/${formData.email}`
+                      `http://13.233.43.240:8085/saveStudentPhoto/${formData.email}`
                     )
                   }
                   disabled={!isFormSubmitted}

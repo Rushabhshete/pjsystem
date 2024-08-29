@@ -41,7 +41,7 @@ const ManageNotification = () => {
 
   const fetchNotifications = async () => {
     try {
-      const response = await fetch("http://localhost:8082/notices/all");
+      const response = await fetch("http://13.233.43.240:8082/notices/all");
       const data = await response.json();
       setNotifications(data);
     } catch (error) {
@@ -66,7 +66,7 @@ const ManageNotification = () => {
     if (notificationToDelete) {
       try {
         const response = await fetch(
-          `http://localhost:8082/notices/deleteNotice/${notificationToDelete.nid}`,
+          `http://13.233.43.240:8082/notices/deleteNotice/${notificationToDelete.nid}`,
           {
             method: "DELETE",
           }
@@ -91,7 +91,7 @@ const ManageNotification = () => {
   const handleUpdate = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8082/notices/updateNotice/${selectedNotification.nid}`,
+        `http://13.233.43.240:8082/notices/updateNotice/${selectedNotification.nid}`,
         {
           method: "PUT",
           headers: {

@@ -71,7 +71,7 @@ const AddCategory = () => {
       try {
         const email = getEmail();
         const response = await fetch(
-          `http://localhost:8087/categories/getAllCategoriesByEmail?email=${encodeURIComponent(
+          `http://13.233.43.240:8087/categories/getAllCategoriesByEmail?email=${encodeURIComponent(
             email
           )}`
         );
@@ -105,7 +105,7 @@ const AddCategory = () => {
       try {
         const email = getEmail();
         const response = await fetch(
-          `http://localhost:8087/categories/save?adminemail=${encodeURIComponent(
+          `http://13.233.43.240:8087/categories/save?adminemail=${encodeURIComponent(
             email
           )}`,
           {
@@ -118,7 +118,7 @@ const AddCategory = () => {
         );
         if (response.ok) {
           const updatedResponse = await fetch(
-            `http://localhost:8087/categories/getAllCategoriesByEmail?email=${encodeURIComponent(
+            `http://13.233.43.240:8087/categories/getAllCategoriesByEmail?email=${encodeURIComponent(
               email
             )}`
           );
@@ -140,7 +140,7 @@ const AddCategory = () => {
   const handleEditClickOpen = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:8087/categories/getById/${id}`
+        `http://13.233.43.240:8087/categories/getById/${id}`
       );
       const result = await response.json();
       setEditCategory(result);
@@ -166,7 +166,7 @@ const AddCategory = () => {
     } else {
       try {
         const response = await fetch(
-          `http://localhost:8087/categories/update/${editCategory.id}`,
+          `http://13.233.43.240:8087/categories/update/${editCategory.id}`,
           {
             method: "PUT",
             headers: {
@@ -180,7 +180,7 @@ const AddCategory = () => {
         if (response.ok) {
           const email = getEmail();
           const updatedResponse = await fetch(
-            `http://localhost:8087/categories/getAllCategoriesByEmail?email=${encodeURIComponent(
+            `http://13.233.43.240:8087/categories/getAllCategoriesByEmail?email=${encodeURIComponent(
               email
             )}`
           );
@@ -207,7 +207,7 @@ const AddCategory = () => {
   const handleDelete = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8087/categories/delete/${categoryIdToDelete}`,
+        `http://13.233.43.240:8087/categories/delete/${categoryIdToDelete}`,
         {
           method: "DELETE",
         }
@@ -215,7 +215,7 @@ const AddCategory = () => {
       if (response.ok) {
         const email = getEmail();
         const updatedResponse = await fetch(
-          `http://localhost:8087/categories/getAllCategoriesByEmail?email=${encodeURIComponent(
+          `http://13.233.43.240:8087/categories/getAllCategoriesByEmail?email=${encodeURIComponent(
             email
           )}`
         );

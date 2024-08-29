@@ -81,9 +81,9 @@ const StudentList = () => {
     const fetchData = async () => {
       try {
         const [admissionResponse, sourceResponse, courseResponse] = await Promise.all([
-          axios.get(`http://localhost:8085/admissions?institutecode=${institutecode}`),
-          axios.get(`http://localhost:8085/api/sourceBy/getAll?institutecode=${institutecode}`),
-          axios.get(`http://localhost:8085/getAllCourse?institutecode=${institutecode}`)
+          axios.get(`http://13.233.43.240:8085/admissions?institutecode=${institutecode}`),
+          axios.get(`http://13.233.43.240:8085/api/sourceBy/getAll?institutecode=${institutecode}`),
+          axios.get(`http://13.233.43.240:8085/getAllCourse?institutecode=${institutecode}`)
         ]);
         setAdmissions(admissionResponse.data);
         setSources(sourceResponse.data);
@@ -217,7 +217,7 @@ const StudentList = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:8085/deleteAdmission/${admissionIdToDelete}`);
+      await axios.delete(`http://13.233.43.240:8085/deleteAdmission/${admissionIdToDelete}`);
       setAdmissions((prevAdmissions) =>
         prevAdmissions.filter((admission) => admission.id !== admissionIdToDelete)
       );
