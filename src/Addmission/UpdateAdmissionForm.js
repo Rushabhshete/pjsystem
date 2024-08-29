@@ -703,10 +703,10 @@ const UpdateAdmissionForm = ({ admission, onUpdate,onClose  }) => {
               label="Remark"
               value={formData.remark}
               onChange={handleInputChange}
-              rows={4}
+              rows={1}
             />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          {/* <Grid item xs={12} sm={4}>
             <TextField
               name="status"
               label="Status"
@@ -714,7 +714,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate,onClose  }) => {
               onChange={handleInputChange}
               fullWidth
             />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12} sm={4}>
             <Button
               type="submit"
