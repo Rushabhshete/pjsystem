@@ -52,7 +52,7 @@ const UpdateIncomeExpense = ({
   const [showGst, setShowGst] = useState(false);
   const [categories, setCategories] = useState([]);
 
-  const getInstituteCode = () => localStorage.getItem("APIInstituteCode");
+  const getInstituteCode = () => localStorage.getItem("institutecode");
 
   useEffect(() => {
     if (data) {
