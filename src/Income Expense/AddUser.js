@@ -153,9 +153,7 @@ const AddUser = () => {
 
   const handleEditClickOpen = async (id) => {
     try {
-      const response = await fetch(
-        `http://localhost:8087/users/getById/${id}`
-      );
+      const response = await fetch(`http://localhost:8087/users/getById/${id}`);
       const result = await response.json();
       setEditUser(result);
       setEditOpen(true);
@@ -249,8 +247,6 @@ const AddUser = () => {
         transform: scale(1);
       }
     }
-
- 
   `;
 
   return (
@@ -271,13 +267,13 @@ const AddUser = () => {
         Add User
       </PopTypography>
       <Grid container spacing={2} className="textField-root">
-      <Typography
-        variant="h6"
-        gutterBottom
-        sx={{ marginTop: 3, whiteSpace: "nowrap" }}
-      >
-        Total Users : {Users.length}
-      </Typography>
+        <Typography
+          variant="h6"
+          gutterBottom
+          sx={{ marginTop: 3, whiteSpace: "nowrap" }}
+        >
+          Total Users : {Users.length}
+        </Typography>
         {/* Dropdown Fields */}
         <Grid item xs={12} sm={1.6}>
           <TextField
@@ -288,8 +284,13 @@ const AddUser = () => {
           />
         </Grid>
         <Grid item xs={12} sm={1.6}>
-          <Button variant="contained" color="primary" onClick={handleClickOpen}  sx={{marginTop:1}}>
-            Add 
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleClickOpen}
+            sx={{ marginTop: 1 }}
+          >
+            Add
           </Button>
         </Grid>
       </Grid>
@@ -364,7 +365,7 @@ const AddUser = () => {
         onConfirm={handleDelete}
       />
       <TableContainer>
-        <Table sx={{ minWidth: 250,justifyContent:"center",marginTop:3   }}>
+        <Table sx={{ minWidth: 250, justifyContent: "center", marginTop: 3 }}>
           <TableHead>
             <TableRow>
               <TableCell
@@ -406,7 +407,7 @@ const AddUser = () => {
                     onClick={() => handleEditClickOpen(user.id)}
                     color="primary"
                     variant="contained"
-                    style={{marginRight:"10px"}}
+                    style={{ marginRight: "10px" }}
                   >
                     Update
                   </Button>
