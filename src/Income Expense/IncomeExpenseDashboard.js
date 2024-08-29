@@ -130,8 +130,24 @@ const IncomeExpenseDashboard = () => {
         const incomeData = await incomeResponse.json();
         const expenseData = await expenseResponse.json();
   
-        setIncomeCategories(incomeData);
-        setExpenseCategories(expenseData);
+        // Sanitize income data
+        const sanitizedIncomeData = Object.fromEntries(
+          Object.entries(incomeData).map(([category, value]) => [
+            category,
+            value !== null ? value : 0,
+          ])
+        );
+  
+        // Sanitize expense data
+        const sanitizedExpenseData = Object.fromEntries(
+          Object.entries(expenseData).map(([category, value]) => [
+            category,
+            value !== null ? value : 0,
+          ])
+        );
+  
+        setIncomeCategories(sanitizedIncomeData);
+        setExpenseCategories(sanitizedExpenseData);
       } catch (error) {
         console.error("Error fetching categories data:", error);
       }
