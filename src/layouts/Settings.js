@@ -65,7 +65,7 @@ const Settings = () => {
   }
 
   return (
-    <Container
+    <div
       maxWidth="lg"
       style={{
         padding: "20px", // Padding around the container
@@ -534,7 +534,7 @@ const Settings = () => {
           </Typography>
         </Grid>
       </Grid>
-    </Container>
+    </div>
   );
 };
 

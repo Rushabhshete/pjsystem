@@ -39,18 +39,18 @@ const MonthlyGraph = () => {
 
         const data = res.data;
         const months = [
-          "JANUARY",
-          "FEBRUARY",
-          "MARCH",
-          "APRIL",
-          "MAY",
-          "JUNE",
-          "JULY",
-          "AUGUST",
-          "SEPTEMBER",
-          "OCTOBER",
-          "NOVEMBER",
-          "DECEMBER",
+          "Jan",
+          "Feb",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "Aug",
+          "Sept",
+          "Oct",
+          "Nov",
+          "Dec",
         ];
 
         const formattedData = months.map((month) => [month, data[month] || 0]);
@@ -71,28 +71,34 @@ const MonthlyGraph = () => {
   }
 
   return (
-    <div >
+    <div>
       {" "}
-      <Grid container spacing={2} justifyContent="center" className="textField-root">
-      <Grid item xs={12} md={4} justifyContent="center">
-        <TextField
-          select
-          label="Year"
-          value={selectedYear}
-          onChange={(e) => setSelectedYear(e.target.value)}
-          variant="outlined"
-          fullWidth
-        >
-          {years.map((year) => (
-            <MenuItem key={year} value={year}>
-              {year}
-            </MenuItem>
-          ))}
-        </TextField>
+      <Grid
+        container
+        spacing={2}
+        justifyContent="center"
+        className="textField-root"
+      >
+        <Grid item xs={12} md={4} justifyContent="center">
+          <TextField
+            select
+            label="Year"
+            value={selectedYear}
+            onChange={(e) => setSelectedYear(e.target.value)}
+            variant="outlined"
+            fullWidth
+          >
+            {years.map((year) => (
+              <MenuItem key={year} value={year}>
+                {year}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Grid>
       </Grid>
-      </Grid>
-      <Typography variant="h6" align="center">Monthly Admissions</Typography>
-
+      <Typography variant="h6" align="center">
+        Monthly Admissions
+      </Typography>
       <Paper elevation={3}>
         <Chart
           width={"100%"}

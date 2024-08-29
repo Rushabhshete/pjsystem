@@ -31,18 +31,18 @@ const ComparisonGraph = () => {
 
         const data = resComparison.data;
         const months = [
-          "JANUARY",
-          "FEBRUARY",
-          "MARCH",
-          "APRIL",
-          "MAY",
-          "JUNE",
-          "JULY",
-          "AUGUST",
-          "SEPTEMBER",
-          "OCTOBER",
-          "NOVEMBER",
-          "DECEMBER",
+          "Jan",
+          "Feb",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "Aug",
+          "Sept",
+          "Oct",
+          "Nov",
+          "Dec",
         ];
 
         const formattedData = months.map((month) => [
@@ -69,7 +69,12 @@ const ComparisonGraph = () => {
   return (
     <div>
       {" "}
-      <Grid container spacing={2} justifyContent="center" className="textField-root">
+      <Grid
+        container
+        spacing={2}
+        justifyContent="center"
+        className="textField-root"
+      >
         <Grid item xs={12} sm={4}>
           <TextField
             select
@@ -103,7 +108,9 @@ const ComparisonGraph = () => {
           </TextField>
         </Grid>
       </Grid>
-      <Typography variant="h6" align="center">Comparison of Admissions</Typography>
+      <Typography variant="h6" align="center">
+        Comparison of Admissions
+      </Typography>
       <Paper elevation={3}>
         <Chart
           width={"100%"}
