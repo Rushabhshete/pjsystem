@@ -328,7 +328,7 @@ const StudentList = () => {
       
         }}
       >
-        Student Application Form
+        Admissions List
       </PopTypography>
       <Grid container spacing={2} className="textField-root">
         <Grid item xs={8} sm={1.6} md={2}>

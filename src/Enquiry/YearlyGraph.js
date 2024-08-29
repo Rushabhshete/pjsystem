@@ -1,7 +1,7 @@
-import React , {useState, useEffect, useRef}from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import axios from 'axios';
 import { BarChart } from 'recharts';
-import {CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar, ResponsiveContainer } from 'recharts';
+import { CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar, ResponsiveContainer, Label } from 'recharts';
 import {
   Select,
   MenuItem,
@@ -9,7 +9,7 @@ import {
   InputLabel,
   Paper,
   Typography,
- Grid
+  Grid
 } from '@mui/material';
 
 
@@ -64,43 +64,74 @@ export default function YearlyGraph() {
 
   return (
     <div>
-      <Paper elevation={3} style={{ padding: '16px' }}>
-            <Grid container justifyContent={'center'} spacing={2}>
-                <Grid item >
-                    <Typography variant="h6">Yearly Enquiry Chart</Typography>
-                </Grid>
-                <Grid item>
-                    <FormControl size="small" variant="outlined" className="textField-root">
-                        <InputLabel id="year-select-label">Year</InputLabel>
-                        <Select
-                            labelId="year-select-label"
-                            value={year}
-                            onChange={handleYearChange}
-                            label="Year"
-                        >
-                            {years.map((yr) => (
-                                <MenuItem key={yr} value={yr}>
-                                    {yr}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                </Grid>
-            </Grid>
-            <ResponsiveContainer width="100%" height={400}>
-                <BarChart
-                    data={data}
-                    margin={{ top: 20, right: 30, bottom: 20, left: 20 }}
-                >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="month" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="count" fill="#76A7FA" />
-                </BarChart>
-            </ResponsiveContainer>
-        </Paper>
+      <Grid
+  container
+  direction="column"
+  justifyContent="center"
+  alignItems="center"
+  mt={1}
+  // spacing={1} // Adds space between the two grids
+>
+  <Grid item>
+    <FormControl variant="outlined" style={{ width: '200px' }}> {/* Set a fixed width */}
+      <InputLabel id="year-select-label">Year</InputLabel>
+      <Select
+        labelId="year-select-label"
+        value={year}
+        onChange={handleYearChange}
+        label="Year"
+      >
+        {years.map((yr) => (
+          <MenuItem key={yr} value={yr}>
+            {yr}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
+  </Grid>
+  <Grid item>
+    <Typography variant="h6" align="center">
+      Yearly Enquiry Chart
+    </Typography>
+  </Grid>
+</Grid>
+
+      {/* <Paper elevation={3} style={{ padding: '16px' }}>
+        <ResponsiveContainer width="100%" height={370}>
+          <BarChart
+            data={data}
+            margin={{ top: 20, right: 30, bottom: 20, left: 20 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="count" fill="#76A7FA" />
+          </BarChart>
+        </ResponsiveContainer>
+      </Paper> */}
+
+<Paper elevation={3} style={{ padding: '16px' }}>
+  <ResponsiveContainer width="100%" height={370}>
+    <BarChart
+      data={data}
+      margin={{ top: 20, right: 30, bottom: 30, left: 40 }} // Adjust margins to fine-tune bar position
+    >
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="month">
+        <Label offset={-5} position="insideBottom" /> {/* Adjust offset for label positioning */}
+      </XAxis>
+      <YAxis>
+        <Label value="Enquiry Count" angle={-90} position="insideLeft" style={{ textAnchor: 'middle', fontWeight:'bold' }} />
+      </YAxis>
+      <Tooltip />
+      <Legend />
+      <Bar dataKey="count" fill="#76A7FA" barSize={30} /> {/* Adjust bar size if needed */}
+    </BarChart>
+  </ResponsiveContainer>
+</Paper>
+
     </div>
   )
 }
