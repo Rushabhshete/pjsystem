@@ -344,23 +344,21 @@ const IncomeExpenseDashboard = () => {
     <CountUp end={value} duration={2.5} formattingFn={formatValue} />
   );
   const PopTypography = styled(Typography)`
-  @keyframes pop {
-    0% {
-      transform: scale(1);
+    @keyframes pop {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+      }
     }
-    50% {
-      transform: scale(1.1);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-
-
-`;
+  `;
   return (
     <div>
-       <PopTypography
+      <PopTypography
         variant="h5"
         gutterBottom
         sx={{
@@ -560,10 +558,7 @@ const IncomeExpenseDashboard = () => {
             <Typography variant="h7">Today's {todaytext}</Typography>
             <Typography
               variant="h4"
-              className={
-                incomeData.today - expenseData.today >= 0
-                  
-              }
+              className={incomeData.today - expenseData.today >= 0}
             >
               ₹{formattedCountUp(incomeData.today - expenseData.today)}
             </Typography>
@@ -583,10 +578,7 @@ const IncomeExpenseDashboard = () => {
             <Typography variant="h7">7 Day's {_7Daystext}</Typography>
             <Typography
               variant="h4"
-              className={
-                incomeData.last7Days - expenseData.last7Days >= 0
-                  
-              }
+              className={incomeData.last7Days - expenseData.last7Days >= 0}
             >
               ₹{formattedCountUp(incomeData.last7Days - expenseData.last7Days)}
             </Typography>
@@ -606,10 +598,7 @@ const IncomeExpenseDashboard = () => {
             <Typography variant="h7">30 Day's {_30Daystext}</Typography>
             <Typography
               variant="h4"
-              className={
-                incomeData.last30Days - expenseData.last30Days >= 0
-                  
-              }
+              className={incomeData.last30Days - expenseData.last30Days >= 0}
             >
               ₹
               {formattedCountUp(incomeData.last30Days - expenseData.last30Days)}
@@ -630,10 +619,7 @@ const IncomeExpenseDashboard = () => {
             <Typography variant="h7">365 Day's {_365Daystext}</Typography>
             <Typography
               variant="h4"
-              className={
-                incomeData.last365Days - expenseData.last365Days >= 0
-                  
-              }
+              className={incomeData.last365Days - expenseData.last365Days >= 0}
             >
               ₹
               {formattedCountUp(
