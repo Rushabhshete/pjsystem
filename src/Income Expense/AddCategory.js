@@ -302,7 +302,7 @@ const AddCategory = () => {
         </Grid>
         <Grid item xs={12} sm={1.6}>
           <Button variant="contained" color="primary" onClick={handleClickOpen} sx={{marginTop:1}}>
-            Add Category
+            Add 
           </Button>
         </Grid>
       </Grid>
