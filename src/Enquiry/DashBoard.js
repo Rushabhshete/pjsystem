@@ -253,7 +253,7 @@
 //         const allEnquiriesResponse = await axios.get(`http://localhost:8086/get/getALLEnquiryByInstitutecode?institutecode=${institutecode}`);
 //         const allEnquiriesData = allEnquiriesResponse.data;
 //         setTotalApplications(allEnquiriesData.length); // Assuming you want the total count of all enquiries
-  
+
 //         // Count exams
 //         const examCount = {};
 //         allEnquiriesData.forEach(enquiry => {
@@ -263,7 +263,7 @@
 //           }
 //         });
 //         setExamData(Object.entries(examCount).map(([ex, count]) => [ex, count]));
-  
+
 //         // Count sources
 //         const sourceCount = {};
 //         allEnquiriesData.forEach(enquiry => {
@@ -273,12 +273,12 @@
 //           }
 //         });
 //         setSourceData(Object.entries(sourceCount).map(([sr, count]) => [sr, count]));
-  
+
 //       } catch (error) {
 //         console.error('Error fetching data:', error);
 //       }
 //     };
-  
+
 //     fetchEnquiries();
 //   }, [institutecode]); 
 
@@ -581,17 +581,9 @@ import { Chart } from "react-google-charts";
 import axios from 'axios';
 import { BarChart } from 'recharts';
 import { ResponsiveContainer, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar, } from 'recharts';
+import YearlyGraph from './YearlyGraph';
 
 
-
-const generateYearRange = () => {
-  const currentYear = new Date().getFullYear();
-  const years = [];
-  for (let i = currentYear - 7; i <= currentYear + 7; i++) {
-      years.push(i);
-  }
-  return years;
-};
 
 
 
@@ -605,43 +597,7 @@ export default function DashBoard() {
   // const [adminemail, setAdminemail]=useState(localStorage.getItem('loggedInUserEmail') || '');
   const [institutecode, setInstituteCode] = useState(localStorage.getItem('institutecode') || '');
 
-  const [year, setYear] = useState(new Date().getFullYear());
-  const [data, setData] = useState([]);
-  const [years, setYears] = useState(generateYearRange());
 
-  useEffect(() => {
-    fetchData(year);
-}, [year]);
-
-const fetchData = async (selectedYear) => {
-    try {
-        const response = await axios.get('http://localhost:8086/getYearlyEnquiryCountOfAllMonths', {
-            params: {
-                year: selectedYear,
-                institutecode: institutecode,
-            }
-        });
-        const monthlyData = transformData(response.data);
-        setData(monthlyData);
-    } catch (error) {
-        console.error('Error fetching data:', error);
-    }
-};
-
-const transformData = (data) => {
-    const months = [
-        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ];
-    return months.map((month, index) => ({
-        month,
-        count: data[index + 1] || 0  // API uses 1-based index for months
-    }));
-};
-
-const handleYearChange = (event) => {
-    setYear(event.target.value);
-};
-  
 
 
   const fetchEnquiriesByDateRange = async () => {
@@ -671,13 +627,13 @@ const handleYearChange = (event) => {
         setSourceData(Object.entries(sourceCount).map(([sr, count]) => [sr, count]));
 
         setDateRangeInquiriesCount(filteredEnquiries.length);
-  
+
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     }
   };
-  
+
   useEffect(() => {
     fetchEnquiriesByDateRange();
   }, [startDate, endDate, institutecode]);
@@ -738,26 +694,26 @@ const handleYearChange = (event) => {
 
   useEffect(() => {
     const apiUrl = `http://localhost:8086/getenquiryCount?institutecode=${institutecode}`;
-  
+
     fetch(apiUrl)
       .then(response => response.json())
       .then(data => {
         console.log('Data from getAll:', data);
-        setTotalApplications(data); 
-        
+        setTotalApplications(data);
+
         // Assuming `data` directly gives you the total applications count
       })
       .catch(error => {
         console.error('Error fetching data from getEnquiryCount:', error);
       });
   }, [institutecode]); // Added adminemail to the dependency array
-  
+
 
 
 
   const [sevenDaysApplication, setSevenDaysApplication] = useState(0);
   useEffect(() => {
-    const apiUrl =  `http://localhost:8086/numberOfEnquiry7days?institutecode=${institutecode}`;
+    const apiUrl = `http://localhost:8086/numberOfEnquiry7days?institutecode=${institutecode}`;
     fetch(apiUrl)
       .then(response => response.json())
       .then(data => {
@@ -800,9 +756,9 @@ const handleYearChange = (event) => {
   }, [institutecode]);
 
   const [examData, setExamData] = useState([]);
-  const [sourceData, setSourceData]=useState([]);
+  const [sourceData, setSourceData] = useState([]);
 
-  
+
 
 
 
@@ -818,7 +774,7 @@ const handleYearChange = (event) => {
         return [
           { name: 'Total Enquiries', total: totalApplications, period: todaysApplications },
         ];
-      
+
       case 'Last 7 Days':
         return [
           { name: 'Total Enquiries', total: totalApplications, period: sevenDaysApplication },
@@ -836,8 +792,8 @@ const handleYearChange = (event) => {
     }
   };
 
- 
-  
+
+
   const [todaysApplications, setTodaysApplications] = useState(0);
   useEffect(() => {
     const fetchEnquiries = async () => {
@@ -850,7 +806,7 @@ const handleYearChange = (event) => {
         const allEnquiriesResponse = await axios.get(`http://localhost:8086/get/getALLEnquiryByInstitutecode?institutecode=${institutecode}`);
         const allEnquiriesData = allEnquiriesResponse.data;
         setTotalApplications(allEnquiriesData.length); // Assuming you want the total count of all enquiries
-  
+
         // Count exams
         const examCount = {};
         allEnquiriesData.forEach(enquiry => {
@@ -860,7 +816,7 @@ const handleYearChange = (event) => {
           }
         });
         setExamData(Object.entries(examCount).map(([ex, count]) => [ex, count]));
-  
+
         // Count sources
         const sourceCount = {};
         allEnquiriesData.forEach(enquiry => {
@@ -870,57 +826,59 @@ const handleYearChange = (event) => {
           }
         });
         setSourceData(Object.entries(sourceCount).map(([sr, count]) => [sr, count]));
-  
+
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-  
+
     fetchEnquiries();
-  }, [institutecode]); 
+  }, [institutecode]);
 
-const examChartData = [
-  ['Exam', 'Enquiry Count', { role: 'style' }],
-  ...(examData.length ? examData.map(([ex, count], index) => {
-    const colors = ['#76A7FA', '#FF5733', '#33FF57', '#3357FF', '#FF33A6', '#FFD700', '#FF6F61', '#8E44AD', '#3498DB', '#2ECC71', '#E74C3C'];
-    return [ex, count, colors[index % colors.length]];
-  }) : [['No Data', 0, 'color:#DDD']])
-];
+  const examChartData = [
+    ['Exam', 'Enquiry Count', { role: 'style' }],
+    ...(examData.length ? examData.map(([ex, count], index) => {
+      const colors = ['#76A7FA', '#FF5733', '#33FF57', '#3357FF', '#FF33A6', '#FFD700', '#FF6F61', '#8E44AD', '#3498DB', '#2ECC71', '#E74C3C'];
+      return [ex, count, colors[index % colors.length]];
+    }) : [['No Data', 0, 'color:#DDD']])
+  ];
 
-const examChartOptions = {
-  label:{title:'Enquiry Count'},
-  xAxis: { title: 'Enquiry Count',
+  const examChartOptions = {
+    label: { title: 'Enquiry Count' },
+    xAxis: {
+      title: 'Enquiry Count',
       ticks: Array.from({ length: Math.max(...examData.map(([_, count]) => count)) + 1 }, (_, i) => i)
-   },
-  yAxis: { title: 'Exam' },
-  legend: 'none',
-  chartArea: { width: '70%', height: '70%' },
-  bar: { groupWidth: '75%' },
-};
+    },
+    yAxis: { title: 'Exam' },
+    legend: 'none',
+    chartArea: { width: '70%', height: '70%' },
+    bar: { groupWidth: '75%' },
+  };
 
 
-const sourceChartData = [
-  ['Source By', 'Enquiry Count', { role: 'style' }],
-  ...(sourceData.length ? sourceData.map(([sr, count], index) => {
-    const colors = ['#76A7FA', '#FF5733', '#33FF57', '#3357FF', '#FF33A6', '#FFD700', '#FF6F61', '#8E44AD', '#3498DB', '#2ECC71', '#E74C3C'];
-    return [sr, count, colors[index % colors.length]];
-  }) : [['No Data', 0, 'color:#DDD']])
-];
+  const sourceChartData = [
+    ['Source By', 'Enquiry Count', { role: 'style' }],
+    ...(sourceData.length ? sourceData.map(([sr, count], index) => {
+      const colors = ['#76A7FA', '#FF5733', '#33FF57', '#3357FF', '#FF33A6', '#FFD700', '#FF6F61', '#8E44AD', '#3498DB', '#2ECC71', '#E74C3C'];
+      return [sr, count, colors[index % colors.length]];
+    }) : [['No Data', 0, 'color:#DDD']])
+  ];
 
-const sourceChartOptions = {
-  xAxis: { title: 'Enquiry Count',
+  const sourceChartOptions = {
+    xAxis: {
+      title: 'Enquiry Count',
       ticks: Array.from({ length: Math.max(...sourceData.map(([_, count]) => count)) + 1 }, (_, i) => i)
-   },
-  yAxis: { title: 'Sourcen By' },
-  legend: 'none',
-  chartArea: { width: '70%', height: '70%' },
-  bar: { groupWidth: '75%' },
-};
+    },
+    yAxis: { title: 'Sourcen By' },
+    legend: 'none',
+    chartArea: { width: '70%', height: '70%' },
+    bar: { groupWidth: '75%' },
+  };
 
 
- 
 
-  
+
+
 
 
 
@@ -929,7 +887,7 @@ const sourceChartOptions = {
 
   return (
     <Container maxWidth="false" sx={{ padding: 2, width: "100%" }}>
-             <Typography
+      <Typography
         variant="h5"
         gutterBottom
         sx={{
@@ -944,174 +902,111 @@ const sourceChartOptions = {
       >
         Enquiry Dashboard
       </Typography>
-      <Box   mt={1} textAlign="center" sx={{ width: "100%" }}>
-      <Grid container spacing={1} justifyContent="center" className="textField-root">
-  
-  <Grid item xs={2.4}>
-    <Paper elevation={3} style={{ padding: '16px',backgroundColor: '#FFCCCB',  borderRadius: '10px' }}>
-      <Typography variant="h6" mt={1}>Today</Typography>
-      <Typography variant="h4" >{todaysApplications}</Typography>
-    </Paper>
-  </Grid>
-  <Grid item xs={2.4}>
-    <Paper elevation={3} style={{ padding: '16px',backgroundColor: '#FF6F61', borderRadius: '10px' }}>
-      <Typography variant="h6" mt={1}>Last 7 Days</Typography>
-      <Typography variant="h4" >{sevenDaysApplication}</Typography>
-    </Paper>
-  </Grid>
-  <Grid item xs={2.4}>
-    <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#3498DB',  borderRadius: '10px' }}>
-      <Typography variant="h6" mt={1}>Last 30 Days</Typography>
-      <Typography variant="h4" >{thirtyDaysApplication}</Typography>
-    </Paper>
-  </Grid>
-  <Grid item xs={2.4}>
-    <Paper elevation={3} style={{ padding: '16px',backgroundColor: '#9ACD32',  borderRadius: '10px' }}>
-      <Typography variant="h6" mt={1}>Last 365 Days</Typography>
-      <Typography variant="h4" >{threeSixtyFiveDaysApplication}</Typography>
-    </Paper>
-  </Grid>
-  <Grid item xs={2.4}>
-    <Paper elevation={3} style={{ padding: '16px',backgroundColor:'#F4C431',  borderRadius: '10px' }}>
-      <Typography variant="h6" mt={1}>Total Enquiries</Typography>
-      <Typography variant="h4" >{totalApplications}</Typography>
-    </Paper>
-  </Grid>
-</Grid>
+      <Box mt={1} textAlign="center" sx={{ width: "100%" }}>
+        <Grid container spacing={1} justifyContent="center" className="textField-root">
+
+          <Grid item xs={2.4}>
+            <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#FFCCCB', borderRadius: '10px' }}>
+              <Typography variant="h6" mt={1}>Today</Typography>
+              <Typography variant="h4" >{todaysApplications}</Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={2.4}>
+            <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#FF6F61', borderRadius: '10px' }}>
+              <Typography variant="h6" mt={1}>Last 7 Days</Typography>
+              <Typography variant="h4" >{sevenDaysApplication}</Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={2.4}>
+            <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#3498DB', borderRadius: '10px' }}>
+              <Typography variant="h6" mt={1}>Last 30 Days</Typography>
+              <Typography variant="h4" >{thirtyDaysApplication}</Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={2.4}>
+            <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#9ACD32', borderRadius: '10px' }}>
+              <Typography variant="h6" mt={1}>Last 365 Days</Typography>
+              <Typography variant="h4" >{threeSixtyFiveDaysApplication}</Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={2.4}>
+            <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#F4C431', borderRadius: '10px' }}>
+              <Typography variant="h6" mt={1}>Total Enquiries</Typography>
+              <Typography variant="h4" >{totalApplications}</Typography>
+            </Paper>
+          </Grid>
+        </Grid>
 
 
 
-<Grid mt={4} align={'left'} display={'inline-flex'} padding={'2%'} fullWidth className="textField-root"
-  sx={{border:'0.5px solid lightgray', borderRadius:'12px'}}>
-      <Typography variant="h6" gutterBottom>
-        <strong>Custom Dates</strong>
-      </Typography>
-      <Box display="flex" alignItems="center" ml={2} gap={2}>
-        <TextField
-          type="date"
-          name="startDate"
-          label="Start Date"
-          InputLabelProps={{ shrink: true }}
-          value={startDate}
-          onChange={handleDateChange}
-          size="small"
-          variant="outlined"
-        />
-        <TextField
-          type="date"
-          name="endDate"
-          label="End Date"
-          InputLabelProps={{ shrink: true }}
-          value={endDate}
-          onChange={handleDateChange}
-          size="small"
-          variant="outlined"
-        />
-      </Box>
-      <Typography variant="h6" ml={4}>
-        Enquiries: <strong>{dateRangeInquiriesCount}</strong>
-      </Typography>
-    </Grid>
+        <Grid mt={4} align={'left'} display={'inline-flex'} padding={'2%'} fullWidth className="textField-root"
+          sx={{ border: '0.5px solid lightgray', borderRadius: '12px' }}>
+          <Typography variant="h6" gutterBottom>
+            <strong>Custom Dates</strong>
+          </Typography>
+          <Box display="flex" alignItems="center" ml={2} gap={2}>
+            <TextField className="textField-root"
+              type="date"
+              name="startDate"
+              label="Start Date"
+              InputLabelProps={{ shrink: true }}
+              value={startDate}
+              onChange={handleDateChange}
+              size="small"
+              variant="outlined"
+            />
+            <TextField className="textField-root"
+              type="date"
+              name="endDate"
+              label="End Date"
+              InputLabelProps={{ shrink: true }}
+              value={endDate}
+              onChange={handleDateChange}
+              size="small"
+              variant="outlined"
+            />
+          </Box>
+          <Typography variant="h6" ml={4}>
+            Enquiries: <strong>{dateRangeInquiriesCount}</strong>
+          </Typography>
+        </Grid>
 
 
 
 
 
-    <Grid container mt={1} spacing={3} justifyContent="center" >
-  {/* <Grid item xs={12} md={6}>
-    <Box sx={{ border: 1, borderColor: 'lightgray', borderRadius: 2, boxShadow: 3, padding: 2 }}>
-    <Typography align='left' padding={'1%'}> Enquiry Distribution By Exams</Typography>
-      <Chart
-        chartType="BarChart"
-        width="90%"
-        height="400px"
-        data={examChartData}
-        options={examChartOptions}
-      />
-    </Box>
-  </Grid> */}
+        <Grid container mt={1} spacing={3} justifyContent="center" >
+          <Grid item xs={12} md={6}>
+            <Paper elevation={3} style={{ padding: '16px' }}>
+              <Typography variant="h6">Exam Chart</Typography>
+              <Chart
+                chartType="ColumnChart"
+                data={examChartData}
+                options={examChartOptions}
+                width="100%"
+                height="400px"
+              />
+            </Paper>
+          </Grid>
 
-  <Grid item xs={12} md={6}>
-                    <Paper elevation={3} style={{ padding: '16px' }}>
-                        <Typography variant="h6">Exam Chart</Typography>
-                        <Chart
-                            chartType="ColumnChart"
-                            data={examChartData}
-                            options={examChartOptions}
-                            width="100%"
-                            height="400px"
-                        />
-                    </Paper>
-                </Grid>
+          <Grid item xs={12} md={6}>
+            <Paper elevation={3} style={{ padding: '16px' }}>
+              <Typography variant="h6">Source Chart</Typography>
+              <Chart
+                chartType="ColumnChart"
+                data={sourceChartData}
+                options={sourceChartOptions}
+                width="100%"
+                height="400px"
+              />
+            </Paper>
+          </Grid>
+          
+        </Grid>
 
-                <Grid item xs={12} md={6}>
-                    <Paper elevation={3} style={{ padding: '16px' }}>
-                        <Typography variant="h6">Source Chart</Typography>
-                        <Chart
-                            chartType="ColumnChart"
-                            data={sourceChartData}
-                            options={sourceChartOptions}
-                            width="100%"
-                            height="400px"
-                        />
-                    </Paper>
-                </Grid>
-
-
-  {/* <Grid item xs={12} md={6}>
-    
-    <Box sx={{ border: 1, borderColor: 'lightgray', borderRadius: 2, boxShadow: 3, padding: 2 }}>
-    <Typography align='left'  padding={'1%'}>Enquiry Distribution By Sources</Typography>
-      <Chart
-        chartType="BarChart"
-        width="90%"
-        height="400px"
-        data={sourceChartData}
-        options={sourceChartOptions}
-      />
-    </Box>
-  </Grid> */}
-
-  <Grid item xs={12} md={6}>
-
-    <Box>
-    <div>
-            <FormControl fullWidth>
-                <InputLabel id="year-select-label">Year</InputLabel>
-                <Select
-                    labelId="year-select-label"
-                    value={year}
-                    onChange={handleYearChange}
-                    label="Year"
-                >
-                    {years.map((yr) => (
-                        <MenuItem key={yr} value={yr}>
-                            {yr}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
-            <BarChart
-                width={800}
-                height={400}
-                data={data}
-                margin={{ top: 20, right: 30, bottom: 20, left: 20 }}
-            >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="count" fill="#82ca9d" />
-            </BarChart>
-        </div>
-    </Box>
-  </Grid>
-
-  <Grid item xs={12} md={6}>
-    
-  </Grid>
-</Grid>
+        <Grid item xs={12} md={6} mt={3}>
+             <YearlyGraph/>
+          </Grid>
 
       </Box>
     </Container>
