@@ -19,6 +19,7 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
+import { styled } from "@mui/system";
 import { Box } from "@mui/system";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { toast, ToastContainer } from "react-toastify";
@@ -41,6 +42,19 @@ const ConfirmDialog = ({ open, onClose, onConfirm, conductName }) => (
     </DialogActions>
   </Dialog>
 );
+const PopTypography = styled(Typography)`
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+`;
 
 const ConductDialog = ({ open, onClose, onSave, conduct }) => {
   const [name, setName] = useState(conduct ? conduct.name : "");
@@ -167,40 +181,34 @@ const Conduct = () => {
   );
 
   return (
-    <Container maxWidth="false" sx={{ padding: 2, width: "100%" }}>
-      <ToastContainer/>
-      <Box textAlign="center" sx={{ width: "100%" }}>
-        <Typography
-          variant="h5"
-          gutterBottom
-          sx={{
-            fontWeight: "bold",
-            color: "#fff",
-            textAlign: "center",
-            backgroundColor: "#24A0ED",
-            borderRadius: "150px",
-            padding: "10px",
-            marginBottom: "-2px",
-          }}
-        >
+    <div>
+    <PopTypography
+      variant="h5"
+      gutterBottom
+      sx={{
+        fontWeight: "bold",
+        color: "#fff",
+        textAlign: "center",
+        backgroundColor: "#24A0ED",
+        borderRadius: "150px",
+        padding: "10px",
+        marginBottom: "20px",
+      }}
+    >
           Conduct List
-        </Typography>
+          </PopTypography>
 
-        <Grid container spacing={1} alignItems="center" justifyContent="flex-start">
-          <Grid item xs={12} sm={2}>
-            <Box mt={2} padding={"1%"}>
-              <Typography
-                variant="h6"
-                gutterBottom
-                sx={{ whiteSpace: "nowrap" }}
-              >
+          <Grid container spacing={2} className="textField-root">
+        <Typography
+          variant="h6"
+          gutterBottom
+          sx={{ marginTop: 3, whiteSpace: "nowrap" }}
+        >
                 Total Conducts: {filteredConducts.length}
-              </Typography>
-            </Box>
-          </Grid>
-
-          <Grid item xs={12} sm={1.6} mt={2} className="textField-root">
-            <TextField
+                </Typography>{" "}
+        {/* Dropdown Fields */}
+        <Grid item xs={12} sm={1.6}>
+          <TextField
               label="Search Conduct"
               variant="outlined"
               value={searchTerm}
@@ -213,7 +221,7 @@ const Conduct = () => {
             <Button
               variant="contained"
               color="primary"
-              sx={{ mt: 2 }}
+              sx={{ marginTop: 1 }}
               onClick={() => handleOpenConductDialog(null)}
               
             >
@@ -290,8 +298,8 @@ const Conduct = () => {
           onSave={saveConduct}
           conduct={conductToEdit}
         />
-      </Box>
-    </Container>
+   
+    </div>
   );
 };
 

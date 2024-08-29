@@ -152,7 +152,7 @@ const AddmissionSource = () => {
   };
 
   return (
-    <Container maxWidth="false" sx={{ padding: 2, width: "100%" }}>
+    <div>
       <Typography
         variant="h5"
         gutterBottom
@@ -163,24 +163,22 @@ const AddmissionSource = () => {
           backgroundColor: "#24A0ED",
           borderRadius: "150px",
           padding: "10px",
-          marginBottom: "-2px",
+          marginBottom: "20px",
     
         }}
       >
         Add Source 
       </Typography>
-      <Grid Grid container spacing={1} alignItems="center" justifyContent="flex-start">
-        <Grid item xs={12} sm={2}>
-          <Box mt={2} padding={"1%"}> 
-          <Typography
-        variant="h6"
-        gutterBottom
-        sx={{  whiteSpace: "nowrap" }}>
+      <Grid container spacing={2} className="textField-root">
+        <Typography
+          variant="h6"
+          gutterBottom
+          sx={{ marginTop: 3, whiteSpace: "nowrap" }}
+        >
           Total Sources: {filteredSources.length}
           </Typography>
-          </Box>
-        </Grid>
-        <Grid item xs={12} sm={1.6} mt={2} className="textField-root">
+         
+          <Grid item xs={12} sm={1.6}>
           <TextField
             label="Search Source"
             variant="outlined"
@@ -189,12 +187,12 @@ const AddmissionSource = () => {
             fullWidth
           />
         </Grid>
-        <Grid item xs={12} sm={2}>
+        <Grid item xs={12} sm={1.6}>
           <Button
             variant="contained"
             color="primary"
             onClick={handleOpenAddDialog}
-            sx={{ mt: 2 }}
+            sx={{ mt: 1 }}
           >
             Add 
           </Button>
@@ -332,7 +330,7 @@ const AddmissionSource = () => {
           </Button>
         </DialogActions>
       </Dialog>
-    </Container>
+    </div>
   );
 };
 

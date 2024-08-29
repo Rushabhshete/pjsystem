@@ -202,36 +202,32 @@ const Exam = () => {
   };
 
   return (
-    <Container maxWidth="false" sx={{ padding: 2, width: "100%" }}>
-      <ToastContainer />
-      <Box textAlign="center" sx={{ width: "100%" }}>
-        <Typography
-          variant="h5"
-          gutterBottom
-          sx={{
-            fontWeight: "bold",
-            color: "#fff",
-            textAlign: "center",
-            backgroundColor: "#24A0ED",
-            borderRadius: "150px",
-            padding: "10px",
-            marginBottom: "-2px",
-          }}
-        >
+    <div>
+    <PopTypography
+      variant="h5"
+      gutterBottom
+      sx={{
+        fontWeight: "bold",
+        color: "#fff",
+        textAlign: "center",
+        backgroundColor: "#24A0ED",
+        borderRadius: "150px",
+        padding: "10px",
+        marginBottom: "20px",
+      }}
+    >
           Exams / Course List
-        </Typography>
-
-
-        <Grid container spacing={1} alignItems="center" justifyContent="flex-start">
-          <Grid item xs={12} sm={2}>
-            <Box mt={2} padding={"1%"}>
-              <Typography variant="h6" gutterBottom sx={{ whiteSpace: "nowrap" }}>
+          </PopTypography>
+      <Grid container spacing={2} className="textField-root">
+        <Typography
+          variant="h6"
+          gutterBottom
+          sx={{ marginTop: 3, whiteSpace: "nowrap" }}
+        >
                 Total Exams: {filteredExams.length}
-              </Typography>
-            </Box>
-          </Grid>
-
-          <Grid item xs={12} sm={2} mt={2} className="textField-root">
+                </Typography>{" "}
+        {/* Dropdown Fields */}
+        <Grid item xs={12} sm={1.6}>
             <TextField
               label="Search Exam"
               variant="outlined"
@@ -246,7 +242,7 @@ const Exam = () => {
               variant="contained"
               color="primary"
               onClick={handleOpenAddDialog}
-              sx={{ mt: 2 }}
+              sx={{ marginTop: 1 }}
             >
               Add 
             </Button>
@@ -384,8 +380,8 @@ const Exam = () => {
             boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
           }}
         />
-      </Box>
-    </Container>
+
+    </div>
   );
 };
 
