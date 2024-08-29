@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import {
   CircularProgress,
   Typography,
@@ -136,6 +137,7 @@ const EditPasswordButton = styled(Button)(({ theme }) => ({
 }));
 
 const AdminProfile = () => {
+  const navigate = useNavigate();
   const [employeeDetails, setEmployeeDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
@@ -407,7 +409,15 @@ const AdminProfile = () => {
         padding: 1,
         marginTop: 1,
         color: "#0D47A1",
+        cursor: "pointer",
+        transition: "all 0.3s ease", // Smooth transition for hover effect
+        "&:hover": {
+          backgroundColor: "#0D47A1", // Background color on hover
+          color: "#ffffff", // Text color on hover
+          borderColor: "#ffffff", // Border color on hover
+        },
       }}
+      onClick={() => navigate("/layout/dashboard")}
     >
       <Typography variant="body1">Enquiry</Typography>
     </Box>
@@ -420,7 +430,15 @@ const AdminProfile = () => {
         padding: 1,
         marginTop: 1,
         color: "#0D47A1",
+        cursor: "pointer",
+        transition: "all 0.3s ease", // Smooth transition for hover effect
+        "&:hover": {
+          backgroundColor: "#0D47A1", // Background color on hover
+          color: "#ffffff", // Text color on hover
+          borderColor: "#ffffff", // Border color on hover
+        },
       }}
+      onClick={() => navigate("/layout/admission-dashboard")}
     >
       <Typography variant="body1">Admission</Typography>
     </Box>
@@ -433,7 +451,15 @@ const AdminProfile = () => {
         padding: 1,
         marginTop: 1,
         color: "#0D47A1",
+        cursor: "pointer",
+        transition: "all 0.3s ease", // Smooth transition for hover effect
+        "&:hover": {
+          backgroundColor: "#0D47A1", // Background color on hover
+          color: "#ffffff", // Text color on hover
+          borderColor: "#ffffff", // Border color on hover
+        },
       }}
+      onClick={() => navigate("/layout/Income-Expense-dashboard")}
     >
       <Typography variant="body1">Income & Expense</Typography>
     </Box>

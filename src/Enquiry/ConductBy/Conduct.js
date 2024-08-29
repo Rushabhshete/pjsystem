@@ -215,9 +215,9 @@ const Conduct = () => {
               color="primary"
               sx={{ mt: 2 }}
               onClick={() => handleOpenConductDialog(null)}
-              fullWidth
+              
             >
-              Add New Conduct
+              Add 
             </Button>
           </Grid>
         </Grid>

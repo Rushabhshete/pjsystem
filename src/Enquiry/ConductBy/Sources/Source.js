@@ -215,10 +215,9 @@ const Source = () => {
               variant="contained"
               color="primary"
               onClick={() => handleOpenSourceDialog(null, false)}
-              sx={{ mt: 2 }}
-              fullWidth
+              sx={{ mt: 2}}
             >
-              Add Source
+              Add
             </Button>
           </Grid>
         </Grid>

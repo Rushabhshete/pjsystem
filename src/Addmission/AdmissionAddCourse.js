@@ -273,7 +273,7 @@ const AddCourse = () => {
               onClick={handleOpenAddCourseDialog}
               sx={{ mt: 2,ml:-8 }}
             >
-              Add Course / Exam
+              Add 
             </Button>
           </Grid>
 

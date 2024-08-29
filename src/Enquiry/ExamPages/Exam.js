@@ -247,9 +247,8 @@ const Exam = () => {
               color="primary"
               onClick={handleOpenAddDialog}
               sx={{ mt: 2 }}
-              fullWidth
             >
-              Add New Exam
+              Add 
             </Button>
           </Grid>
         </Grid>

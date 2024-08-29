@@ -192,7 +192,7 @@ const AddGuide = () => {
             onClick={handleOpenAddDialog}
             sx={{ mt: 2 }}
           >
-            Add New Guide
+            Add 
           </Button>
         </Grid>
         
