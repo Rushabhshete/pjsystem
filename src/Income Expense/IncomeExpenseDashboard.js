@@ -118,11 +118,12 @@ const IncomeExpenseDashboard = () => {
     fetchMonthlyExpense();
   }, [year]);
   // Fetch pie chart data
+  
   useEffect(() => {
     const fetchIncomeCategories = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8087/dashboard/incomes?institutecode=${getInstituteCode()}`
+          `http://localhost:8087/dashboard/incomes/category/month-year?year=${year}&month=${month}&institutecode=${getInstituteCode()}`
         );
         const data = await response.json();
         setIncomeCategories(data);
@@ -134,7 +135,7 @@ const IncomeExpenseDashboard = () => {
     const fetchExpenseCategories = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8087/dashboard/expenses?institutecode=${getInstituteCode()}`
+          `http://localhost:8087/dashboard/totalExpenseByCategory?year=${year}&month=${month}&institutecode=${getInstituteCode()}`
         );
         const data = await response.json();
         setExpenseCategories(data);
@@ -145,7 +146,7 @@ const IncomeExpenseDashboard = () => {
 
     fetchIncomeCategories();
     fetchExpenseCategories();
-  }, []);
+  }, [year, month]);
   // Determine text for savings/loss card
   const savingsText = savingsData >= 0 ? "Saving" : "Loss";
   const todaytext =
@@ -289,10 +290,10 @@ const IncomeExpenseDashboard = () => {
   }));
 
   const incomePieData = {
-    labels: incomeCategoryData.map((category) => category.category),
+    labels: Object.keys(incomeCategories),
     datasets: [
       {
-        data: incomeCategoryData.map((category) => category.value),
+        data: Object.values(incomeCategories),
         backgroundColor: [
           "#FF6F61",
           "#3498DB",
@@ -306,10 +307,10 @@ const IncomeExpenseDashboard = () => {
   };
 
   const expensePieData = {
-    labels: expenseCategoryData.map((category) => category.category),
+    labels: Object.keys(expenseCategories),
     datasets: [
       {
-        data: expenseCategoryData.map((category) => category.value),
+        data: Object.values(expenseCategories),
         backgroundColor: [
           "#FF6F61",
           "#3498DB",
@@ -733,6 +734,7 @@ const IncomeExpenseDashboard = () => {
             </TextField>
           </Grid>
         </Grid>
+        <Grid container spacing={3} style={{ marginTop: "10px" }}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom align="center">
             Income Categories ({months[month - 1]} {year})
@@ -767,6 +769,7 @@ const IncomeExpenseDashboard = () => {
             <Pie data={expensePieData} />
           </Paper>
         </Grid>
+      </Grid>
       </Grid>
     </div>
   );
