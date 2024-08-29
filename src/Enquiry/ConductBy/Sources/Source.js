@@ -21,6 +21,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { toast, ToastContainer } from "react-toastify";
 
 
 
@@ -162,15 +163,17 @@ const Source = () => {
           `http://localhost:8086/update/source/${source.id}`,
           source
         );
-        setSnackbarMessage("Source updated successfully");
+        // setSnackbarMessage("Source updated successfully");
+        toast.success("Source Updated Successfully");
       } else {
         await axios.post(
           `http://localhost:8086/save/source?institutecode=${institutecode}`,
           source
         );
-        setSnackbarMessage("Source added successfully");
+        toast.success("Source Added Successfully");
+        // setSnackbarMessage("Source added successfully");
       }
-      setSnackbarOpen(true);
+      // setSnackbarOpen(true);
       loadSources();
     } catch (error) {
       console.error("Error saving source:", error);
@@ -181,6 +184,7 @@ const Source = () => {
 
   return (
     <Container maxWidth="false" sx={{ padding: 2, width: "100%" }}>
+      <ToastContainer/>
       <Box textAlign="center" sx={{ width: "100%" }}>
         <Typography
           variant="h5"

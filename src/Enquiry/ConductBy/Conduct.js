@@ -21,6 +21,7 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { toast, ToastContainer } from "react-toastify";
 
 const ConfirmDialog = ({ open, onClose, onConfirm, conductName }) => (
   <Dialog open={open} onClose={onClose}>
@@ -150,6 +151,7 @@ const Conduct = () => {
           newConduct
         );
       }
+      toast.success("Conduct Added Successfully");
       loadConducts();
       handleCloseConductDialog();
     } catch (error) {
@@ -163,6 +165,7 @@ const Conduct = () => {
 
   return (
     <Container maxWidth="false" sx={{ padding: 2, width: "100%" }}>
+      <ToastContainer/>
       <Box textAlign="center" sx={{ width: "100%" }}>
         <Typography
           variant="h5"
