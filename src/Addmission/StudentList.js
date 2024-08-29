@@ -3,19 +3,14 @@ import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import {
-  Container,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
   CircularProgress,
-  Select,
   MenuItem,
-  FormControl,
-  InputLabel,
   TextField,
   Grid,
   Button,
@@ -27,7 +22,6 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import { Edit, Delete } from "@mui/icons-material";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Papa from "papaparse";
@@ -77,85 +71,32 @@ const StudentList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [courses, setCourses] = useState([]);
   const [sources, setSources] = useState([]);
-  const [guide, setGuide] = useState([]);
   const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
   const [currentAdmission, setCurrentAdmission] = useState(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const institutecode = localStorage.getItem("institutecode");
   const [admissionIdToDelete, setAdmissionIdToDelete] = useState(null);
-  useEffect(() => {
-    const fetchSources = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8085/api/sourceBy/getAll?institutecode=${institutecode}`
-        );
-        setSources(response.data);
-      } catch (error) {
-        console.error("Error fetching sources:", error);
-      }
-    };
-
-    fetchSources();
-  }, [institutecode]);
 
   useEffect(() => {
-    const fetchCourses = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8085/getAllCourse?institutecode=${institutecode}`
-        );
-        setCourses(response.data);
+        const [admissionResponse, sourceResponse, courseResponse] = await Promise.all([
+          axios.get(`http://localhost:8085/admissions?institutecode=${institutecode}`),
+          axios.get(`http://localhost:8085/api/sourceBy/getAll?institutecode=${institutecode}`),
+          axios.get(`http://localhost:8085/getAllCourse?institutecode=${institutecode}`)
+        ]);
+        setAdmissions(admissionResponse.data);
+        setSources(sourceResponse.data);
+        setCourses(courseResponse.data);
       } catch (error) {
-        console.error("Error fetching courses:", error);
-      }
-    };
-
-    fetchCourses();
-  }, [institutecode]);
-
-  useEffect(() => {
-    const fetchAdmissions = async () => {
-      setLoading(true);
-      let apiEndpoint = `http://localhost:8085/admissions?institutecode=${institutecode}`;
-
-      if (timeRange === "7Days") {
-        apiEndpoint = `http://localhost:8085/AdmissionIn7DaysData?institutecode=${institutecode}`;
-      } else if (timeRange === "30Days") {
-        apiEndpoint = `http://localhost:8085/AdmissionIn30DaysData?institutecode=${institutecode}`;
-      } else if (timeRange === "365Days") {
-        apiEndpoint = `http://localhost:8085/AdmissionIn365DaysData?institutecode=${institutecode}`;
-      } else if (timeRange === "Custom" && startDate && endDate) {
-        apiEndpoint = `http://localhost:8085/admissionsBetweenDates?startDate=${startDate}&endDate=${endDate}&institutecode=${institutecode}`;
-      } else if (selectedSource) {
-        apiEndpoint = `http://localhost:8085/bySourceBy/${selectedSource}?institutecode=${institutecode}`;
-      } else if (selectedCourse) {
-        apiEndpoint = `http://localhost:8085/byCourses/${selectedCourse}?institutecode=${institutecode}`;
-      } else if (selectedPaymentMode) {
-        apiEndpoint = `http://localhost:8085/getAdmissionsByPaymentModeAndInstitutecode?paymentMode=${selectedPaymentMode}&institutecode=${institutecode}`;
-      }
-
-      try {
-        const response = await axios.get(apiEndpoint);
-        const data = Array.isArray(response.data) ? response.data : [];
-        setAdmissions(data);
-      } catch (error) {
-        console.error("Error fetching admission data:", error);
-        setAdmissions([]);
+        console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchAdmissions();
-  }, [
-    timeRange,
-    startDate,
-    endDate,
-    selectedSource,
-    selectedCourse,
-    selectedPaymentMode,
-    institutecode,
-  ]);
+    fetchData();
+  }, [institutecode]);
 
   const handleTimeRangeChange = (event) => {
     setTimeRange(event.target.value);
@@ -167,24 +108,14 @@ const StudentList = () => {
 
   const handleSourceChange = (event) => {
     setSelectedSource(event.target.value);
-    setSelectedPaymentMode("");
   };
 
   const handlePaymentModeChange = (event) => {
     setSelectedPaymentMode(event.target.value);
-    setSelectedSource("");
   };
 
   const handleCourseMethodChange = (event) => {
     setSelectedCourse(event.target.value);
-    setSelectedPaymentMode("");
-  };
-
-  const handleFetchCustomRange = () => {
-    if (startDate && endDate) {
-      setLoading(true);
-      setTimeRange("Custom");
-    }
   };
 
   const handleSearch = (event) => {
@@ -192,14 +123,15 @@ const StudentList = () => {
   };
 
   const filteredAdmissions = useMemo(() => {
-    return admissions.length > 0
-      ? admissions.filter(
-          (admission) =>
-            admission.name &&
-            admission.name.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-      : [];
-  }, [admissions, searchQuery]);
+    return admissions.filter((admission) => {
+      const matchesSource = selectedSource ? admission.sourceBy === selectedSource : true;
+      const matchesCourse = selectedCourse ? admission.courses === selectedCourse : true;
+      const matchesPaymentMode = selectedPaymentMode ? admission.paymentMode === selectedPaymentMode : true;
+      const matchesSearchQuery = admission.name.toLowerCase().includes(searchQuery.toLowerCase());
+
+      return matchesSource && matchesCourse && matchesPaymentMode && matchesSearchQuery;
+    });
+  }, [admissions, selectedSource, selectedCourse, selectedPaymentMode, searchQuery]);
 
   const handleDownload = () => {
     const doc = new jsPDF({
@@ -282,7 +214,8 @@ const StudentList = () => {
     setAdmissionIdToDelete(id);
     setConfirmOpen(true);
   };
-  const handleDelete = async (id) => {
+
+  const handleDelete = async () => {
     try {
       await axios.delete(`http://localhost:8085/deleteAdmission/${admissionIdToDelete}`);
       setAdmissions((prevAdmissions) =>
@@ -298,6 +231,7 @@ const StudentList = () => {
   };
 
   const PopTypography = styled(Typography)`
+    animation: pop 1s ease-in-out;
     @keyframes pop {
       0% {
         transform: scale(1);
@@ -309,9 +243,8 @@ const StudentList = () => {
         transform: scale(1);
       }
     }
-
- 
   `;
+
   return (
     <div>
       <PopTypography
@@ -325,17 +258,16 @@ const StudentList = () => {
           borderRadius: "150px",
           padding: "10px",
           marginBottom: "40px",
-      
         }}
       >
         Admissions List
       </PopTypography>
-      <Grid container spacing={2} className="textField-root">
+      <Grid container spacing={2} >
         <Grid item xs={8} sm={1.6} md={2}>
           <TextField
             select
             fullWidth
-            varient="outlined"
+            variant="outlined"
             value={timeRange}
             onChange={handleTimeRangeChange}
             label="TimeRange"
@@ -377,7 +309,7 @@ const StudentList = () => {
               <DownloadButton
                 variant="contained"
                 color="primary"
-                onClick={handleFetchCustomRange}
+                onClick={() => setLoading(true)} // Add your fetch logic here
               >
                 Fetch Data
               </DownloadButton>
@@ -404,7 +336,7 @@ const StudentList = () => {
           <TextField
             select
             fullWidth
-            label="Cource"
+            label="Course"
             value={selectedCourse}
             onChange={handleCourseMethodChange}
           >
@@ -426,10 +358,10 @@ const StudentList = () => {
           >
             <MenuItem value="">All Payment Modes</MenuItem>
             <MenuItem value="Gpay">Gpay</MenuItem>
-                <MenuItem value="Phonepay">Phonepay</MenuItem>
-                <MenuItem value="Cash">Cash</MenuItem>
-                <MenuItem value="Card">Credit Card</MenuItem>
-                <MenuItem value="Card">Debit Card</MenuItem>
+            <MenuItem value="Phonepay">Phonepay</MenuItem>
+            <MenuItem value="Cash">Cash</MenuItem>
+            <MenuItem value="Card">Credit Card</MenuItem>
+            <MenuItem value="Card">Debit Card</MenuItem>
           </TextField>
         </Grid>
         <Grid item xs={8} sm={1.6} md={2}>
@@ -458,12 +390,13 @@ const StudentList = () => {
             Download CSV
           </DownloadButton>
         </Grid>
-   
+      </Grid>
+
       {loading ? (
         <CircularProgress />
       ) : (
         <TableContainer style={{ marginTop: "10px" }}>
-          <Table style={{overflowX:"hidden"}}>
+          <Table style={{ overflowX: "hidden" }}>
             <TableHead
               style={{
                 backgroundColor: "#f2f2f2",
@@ -473,27 +406,16 @@ const StudentList = () => {
               <TableRow>
                 <TableCell style={{ fontWeight: "bold" }}>Name</TableCell>
                 <TableCell style={{ fontWeight: "bold" }}>Mobile 1</TableCell>
-                {/* <TableCell style={{ fontWeight: "bold" }}>Mobile 2</TableCell> */}
                 <TableCell style={{ fontWeight: "bold" }}>Email</TableCell>
                 <TableCell style={{ fontWeight: "bold" }}>Course</TableCell>
                 <TableCell style={{ fontWeight: "bold" }}>Duration</TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>
-                  Joining Date
-                </TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>
-                  Expiry Date
-                </TableCell>
+                <TableCell style={{ fontWeight: "bold" }}>Joining Date</TableCell>
+                <TableCell style={{ fontWeight: "bold" }}>Expiry Date</TableCell>
                 <TableCell style={{ fontWeight: "bold" }}>Total Fees</TableCell>
                 <TableCell style={{ fontWeight: "bold" }}>Paid Fees</TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>
-                  Pending Fees
-                </TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>
-                  Payment Mode
-                </TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>
-                  Transaction ID
-                </TableCell>
+                <TableCell style={{ fontWeight: "bold" }}>Pending Fees</TableCell>
+                <TableCell style={{ fontWeight: "bold" }}>Payment Mode</TableCell>
+                <TableCell style={{ fontWeight: "bold" }}>Transaction ID</TableCell>
                 <TableCell style={{ fontWeight: "bold" }}>Status</TableCell>
                 <TableCell style={{ fontWeight: "bold" }}>Actions</TableCell>
               </TableRow>
@@ -503,7 +425,6 @@ const StudentList = () => {
                 <TableRow key={admission.id}>
                   <TableCell>{admission.name}</TableCell>
                   <TableCell>{admission.mobile1}</TableCell>
-                  {/* <TableCell>{admission.mobile2}</TableCell> */}
                   <TableCell>{admission.email}</TableCell>
                   <TableCell>{admission.courses}</TableCell>
                   <TableCell>{admission.duration}</TableCell>
@@ -525,14 +446,14 @@ const StudentList = () => {
                       color="primary"
                       onClick={() => handleEditClick(admission)}
                     >
-                    <EditIcon />
+                      <EditIcon />
                     </IconButton>
                     <IconButton
                       color="error"
                       onClick={() => handleDeleteClick(admission.id)}
                       variant="contained"
                     >
-                  <DeleteIcon />
+                      <DeleteIcon />
                     </IconButton>
                   </TableCell>
                 </TableRow>
@@ -541,7 +462,7 @@ const StudentList = () => {
           </Table>
         </TableContainer>
       )}
-       <AlertDialog
+      <AlertDialog
         open={confirmOpen}
         onClose={() => setConfirmOpen(false)}
         onConfirm={handleDelete}
@@ -557,7 +478,6 @@ const StudentList = () => {
           </Button>
         </DialogActions>
       </Dialog>
-      </Grid>
     </div>
   );
 };
