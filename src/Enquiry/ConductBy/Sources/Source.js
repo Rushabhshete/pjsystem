@@ -21,9 +21,6 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 import DeleteIcon from "@mui/icons-material/Delete";
-
-
-
 // Confirm Delete Dialog
 const ConfirmDialog = ({ open, onClose, onConfirm, sourceName }) => (
   <Dialog open={open} onClose={onClose}>
@@ -43,20 +40,16 @@ const ConfirmDialog = ({ open, onClose, onConfirm, sourceName }) => (
     </DialogActions>
   </Dialog>
 );
-
 // Add/Update Source Dialog
 const SourceDialog = ({ open, onClose, source, onSave, isUpdate }) => {
   const [name, setName] = useState(source ? source.name : "");
-
   useEffect(() => {
     if (source) setName(source.name);
   }, [source]);
-
   const handleSave = () => {
     onSave({ ...source, name });
     onClose();
   };
-
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>{isUpdate ? "Update Source" : "Add New Source"}</DialogTitle>
@@ -80,7 +73,6 @@ const SourceDialog = ({ open, onClose, source, onSave, isUpdate }) => {
     </Dialog>
   );
 };
-
 const Source = () => {
   const [sources, setSources] = useState([]);
   const [filteredSources, setFilteredSources] = useState([]);
@@ -92,17 +84,13 @@ const Source = () => {
   const [isUpdate, setIsUpdate] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
-
   const institutecode = localStorage.getItem("institutecode") || "";
-
   useEffect(() => {
     loadSources();
   }, [institutecode]);
-
   useEffect(() => {
     filterSources();
   }, [searchTerm, sources]);
-
   const loadSources = async () => {
     try {
       const response = await axios.get(
@@ -114,24 +102,20 @@ const Source = () => {
       console.error("Error fetching sources:", error);
     }
   };
-
   const filterSources = () => {
     const filtered = sources.filter((source) =>
       source.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredSources(filtered);
   };
-
   const handleOpenConfirmDialog = (source) => {
     setSourceToDelete(source);
     setConfirmDialogOpen(true);
   };
-
   const handleCloseConfirmDialog = () => {
     setConfirmDialogOpen(false);
     setSourceToDelete(null);
   };
-
   const confirmDeleteSource = async () => {
     try {
       await axios.delete(
@@ -143,18 +127,15 @@ const Source = () => {
       console.error("Error deleting source:", error);
     }
   };
-
   const handleOpenSourceDialog = (source = null, isUpdate = false) => {
     setCurrentSource(source);
     setIsUpdate(isUpdate);
     setSourceDialogOpen(true);
   };
-
   const handleCloseSourceDialog = () => {
     setSourceDialogOpen(false);
     setCurrentSource(null);
   };
-
   const handleSaveSource = async (source) => {
     try {
       if (isUpdate) {
@@ -178,7 +159,6 @@ const Source = () => {
       setSnackbarOpen(true);
     }
   };
-
   return (
     <Container maxWidth="false" sx={{ padding: 2, width: "100%" }}>
       <Box textAlign="center" sx={{ width: "100%" }}>
@@ -197,7 +177,6 @@ const Source = () => {
         >
           Source List
         </Typography>
-
         <Grid container spacing={1} alignItems="center" justifyContent="flex-start">
           <Grid item xs={12} sm={2}>
             <Box mt={2} padding={"1%"}>
@@ -210,7 +189,6 @@ const Source = () => {
               </Typography>
             </Box>
           </Grid>
-
           <Grid item xs={12} sm={2}>
             <TextField
               label="Search Source"
@@ -221,7 +199,6 @@ const Source = () => {
               sx={{ mt: 2 }}
             />
           </Grid>
-
           <Grid item xs={12} sm={2}>
             <Button
               variant="contained"
@@ -234,11 +211,10 @@ const Source = () => {
             </Button>
           </Grid>
         </Grid>
-
         <Box mt={2}>
           <TableContainer sx={{ width: "100%" }}>
             <Table size="small" aria-label="source table" sx={{ width: "100%" }}>
-              <TableHead sx={{ backgroundColor: "#f2f2f2" }}>
+              <TableHead sx={{ backgroundColor: "#F2F2F2" }}>
                 <TableRow>
                   <TableCell>
                     <strong>Id</strong>
@@ -281,14 +257,12 @@ const Source = () => {
             </Table>
           </TableContainer>
         </Box>
-
         <ConfirmDialog
           open={confirmDialogOpen}
           onClose={handleCloseConfirmDialog}
           onConfirm={confirmDeleteSource}
           sourceName={sourceToDelete?.name}
         />
-
         <SourceDialog
           open={sourceDialogOpen}
           onClose={handleCloseSourceDialog}
@@ -296,7 +270,6 @@ const Source = () => {
           onSave={handleSaveSource}
           isUpdate={isUpdate}
         />
-
         <Snackbar
           open={snackbarOpen}
           autoHideDuration={2000}
@@ -311,5 +284,4 @@ const Source = () => {
     </Container>
   );
 };
-
 export default Source;

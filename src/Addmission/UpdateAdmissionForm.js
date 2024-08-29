@@ -349,6 +349,17 @@ const UpdateAdmissionForm = ({ admission, onUpdate,onClose  }) => {
   }, [institutecode]);
 
   useEffect(() => {
+    if (formData.paymentMethod === "Complete") {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        paidFees: prevFormData.totalFees
+      }));
+    } else if (formData.paymentMethod === "Partial") {
+      // Handle Partial Payment if needed
+    }
+  }, [formData.paymentMethod]);
+
+  useEffect(() => {
     const fetchCourses = async () => {
       try {
         const response = await axios.get(

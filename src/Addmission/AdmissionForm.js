@@ -112,7 +112,7 @@ const AdmissionForm = () => {
   }, [formData.totalFees, formData.paidFees]);
 
   useEffect(() => {
-    if (formData.paymentMethod === "Paid") {
+    if (formData.paymentMethod === "Complete") {
       setFormData((prevFormData) => ({
         ...prevFormData,
         paidFees: prevFormData.totalFees
@@ -333,7 +333,10 @@ const AdmissionForm = () => {
                 required
 
               >
+                <MenuItem value="1 Months">1 Months</MenuItem>
+                <MenuItem value="2 Months">2 Months</MenuItem>
                 <MenuItem value="3 Months">3 Months</MenuItem>
+                <MenuItem value="4 Months">4 Months</MenuItem>
                 <MenuItem value="6 Months">6 Months</MenuItem>
                 <MenuItem value="12 Months">12 Months</MenuItem>
                 <MenuItem value="24 Months">24 Months</MenuItem>
@@ -518,7 +521,7 @@ const AdmissionForm = () => {
            
             <Grid container spacing={1} justifyContent="space-evenly" display="flex">
               <Grid item xs={12} sm={6} md={4}>
-                <Button variant="contained" component="label">
+                <Button variant="outlined" component="label" style={{marginRight:"10px"}}>
                   Upload Fees Receipt Photo
                   <input
                     type="file"
@@ -541,7 +544,7 @@ const AdmissionForm = () => {
                 </Button>
               </Grid>
               <Grid item xs={12} sm={6} md={4}>
-                <Button variant="contained" component="label">
+                <Button variant="outlined" component="label" style={{marginRight:"10px"}}>
                   Upload Student Photo
                   <input
                     type="file"

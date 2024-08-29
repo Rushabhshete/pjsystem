@@ -356,12 +356,10 @@ const StudentList = () => {
             value={selectedPaymentMode}
             onChange={handlePaymentModeChange}
           >
-            <MenuItem value="">All Payment Modes</MenuItem>
-            <MenuItem value="Gpay">Gpay</MenuItem>
-            <MenuItem value="Phonepay">Phonepay</MenuItem>
-            <MenuItem value="Cash">Cash</MenuItem>
-            <MenuItem value="Card">Credit Card</MenuItem>
-            <MenuItem value="Card">Debit Card</MenuItem>
+          <MenuItem value="Cheque">Cheque</MenuItem>
+              <MenuItem value="UPI">UPI</MenuItem>
+              <MenuItem value="Cash">Cash</MenuItem>
+              <MenuItem value="Bank Transfer">Bank Transfer</MenuItem>
           </TextField>
         </Grid>
         <Grid item xs={8} sm={1.6} md={2}>
@@ -439,7 +437,12 @@ const StudentList = () => {
                   <TableCell>{admission.pendingFees}</TableCell>
                   <TableCell>{admission.paymentMode}</TableCell>
                   <TableCell>{admission.transactionid}</TableCell>
-                  <TableCell>{admission.status}</TableCell>
+                  <TableCell style={{
+                    fontWeight:"bold",
+  color: admission.paymentMethod === 'Pending' ? 'red' :
+         admission.paymentMethod === 'Partial' ? 'purple' :
+         admission.paymentMethod === 'Complete' ? 'green' : "green"
+}}>{admission.paymentMethod}</TableCell>
                   <TableCell style={{ whiteSpace: "nowrap" }}>
                     <IconButton
                       variant="contained"

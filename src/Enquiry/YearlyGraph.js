@@ -114,8 +114,8 @@ export default function YearlyGraph() {
         </ResponsiveContainer>
       </Paper> */}
 
-<Paper elevation={3} style={{ padding: '16px' }}>
-  <ResponsiveContainer width="100%" height={370}>
+<Paper elevation={3} >
+  <ResponsiveContainer width="100%" height={410}>
     <BarChart
       data={data}
       margin={{ top: 20, right: 30, bottom: 30, left: 40 }} // Adjust margins to fine-tune bar position

@@ -128,15 +128,14 @@ import ForgotPassword from './layouts/ForgotPassword';
 import Login from './layouts/Login';
 import Layout from './layouts/layout';
 import ProtectedRoute from './layouts/ProtectedRoute';
-import UpdateSource from './Enquiry/ConductBy/Sources/UpdateSource';
-import AddSource from './Enquiry/ConductBy/Sources/AddSource';
+
 import Source from './Enquiry/ConductBy/Sources/Source';
-import UpdateExam from './Enquiry/ExamPages/UpdateExam';
+
 import Exam from './Enquiry/ExamPages/Exam';
-import AddExam from './Enquiry/ExamPages/AddExam';
-import UpdateConduct from './Enquiry/ConductBy/UpdateConduct';
+
+
 import Conduct from './Enquiry/ConductBy/Conduct';
-import AddConduct from './Enquiry/ConductBy/AddConduct';
+
 import Report from './Enquiry/Report';
 import UpdateEnquiry from './Enquiry/pages/UpdateInquiry';
 import AddEnquiry from './Enquiry/pages/AddInquiry';
@@ -201,16 +200,13 @@ function AppContent() {
               <Route path="add" element={<AddEnquiry />} />
               <Route path="manage/:id" element={<UpdateEnquiry />} />
               <Route path="report" element={<Report />} />
-              <Route path="addconduct" element={<AddConduct />} />
+           
               <Route path="conduct" element={<Conduct />} />
-              <Route path="updateconduct/:id" element={<UpdateConduct />} />
-              <Route path="addexam" element={<AddExam />} />
+            
               <Route path="exam" element={<Exam />} />
-              <Route path="updateexam/:id" element={<UpdateExam />} />
+        
               <Route path="source" element={<Source />} />
-              <Route path="addsource" element={<AddSource />} />
-              <Route path="updatesource/:id" element={<UpdateSource />} />
-
+       
               {/* Admission Routes */}
               <Route path="admission-dashboard" element={<AddmissionDashboard />}/>
               <Route path="admission-form" element={<AdmissionForm />} />
