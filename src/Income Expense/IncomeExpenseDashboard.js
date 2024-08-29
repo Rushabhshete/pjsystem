@@ -126,10 +126,8 @@ const IncomeExpenseDashboard = () => {
           fetch(`http://localhost:8087/dashboard/totalIncomeByCategory?year=${year}&month=${month}&institutecode=${getInstituteCode()}`),
           fetch(`http://localhost:8087/dashboard/totalExpenseByCategory?year=${year}&month=${month}&institutecode=${getInstituteCode()}`)
         ]);
-  
         const incomeData = await incomeResponse.json();
         const expenseData = await expenseResponse.json();
-  
         // Sanitize income data
         const sanitizedIncomeData = Object.fromEntries(
           Object.entries(incomeData).map(([category, value]) => [
@@ -137,7 +135,6 @@ const IncomeExpenseDashboard = () => {
             value !== null ? value : 0,
           ])
         );
-  
         // Sanitize expense data
         const sanitizedExpenseData = Object.fromEntries(
           Object.entries(expenseData).map(([category, value]) => [
@@ -145,14 +142,12 @@ const IncomeExpenseDashboard = () => {
             value !== null ? value : 0,
           ])
         );
-  
         setIncomeCategories(sanitizedIncomeData);
         setExpenseCategories(sanitizedExpenseData);
       } catch (error) {
         console.error("Error fetching categories data:", error);
       }
     };
-  
     fetchCategories();
   }, [year, month]);
   
