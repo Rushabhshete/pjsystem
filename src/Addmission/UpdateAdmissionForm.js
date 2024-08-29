@@ -40,6 +40,17 @@ const UpdateAdmissionForm = ({ admission, onUpdate,onClose  }) => {
   }, [institutecode]);
 
   useEffect(() => {
+    if (formData.paymentMethod === "Complete") {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        paidFees: prevFormData.totalFees
+      }));
+    } else if (formData.paymentMethod === "Partial") {
+      // Handle Partial Payment if needed
+    }
+  }, [formData.paymentMethod]);
+
+  useEffect(() => {
     const fetchCourses = async () => {
       try {
         const response = await axios.get(
@@ -384,10 +395,10 @@ const UpdateAdmissionForm = ({ admission, onUpdate,onClose  }) => {
               label="Remark"
               value={formData.remark}
               onChange={handleInputChange}
-              rows={4}
+              rows={1}
             />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          {/* <Grid item xs={12} sm={4}>
             <TextField
               name="status"
               label="Status"
@@ -395,7 +406,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate,onClose  }) => {
               onChange={handleInputChange}
               fullWidth
             />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12} sm={4}>
             <Button
               type="submit"
