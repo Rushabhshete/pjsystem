@@ -18,13 +18,12 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Grid, Box
+  Grid,
+  Box,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { styled } from "@mui/material/styles";
-
-
 
 const AddGuide = () => {
   const [guideName, setGuideName] = useState("");
@@ -144,10 +143,23 @@ const AddGuide = () => {
     setOpenDeleteDialog(false);
     setSelectedGuideId(null);
   };
+  const PopTypography = styled(Typography)`
+  @keyframes pop {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+`;
 
   return (
     <Container maxWidth="false" sx={{ padding: 2, width: "100%" }}>
-      <Typography
+      <PopTypography
         variant="h5"
         gutterBottom
         sx={{
@@ -157,25 +169,21 @@ const AddGuide = () => {
           backgroundColor: "#24A0ED",
           borderRadius: "150px",
           padding: "10px",
-          marginBottom: "-2px",
-    
+          marginBottom: "20px",
         }}
       >
-        Guide List 
-      </Typography>
-      <Grid container spacing={1} alignItems="center" justifyContent="flex-start">
-        <Grid item xs={12} sm={2}>
-          <Box mt={2} padding={"1%"}>
-            <Typography
-        variant="h6"
-        gutterBottom
-        sx={{  whiteSpace: "nowrap" }}>
-            Total Guides: {filteredGuides.length}
-            </Typography>
-          </Box>
-        </Grid>
-
-        <Grid item xs={12} sm={1.6} mt={2} className="textField-root">
+        Guide List
+        </PopTypography>
+        <Grid container spacing={2} className="textField-root">
+        <Typography
+          variant="h6"
+          gutterBottom
+          sx={{ marginTop: 3, whiteSpace: "nowrap" }}
+        >
+              Total Guides: {filteredGuides.length}
+              </Typography>{" "}
+        {/* Dropdown Fields */}
+        <Grid item xs={12} sm={1.6}>
           <TextField
             label="Search Guide"
             variant="outlined"
@@ -185,62 +193,61 @@ const AddGuide = () => {
           />
         </Grid>
 
-        <Grid item xs={12} sm={2}>
+        <Grid item xs={12} sm={1.6}>
           <Button
-             variant="contained"
-             color="primary"
+            variant="contained"
+            color="primary"
             onClick={handleOpenAddDialog}
-            sx={{ mt: 2 }}
+            sx={{ mt: 1 }}
           >
-            Add 
+            Add
           </Button>
         </Grid>
-        
       </Grid>
 
       <Box mt={2}>
-      <TableContainer sx={{ width: "100%" }}>
-        <Table size="small" aria-label="source table" sx={{ width: "100%" }}>
-          <TableHead sx={{ backgroundColor: "#f2f2f2" }}>
-            <TableRow>
-              <TableCell style={{ fontWeight: "bold" }}>ID</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Guide Name</TableCell>
-              <TableCell style={{ fontWeight: "bold" }} >
-                Action Required
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {filteredGuides.map((guide) => (
-              <TableRow key={guide.id}>
-                <TableCell>{guide.id}</TableCell>
-                <TableCell>{guide.guideName}</TableCell>
-                <TableCell >
-                  <Button
-                    edge="end"
-                    aria-label="edit"
-                    onClick={() => handleOpenUpdateDialog(guide)}
-                    color="primary"
-                    sx={{ mr: 1 }}
-                    variant="contained"
-                  >
-                    Update
-                  </Button>
-                  <Button
-                    edge="end"
-                    aria-label="delete"
-                    onClick={() => handleOpenDeleteDialog(guide.id)}
-                    color="error"
-                    variant="contained"
-                  >
-                    Delete
-                  </Button>
+        <TableContainer sx={{ width: "100%" }}>
+          <Table size="small" aria-label="source table" sx={{ width: "100%" }}>
+            <TableHead sx={{ backgroundColor: "#f2f2f2" }}>
+              <TableRow>
+                <TableCell style={{ fontWeight: "bold" }}>ID</TableCell>
+                <TableCell style={{ fontWeight: "bold" }}>Guide Name</TableCell>
+                <TableCell style={{ fontWeight: "bold" }}>
+                  Action Required
                 </TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {filteredGuides.map((guide) => (
+                <TableRow key={guide.id}>
+                  <TableCell>{guide.id}</TableCell>
+                  <TableCell>{guide.guideName}</TableCell>
+                  <TableCell>
+                    <Button
+                      edge="end"
+                      aria-label="edit"
+                      onClick={() => handleOpenUpdateDialog(guide)}
+                      color="primary"
+                      sx={{ mr: 1 }}
+                      variant="contained"
+                    >
+                      Update
+                    </Button>
+                    <Button
+                      edge="end"
+                      aria-label="delete"
+                      onClick={() => handleOpenDeleteDialog(guide.id)}
+                      color="error"
+                      variant="contained"
+                    >
+                      Delete
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Box>
 
       {/* Add Guide Dialog */}
@@ -252,15 +259,15 @@ const AddGuide = () => {
         <DialogTitle id="add-guide-dialog-title">Add New Guide</DialogTitle>
         <DialogContent>
           <Grid item className="textField-root">
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Guide Name"
-            type="text"
-            fullWidth
-            value={guideName}
-            onChange={(e) => setGuideName(e.target.value)}
-          />
+            <TextField
+              autoFocus
+              margin="dense"
+              label="Guide Name"
+              type="text"
+              fullWidth
+              value={guideName}
+              onChange={(e) => setGuideName(e.target.value)}
+            />
           </Grid>
         </DialogContent>
         <DialogActions>
@@ -282,15 +289,15 @@ const AddGuide = () => {
         <DialogTitle id="update-guide-dialog-title">Update Guide</DialogTitle>
         <DialogContent>
           <Grid item className="textField-root">
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Guide Name"
-            type="text"
-            fullWidth
-            value={updateGuideName}
-            onChange={(e) => setUpdateGuideName(e.target.value)}
-          />
+            <TextField
+              autoFocus
+              margin="dense"
+              label="Guide Name"
+              type="text"
+              fullWidth
+              value={updateGuideName}
+              onChange={(e) => setUpdateGuideName(e.target.value)}
+            />
           </Grid>
         </DialogContent>
         <DialogActions>
@@ -309,10 +316,13 @@ const AddGuide = () => {
         onClose={handleCloseDeleteDialog}
         aria-labelledby="delete-guide-dialog-title"
       >
-        <DialogTitle id="delete-guide-dialog-title">Confirm Deletion</DialogTitle>
+        <DialogTitle id="delete-guide-dialog-title">
+          Confirm Deletion
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to delete this guide? This action cannot be undone.
+            Are you sure you want to delete this guide? This action cannot be
+            undone.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

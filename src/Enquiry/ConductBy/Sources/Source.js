@@ -169,45 +169,53 @@ const Source = () => {
       setSnackbarOpen(true);
     }
   };
+  const PopTypography = styled(Typography)`
+  @keyframes pop {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+`;
   return (
-    <Container maxWidth="false" sx={{ padding: 2, width: "100%" }}>
-      <ToastContainer/>
-      <Box textAlign="center" sx={{ width: "100%" }}>
-        <Typography
-          variant="h5"
-          gutterBottom
-          sx={{
-            fontWeight: "bold",
-            color: "#fff",
-            textAlign: "center",
-            backgroundColor: "#24A0ED",
-            borderRadius: "150px",
-            padding: "10px",
-            marginBottom: "-2px",
-          }}
-        >
+    <div>
+    <PopTypography
+      variant="h5"
+      gutterBottom
+      sx={{
+        fontWeight: "bold",
+        color: "#fff",
+        textAlign: "center",
+        backgroundColor: "#24A0ED",
+        borderRadius: "150px",
+        padding: "10px",
+        marginBottom: "20px",
+      }}
+    >
           Source List
-        </Typography>
-        <Grid container spacing={1} alignItems="center" justifyContent="flex-start">
-          <Grid item xs={6} sm={2}>
-            <Box mt={2} >
-              <Typography
-                variant="h6"
-                gutterBottom
-                sx={{ whiteSpace: "nowrap" }}
-              >
+          </PopTypography>
+      <Grid container spacing={2} className="textField-root">
+        <Typography
+          variant="h6"
+          gutterBottom
+          sx={{ marginTop: 3, whiteSpace: "nowrap" }}
+        >
                 Total Sources: {filteredSources.length}
-              </Typography> 
-            </Box>
-          </Grid>
-          <Grid item xs={6} sm={2} className="textField-root">
-            <TextField
+                </Typography>{" "}
+        {/* Dropdown Fields */}
+        <Grid item xs={12} sm={1.6}>
+          <TextField
               label="Search Source"
               variant="outlined"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               fullWidth
-              sx={{ mt: 2 }}
+          
             />
           </Grid>
           <Grid item xs={6} sm={2}>
@@ -215,7 +223,7 @@ const Source = () => {
               variant="contained"
               color="primary"
               onClick={() => handleOpenSourceDialog(null, false)}
-              sx={{ mt: 2}}
+              sx={{ marginTop: 1 }}
             >
               Add
             </Button>
@@ -290,8 +298,8 @@ const Source = () => {
             sx: { backgroundColor: snackbarMessage === "Error saving source" ? "red" : "green" },
           }}
         /> */}
-      </Box>
-    </Container>
+  
+    </div>
   );
 };
 export default Source;

@@ -263,8 +263,6 @@ const AddCategory = () => {
         transform: scale(1);
       }
     }
-
- 
   `;
 
   return (
@@ -285,13 +283,14 @@ const AddCategory = () => {
         Add Category
       </PopTypography>
       <Grid container spacing={2} className="textField-root">
-      <Typography
-        variant="h6"
-        gutterBottom
-        sx={{ marginTop: 3, whiteSpace: "nowrap" }}
-      >
-        Total Categories : {categories.length}
-      </Typography>  {/* Dropdown Fields */}
+        <Typography
+          variant="h6"
+          gutterBottom
+          sx={{ marginTop: 3, whiteSpace: "nowrap" }}
+        >
+          Total Categories : {categories.length}
+        </Typography>{" "}
+        {/* Dropdown Fields */}
         <Grid item xs={12} sm={1.6}>
           <TextField
             label="Search Category"
@@ -301,8 +300,13 @@ const AddCategory = () => {
           />
         </Grid>
         <Grid item xs={12} sm={1.6}>
-          <Button variant="contained" color="primary" onClick={handleClickOpen} sx={{marginTop:1}}>
-            Add 
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleClickOpen}
+            sx={{ marginTop: 1 }}
+          >
+            Add
           </Button>
         </Grid>
       </Grid>
@@ -321,7 +325,6 @@ const AddCategory = () => {
             error={!!error}
             helperText={error}
             className="textField-root"
-         
           />
         </DialogContent>
         <DialogActions>
@@ -377,9 +380,8 @@ const AddCategory = () => {
         </Alert>
       </Snackbar>
 
-     
-      <TableContainer >
-        <Table sx={{ minWidth: 250,marginTop:3,justifyContent:"center"  }}>
+      <TableContainer>
+        <Table sx={{ minWidth: 250, marginTop: 3, justifyContent: "center" }}>
           <TableHead style={{ backgroundColor: "#f2f2f2" }}>
             <TableRow>
               <TableCell
@@ -427,8 +429,7 @@ const AddCategory = () => {
                     variant="contained"
                     color="primary"
                     onClick={() => handleEditClickOpen(category.id)}
-                    style={{marginRight:"10px"}}
-
+                    style={{ marginRight: "10px" }}
                   >
                     Update
                   </Button>

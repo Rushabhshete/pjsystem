@@ -17,7 +17,7 @@ import {
   Typography,
   Box,
   Container,
-  Grid
+  Grid,
 } from "@mui/material";
 import { styled } from "@mui/system";
 
@@ -40,22 +40,28 @@ const ConfirmDialog = ({ open, onClose, onConfirm, courseName }) => (
   </Dialog>
 );
 
-const UpdateDialog = ({ open, onClose, onUpdate, courseName, setUpdateCourseName }) => (
+const UpdateDialog = ({
+  open,
+  onClose,
+  onUpdate,
+  courseName,
+  setUpdateCourseName,
+}) => (
   <Dialog open={open} onClose={onClose}>
     <DialogTitle>Update Course</DialogTitle>
     <DialogContent>
       <Grid item className="textField-root">
-      <TextField
-        autoFocus
-        margin="dense"
-        id="course-name"
-        label="Course Name"
-        type="text"
-        fullWidth
-        variant="outlined"
-        value={courseName}
-        onChange={(e) => setUpdateCourseName(e.target.value)}
-      />
+        <TextField
+          autoFocus
+          margin="dense"
+          id="course-name"
+          label="Course Name"
+          type="text"
+          fullWidth
+          variant="outlined"
+          value={courseName}
+          onChange={(e) => setUpdateCourseName(e.target.value)}
+        />
       </Grid>
     </DialogContent>
     <DialogActions>
@@ -69,22 +75,28 @@ const UpdateDialog = ({ open, onClose, onUpdate, courseName, setUpdateCourseName
   </Dialog>
 );
 
-const AddCourseDialog = ({ open, onClose, onAdd, courseName, setCourseName }) => (
+const AddCourseDialog = ({
+  open,
+  onClose,
+  onAdd,
+  courseName,
+  setCourseName,
+}) => (
   <Dialog open={open} onClose={onClose}>
     <DialogTitle>Add New Course</DialogTitle>
     <DialogContent>
       <Grid item className="textField-root">
-      <TextField
-        autoFocus
-        margin="dense"
-        id="new-course-name"
-        label="Course Name"
-        type="text"
-        fullWidth
-        variant="outlined"
-        value={courseName}
-        onChange={(e) => setCourseName(e.target.value)}
-      />
+        <TextField
+          autoFocus
+          margin="dense"
+          id="new-course-name"
+          label="Course Name"
+          type="text"
+          fullWidth
+          variant="outlined"
+          value={courseName}
+          onChange={(e) => setCourseName(e.target.value)}
+        />
       </Grid>
     </DialogContent>
     <DialogActions>
@@ -193,7 +205,7 @@ const AddCourse = () => {
       if (!institutecode) {
         throw new Error("No institutecode found in local storage");
       }
-  
+
       // Send institutecode as a query parameter
       await axios.put(
         `http://localhost:8085/updateCourse/${selectedCourseId}?institutecode=${institutecode}`,
@@ -201,7 +213,7 @@ const AddCourse = () => {
           cname: updateCourseName, // Only send course name in the request body
         }
       );
-  
+
       console.log("Course updated successfully");
       fetchCourses(); // Refresh the course list
       handleCloseUpdateDialog(); // Close the dialog
@@ -209,7 +221,6 @@ const AddCourse = () => {
       console.error("Error updating course:", error.response || error.message);
     }
   };
-  
 
   const handleOpenAddCourseDialog = () => {
     setOpenAddCourseDialog(true);
@@ -226,104 +237,100 @@ const AddCourse = () => {
   );
 
   return (
-    <Container maxWidth="false" sx={{ padding: 2, width: "100%" }}>
-      <Box textAlign="center" sx={{ width: "100%" }}>
+    <div>
+      <Typography
+        variant="h5"
+        gutterBottom
+        sx={{
+          fontWeight: "bold",
+          color: "#fff",
+          textAlign: "center",
+          backgroundColor: "#24A0ED",
+          borderRadius: "150px",
+          padding: "10px",
+          marginBottom: "20px",
+        }}
+      >
+        Add Course / Exam
+      </Typography>
+
+      <Grid container spacing={2} className="textField-root">
         <Typography
-          variant="h5"
+          variant="h6"
           gutterBottom
-          sx={{
-            fontWeight: "bold",
-            color: "#fff",
-            textAlign: "center",
-            backgroundColor: "#24A0ED",
-            borderRadius: "150px",
-            padding: "10px",
-            marginBottom: "-2px",
-          }}
+          sx={{ marginTop: 3, whiteSpace: "nowrap" }}
         >
-          Add Course / Exam
+          Total Courses: {filteredCourses.length}
         </Typography>
 
-        <Grid container spacing={1} alignItems="center" >
-          <Grid item xs={12} sm={2}>
-            <Box mt={2} padding={"1%"}>
-              <Typography
-                variant="h6"
-                gutterBottom
-                sx={{ whiteSpace: "nowrap" }}>
-                Total Courses: {filteredCourses.length}
-              </Typography>
-            </Box>
-          </Grid>
-
-          <Grid item xs={12} sm={1.6} mt={2} className="textField-root">
-            <TextField
+        <Grid item xs={12} sm={1.6} className="textField-root">
+          <TextField
             label="Search Course..."
-              fullWidth
-              variant="outlined"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={2}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleOpenAddCourseDialog}
-              sx={{ mt: 2,ml:-8 }}
-            >
-              Add 
-            </Button>
-          </Grid>
-
+            fullWidth
+            variant="outlined"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
         </Grid>
 
-        <Box mt={2}>
-          <TableContainer sx={{ width: "100%" }}>
-            <Table size="small" aria-label="course table" sx={{ width: "100%" }}>
-              <TableHead sx={{ backgroundColor: "#f2f2f2" }}>
-                <TableRow>
-                  <StyledTableHeader>ID</StyledTableHeader>
-                  <StyledTableHeader>Course Name</StyledTableHeader>
-                  <StyledTableHeader>Action Required</StyledTableHeader>
+        <Grid item xs={12} sm={1.6}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleOpenAddCourseDialog}
+            sx={{ marginTop: 1 }}
+          >
+            Add
+          </Button>
+        </Grid>
+      </Grid>
+
+      <Box mt={2}>
+        <TableContainer sx={{ width: "100%" }}>
+          <Table size="small" aria-label="course table" sx={{ width: "100%" }}>
+            <TableHead sx={{ backgroundColor: "#f2f2f2" }}>
+              <TableRow>
+                <StyledTableHeader>ID</StyledTableHeader>
+                <StyledTableHeader>Course Name</StyledTableHeader>
+                <StyledTableHeader>Action Required</StyledTableHeader>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {filteredCourses.map((course) => (
+                <TableRow key={course.id}>
+                  <TableCell>{course.id}</TableCell>
+                  <TableCell>{course.cname}</TableCell>
+                  <TableCell>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleOpenUpdateDialog(course)}
+                      sx={{ mr: 1 }}
+                    >
+                      Update
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="error"
+                      onClick={() => handleOpenDialog(course.id)}
+                    >
+                      Delete
+                    </Button>
+                  </TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {filteredCourses.map((course) => (
-                  <TableRow key={course.id}>
-                    <TableCell>{course.id}</TableCell>
-                    <TableCell>{course.cname}</TableCell>
-                    <TableCell>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => handleOpenUpdateDialog(course)}
-                        sx={{ mr: 1 }}
-                      >
-                        Update
-                      </Button>
-                      <Button
-                        variant="contained"
-                        color="error"
-                        onClick={() => handleOpenDialog(course.id)}
-                      >
-                        Delete
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Box>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Box>
 
       <ConfirmDialog
         open={open}
         onClose={handleCloseDialog}
         onConfirm={confirmDeleteCourse}
-        courseName={courses.find((course) => course.id === selectedCourseId)?.cname || ""}
+        courseName={
+          courses.find((course) => course.id === selectedCourseId)?.cname || ""
+        }
       />
 
       <UpdateDialog
@@ -341,7 +348,7 @@ const AddCourse = () => {
         courseName={courseName}
         setCourseName={setCourseName}
       />
-    </Container>
+    </div>
   );
 };
 

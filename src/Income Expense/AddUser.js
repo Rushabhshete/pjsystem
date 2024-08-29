@@ -281,7 +281,7 @@ const AddUser = () => {
         {/* Dropdown Fields */}
         <Grid item xs={12} sm={1.6}>
           <TextField
-            label="Search Category"
+            label="Search User"
             variant="outlined"
             value={searchTerm}
             onChange={handleSearchChange}
