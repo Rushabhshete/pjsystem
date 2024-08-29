@@ -18,6 +18,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 import MuiAlert from "@mui/material/Alert";
+import { toast, ToastContainer } from "react-toastify";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -115,6 +116,7 @@ const AddUser = () => {
 
   const handleSubmit = async () => {
     const getInstituteCode = () => localStorage.getItem("institutecode");
+    
     if (userName.trim() === "") {
       setError("User name cannot be empty");
     } else if (Users.map((u) => u.userName).includes(userName.trim())) {
@@ -131,7 +133,10 @@ const AddUser = () => {
             body: JSON.stringify({ userName: userName.trim() }),
           }
         );
+  
         if (response.ok) {
+          toast.success("User added successfully");
+  
           // Refresh Users list after adding new userName
           const updatedResponse = await fetch(
             `http://localhost:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
@@ -143,10 +148,12 @@ const AddUser = () => {
           handleClose();
         } else {
           setError("Failed to add userName");
+          toast.error("Failed to add user");
         }
       } catch (error) {
         console.error("Error adding userName: ", error);
         setError("Failed to add userName");
+        toast.error("Failed to add user");
       }
     }
   };
@@ -196,8 +203,9 @@ const AddUser = () => {
           );
           const updatedUser = await updatedResponse.json();
           setUsers(updatedUser);
-          setSnackbarMessage("User updated successfully");
-          setSnackbarOpen(true);
+          // setSnackbarMessage("User updated successfully");
+          toast.success("User Updated Successfully");
+          // setSnackbarOpen(true);
           handleEditClose();
         } else {
           setError("Failed to update user");
@@ -251,6 +259,16 @@ const AddUser = () => {
 
   return (
     <div>
+      <ToastContainer
+      autoClose={1000} // Toast will close automatically after 5 seconds
+      position="top-right" // Position of the toast
+      hideProgressBar={false} // Show or hide the progress bar
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover/>
       <PopTypography
         variant="h5"
         gutterBottom

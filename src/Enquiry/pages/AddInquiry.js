@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import {
   Container,
@@ -127,7 +128,7 @@ export default function AddEnquiry() {
         `http://localhost:8086/save/enquiry?institutecode=${Enquiry.institutecode}`,
         Enquiry
       );
-      setOpen(true); // Show the success message
+      toast.success("Enquiry Added Successfully");
       // Navigate to /report after successful submission
       setTimeout(() => {
         navigate("/layout/report");
@@ -163,6 +164,16 @@ export default function AddEnquiry() {
 
   return (
     <div maxWidth="false" sx={{ padding: 2, width: "100%" }}>
+      <ToastContainer
+      autoClose={1000} // Toast will close automatically after 5 seconds
+      position="top-right" // Position of the toast
+      hideProgressBar={false} // Show or hide the progress bar
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover/>
       <Box mt={1} textAlign="center" sx={{ width: "100%" }}>
         <PopTypography
           variant="h5"

@@ -19,6 +19,7 @@ import {
 import { styled } from "@mui/system";
 import MuiAlert from "@mui/material/Alert";
 import "./Design.css";
+import { toast, ToastContainer } from "react-toastify";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -137,6 +138,8 @@ const AddCategory = () => {
           }
         );
         if (response.ok) {
+          toast.success("Category added successfully");
+  
           const updatedResponse = await fetch(
             `http://localhost:8087/categories/getAllCategoriesByInstitutecode?institutecode=${encodeURIComponent(
               institutecode
@@ -148,10 +151,12 @@ const AddCategory = () => {
           setError("");
           handleClose();
         } else {
+          toast.error("Failed to add category");
           setError("Failed to add category");
         }
       } catch (error) {
         console.error("Error adding category: ", error);
+        toast.error("Failed to add category");
         setError("Failed to add category");
       }
     }
@@ -267,6 +272,16 @@ const AddCategory = () => {
 
   return (
     <div>
+      <ToastContainer
+      autoClose={1000} // Toast will close automatically after 5 seconds
+      position="top-right" // Position of the toast
+      hideProgressBar={false} // Show or hide the progress bar
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover/>
       <PopTypography
         variant="h5"
         gutterBottom

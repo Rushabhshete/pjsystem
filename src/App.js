@@ -181,6 +181,7 @@ function AppContent() {
     setIsAuthenticated(true);
     localStorage.setItem('isAuthenticated', 'true');
   };
+  
 
   return (
     <>
