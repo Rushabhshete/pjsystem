@@ -22,6 +22,7 @@ import {
   Snackbar,
 } from "@mui/material";
 import { styled } from "@mui/system";
+import { toast, ToastContainer } from "react-toastify";
 
 const PopTypography = styled(Typography)`
   @keyframes pop {
@@ -157,8 +158,9 @@ const Exam = () => {
         `http://localhost:8086/saveExam?institutecode=${institutecode}`,
         exam
       );
-      setSnackbarMessage("Exam added successfully!");
-      setSnackbarColor("green");
+      // setSnackbarMessage("Exam added successfully!");
+      toast.success("Exam Added Successfully");
+      // setSnackbarColor("green");
       handleCloseAddDialog();
       loadExams();
     } catch (error) {
@@ -199,6 +201,7 @@ const Exam = () => {
 
   return (
     <Container maxWidth="false" sx={{ padding: 2, width: "100%" }}>
+      <ToastContainer />
       <Box textAlign="center" sx={{ width: "100%" }}>
         <Typography
           variant="h5"
@@ -215,6 +218,7 @@ const Exam = () => {
         >
           Exams / Course List
         </Typography>
+
 
         <Grid container spacing={1} alignItems="center" justifyContent="flex-start">
           <Grid item xs={12} sm={2}>

@@ -121,7 +121,7 @@ const sidebarOptions = [
         icon: <RemoveRedEyeIcon sx={{ color: "#4682b4" }} />,
       },
       {
-        name: "Add Cource/ Exam",
+        name: "Add Cource",
         route: "/layout/add-course",
         icon: <AddToPhotosIcon sx={{ color: "#4682b4" }} />,
       },
