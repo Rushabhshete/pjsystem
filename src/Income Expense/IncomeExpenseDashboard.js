@@ -120,33 +120,26 @@ const IncomeExpenseDashboard = () => {
   // Fetch pie chart data
   
   useEffect(() => {
-    const fetchIncomeCategories = async () => {
+    const fetchCategories = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:8087/dashboard/incomes/category/month-year?year=${year}&month=${month}&institutecode=${getInstituteCode()}`
-        );
-        const data = await response.json();
-        setIncomeCategories(data);
+        const [incomeResponse, expenseResponse] = await Promise.all([
+          fetch(`http://localhost:8087/dashboard/totalIncomeByCategory?year=${year}&month=${month}&institutecode=${getInstituteCode()}`),
+          fetch(`http://localhost:8087/dashboard/totalExpenseByCategory?year=${year}&month=${month}&institutecode=${getInstituteCode()}`)
+        ]);
+  
+        const incomeData = await incomeResponse.json();
+        const expenseData = await expenseResponse.json();
+  
+        setIncomeCategories(incomeData);
+        setExpenseCategories(expenseData);
       } catch (error) {
-        console.error("Error fetching income categories data:", error);
+        console.error("Error fetching categories data:", error);
       }
     };
-
-    const fetchExpenseCategories = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:8087/dashboard/totalExpenseByCategory?year=${year}&month=${month}&institutecode=${getInstituteCode()}`
-        );
-        const data = await response.json();
-        setExpenseCategories(data);
-      } catch (error) {
-        console.error("Error fetching expense categories data:", error);
-      }
-    };
-
-    fetchIncomeCategories();
-    fetchExpenseCategories();
+  
+    fetchCategories();
   }, [year, month]);
+  
   // Determine text for savings/loss card
   const savingsText = savingsData >= 0 ? "Saving" : "Loss";
   const todaytext =
