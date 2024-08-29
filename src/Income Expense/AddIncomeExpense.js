@@ -243,7 +243,7 @@ const AddIncomeExpense = () => {
       setSubmittedData(integerFormData);
       setOpenDialog(true);
       toast.success("Form submitted successfully!");
-
+    
       setFormData({
         type: "",
         user: "",
@@ -265,6 +265,7 @@ const AddIncomeExpense = () => {
       });
       setSearchTerm("");
       setShowGst(false);
+      
     } catch (error) {
       toast.error("Error submitting form. Please try again.");
     }

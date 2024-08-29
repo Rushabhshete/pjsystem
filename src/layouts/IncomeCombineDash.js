@@ -238,11 +238,32 @@ export default function IncomeCombineDash() {
   return (
     <div>
       {/* Income Expense Dashboard */}
-      <Grid item align="center">
-                <Typography variant="h6" >
-                  <b>Income & Expense</b>
-                </Typography>
-              </Grid>
+      <Box
+  sx={{
+    display: "flex",
+    alignItems: "center",
+    width: "100%",
+  }}
+>
+  <Box
+    sx={{
+      flexGrow: 1,
+      height: "1px",
+      backgroundColor: "#0D47A1",
+    }}
+  />
+  <Typography variant="h6" sx={{ margin: "0 10px" }}>
+    <b>Income And Expense</b>
+  </Typography>
+  
+  <Box
+    sx={{
+      flexGrow: 1,
+      height: "1px",
+      backgroundColor: "#0D47A1",
+    }}
+  />
+</Box>
       <Grid item xs={12}>
         <Box
           sx={{
@@ -255,6 +276,7 @@ export default function IncomeCombineDash() {
             marginTop: "10px",
           }}
         >
+          
           <Grid container spacing={2} justifyContent="center" wrap="nowrap">
             <Grid item xs={12} sm={6} md={2.4}>
               <Paper
