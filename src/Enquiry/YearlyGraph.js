@@ -9,7 +9,8 @@ import {
   InputLabel,
   Paper,
   Typography,
-  Grid
+  Grid,
+  TextField
 } from '@mui/material';
 
 
@@ -72,10 +73,11 @@ export default function YearlyGraph() {
   mt={1}
   // spacing={1} // Adds space between the two grids
 >
-  <Grid item>
+  <Grid item className='textField-root'>
     <FormControl variant="outlined" style={{ width: '200px' }}> {/* Set a fixed width */}
-      <InputLabel id="year-select-label">Year</InputLabel>
-      <Select
+
+      <TextField
+      select
         labelId="year-select-label"
         value={year}
         onChange={handleYearChange}
@@ -86,8 +88,8 @@ export default function YearlyGraph() {
             {yr}
           </MenuItem>
         ))}
-      </Select>
-    </FormControl>
+      </TextField>
+    </FormControl>  
   </Grid>
   <Grid item>
     <Typography variant="h6" align="center">

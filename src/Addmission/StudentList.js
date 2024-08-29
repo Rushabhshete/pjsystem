@@ -262,7 +262,7 @@ const StudentList = () => {
       >
         Admissions List
       </PopTypography>
-      <Grid container spacing={2} >
+      <Grid container spacing={2} className="textField-root">
         <Grid item xs={8} sm={1.6} md={2}>
           <TextField
             select

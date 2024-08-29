@@ -357,7 +357,7 @@ export default function DashBoard() {
 
 
   return (
-    <Container maxWidth="false" sx={{ padding: 2, width: "100%" }}>
+    <div sx={{ padding: 2, width: "100%" }}>
       <Typography
         variant="h5"
         gutterBottom
@@ -499,7 +499,7 @@ export default function DashBoard() {
         width={window.innerWidth * 0.8} // Adjust to fit within the Paper's width
         height={400}
         data={data}
-        margin={{ top: 20, right: 30, bottom: 20, left: 20 }}
+       // margin={{ top: 20, right: 30, bottom: 20, left: 20 }}
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="month" />
@@ -516,6 +516,6 @@ export default function DashBoard() {
 
 
       </Box>
-    </Container>
+    </div>
   );
 };
