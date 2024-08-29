@@ -24,6 +24,7 @@ import { Chart } from "react-google-charts";
 import ComparisonGraph from "../Addmission/AdmissionComparisonGraph"
 import { styled } from "@mui/system";
 import IncomeCombineDash from "./IncomeCombineDash";
+import YearlyGraph from '../Enquiry/YearlyGraph'
 
 export default function CombineDashboard() {
   //admission
@@ -425,69 +426,7 @@ export default function CombineDashboard() {
               </Grid>
             </Grid>
 
-           <Box 
-  sx={{ 
-    marginTop: 2, 
-    display: "flex", 
-    flexDirection: "column", 
-    alignItems: "center" 
-  }}
->
-  <Grid container justifyContent="center">
-    <Grid 
-      item 
-      xs={12} 
-      sm={4} 
-      className="textField-root"
-    >
-      <TextField
-        select
-        fullWidth
-        value={selectedPeriod}
-        onChange={handlePeriodChange}
-        label="select"
-      >
-        <MenuItem value="Today">Today</MenuItem>
-        <MenuItem value="Last 7 Days">Last 7 Days</MenuItem>
-        <MenuItem value="Last 30 Days">Last 30 Days</MenuItem>
-        <MenuItem value="Last 365 Days">Last 365 Days</MenuItem>
-      </TextField>
-    </Grid>
-  </Grid>
-
-  <Typography 
-    variant="h6" 
-    align="center" 
- 
-  >
-    Comparison of Enquiries
-  </Typography>
-
-  <Box 
-    sx={{ 
-      border: 1, 
-      borderColor: "lightgray", 
-      borderRadius: 2, 
-      boxShadow: 3, 
-      padding: 1, 
-  
-      width: "100%", 
-     
-    }}
-  >
-    <ResponsiveContainer width="100%" height={385}>
-      <BarChart data={periodData()}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="total" fill="#90EE90" name="Total Enquiries" />
-        <Bar dataKey="period" fill="#FF6F61" name={selectedPeriod} />
-      </BarChart>
-    </ResponsiveContainer>
-  </Box>
-</Box>
+         <YearlyGraph />
 </Box>
         </Grid>
         {/* Enquiry Dashboard end */}
