@@ -180,7 +180,7 @@ const AddmissionSource = () => {
           </Typography>
           </Box>
         </Grid>
-        <Grid item xs={12} sm={1.6} mt={2} className="textfield-root">
+        <Grid item xs={12} sm={1.6} mt={2} className="textField-root">
           <TextField
             label="Search Source"
             variant="outlined"
@@ -253,6 +253,7 @@ const AddmissionSource = () => {
       >
         <DialogTitle id="add-source-dialog-title">Add New Source</DialogTitle>
         <DialogContent>
+          <Grid item className="textField-root">
           <TextField
             autoFocus
             margin="dense"
@@ -264,6 +265,7 @@ const AddmissionSource = () => {
             value={sourceName}
             onChange={(e) => setSourceName(e.target.value)}
           />
+          </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseAddDialog} color="secondary">
@@ -284,6 +286,7 @@ const AddmissionSource = () => {
       >
         <DialogTitle id="update-source-dialog-title">Update Source</DialogTitle>
         <DialogContent>
+          <Grid item className="textField-root">
           <TextField
             autoFocus
             margin="dense"
@@ -295,6 +298,7 @@ const AddmissionSource = () => {
             value={updateSourceName}
             onChange={(e) => setUpdateSourceName(e.target.value)}
           />
+          </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseUpdateDialog} color="secondary">
