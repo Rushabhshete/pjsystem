@@ -123,6 +123,7 @@ const Conduct = () => {
       await axios.delete(
         `http://localhost:8086/deleteConduct/${conductToDelete.id}`
       );
+      toast.success("Conduct Deleted Successfully");
       loadConducts();
       handleCloseDeleteDialog();
     } catch (error) {

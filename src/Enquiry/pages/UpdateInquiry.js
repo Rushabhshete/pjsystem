@@ -26,6 +26,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import CancelIcon from "@mui/icons-material/Cancel";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import { toast, ToastContainer } from "react-toastify";
 
 const PopTypography = styled(Typography)`
   @keyframes pop {
@@ -148,8 +149,7 @@ export default function UpdateEnquiry() {
     e.preventDefault();
     try {
       await axios.put(`http://localhost:8086/updateenquiry/${id}`, Enquiry);
-      setSnackbarMessage("Enquiry updated successfully"); // Set success message
-      setOpenSnackbar(true); // Show Snackbar
+      toast.success("Enquiry Updated Successfully")
       setTimeout(() => {
         navigate("/layout/report"); // Navigate after a delay
       }, 2000); // Adjust time as needed
@@ -166,7 +166,9 @@ export default function UpdateEnquiry() {
   const handleDelete = async () => {
     try {
       await axios.delete(`http://localhost:8086/deleteenquiry/${id}`);
+      toast.success("Enquiry Deleted Successfully");
       navigate("/layout/report");
+      
     } catch (error) {
       console.error("Error deleting enquiry:", error);
     }
@@ -238,6 +240,7 @@ export default function UpdateEnquiry() {
 
   return (
     <Container maxWidth="false" sx={{ padding: 2, width: "100%" }}>
+      <ToastContainer/>
       <Box textAlign="center" sx={{ width: "100%" }}>
         <PopTypography
           variant="h5"
@@ -254,7 +257,7 @@ export default function UpdateEnquiry() {
           Update Enquiry
         </PopTypography>
         <Box component="form" onSubmit={onSubmit}>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} className="textField-root">
             <Grid item xs={12} sm={6}>
               <TextField
                 label="Name"
