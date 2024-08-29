@@ -229,7 +229,7 @@ const Exam = () => {
             </Box>
           </Grid>
 
-          <Grid item xs={12} sm={2} mt={2} className="textfield-root">
+          <Grid item xs={12} sm={2} mt={2} className="textField-root">
             <TextField
               label="Search Exam"
               variant="outlined"
@@ -296,11 +296,12 @@ const Exam = () => {
         {/* Add Exam Dialog */}
         <Dialog open={openAddDialog} onClose={handleCloseAddDialog}>
           <DialogTitle>Add Exam</DialogTitle>
-          <DialogContent>
+          <DialogContent > 
             <DialogContentText>
-              Please enter the name of the new exam.
+              Add new exam.
             </DialogContentText>
-            <form onSubmit={onAddExamSubmit}>
+            <form onSubmit={onAddExamSubmit} >
+              <Grid item className="textField-root"> 
               <TextField
                 autoFocus
                 margin="dense"
@@ -310,6 +311,7 @@ const Exam = () => {
                 value={exam.name}
                 onChange={(e) => setExam({ ...exam, name: e.target.value })}
               />
+              </Grid>
               <DialogActions>
                 <Button onClick={handleCloseAddDialog} color="primary">
                   Cancel
@@ -330,6 +332,7 @@ const Exam = () => {
               Update the details of the exam.
             </DialogContentText>
             <form onSubmit={onUpdateExamSubmit}>
+              <Grid item className="textField-root">
               <TextField
                 autoFocus
                 margin="dense"
@@ -339,6 +342,8 @@ const Exam = () => {
                 value={exam.name}
                 onChange={(e) => setExam({ ...exam, name: e.target.value })}
               />
+              </Grid>
+              
               <DialogActions>
                 <Button onClick={handleCloseUpdateDialog} color="primary">
                   Cancel
