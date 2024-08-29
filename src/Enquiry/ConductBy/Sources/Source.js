@@ -189,18 +189,18 @@ const Source = () => {
           Source List
         </Typography>
         <Grid container spacing={1} alignItems="center" justifyContent="flex-start">
-          <Grid item xs={12} sm={2}>
-            <Box mt={2} padding={"1%"}>
+          <Grid item xs={6} sm={2}>
+            <Box mt={2} >
               <Typography
                 variant="h6"
                 gutterBottom
                 sx={{ whiteSpace: "nowrap" }}
               >
                 Total Sources: {filteredSources.length}
-              </Typography>
+              </Typography> 
             </Box>
           </Grid>
-          <Grid item xs={12} sm={2} className="textField-root">
+          <Grid item xs={6} sm={2} className="textField-root">
             <TextField
               label="Search Source"
               variant="outlined"
@@ -210,7 +210,7 @@ const Source = () => {
               sx={{ mt: 2 }}
             />
           </Grid>
-          <Grid item xs={12} sm={2}>
+          <Grid item xs={6} sm={2}>
             <Button
               variant="contained"
               color="primary"
