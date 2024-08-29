@@ -471,15 +471,17 @@ export default function DashBoard() {
 
   {/* Year Change Graph spanning the combined width of the two above */}
   <Grid item xs={12}>
-  <Paper elevation={3} style={{ padding: '16px' }}>
+
     <Grid container alignItems="center" justifyContent={'center'} gap={1}>
       <Grid item >
         <Typography variant="h6">Year Change Chart</Typography>
       </Grid>
       <Grid item style={{ display: 'flex'}}>
-        <FormControl fullWidth style={{ maxWidth: 200 }}>
-          <InputLabel id="year-select-label">Year</InputLabel>
-          <Select
+      
+        
+          <TextField
+          select
+          label="Year"
             labelId="year-select-label"
             value={year}
             onChange={handleYearChange}
@@ -490,8 +492,8 @@ export default function DashBoard() {
                 {yr}
               </MenuItem>
             ))}
-          </Select>
-        </FormControl>
+          </TextField>
+    
       </Grid>
     </Grid>
     <div style={{ width: '100%', marginTop: '16px' }}>
@@ -509,7 +511,7 @@ export default function DashBoard() {
         <Bar dataKey="count" fill="#76A7FA" />
       </BarChart>
     </div>
-  </Paper>
+
 </Grid>
 
 </Grid>
