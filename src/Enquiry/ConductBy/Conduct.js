@@ -114,7 +114,7 @@ const Conduct = () => {
   const loadConducts = async () => {
     try {
       const response = await axios.get(
-        `http://13.233.43.240:8086/get/getAllConductModels?institutecode=${institutecode}`
+        `http://localhost:8086/get/getAllConductModels?institutecode=${institutecode}`
       );
       setConducts(response.data);
     } catch (error) {
@@ -135,7 +135,7 @@ const Conduct = () => {
   const confirmDeleteConduct = async () => {
     try {
       await axios.delete(
-        `http://13.233.43.240:8086/deleteConduct/${conductToDelete.id}`
+        `http://localhost:8086/deleteConduct/${conductToDelete.id}`
       );
       toast.success("Conduct Deleted Successfully");
       loadConducts();
@@ -160,14 +160,14 @@ const Conduct = () => {
       if (conductToEdit) {
         // Update existing conduct
         await axios.put(
-          `http://13.233.43.240:8086/updateConduct/${conductToEdit.id}`,
+          `http://localhost:8086/updateConduct/${conductToEdit.id}`,
           newConduct
         );
         toast.success("Conduct Updated Successfully");
       } else {
         // Create new conduct
         await axios.post(
-          `http://13.233.43.240:8086/save/conduct_by?institutecode=${institutecode}`,
+          `http://localhost:8086/save/conduct_by?institutecode=${institutecode}`,
           newConduct
         );
         toast.success("Conduct Added Successfully");

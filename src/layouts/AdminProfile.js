@@ -156,7 +156,7 @@ const AdminProfile = () => {
         }
 
         const response = await axios.get(
-          `http://13.233.43.240:8081/findInstitutesby/email?emailaddress=${email}`
+          `http://localhost:8081/findInstitutesby/email?emailaddress=${email}`
         );
         setEmployeeDetails(response.data);
         setLoading(false);
@@ -186,41 +186,71 @@ const AdminProfile = () => {
     setSelectedFile(null);
   };
 
+  // const handleSave = async () => {
+  //   const formData = new FormData();
+  //   // Uncomment and use these fields as needed
+  //   // formData.append("fullName", editValues.fullName);
+  //   // formData.append("mobileNo", editValues.mobileNo);
+  //   // formData.append("password", editValues.password);
+  //   // formData.append("confirmPassword", editValues.confirmPassword);
+    
+  //   if (selectedFile) {
+  //     formData.append("adminphoto", selectedFile);
+  //   }
+  
+  //   try {
+  //     const response = await axios.patch(
+  //       `http://localhost:8081/updateadminimage/${email}`,
+  //       formData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+  
+  //     setEmployeeDetails((prevDetails) => ({
+  //       ...prevDetails,
+  //       ...editValues,
+  //       ...(selectedFile && {
+  //         adminphoto: URL.createObjectURL(selectedFile),
+  //       }),
+  //     }));
+  //     setOpen(false);
+  //     setEditingField(null);
+  //     setSelectedFile(null);
+  //   } catch (error) {
+  //     console.error("Error updating employee details:", error);
+  //   }
+  // };
+  
   const handleSave = async () => {
-    const formData = new FormData();
-    // formData.append("fullName", editValues.fullName);
-    // formData.append("mobileNo", editValues.mobileNo);
-    formData.append("password", editValues.password);
-    formData.append("confirmPassword", editValues.confirmPassword);
-    if (selectedFile) {
-      formData.append("empFile", selectedFile);
+    if (!selectedFile) {
+      alert('Please select an image file to upload.');
+      return;
     }
 
+    const formData = new FormData();
+    formData.append('adminphoto', selectedFile);
+
     try {
-      const response = await axios.patch(
-        `http://13.233.43.240:8081/saveadminPhoto?email=${email}`,
+      const response = await axios.put(
+        `http://localhost:8081/updateadminimage/${email}`,
         formData,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
           },
         }
       );
-      setEmployeeDetails((prevDetails) => ({
-        ...prevDetails,
-        ...editValues,
-        ...(selectedFile && {
-          employeePhoto: URL.createObjectURL(selectedFile),
-        }),
-      }));
-      setOpen(false);
-      setEditingField(null);
-      setSelectedFile(null);
+
+      alert(response.data); // Show success message
+      setSelectedFile(null); // Clear file input
     } catch (error) {
-      console.error("Error updating employee details:", error);
+      console.error('Error updating image:', error);
+      alert('Failed to update image.');
     }
   };
-
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "image" && files[0]) {
@@ -241,20 +271,18 @@ const AdminProfile = () => {
     return <Typography variant="h6">No employee details found</Typography>;
   }
   const PopTypography = styled(Typography)`
-  @keyframes pop {
-    0% {
-      transform: scale(1);
+    @keyframes pop {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+      }
     }
-    50% {
-      transform: scale(1.1);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-
-
-`;
+  `;
   return (
     <div maxWidth="md">
       <PopTypography
@@ -304,200 +332,198 @@ const AdminProfile = () => {
           </CardContainer>
 
           <Card
-  sx={{
-    position: "relative",
-    padding: 1,
-    textAlign: "center",
-    maxWidth: 500,
-    background: "linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%)",
-    boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-    borderRadius: 4,
-  }}
->
-  {/* Bookmark with Best Seller Star */}
-  <Box
-    sx={{
-      position: "absolute",
-      top: 0,
-      right: 10,
-      width: 70,
-      height: 70,
-      backgroundColor: "#0D47A1",
-      clipPath: "polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%)",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      color: "gold",
-      fontWeight: "bold",
-      fontSize: "0.75rem",
-    }}
-  >
-    <StarIcon sx={{ color: "gold", marginRight: 0.5 }} />
-    Best Seller
-  </Box>
+            sx={{
+              position: "relative",
+              padding: 1,
+              textAlign: "center",
+              maxWidth: 500,
+              background: "linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%)",
+              boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+              borderRadius: 4,
+            }}
+          >
+            {/* Bookmark with Best Seller Star */}
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                right: 10,
+                width: 70,
+                height: 70,
+                backgroundColor: "#0D47A1",
+                clipPath: "polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "gold",
+                fontWeight: "bold",
+                fontSize: "0.75rem",
+              }}
+            >
+              <StarIcon sx={{ color: "gold", marginRight: 0.5 }} />
+              Best Seller
+            </Box>
 
-  <CardContent mt={-11}>
-    {/* Title */}
-    <Typography
-      variant="h4"
-      sx={{
-        marginTop: "1",
-        marginBottom: 2,
-        background: "linear-gradient(90deg, #6A82FB 0%, #1E3A8A 100%)",
-        WebkitBackgroundClip: "text",
-        WebkitTextFillColor: "transparent",
-        fontWeight: "bold",
-      }}
-    >
-      Basic
-    </Typography>
+            <CardContent mt={-11}>
+              {/* Title */}
+              <Typography
+                variant="h4"
+                sx={{
+                  marginTop: "1",
+                  marginBottom: 2,
+                  background:
+                    "linear-gradient(90deg, #6A82FB 0%, #1E3A8A 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  fontWeight: "bold",
+                }}
+              >
+                {employeeDetails.plan}
+              </Typography>
 
-    {/* Discounted Price */}
-    <Typography
-      variant="h3"
-      sx={{
-        fontWeight: "bold",
-        color: "green",
-      }}
-    >
-      $49
-    </Typography>
+              {/* Discounted Price */}
+              <Typography
+                variant="h3"
+                sx={{
+                  fontWeight: "bold",
+                  color: "green",
+                }}
+              >
+                ₹49
+              </Typography>
 
-    {/* MRP */}
-    <Typography
-      variant="body1"
-      color="textSecondary"
-      sx={{
-        textDecoration: "line-through",
-        fontSize: "1rem",
-        marginBottom: 2,
-        color: "red",
-      }}
-    >
-      $99
-    </Typography>
+              {/* MRP */}
+              <Typography
+                variant="body1"
+                color="textSecondary"
+                sx={{
+                  textDecoration: "line-through",
+                  fontSize: "1rem",
+                  marginBottom: 2,
+                  color: "red",
+                }}
+              >
+                ₹99
+              </Typography>
 
-    {/* Plan Details */}
-    <Typography
-      variant="h6"
-      sx={{
-        marginTop: 2,
-        color: "#1E88E5",
-      }}
-    >
-      Validity: 6 Months
-    </Typography>
+              {/* Plan Details */}
+              <Typography
+                variant="h6"
+                sx={{
+                  marginTop: 2,
+                  color: "#1E88E5",
+                }}
+              >
+                Validity: {employeeDetails.subscriptionyear}
+              </Typography>
 
-    {/* Systems Heading */}
-    <Typography
-      variant="h7"
-      sx={{
-        color: "#0D47A1",
-        marginBottom: 2,
-        fontWeight: "bold",
-        textDecoration: "underline",
-      }}
-    >
-     Subscribed Systems :
-    </Typography>
+              {/* Systems Heading */}
+              <Typography
+                variant="h7"
+                sx={{
+                  color: "#0D47A1",
+                  marginBottom: 2,
+                  fontWeight: "bold",
+                  textDecoration: "underline",
+                }}
+              >
+                Subscribed Systems :
+              </Typography>
 
-    {/* Enquiry */}
-    <Box
-      sx={{
-        border: "2px solid #0D47A1",
-        borderRadius: 2,
-        padding: 1,
-        marginTop: 1,
-        color: "#0D47A1",
-        cursor: "pointer",
-        transition: "all 0.3s ease", // Smooth transition for hover effect
-        "&:hover": {
-          backgroundColor: "#0D47A1", // Background color on hover
-          color: "#ffffff", // Text color on hover
-          borderColor: "#ffffff", // Border color on hover
-        },
-      }}
-      onClick={() => navigate("/layout/dashboard")}
-    >
-      <Typography variant="body1">Enquiry</Typography>
-    </Box>
+              {/* Enquiry */}
+              <Box
+                sx={{
+                  border: "2px solid #0D47A1",
+                  borderRadius: 2,
+                  padding: 1,
+                  marginTop: 1,
+                  color: "#0D47A1",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease", // Smooth transition for hover effect
+                  "&:hover": {
+                    backgroundColor: "#0D47A1", // Background color on hover
+                    color: "#ffffff", // Text color on hover
+                    borderColor: "#ffffff", // Border color on hover
+                  },
+                }}
+                onClick={() => navigate("/layout/dashboard")}
+              >
+                <Typography variant="body1">Enquiry</Typography>
+              </Box>
 
-    {/* Admission */}
-    <Box
-      sx={{
-        border: "2px solid #0D47A1",
-        borderRadius: 2,
-        padding: 1,
-        marginTop: 1,
-        color: "#0D47A1",
-        cursor: "pointer",
-        transition: "all 0.3s ease", // Smooth transition for hover effect
-        "&:hover": {
-          backgroundColor: "#0D47A1", // Background color on hover
-          color: "#ffffff", // Text color on hover
-          borderColor: "#ffffff", // Border color on hover
-        },
-      }}
-      onClick={() => navigate("/layout/admission-dashboard")}
-    >
-      <Typography variant="body1">Admission</Typography>
-    </Box>
+              {/* Admission */}
+              <Box
+                sx={{
+                  border: "2px solid #0D47A1",
+                  borderRadius: 2,
+                  padding: 1,
+                  marginTop: 1,
+                  color: "#0D47A1",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease", // Smooth transition for hover effect
+                  "&:hover": {
+                    backgroundColor: "#0D47A1", // Background color on hover
+                    color: "#ffffff", // Text color on hover
+                    borderColor: "#ffffff", // Border color on hover
+                  },
+                }}
+                onClick={() => navigate("/layout/admission-dashboard")}
+              >
+                <Typography variant="body1">Admission</Typography>
+              </Box>
 
-    {/* Income & Expense */}
-    <Box
-      sx={{
-        border: "2px solid #0D47A1",
-        borderRadius: 2,
-        padding: 1,
-        marginTop: 1,
-        color: "#0D47A1",
-        cursor: "pointer",
-        transition: "all 0.3s ease", // Smooth transition for hover effect
-        "&:hover": {
-          backgroundColor: "#0D47A1", // Background color on hover
-          color: "#ffffff", // Text color on hover
-          borderColor: "#ffffff", // Border color on hover
-        },
-      }}
-      onClick={() => navigate("/layout/Income-Expense-dashboard")}
-    >
-      <Typography variant="body1">Income & Expense</Typography>
-    </Box>
- {/* Subscription Dates */}
- <Box
-      sx={{
-        marginTop: 3,
-        textAlign: "left",
-      }}
-    >
-      <Typography
-        variant="body2"
-        sx={{
-          color: "#0D47A1",
-          fontWeight: "bold",
-        }}
-      >
-        Subscription Start Date: 01 Jan 2024
-      </Typography>
-     
+              {/* Income & Expense */}
+              <Box
+                sx={{
+                  border: "2px solid #0D47A1",
+                  borderRadius: 2,
+                  padding: 1,
+                  marginTop: 1,
+                  color: "#0D47A1",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease", // Smooth transition for hover effect
+                  "&:hover": {
+                    backgroundColor: "#0D47A1", // Background color on hover
+                    color: "#ffffff", // Text color on hover
+                    borderColor: "#ffffff", // Border color on hover
+                  },
+                }}
+                onClick={() => navigate("/layout/Income-Expense-dashboard")}
+              >
+                <Typography variant="body1">Income & Expense</Typography>
+              </Box>
+              {/* Subscription Dates */}
+              <Box
+                sx={{
+                  marginTop: 3,
+                  textAlign: "left",
+                }}
+              >
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: "#0D47A1",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Subscription Start Date: {employeeDetails.subscriptstartDate}
+                </Typography>
 
-      <Typography
-        variant="body2"
-        sx={{
-          color: "#0D47A1",
-          fontWeight: "bold",
-        }}
-      >
-        Subscription End Date: 30 Jun 2024
-      </Typography>
-     
-    </Box>
-    {/* <Box>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: "#0D47A1",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Subscription End Date: {employeeDetails.subscriptendDate}
+                </Typography>
+              </Box>
+              {/* <Box>
       <Typography>pjsofttech@gmail.com</Typography>
     </Box> */}
-  </CardContent>
-</Card>
-
+            </CardContent>
+          </Card>
         </Grid>
 
         <Grid item xs={12} md={8}>

@@ -87,7 +87,7 @@ const Exam = () => {
   const loadExams = async () => {
     try {
       const response = await axios.get(
-        `http://13.233.43.240:8086/getAllExam?institutecode=${institutecode}`
+        `http://localhost:8086/getAllExam?institutecode=${institutecode}`
       );
       setExams(response.data);
       setFilteredExams(response.data);
@@ -115,7 +115,7 @@ const Exam = () => {
 
   const confirmDeleteExam = async () => {
     try {
-      await axios.delete(`http://13.233.43.240:8086/deleteExam/${examToDelete.id}`);
+      await axios.delete(`http://localhost:8086/deleteExam/${examToDelete.id}`);
       loadExams();
       // setSnackbarMessage("Exam deleted successfully");
       // setSnackbarColor("green");
@@ -156,7 +156,7 @@ const Exam = () => {
 
     try {
       await axios.post(
-        `http://13.233.43.240:8086/saveExam?institutecode=${institutecode}`,
+        `http://localhost:8086/saveExam?institutecode=${institutecode}`,
         exam
       );
       // setSnackbarMessage("Exam added successfully!");
@@ -183,7 +183,7 @@ const Exam = () => {
         throw new Error("No exam ID found");
       }
 
-      await axios.put(`http://13.233.43.240:8086/updateExam/${exam.id}`, exam, {
+      await axios.put(`http://localhost:8086/updateExam/${exam.id}`, exam, {
         headers: {
           "Content-Type": "application/json",
         },

@@ -10,15 +10,22 @@ import {
   Box,
   Card,
   CardContent,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from "@mui/material";
 
 import StarIcon from "@mui/icons-material/Star";
+import { policies } from "./policies";
+import PolicyPopup from './PolicyPopup ';
 
 const Settings = () => {
   const [employeeDetails, setEmployeeDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const email = localStorage.getItem("email");
-
+  const [open, setOpen] = useState(false);
+  const [selectedPolicy, setSelectedPolicy] = useState(null);
   useEffect(() => {
     const fetchEmployeeDetails = async () => {
       try {
@@ -29,7 +36,7 @@ const Settings = () => {
         }
 
         const response = await axios.get(
-          `http://13.233.43.240:8081/findInstitutesby/email?emailaddress=${email}`
+          `http://localhost:8081/findInstitutesby/email?emailaddress=${email}`
         );
         setEmployeeDetails(response.data);
         setLoading(false);
@@ -63,7 +70,14 @@ const Settings = () => {
       </Container>
     );
   }
+  const handleClickOpen = (policy) => {
+    setSelectedPolicy(policy);
+    setOpen(true);
+  };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <div
       maxWidth="lg"
@@ -87,43 +101,91 @@ const Settings = () => {
       >
         Basic Info.
       </Typography>
+      
       <Grid container spacing={2} justifyContent="center">
-        <Grid item xs={12} sm={6} md={4}>
-          <Typography
-            variant="body1"
-           
-            align="center"
-            style={{ padding: "8px" }}
-          >
-           <strong>Institute Name: </strong> {employeeDetails.institutename}
+      <Grid item xs={12} sm={6} md={4}>
+          <Typography variant="body1" align="center" style={{ padding: "8px" }}>
+            <strong>Admin Name: </strong> {employeeDetails.ownerName}
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
           <Typography variant="body1" align="center" style={{ padding: "8px" }}>
-          <strong>Institute Code: </strong>  {employeeDetails.institutecode}
+            <strong>Institute Name: </strong> {employeeDetails.institutename}
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
           <Typography variant="body1" align="center" style={{ padding: "8px" }}>
-          <strong>Registration Number: </strong>  {employeeDetails.registrationnumber}
+            <strong>Institute Code: </strong> {employeeDetails.institutecode}
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
           <Typography variant="body1" align="center" style={{ padding: "8px" }}>
-          <strong>Webside Name: </strong> {employeeDetails.websidename}
+            <strong>Email Address: </strong> {employeeDetails.emailaddress}
           </Typography>
         </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <Typography variant="body1" align="center" style={{ padding: "8px" }}>
+            <strong>Registration Number: </strong>{" "}
+            {employeeDetails.registrationnumber}
+          </Typography>
+        </Grid>
+      
+       
+      
+        <Grid item xs={12} sm={6} md={4}>
+          <Typography variant="body1" align="center" style={{ padding: "8px" }}>
+            <strong>Contact No. : </strong> {employeeDetails.mobilenumber}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <Typography variant="body1" align="center" style={{ padding: "8px" }}>
+            <strong>Webside Name: </strong> {employeeDetails.websidename}
+          </Typography>
+        </Grid>{" "}
       </Grid>
 
       <Grid item xs={12}>
-        <Typography
-          variant="h5"
-          color="#0D47A1"
-          align="center"
-          style={{ padding: "8px" }}
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          sx={{
+            borderBottom: "2px solid #0D47A1",
+            padding: "8px",
+            position: "relative",
+            "&::before": {
+              content: '""',
+              position: "absolute",
+              left: 0,
+              width: "50%",
+              borderBottom: "2px solid #0D47A1",
+              top: "50%",
+              transform: "translateY(-50%)",
+            },
+            "&::after": {
+              content: '""',
+              position: "absolute",
+              right: 0,
+              width: "50%",
+              borderBottom: "2px solid #0D47A1",
+              top: "50%",
+              transform: "translateY(-50%)",
+            },
+          }}
         >
-          <strong>Our Best Plans</strong>
-        </Typography>
+          <Typography
+            variant="h5"
+            color="#0D47A1"
+            align="center"
+            sx={{
+              backgroundColor: "white", // Ensure background is white for better visibility
+              paddingX: "8px", // Add some padding on the sides to space out from the lines
+              zIndex: 1, // Ensure text is on top of the lines
+            }}
+          >
+            <strong>Upgrade Your Plan</strong>
+          </Typography>
+        </Box>
       </Grid>
 
       <Box sx={{ flexGrow: 1, padding: 3 }}>
@@ -135,7 +197,7 @@ const Settings = () => {
                 position: "relative",
                 padding: 3,
                 textAlign: "center",
-                height: 320, // Set a fixed height
+                height: 350, // Set a fixed height
                 background: "linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%)",
                 boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
                 borderRadius: 4,
@@ -147,6 +209,85 @@ const Settings = () => {
               }}
             >
               {/* Bookmark with Best Seller Star */}
+
+              <CardContent sx={{ height: "400Px" }}>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    marginBottom: 2,
+                    background:
+                      "linear-gradient(90deg, #6A82FB 0%, #1E3A8A 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Free/Demo
+                </Typography>
+                <Box display="flex" alignItems="center">
+                  <Typography
+                    variant="h3"
+                    sx={{
+                      fontWeight: "bold",
+                      color: "#0D47A1",
+                      marginRight: 1, // Add some space between the price and the text
+                    }}
+                  >
+                    ₹0
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: "#1E88E5",
+                    }}
+                  >
+                    /Per Month
+                  </Typography>
+                </Box>
+
+                <Typography
+                  variant="body1"
+                  color="red"
+                  sx={{
+                    textDecoration: "line-through",
+                    fontSize: "1rem",
+                    marginBottom: 2,
+                  }}
+                >
+                  ₹99
+                </Typography>
+
+                <Typography
+                  variant="body1"
+                  sx={{
+                    // color: "#1976D2",
+                    marginBottom: 2,
+                  }}
+                >
+                  <b>Systems : </b> Enquiry, Admission, Income & Expense
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+
+          {/* Gold Plan */}
+          <Grid item xs={12} sm={6} md={3}>
+            <Card
+              sx={{
+                position: "relative",
+                padding: 3,
+                textAlign: "center",
+                height: 350, // Set a fixed height
+                background: "linear-gradient(135deg, #FFFDE7 0%, #FFF176 100%)",
+                boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+                borderRadius: 4,
+                transition: "transform 0.3s ease",
+                "&:hover": {
+                  transform: "scale(1.2)", // Increase size on hover
+                },
+              }}
+            >
+              {" "}
               <Box
                 sx={{
                   position: "absolute",
@@ -167,80 +308,6 @@ const Settings = () => {
                 <StarIcon sx={{ color: "gold", marginRight: 0.5 }} />
                 Best Seller
               </Box>
-
-              <CardContent>
-                <Typography
-                  variant="h5"
-                  sx={{
-                    marginBottom: 2,
-                    background:
-                      "linear-gradient(90deg, #6A82FB 0%, #1E3A8A 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Basic
-                </Typography>
-                <Typography
-                  variant="h3"
-                  sx={{
-                    fontWeight: "bold",
-                    color: "#0D47A1",
-                  }}
-                >
-                  $49
-                </Typography>
-                <Typography
-                  variant="body1"
-                  color="red"
-                  sx={{
-                    textDecoration: "line-through",
-                    fontSize: "1rem",
-                    marginBottom: 2,
-                  }}
-                >
-                  $99
-                </Typography>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    marginTop: 2,
-                    color: "#1E88E5",
-                  }}
-                >
-                  Validity: 6 Months
-                </Typography>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: "#1976D2",
-                    marginBottom: 2,
-                  }}
-                >
-                  Systems: Enquiry, Admission, Income & Expense
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          {/* Gold Plan */}
-          <Grid item xs={12} sm={6} md={3}>
-            <Card
-              sx={{
-                position: "relative",
-                padding: 3,
-                textAlign: "center",
-                height: 300, // Set a fixed height
-                background: "linear-gradient(135deg, #FFFDE7 0%, #FFF176 100%)",
-                boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-                borderRadius: 4,
-                transition: "transform 0.3s ease",
-                "&:hover": {
-                  transform: "scale(1.2)", // Increase size on hover
-                },
-              }}
-            >
               <CardContent>
                 <Typography
                   variant="h5"
@@ -253,17 +320,28 @@ const Settings = () => {
                     fontWeight: "bold",
                   }}
                 >
-                  Gold
+                  Basic
                 </Typography>
-                <Typography
-                  variant="h3"
-                  sx={{
-                    fontWeight: "bold",
-                    color: "#FBC02D",
-                  }}
-                >
-                  $99
-                </Typography>
+                <Box display="flex" alignItems="center">
+                  <Typography
+                    variant="h3"
+                    sx={{
+                      fontWeight: "bold",
+                      color: "#0D47A1",
+                      marginRight: 1, // Add some space between the price and the text
+                    }}
+                  >
+                    ₹99
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: "#1E88E5",
+                    }}
+                  >
+                    /Per Month
+                  </Typography>
+                </Box>
                 <Typography
                   variant="body1"
                   color="red"
@@ -273,25 +351,17 @@ const Settings = () => {
                     marginBottom: 2,
                   }}
                 >
-                  $199
+                  ₹199
                 </Typography>
+
                 <Typography
                   variant="body1"
                   sx={{
-                    marginTop: 2,
-                    color: "#FDD835",
-                  }}
-                >
-                  Validity: 12 Months
-                </Typography>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: "#FBC02D",
+                    //  color: "#FBC02D",
                     marginBottom: 2,
                   }}
                 >
-                  Systems: Enquiry, Admission, Income & Expense
+                  <b>Systems : </b> Enquiry, Admission, Income & Expense
                 </Typography>
                 <Box sx={{ marginTop: 3 }}>
                   <Button
@@ -307,7 +377,7 @@ const Settings = () => {
                       },
                     }}
                   >
-                    Add
+                    Upgrade
                   </Button>
                 </Box>
               </CardContent>
@@ -321,7 +391,7 @@ const Settings = () => {
                 position: "relative",
                 padding: 3,
                 textAlign: "center",
-                height: 300, // Set a fixed height
+                height: 350, // Set a fixed height
                 background: "linear-gradient(135deg, #E8F5E9 0%, #A5D6A7 100%)",
                 boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
                 borderRadius: 4,
@@ -343,45 +413,48 @@ const Settings = () => {
                     fontWeight: "bold",
                   }}
                 >
-                  Platinum
+                  Premium
                 </Typography>
-                <Typography
-                  variant="h3"
-                  sx={{
-                    fontWeight: "bold",
-                    color: "#388E3C",
-                  }}
-                >
-                  $149
-                </Typography>
+                <Box display="flex" alignItems="center">
+                  <Typography
+                    variant="h3"
+                    sx={{
+                      fontWeight: "bold",
+                      color: "#0D47A1",
+                      marginRight: 1, // Add some space between the price and the text
+                    }}
+                  >
+                    ₹149
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: "#1E88E5",
+                    }}
+                  >
+                    /Per Month
+                  </Typography>
+                </Box>
                 <Typography
                   variant="body1"
-             color="red"
+                  color="red"
                   sx={{
                     textDecoration: "line-through",
                     fontSize: "1rem",
                     marginBottom: 2,
                   }}
                 >
-                  $299
+                  ₹299
                 </Typography>
+
                 <Typography
                   variant="body1"
                   sx={{
-                    marginTop: 2,
-                    color: "#43A047",
-                  }}
-                >
-                  Validity: 18 Months
-                </Typography>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: "#2E7D32",
+                    // color: "#2E7D32",
                     marginBottom: 2,
                   }}
                 >
-                  Systems: Enquiry, Admission, Income & Expense
+                  <b>Systems : </b> Enquiry, Admission, Income & Expense
                 </Typography>
                 <Box sx={{ marginTop: 3 }}>
                   <Button
@@ -397,7 +470,7 @@ const Settings = () => {
                       },
                     }}
                   >
-                    Add
+                    Upgrade
                   </Button>
                 </Box>
               </CardContent>
@@ -411,7 +484,7 @@ const Settings = () => {
                 position: "relative",
                 padding: 3,
                 textAlign: "center",
-                height: 300, // Set a fixed height
+                height: 350, // Set a fixed height
                 background: "linear-gradient(135deg, #FFEBEE 0%, #EF9A9A 100%)",
                 boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
                 borderRadius: 4,
@@ -433,45 +506,47 @@ const Settings = () => {
                     fontWeight: "bold",
                   }}
                 >
-                  Premium
+                  Business
                 </Typography>
-                <Typography
-                  variant="h3"
-                  sx={{
-                    fontWeight: "bold",
-                    color: "#F44336",
-                  }}
-                >
-                  $199
-                </Typography>
+                <Box display="flex" alignItems="center">
+                  <Typography
+                    variant="h3"
+                    sx={{
+                      fontWeight: "bold",
+                      color: "#0D47A1",
+                      marginRight: 1, // Add some space between the price and the text
+                    }}
+                  >
+                    ₹299
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: "#1E88E5",
+                    }}
+                  >
+                    /Per Month
+                  </Typography>
+                </Box>
                 <Typography
                   variant="body1"
-               color="red"
+                  color="red"
                   sx={{
                     textDecoration: "line-through",
                     fontSize: "1rem",
                     marginBottom: 2,
                   }}
                 >
-                  $399
+                  ₹399
                 </Typography>
                 <Typography
                   variant="body1"
                   sx={{
-                    marginTop: 2,
-                    color: "#E57373",
-                  }}
-                >
-                  Validity: 24 Months
-                </Typography>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: "#D32F2F",
+                    // color: "#D32F2F",
                     marginBottom: 2,
                   }}
                 >
-                  Systems: Enquiry, Admission, Income & Expense
+                  <b>Systems : </b> Enquiry, Admission, Income & Expense
                 </Typography>
                 <Box sx={{ marginTop: 3 }}>
                   <Button
@@ -487,7 +562,7 @@ const Settings = () => {
                       },
                     }}
                   >
-                    Add
+                    Upgrade
                   </Button>
                 </Box>
               </CardContent>
@@ -497,7 +572,15 @@ const Settings = () => {
       </Box>
 
       {/* Divider */}
-      <Divider style={{ margin: "24px 0" }} />
+      <Grid item xs={12}>
+        <Box
+          sx={{
+            borderBottom: "2px solid #0D47A1",
+            margin: "24px 0", // Adjust the margin as needed
+            width: "100%", // Make sure it spans the full width
+          }}
+        />
+      </Grid>
 
       {/* Legal Information Section */}
       <Typography
@@ -533,7 +616,60 @@ const Settings = () => {
             <strong>GST No:</strong> {employeeDetails.gstNo}
           </Typography>
         </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <Typography variant="body1" align="center" style={{ padding: "8px" }}>
+            <strong>LOA:</strong> {employeeDetails.loa}
+          </Typography>
+        </Grid>
       </Grid>
+      <Grid container spacing={2} justifyContent="center">
+        {/* Your existing grid items for employee details */}
+        {/* ... */}
+      </Grid>
+
+      {/* Policies Section */}
+      <Grid container spacing={2} justifyContent="center" sx={{ marginTop: "24px" }}>
+        <Grid item>
+          <Typography
+            variant="body1"
+            align="center"
+            onClick={() => handleClickOpen(policies.privacyPolicy)}
+            sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+          >
+            Privacy Policy
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography
+            variant="body1"
+            align="center"
+            onClick={() => handleClickOpen(policies.termsConditions)}
+            sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+          >
+            Terms & Conditions
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography
+            variant="body1"
+            align="center"
+            onClick={() => handleClickOpen(policies.dataProductPolicy)}
+            sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+          >
+            Data & Product Policy
+          </Typography>
+        </Grid>
+      </Grid>
+
+      {/* Dialog for Policy Information */}
+        
+      {selectedPolicy && (
+        <PolicyPopup
+          open={open}
+          onClose={handleClose}
+          policy={selectedPolicy}
+        />
+      )}
     </div>
   );
 };

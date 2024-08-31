@@ -45,9 +45,9 @@ const Memo = React.memo(() => {
     let url;
 
     if (option === 'Memo') {
-      url = 'http://13.233.43.240:8082/memos/addmemo';
+      url = 'http://localhost:8082/memos/addmemo';
     } else if (option === 'Notification') {
-      url = 'http://13.233.43.240:8082/notices/addnotice';
+      url = 'http://localhost:8082/notices/addnotice';
     }
 
     try {

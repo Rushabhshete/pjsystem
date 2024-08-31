@@ -39,6 +39,7 @@ export const studentManagementErrors = {
   unauthorizedAccess: '"You do not have permission to access this resource."',
   connectionFailed: '"Failed to connect to the database."',
   queryFailed: '"Database query failed."',
+  changeEmail: '"Want To Change Email."',
   recordNotFound: '"The requested record was not found."',
   duplicateRecord: '"A record with the same identifier already exists."',
   timeout: '"The request timed out."',

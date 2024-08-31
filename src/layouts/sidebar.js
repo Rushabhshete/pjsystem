@@ -202,17 +202,17 @@ const sidebarOptions = [
         subSubOptions: [
           {
             name: "Dashboard",
-            // route: "/employee/hr/add",
+             route: "/layout/empDashboard",
             icon: <GridViewRoundedIcon />,
           },
           {
             name: "Add Employee",
-            // route: "/employee/hr/add",
+             route: "/layout/empAdd",
             icon: <NotificationsIcon />,
           },
           {
             name: "Employee List",
-            // route: "/employee/hr/manage",
+             route: "/layout/empList",
             icon: <NotificationsIcon />,
           },
           {

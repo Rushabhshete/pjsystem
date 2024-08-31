@@ -16,6 +16,7 @@ import {
   IconButton,
   Grid,
   Box,
+  TablePagination,
   Typography,
   TextField,
   Dialog,
@@ -52,7 +53,8 @@ export default function Report() {
 
   const [smsDialogOpen, setSmsDialogOpen] = useState(false);
   const [smsData, setSmsData] = useState({ mobile: "", content: "" });
-
+  const [rowsPerPage, setRowsPerPage] = useState(50);
+  const [page, setPage] = useState(0);
   const getInstituteCode = () => localStorage.getItem("institutecode");
 
   // Load data on component mount
@@ -70,13 +72,13 @@ export default function Report() {
   }, [startDate, endDate]);
 
   const loadUsers = async (start = "", end = "") => {
-    let url = `http://13.233.43.240:8086/get/getALLEnquiryByInstitutecode?institutecode=${getInstituteCode()}`;
+    let url = `http://localhost:8086/get/getALLEnquiryByInstitutecode?institutecode=${getInstituteCode()}`;
 
     // Update URL based on date, month and year filters
     if (start && end) {
-      url = `http://13.233.43.240:8086/enquiryBetweenDates?startDate=${start}&endDate=${end}&institutecode=${getInstituteCode()}`;
+      url = `http://localhost:8086/enquiryBetweenDates?startDate=${start}&endDate=${end}&institutecode=${getInstituteCode()}`;
     } else if (selectedYear && selectedMonth) {
-      url = `http://13.233.43.240:8086/enquiryByMonthAndYear?month=${selectedMonth}&year=${selectedYear}&institutecode=${getInstituteCode()}`;
+      url = `http://localhost:8086/enquiryByMonthAndYear?month=${selectedMonth}&year=${selectedYear}&institutecode=${getInstituteCode()}`;
     }
 
     const result = await axios.get(url);
@@ -86,7 +88,7 @@ export default function Report() {
   const loadExams = async () => {
     try {
       const response = await axios.get(
-        `http://13.233.43.240:8086/getAllExam?institutecode=${getInstituteCode()}`
+        `http://localhost:8086/getAllExam?institutecode=${getInstituteCode()}`
       );
       setExamOptions(response.data);
     } catch (error) {
@@ -97,7 +99,7 @@ export default function Report() {
   const loadSources = async () => {
     try {
       const response = await axios.get(
-        `http://13.233.43.240:8086/getAllSource?institutecode=${getInstituteCode()}`
+        `http://localhost:8086/getAllSource?institutecode=${getInstituteCode()}`
       );
       setSourceOptions(response.data);
     } catch (error) {
@@ -108,7 +110,7 @@ export default function Report() {
   const loadConducts = async () => {
     try {
       const response = await axios.get(
-        `http://13.233.43.240:8086/get/getAllConductModels?institutecode=${getInstituteCode()}`
+        `http://localhost:8086/get/getAllConductModels?institutecode=${getInstituteCode()}`
       );
       setConductedBy(response.data);
     } catch (error) {
@@ -154,7 +156,14 @@ export default function Report() {
     setSelectedYear(e.target.value);
     loadUsers();
   };
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
   const filterInquiries = () => {
     return inquiries.filter((inquiry) => {
       const matchesExam = selectedExam ? inquiry.exam === selectedExam : true;
@@ -257,7 +266,7 @@ export default function Report() {
 
   const handleSendSms = async () => {
     try {
-      await axios.post("http://13.233.43.240:8086/sendSms", {
+      await axios.post("http://localhost:8086/sendSms", {
         mobile: smsData.mobile,
         content: smsData.content,
       });
@@ -390,7 +399,7 @@ export default function Report() {
               <MenuItem value="">
                 <strong>All</strong>
               </MenuItem>
-              <MenuItem value="Call">Call</MenuItem>
+              <MenuItem value="Call Back">Call Back</MenuItem>
               <MenuItem value="Interested">Interested</MenuItem>
               <MenuItem value="Not Interested">Not Interested</MenuItem>
               <MenuItem value="DND">DND</MenuItem>
@@ -401,8 +410,8 @@ export default function Report() {
           </Grid>
           <Grid item xs={12} md={3} className="textField-root">
             <TextField
-            InputLabelProps={{shrink:true}}
-            label="Start Date"
+              InputLabelProps={{ shrink: true }}
+              label="Start Date"
               type="date"
               value={startDate}
               onChange={handleStartDateChange}
@@ -413,8 +422,8 @@ export default function Report() {
           </Grid>
           <Grid item xs={12} md={3} className="textField-root">
             <TextField
-            InputLabelProps={{shrink:true}}
-            label="End Date"
+              InputLabelProps={{ shrink: true }}
+              label="End Date"
               type="date"
               value={endDate}
               onChange={handleEndDateChange}
@@ -472,6 +481,15 @@ export default function Report() {
         </Grid>
 
         <Box mt={4}>
+        <TablePagination
+        rowsPerPageOptions={[50, 100, 150]}
+        component="div"
+        count={filterInquiries.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
           <TableContainer>
             <Table>
               <TableHead sx={{ backgroundColor: "#f2f2f2", align: "center" }}>

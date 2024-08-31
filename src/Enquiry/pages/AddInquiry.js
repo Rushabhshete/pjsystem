@@ -45,7 +45,7 @@ export default function AddEnquiry() {
   });
   const [error, setError] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);  const [emailError, setEmailError] = useState("");
 
   const theme = useTheme();
 
@@ -59,6 +59,9 @@ export default function AddEnquiry() {
         setError("Phone number should not exceed 10 digits");
       }
     }
+    if (e.target.name === "email") {
+      setEmailError(validateEmail(e.target.value) ? "" : "Please enter a valid email address.");
+    }
   };
 
   useEffect(() => {
@@ -67,13 +70,13 @@ export default function AddEnquiry() {
         const [examsResponse, sourcesResponse, conductsResponse] =
           await Promise.all([
             axios.get(
-              `http://13.233.43.240:8086/getAllExam?institutecode=${Enquiry.institutecode}`
+              `http://localhost:8086/getAllExam?institutecode=${Enquiry.institutecode}`
             ),
             axios.get(
-              `http://13.233.43.240:8086/getAllSource?institutecode=${Enquiry.institutecode}`
+              `http://localhost:8086/getAllSource?institutecode=${Enquiry.institutecode}`
             ),
             axios.get(
-              `http://13.233.43.240:8086/get/getAllConductModels?institutecode=${Enquiry.institutecode}`
+              `http://localhost:8086/get/getAllConductModels?institutecode=${Enquiry.institutecode}`
             ),
           ]);
 
@@ -87,6 +90,10 @@ export default function AddEnquiry() {
 
     fetchOptions();
   }, []);
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const validateFields = () => {
     if (
@@ -103,29 +110,35 @@ export default function AddEnquiry() {
       setErrorMessage("Fill all the necessary fields");
       return false;
     }
-    if (Enquiry.status1 === "Call") {
+  
+    if (!validateEmail(Enquiry.email)) {
+      setEmailError("Please enter a valid email address.");
+      return false;
+    }
+  
+    if (Enquiry.status1 === "Call Back") {
       if (!Enquiry.callBackDate || !Enquiry.callBackTime) {
         setErrorMessage("Please fill in the call back date and time");
         return false;
       }
     }
-
+  
     return true;
   };
 
   const onSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
-
+  
     // Validate fields before submitting
     if (!validateFields()) {
       setOpenSnackbar(true);
       return;
     }
-
+  
     try {
       // Send the form data to the API endpoint
       await axios.post(
-        `http://13.233.43.240:8086/save/enquiry?institutecode=${Enquiry.institutecode}`,
+        `http://localhost:8086/save/enquiry?institutecode=${Enquiry.institutecode}`,
         Enquiry
       );
       toast.success("Enquiry Added Successfully");
@@ -226,6 +239,8 @@ export default function AddEnquiry() {
               onChange={onInputChange}
               fullWidth
               size="small"
+              error={Boolean(emailError)}
+              helperText={emailError}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -299,7 +314,7 @@ export default function AddEnquiry() {
                 onChange={onInputChange}
                 sx={{ textAlign: "left" }} // Aligns text to the left in the Select component
               >
-                <MenuItem value="Call">Call</MenuItem>
+                <MenuItem value="Call Back">Call Back</MenuItem>
                 <MenuItem value="Interested">Interested</MenuItem>
                 <MenuItem value="Not Interested">Not Interested</MenuItem>
                 <MenuItem value="DND">DND</MenuItem>
@@ -310,7 +325,7 @@ export default function AddEnquiry() {
             </FormControl>
           </Grid>
 
-          {Enquiry.status1 === "Call" && (
+          {Enquiry.status1 === "Call Back" && (
             <>
               <Grid item xs={12} sm={6}>
                 <TextField

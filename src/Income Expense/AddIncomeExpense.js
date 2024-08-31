@@ -103,7 +103,7 @@ const AddIncomeExpense = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `http://13.233.43.240:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
+          `http://localhost:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
         );
         setUsers(response.data);
         setFilteredUsers(response.data); // Initialize with all users
@@ -121,7 +121,7 @@ const AddIncomeExpense = () => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
-          `http://13.233.43.240:8087/categories/getAllCategoriesByInstitutecode?institutecode=${getInstituteCode()}`
+          `http://localhost:8087/categories/getAllCategoriesByInstitutecode?institutecode=${getInstituteCode()}`
         );
         setCategories(response.data);
       } catch (error) {
@@ -236,8 +236,8 @@ const AddIncomeExpense = () => {
     };
     const apiUrl =
       formData.type === "Income"
-        ? `http://13.233.43.240:8087/incomes/save?institutecode=${getInstituteCode()}`
-        : `http://13.233.43.240:8087/expenses/save?institutecode=${getInstituteCode()}`;
+        ? `http://localhost:8087/incomes/save?institutecode=${getInstituteCode()}`
+        : `http://localhost:8087/expenses/save?institutecode=${getInstituteCode()}`;
 
     try {
       await axios.post(apiUrl, integerFormData);

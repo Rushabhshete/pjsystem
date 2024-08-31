@@ -39,7 +39,7 @@ const HelpDeskForm = ({ open, onClose }) => {
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
-        `http://13.233.43.240:8081/createTicket?institutecode=${institutecode()}`,
+        `http://localhost:8081/createTicket?institutecode=${institutecode()}`,
         formData
       );
       console.log("Ticket created:", response.data);
@@ -80,8 +80,8 @@ const HelpDeskForm = ({ open, onClose }) => {
           <FormControl fullWidth margin="dense">
             <TextField
               label="Select System"
-              name="system"
-              value={formData.system}
+              name="systemName"
+              value={formData.systemName}
               onChange={handleChange}
               required
               select
