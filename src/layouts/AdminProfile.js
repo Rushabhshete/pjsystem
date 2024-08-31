@@ -358,7 +358,7 @@ const AdminProfile = () => {
                   color: "green",
                 }}
               >
-                ₹49
+                ₹149
               </Typography>
 
               {/* MRP */}
@@ -372,19 +372,19 @@ const AdminProfile = () => {
                   color: "red",
                 }}
               >
-                ₹99
+                ₹299
               </Typography>
 
               {/* Plan Details */}
-              <Typography
+              {/* <Typography
                 variant="h6"
                 sx={{
                   marginTop: 2,
                   color: "#1E88E5",
                 }}
               >
-                Validity: {employeeDetails.subscriptionyear}
-              </Typography>
+                Validity: {employeeDetails.subscriptionyear} Year
+              </Typography> */}
 
               {/* Systems Heading */}
               <Typography
@@ -709,6 +709,7 @@ const AdminProfile = () => {
           </Button>
         </DialogActions>
       </Dialog>
+      
     </div>
   );
 };

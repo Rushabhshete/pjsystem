@@ -12,7 +12,7 @@ import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import logo from '../img/logo.jpg';
+import logo from "../img/logo.jpg";
 
 const fadeIn = keyframes`
   from {
@@ -179,6 +179,9 @@ function Login({ onLogin }) {
   const handleForgotPassword = () => {
     navigate("/forgot-password");
   };
+  const handleCreateAccount = () => {
+    navigate("/create-account");
+  };
 
   return (
     <BackgroundContainer>
@@ -231,6 +234,20 @@ function Login({ onLogin }) {
               <BtnPrimary variant="contained" color="primary" type="submit">
                 Login
               </BtnPrimary>
+              <Link
+                href="#"
+                onClick={handleCreateAccount}
+                underline="hover"
+                sx={{
+                  display: "block",
+                  textAlign: "center",
+                  color: "#007BFF",
+                  "&:hover": { color: "#0056B3" },
+                  marginBottom: "10px",
+                }}
+              >
+                Create Account
+              </Link>
               <ForgotPasswordLink
                 href="#"
                 onClick={handleForgotPassword}

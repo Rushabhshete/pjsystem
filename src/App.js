@@ -160,6 +160,7 @@ import Settings from "./layouts/Settings";
 import EmployeeDashboard from "./Employee_System/Employee/EmployeeDashboard";
 import AddEmployee from "./Employee_System/Employee/AddEmployee";
 import EmployeeList from "./Employee_System/Employee/EmployeeList";
+import CreateAccount from "./layouts/CreateAccount";
 
 
 function AppContent() {
@@ -186,6 +187,7 @@ function AppContent() {
     <>
       <Routes>
         <Route path="/systems/" element={<Login onLogin={handleLogin} />} />
+        <Route path="/create-account" element={<CreateAccount />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         {/* <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}> */}
 
