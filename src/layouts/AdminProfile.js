@@ -229,13 +229,13 @@ const AdminProfile = () => {
       alert('Please select an image file to upload.');
       return;
     }
-
+  
     const formData = new FormData();
-    formData.append('adminphoto', selectedFile);
-
+    formData.append('instituteimage', selectedFile);
+  
     try {
-      const response = await axios.put(
-        `http://localhost:8081/updateadminimage/${email}`,
+      const response = await axios.post(
+        `http://localhost:8081/updateimage/${email}`,
         formData,
         {
           headers: {
@@ -243,14 +243,20 @@ const AdminProfile = () => {
           },
         }
       );
-
-      alert(response.data); // Show success message
-      setSelectedFile(null); // Clear file input
+  
+      alert(response.data);
+      setEmployeeDetails((prevDetails) => ({
+        ...prevDetails,
+        instituteimage: URL.createObjectURL(selectedFile), // Update image in the state
+      }));
+      setOpen(false);
+      setSelectedFile(null);
     } catch (error) {
       console.error('Error updating image:', error);
       alert('Failed to update image.');
     }
   };
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "image" && files[0]) {
@@ -583,8 +589,8 @@ const AdminProfile = () => {
                 <Grid item xs={12} sm={6}>
                   <StyledTextField
                     fullWidth
-                    label="Webside Name"
-                    value={employeeDetails.websidename}
+                    label="Website Name"
+                    value={employeeDetails.websitename}
                     InputProps={{ readOnly: true }}
                     variant="outlined"
                   />
@@ -593,7 +599,7 @@ const AdminProfile = () => {
                   <TextField
                     fullWidth
                     label="Address"
-                    value={employeeDetails.Address}
+                    value={employeeDetails.address}
                     InputProps={{ readOnly: true }}
                     variant="outlined"
                   />
