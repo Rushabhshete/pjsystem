@@ -186,44 +186,7 @@ const AdminProfile = () => {
     setSelectedFile(null);
   };
 
-  // const handleSave = async () => {
-  //   const formData = new FormData();
-  //   // Uncomment and use these fields as needed
-  //   // formData.append("fullName", editValues.fullName);
-  //   // formData.append("mobileNo", editValues.mobileNo);
-  //   // formData.append("password", editValues.password);
-  //   // formData.append("confirmPassword", editValues.confirmPassword);
-    
-  //   if (selectedFile) {
-  //     formData.append("adminphoto", selectedFile);
-  //   }
-  
-  //   try {
-  //     const response = await axios.patch(
-  //       `http://localhost:8081/updateadminimage/${email}`,
-  //       formData,
-  //       {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //         },
-  //       }
-  //     );
-  
-  //     setEmployeeDetails((prevDetails) => ({
-  //       ...prevDetails,
-  //       ...editValues,
-  //       ...(selectedFile && {
-  //         adminphoto: URL.createObjectURL(selectedFile),
-  //       }),
-  //     }));
-  //     setOpen(false);
-  //     setEditingField(null);
-  //     setSelectedFile(null);
-  //   } catch (error) {
-  //     console.error("Error updating employee details:", error);
-  //   }
-  // };
-  
+ 
   const handleSave = async () => {
     if (!selectedFile) {
       alert('Please select an image file to upload.');
