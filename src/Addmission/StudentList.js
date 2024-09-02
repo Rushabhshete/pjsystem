@@ -16,6 +16,7 @@ import {
   Button,
   IconButton,
   Dialog,
+  Box,
   DialogActions,
   DialogContent,
   DialogTitle,
@@ -67,10 +68,12 @@ const StudentList = () => {
   const [endDate, setEndDate] = useState("");
   const [selectedSource, setSelectedSource] = useState("");
   const [selectedCourse, setSelectedCourse] = useState("");
+  const [selectedGuide, setSelectedGuide] = useState("");
   const [selectedPaymentMode, setSelectedPaymentMode] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [courses, setCourses] = useState([]);
   const [sources, setSources] = useState([]);
+  const [guide,setGuide] = useState([]);
   const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
   const [currentAdmission, setCurrentAdmission] = useState(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -80,14 +83,29 @@ const StudentList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [admissionResponse, sourceResponse, courseResponse] = await Promise.all([
-          axios.get(`http://localhost:8085/admissions?institutecode=${institutecode}`),
-          axios.get(`http://localhost:8085/api/sourceBy/getAll?institutecode=${institutecode}`),
-          axios.get(`http://localhost:8085/getAllCourse?institutecode=${institutecode}`)
+        const [
+          admissionResponse,
+          sourceResponse,
+          courseResponse,
+          guideResponse,
+        ] = await Promise.all([
+          axios.get(
+            `http://localhost:8085/admissions?institutecode=${institutecode}`
+          ),
+          axios.get(
+            `http://localhost:8085/api/sourceBy/getAll?institutecode=${institutecode}`
+          ),
+          axios.get(
+            `http://localhost:8085/getAllCourse?institutecode=${institutecode}`
+          ),
+          axios.get(
+            `http://localhost:8085/api/conductBy/getAllConductBy?institutecode=${institutecode}`
+          ),
         ]);
         setAdmissions(admissionResponse.data);
         setSources(sourceResponse.data);
         setCourses(courseResponse.data);
+        setGuide(guideResponse.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -117,6 +135,10 @@ const StudentList = () => {
   const handleCourseMethodChange = (event) => {
     setSelectedCourse(event.target.value);
   };
+  const handleGuideChnage = (event) => {
+    setSelectedGuide(event.target.value);
+  };
+
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
@@ -124,14 +146,38 @@ const StudentList = () => {
 
   const filteredAdmissions = useMemo(() => {
     return admissions.filter((admission) => {
-      const matchesSource = selectedSource ? admission.sourceBy === selectedSource : true;
-      const matchesCourse = selectedCourse ? admission.courses === selectedCourse : true;
-      const matchesPaymentMode = selectedPaymentMode ? admission.paymentMode === selectedPaymentMode : true;
-      const matchesSearchQuery = admission.name.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesSource = selectedSource
+        ? admission.sourceBy === selectedSource
+        : true;
+      const matchesCourse = selectedCourse
+        ? admission.courses === selectedCourse
+        : true;
+      const matchesPaymentMode = selectedPaymentMode
+        ? admission.paymentMode === selectedPaymentMode
+        : true;
+      const matchesGuideName = selectedGuide
+        ? admission.guideName === selectedGuide
+        : true;
+      const matchesSearchQuery = admission.name
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase());
 
-      return matchesSource && matchesCourse && matchesPaymentMode && matchesSearchQuery;
+      return (
+        matchesSource &&
+        matchesCourse &&
+        matchesGuideName &&
+        matchesPaymentMode &&
+        matchesSearchQuery 
+      );
     });
-  }, [admissions, selectedSource, selectedCourse, selectedPaymentMode, searchQuery]);
+  }, [
+    admissions,
+    selectedSource,
+    selectedCourse,
+    selectedGuide,
+    selectedPaymentMode,
+    searchQuery,
+  ]);
 
   const handleDownload = () => {
     const doc = new jsPDF({
@@ -217,9 +263,13 @@ const StudentList = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:8085/deleteAdmission/${admissionIdToDelete}`);
+      await axios.delete(
+        `http://localhost:8085/deleteAdmission/${admissionIdToDelete}`
+      );
       setAdmissions((prevAdmissions) =>
-        prevAdmissions.filter((admission) => admission.id !== admissionIdToDelete)
+        prevAdmissions.filter(
+          (admission) => admission.id !== admissionIdToDelete
+        )
       );
     } catch (error) {
       console.error("Error deleting admission:", error);
@@ -231,7 +281,7 @@ const StudentList = () => {
   };
 
   const PopTypography = styled(Typography)`
-    animation: pop 1s ease-in-out;
+
     @keyframes pop {
       0% {
         transform: scale(1);
@@ -244,6 +294,19 @@ const StudentList = () => {
       }
     }
   `;
+  const formatValue = (value) => Math.abs(value).toLocaleString();
+  const totalAmount = filteredAdmissions.reduce(
+    (acc, item) => acc + item.totalFees,
+    0
+  );
+  const paidAmount = filteredAdmissions.reduce(
+    (acc, item) => acc + item.paidFees,
+    0
+  );
+  const pendingAmount = filteredAdmissions.reduce(
+    (acc, item) => acc + item.pendingFees,
+    0
+  );
 
   return (
     <div>
@@ -347,6 +410,22 @@ const StudentList = () => {
               </MenuItem>
             ))}
           </TextField>
+        </Grid>{" "}
+        <Grid item xs={8} sm={1.6} md={2}>
+          <TextField
+            select
+            fullWidth
+            label="Guide"
+            value={selectedGuide}
+            onChange={handleGuideChnage}
+          >
+            <MenuItem value="">All Guide</MenuItem>
+            {guide.map((guide) => (
+              <MenuItem key={guide.id} value={guide.guideName}>
+                {guide.guideName}
+              </MenuItem>
+            ))}
+          </TextField>
         </Grid>
         <Grid item xs={8} sm={1.6} md={2}>
           <TextField
@@ -356,10 +435,10 @@ const StudentList = () => {
             value={selectedPaymentMode}
             onChange={handlePaymentModeChange}
           >
-          <MenuItem value="Cheque">Cheque</MenuItem>
-              <MenuItem value="UPI">UPI</MenuItem>
-              <MenuItem value="Cash">Cash</MenuItem>
-              <MenuItem value="Bank Transfer">Bank Transfer</MenuItem>
+            <MenuItem value="Cheque">Cheque</MenuItem>
+            <MenuItem value="UPI">UPI</MenuItem>
+            <MenuItem value="Cash">Cash</MenuItem>
+            <MenuItem value="Bank Transfer">Bank Transfer</MenuItem>
           </TextField>
         </Grid>
         <Grid item xs={8} sm={1.6} md={2}>
@@ -389,7 +468,25 @@ const StudentList = () => {
           </DownloadButton>
         </Grid>
       </Grid>
-
+      <Box display="flex" marginTop="20px">
+        <Typography
+          variant="h6"
+          gutterBottom
+          sx={{ marginRight: 10, whiteSpace: "nowrap", marginLeft: 5 }}
+        >
+          Total Amount(+GST) : ₹ {formatValue(totalAmount)}
+        </Typography>
+        <Typography
+          variant="h6"
+          gutterBottom
+          sx={{ marginRight: 10, whiteSpace: "nowrap" }}
+        >
+          Paid Amount : ₹ {formatValue(paidAmount)}
+        </Typography>
+        <Typography variant="h6" gutterBottom sx={{ whiteSpace: "nowrap" }}>
+          Pending Amount : ₹ {formatValue(pendingAmount)}
+        </Typography>
+      </Box>
       {loading ? (
         <CircularProgress />
       ) : (
@@ -407,13 +504,23 @@ const StudentList = () => {
                 <TableCell style={{ fontWeight: "bold" }}>Email</TableCell>
                 <TableCell style={{ fontWeight: "bold" }}>Course</TableCell>
                 <TableCell style={{ fontWeight: "bold" }}>Duration</TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>Joining Date</TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>Expiry Date</TableCell>
+                <TableCell style={{ fontWeight: "bold" }}>
+                  Joining Date
+                </TableCell>
+                <TableCell style={{ fontWeight: "bold" }}>
+                  Expiry Date
+                </TableCell>
                 <TableCell style={{ fontWeight: "bold" }}>Total Fees</TableCell>
                 <TableCell style={{ fontWeight: "bold" }}>Paid Fees</TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>Pending Fees</TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>Payment Mode</TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>Transaction ID</TableCell>
+                <TableCell style={{ fontWeight: "bold" }}>
+                  Pending Fees
+                </TableCell>
+                <TableCell style={{ fontWeight: "bold" }}>
+                  Payment Mode
+                </TableCell>
+                <TableCell style={{ fontWeight: "bold" }}>
+                  Transaction ID
+                </TableCell>
                 <TableCell style={{ fontWeight: "bold" }}>Status</TableCell>
                 <TableCell style={{ fontWeight: "bold" }}>Actions</TableCell>
               </TableRow>
@@ -437,12 +544,21 @@ const StudentList = () => {
                   <TableCell>{admission.pendingFees}</TableCell>
                   <TableCell>{admission.paymentMode}</TableCell>
                   <TableCell>{admission.transactionid}</TableCell>
-                  <TableCell style={{
-                    fontWeight:"bold",
-  color: admission.paymentMethod === 'Pending' ? 'red' :
-         admission.paymentMethod === 'Partial' ? 'purple' :
-         admission.paymentMethod === 'Complete' ? 'green' : "green"
-}}>{admission.paymentMethod}</TableCell>
+                  <TableCell
+                    style={{
+                      fontWeight: "bold",
+                      color:
+                        admission.paymentMethod === "Pending"
+                          ? "red"
+                          : admission.paymentMethod === "Partial"
+                          ? "purple"
+                          : admission.paymentMethod === "Complete"
+                          ? "green"
+                          : "green",
+                    }}
+                  >
+                    {admission.paymentMethod}
+                  </TableCell>
                   <TableCell style={{ whiteSpace: "nowrap" }}>
                     <IconButton
                       variant="contained"

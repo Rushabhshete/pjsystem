@@ -45,7 +45,8 @@ export default function AddEnquiry() {
   });
   const [error, setError] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [openSnackbar, setOpenSnackbar] = useState(false);  const [emailError, setEmailError] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [emailError, setEmailError] = useState("");
 
   const theme = useTheme();
 
@@ -60,7 +61,11 @@ export default function AddEnquiry() {
       }
     }
     if (e.target.name === "email") {
-      setEmailError(validateEmail(e.target.value) ? "" : "Please enter a valid email address.");
+      setEmailError(
+        validateEmail(e.target.value)
+          ? ""
+          : "Please enter a valid email address."
+      );
     }
   };
 
@@ -110,31 +115,31 @@ export default function AddEnquiry() {
       setErrorMessage("Fill all the necessary fields");
       return false;
     }
-  
+
     if (!validateEmail(Enquiry.email)) {
       setEmailError("Please enter a valid email address.");
       return false;
     }
-  
+
     if (Enquiry.status1 === "Call Back") {
       if (!Enquiry.callBackDate || !Enquiry.callBackTime) {
         setErrorMessage("Please fill in the call back date and time");
         return false;
       }
     }
-  
+
     return true;
   };
 
   const onSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
-  
+
     // Validate fields before submitting
     if (!validateFields()) {
       setOpenSnackbar(true);
       return;
     }
-  
+
     try {
       // Send the form data to the API endpoint
       await axios.post(
@@ -143,9 +148,7 @@ export default function AddEnquiry() {
       );
       toast.success("Enquiry Added Successfully");
       // Navigate to /report after successful submission
-      setTimeout(() => {
-        navigate("/layout/report");
-      }, 3000); // Delay navigation to allow Snackbar to show
+      navigate("/layout/report");
     } catch (error) {
       console.error(
         "There was an error adding the Enquiry!",
@@ -178,15 +181,16 @@ export default function AddEnquiry() {
   return (
     <div maxWidth="false" sx={{ padding: 2, width: "100%" }}>
       <ToastContainer
-      autoClose={1000} // Toast will close automatically after 5 seconds
-      position="top-right" // Position of the toast
-      hideProgressBar={false} // Show or hide the progress bar
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover/>
+        autoClose={1000} // Toast will close automatically after 5 seconds
+        position="top-right" // Position of the toast
+        hideProgressBar={false} // Show or hide the progress bar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Box mt={1} textAlign="center" sx={{ width: "100%" }}>
         <PopTypography
           variant="h5"

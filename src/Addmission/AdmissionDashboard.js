@@ -100,17 +100,17 @@ const Dashboard = () => {
 
   const data = [
     // Count Data
-    { label: "Todays Admission", value: admissionsToday || 0, color: "#FFCCCB" }, // Green
-    { label: "7Days Admissions  ", value: admissions7Days || 0, color: "#FF6F61" }, // Amber
-    { label: "30Days Admissions", value: admissions30Days || 0, color: "#3498DB" }, // Light Blue
-    { label: "365Days Admissions", value: admissions365Days || 0, color: "#9ACD32" }, // Pink
+    { label: "Today's Admission", value: admissionsToday || 0, color: "#FFCCCB" }, // Green
+    { label: "7 Day's Admissions  ", value: admissions7Days || 0, color: "#FF6F61" }, // Amber
+    { label: "30 Day's Admissions", value: admissions30Days || 0, color: "#3498DB" }, // Light Blue
+    { label: "365 Day's Admissions", value: admissions365Days || 0, color: "#9ACD32" }, // Pink
     { label: "Total Admissions", value: totalAdmissions || 0, color: "#F4C431" }, // Purple
     
     // Revenue Data
-    { label: "Todays Revenue ", value: ToDaysRevenue || 0, color: "#FFCCCB" }, // Deep Orange
-    { label: "7 DaysRevenue", value: revenue7Days || 0, color: "#FF6F61" }, // Teal
-    { label: "30 Days Revenue", value: revenue30Days || 0 , color: "#3498DB" }, // Indigo
-    { label: "365 Days Revenue", value: revenue365Days || 0, color: "#9ACD32" }, // Brown
+    { label: "Today's Revenue ", value: ToDaysRevenue || 0, color: "#FFCCCB" }, // Deep Orange
+    { label: "7 Day's Revenue", value: revenue7Days || 0, color: "#FF6F61" }, // Teal
+    { label: "30 Day's Revenue", value: revenue30Days || 0 , color: "#3498DB" }, // Indigo
+    { label: "365 Day's Revenue", value: revenue365Days || 0, color: "#9ACD32" }, // Brown
     { label: "Total Revenue", value: totalRevenue || 0, color : "#F4C431" }, // Orange
   ];
   const PopTypography = styled(Typography)`
