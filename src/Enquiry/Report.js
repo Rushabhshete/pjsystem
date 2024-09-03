@@ -549,7 +549,7 @@ export default function Report() {
                       sx={{ align: "center" }}
                       style={{
                         color:
-                          inquiry.status1 === "Call"
+                          inquiry.status1 === "Call Back"
                             ? "orange"
                             : inquiry.status1 === "Interested"
                             ? "purple"
@@ -575,7 +575,7 @@ export default function Report() {
                       style={{ alignItems: "center", flexDirection: "row" }}
                     >
                       <b>
-                        {inquiry.status1 === "Call"
+                        {inquiry.status1 === "Call Back"
                           ? `${inquiry.callBackDate} ${inquiry.callBackTime}`
                           : "-----"}
                       </b>

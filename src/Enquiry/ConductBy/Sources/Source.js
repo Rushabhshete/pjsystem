@@ -29,10 +29,13 @@ import { toast } from "react-toastify";
 // Confirm Delete Dialog
 const ConfirmDialog = ({ open, onClose, onConfirm, sourceName }) => (
   <Dialog open={open} onClose={onClose}>
-    <DialogTitle>Confirm Delete</DialogTitle>
+    <DialogTitle color="blue" textAlign={"center"}>
+      Confirm Deletion
+    </DialogTitle>
     <DialogContent>
-      <Typography>
-        Are you sure you want to delete the source "{sourceName}"?
+      <Typography>Are you sure you want to delete this Source?</Typography>
+      <Typography color="red" fontWeight={200} variant="body2">
+        *On clicking Confirm, this Source cannot be recovered
       </Typography>
     </DialogContent>
     <DialogActions>

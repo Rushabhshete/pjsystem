@@ -331,15 +331,15 @@ const AddGuide = () => {
         onClose={handleCloseDeleteDialog}
         aria-labelledby="delete-guide-dialog-title"
       >
-        <DialogTitle id="delete-guide-dialog-title">
-          Confirm Deletion
-        </DialogTitle>
+        <DialogTitle color="blue" textAlign={"center"}>
+      Confirm Deletion
+    </DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Are you sure you want to delete this guide? This action cannot be
-            undone.
-          </DialogContentText>
-        </DialogContent>
+      <Typography>Are you sure you want to delete this Guide?</Typography>
+      <Typography color="red" fontWeight={200} variant="body2">
+        *On clicking Confirm, this Guide cannot be recovered
+      </Typography>
+    </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDeleteDialog} color="primary">
             Cancel
