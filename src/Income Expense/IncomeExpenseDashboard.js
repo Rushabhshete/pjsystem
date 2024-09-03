@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Typography, Grid, Paper, TextField, MenuItem, Button } from "@mui/material";
 import {
@@ -48,18 +49,6 @@ const InfoCard = ({ title, value, color }) => (
     </Paper>
   </Grid>
 );
-
-const incomeTitleMap = {
-  incomeKey1: "Today",
-  incomeKey2: "7 Days",
-  // Add as many custom titles as needed
-};
-
-const expenseTitleMap = {
-  expenseKey1: "Today",
-  expenseKey2: "7 Days",
-  // Add as many custom titles as needed
-};
 
 const IncomeExpenseDashboard = () => {
   const [year, setYear] = useState(new Date().getFullYear());
@@ -151,6 +140,7 @@ const IncomeExpenseDashboard = () => {
     fetchMonthlyIncome();
     fetchMonthlyExpense();
   }, [year]);
+  // Fetch pie chart data
   
   useEffect(() => {
     const fetchCategories = async () => {
@@ -161,12 +151,14 @@ const IncomeExpenseDashboard = () => {
         ]);
         const incomeData = await incomeResponse.json();
         const expenseData = await expenseResponse.json();
+        // Sanitize income data
         const sanitizedIncomeData = Object.fromEntries(
           Object.entries(incomeData).map(([category, value]) => [
             category,
             value !== null ? value : 0,
           ])
         );
+        // Sanitize expense data
         const sanitizedExpenseData = Object.fromEntries(
           Object.entries(expenseData).map(([category, value]) => [
             category,
@@ -181,9 +173,21 @@ const IncomeExpenseDashboard = () => {
     };
     fetchCategories();
   }, [year, month]);
-
+  
+  // Determine text for savings/loss card
+  const savingsText = savingsData >= 0 ? "Saving" : "Loss";
+  const todaytext =
+    incomeData.today - expenseData.today >= 0 ? "Saving" : "Loss";
+  const _7Daystext =
+    incomeData.last7Days - expenseData.last7Days >= 0 ? "Saving" : "Loss";
+  const _30Daystext =
+    incomeData.last30Days - expenseData.last30Days >= 0 ? "Saving" : "Loss";
+  const _365Daystext =
+    incomeData.last365Days - expenseData.last365Days >= 0 ? "Saving" : "Loss";
+  // Format data values with commas
   const formatValue = (value) => Math.abs(value).toLocaleString();
 
+  // Data for the overall comparison chart
   const overallData = {
     labels: ["Today's", "7 Day's", "30 Day's", "365 Day's", "Total"],
     datasets: [
@@ -232,6 +236,7 @@ const IncomeExpenseDashboard = () => {
     },
   };
 
+  // Data for the monthly chart
   const monthlyData = {
     labels: [
       "Jan",
@@ -296,11 +301,11 @@ const IncomeExpenseDashboard = () => {
     setYear(event.target.value);
   };
 
+  // Generate the last 10 years for the year dropdown
   const years = Array.from(
     new Array(10),
     (val, index) => new Date().getFullYear() - index
   );
-
   const incomeCategoryData = Object.keys(incomeCategories).map((key) => ({
     category: key,
     value: incomeCategories[key].total || 0,
@@ -310,44 +315,6 @@ const IncomeExpenseDashboard = () => {
     category: key,
     value: expenseCategories[key].total || 0,
   }));
-
-  const incomePieData = {
-    labels: Object.keys(incomeCategories),
-    datasets: [
-      {
-        data: Object.values(incomeCategories),
-        backgroundColor: [
-          "#FF6F61",
-          "#3498DB",
-          "#9ACD32",
-          "#FF6347",
-          "#F4C431",
-          "#FFCCCB",
-        ],
-      },
-    ],
-  };
-
-  const expensePieData = {
-    labels: Object.keys(expenseCategories),
-    datasets: [
-      {
-        data: Object.values(expenseCategories),
-        backgroundColor: [
-          "#FF6F61",
-          "#3498DB",
-          "#9ACD32",
-          "#FF6347",
-          "#F4C431",
-          "#FFCCCB",
-        ],
-      },
-    ],
-  };
-
-  const handleMonthChange = (event) => {
-    setMonth(event.target.value);
-  };
 
   useEffect(() => {
     if (showPending) {
@@ -388,7 +355,44 @@ const IncomeExpenseDashboard = () => {
   const togglePending = () => {
     setShowPending(prev => !prev);
   };
-  
+
+  const incomePieData = {
+    labels: Object.keys(incomeCategories),
+    datasets: [
+      {
+        data: Object.values(incomeCategories),
+        backgroundColor: [
+          "#FF6F61",
+          "#3498DB",
+          "#9ACD32",
+          "#FF6347",
+          "#F4C431",
+          "#FFCCCB",
+        ],
+      },
+    ],
+  };
+
+  const expensePieData = {
+    labels: Object.keys(expenseCategories),
+    datasets: [
+      {
+        data: Object.values(expenseCategories),
+        backgroundColor: [
+          "#FF6F61",
+          "#3498DB",
+          "#9ACD32",
+          "#FF6347",
+          "#F4C431",
+          "#FFCCCB",
+        ],
+      },
+    ],
+  };
+
+  const handleMonthChange = (event) => {
+    setMonth(event.target.value);
+  };
   const months = [
     "Jan",
     "Feb",
@@ -403,58 +407,320 @@ const IncomeExpenseDashboard = () => {
     "Nov",
     "Dec",
   ];
-
+  // Function to format the count up value
   const formattedCountUp = (value) => (
     <CountUp end={value} duration={2.5} formattingFn={formatValue} />
   );
-
+  const PopTypography = styled(Typography)`
+    @keyframes pop {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+  `;
   return (
     <div>
-      <Typography variant="h5" gutterBottom sx={{
-        fontWeight: "bold",
-        color: "#fff",
-        textAlign: "center",
-        backgroundColor: "#24A0ED",
-        borderRadius: "150px",
-        padding: "10px",
-        marginBottom: "20px",
-      }}>
+      <PopTypography
+        variant="h5"
+        gutterBottom
+        sx={{
+          fontWeight: "bold",
+          color: "#fff",
+          textAlign: "center",
+          backgroundColor: "#24A0ED",
+          borderRadius: "150px",
+          padding: "10px",
+          marginBottom: "20px",
+        }}
+      >
         Income & Expense Dashboard
-      </Typography>
+      </PopTypography>
       <Grid container spacing={2}>
-        {/* Today's Income */}
-        <InfoCard title="Today's Income" value={formattedCountUp(incomeData.today || 0)} color="#F9E79F" />
-        {/* 7 Day's Income */}
-        <InfoCard title="7 Day's Income" value={formattedCountUp(incomeData.last7Days || 0)} color="#FF6F61" />
-        {/* 30 Day's Income */}
-        <InfoCard title="30 Day's Income" value={formattedCountUp(incomeData.last30Days || 0)} color="#3498DB" />
-        {/* 365 Day's Income */}
-        <InfoCard title="365 Day's Income" value={formattedCountUp(incomeData.last365Days || 0)} color="#9ACD32" />
-        {/* Total Income */}
-        <InfoCard title="Total Income" value={formattedCountUp(incomeData.total || 0)} color="#F4C431" />
-
-        {/* Today's Expense */}
-        <InfoCard title="Today's Expense" value={formattedCountUp(expenseData.today || 0)} color="#F9E79F" />
-        {/* 7 Day's Expense */}
-        <InfoCard title="7 Day's Expense" value={formattedCountUp(expenseData.last7Days || 0)} color="#FF6F61" />
-        {/* 30 Day's Expense */}
-        <InfoCard title="30 Day's Expense" value={formattedCountUp(expenseData.last30Days || 0)} color="#3498DB" />
-        {/* 365 Day's Expense */}
-        <InfoCard title="365 Day's Expense" value={formattedCountUp(expenseData.last365Days || 0)} color="#9ACD32" />
-        {/* Total Expense */}
-        <InfoCard title="Total Expense" value={formattedCountUp(expenseData.total || 0)} color="#F4C431" />
-
-        {/* Today's Savings or Loss */}
-        <InfoCard title="Today's Result" value={formattedCountUp(incomeData.today - expenseData.today)} color={incomeData.today - expenseData.today >= 0 ? "#F9E79F" : "#FF6F61"} />
-        {/* 7 Day's Result */}
-        <InfoCard title="7 Day's Result" value={formattedCountUp(incomeData.last7Days - expenseData.last7Days)} color={incomeData.last7Days - expenseData.last7Days >= 0 ? "#FF6F61" : "#FF6F61"} />
-        {/* 30 Day's Result */}
-        <InfoCard title="30 Day's Result" value={formattedCountUp(incomeData.last30Days - expenseData.last30Days)} color={incomeData.last30Days - expenseData.last30Days >= 0 ? "#3498DB" : "#3498DB"} />
-        {/* 365 Day's Result */}
-        <InfoCard title="365 Day's Result" value={formattedCountUp(incomeData.last365Days - expenseData.last365Days)} color={incomeData.last365Days - expenseData.last365Days >= 0 ? "#9ACD32" : "#9ACD32"} />
-        {/* Total Savings or Loss */}
-        <InfoCard title="Total Savings" value={formattedCountUp(savingsData)} color={savingsData >= 0 ? "#F4C431" : "#F4C431"} />
+        <Grid item xs={12} sm={6} md={2.4}>
+          <Paper
+            elevation={3}
+            sx={{
+              padding: 2,
+              backgroundColor: "#F9E79F",
+              borderRadius: 2,
+              fontWeight: "bold",
+              boxShadow: 3,
+            }}
+          >
+            <Typography variant="h7">Today's Income</Typography>
+            <Typography variant="h4">
+              ₹{formattedCountUp(incomeData.today || 0)}
+            </Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={2.4}>
+          <Paper
+            elevation={3}
+            sx={{
+              padding: 2,
+              backgroundColor: "#FF6F61", // Mint Green
+              borderRadius: 2,
+              fontWeight: "bold",
+              boxShadow: 3,
+            }}
+          >
+            <Typography variant="h7">7 Day's Income</Typography>
+            <Typography variant="h4">
+              ₹{formattedCountUp(incomeData.last7Days || 0)}
+            </Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={2.4}>
+          <Paper
+            elevation={3}
+            sx={{
+              padding: 2,
+              backgroundColor: "#3498DB",
+              borderRadius: 2,
+              fontWeight: "bold",
+              boxShadow: 3,
+            }}
+          >
+            <Typography variant="h7">30 Day's Income</Typography>
+            <Typography variant="h4">
+              ₹{formattedCountUp(incomeData.last30Days || 0)}
+            </Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={2.4}>
+          <Paper
+            elevation={3}
+            sx={{
+              padding: 2,
+              backgroundColor: "#9ACD32",
+              borderRadius: 2,
+              fontWeight: "bold",
+              boxShadow: 3,
+            }}
+          >
+            <Typography variant="h7">365 Day's Income</Typography>
+            <Typography variant="h4">
+              ₹{formattedCountUp(incomeData.last365Days || 0)}
+            </Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={2.4}>
+          <Paper
+            elevation={3}
+            sx={{
+              padding: 2,
+              backgroundColor: "#F4C431",
+              borderRadius: 2,
+              fontWeight: "bold",
+              boxShadow: 3,
+            }}
+          >
+            <Typography variant="h7">Total Income</Typography>
+            <Typography variant="h4">
+              ₹{formattedCountUp(incomeData.total || 0)}
+            </Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={2.4}>
+          <Paper
+            elevation={3}
+            sx={{
+              padding: 2,
+              backgroundColor: "#F9E79F",
+              borderRadius: 2,
+              fontWeight: "bold",
+              boxShadow: 3,
+            }}
+          >
+            <Typography variant="h7">Today's Expense</Typography>
+            <Typography variant="h4">
+              ₹{formattedCountUp(expenseData.today || 0)}
+            </Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={2.4}>
+          <Paper
+            elevation={3}
+            sx={{
+              padding: 2,
+              backgroundColor: "#FF6F61",
+              borderRadius: 2,
+              fontWeight: "bold",
+              boxShadow: 3,
+            }}
+          >
+            <Typography variant="h7">7 Day's Expense</Typography>
+            <Typography variant="h4">
+              ₹{formattedCountUp(expenseData.last7Days || 0)}
+            </Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={2.4}>
+          <Paper
+            elevation={3}
+            sx={{
+              padding: 2,
+              backgroundColor: "#3498DB",
+              borderRadius: 2,
+              fontWeight: "bold",
+              boxShadow: 3,
+            }}
+          >
+            <Typography variant="h7">30 Day's Expense</Typography>
+            <Typography variant="h4">
+              ₹{formattedCountUp(expenseData.last30Days || 0)}
+            </Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={2.4}>
+          <Paper
+            elevation={3}
+            sx={{
+              padding: 2,
+              backgroundColor: "#9ACD32",
+              borderRadius: 2,
+              fontWeight: "bold",
+              boxShadow: 3,
+            }}
+          >
+            <Typography variant="h7">365 Day's Expense</Typography>
+            <Typography variant="h4">
+              ₹{formattedCountUp(expenseData.last365Days || 0)}
+            </Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={2.4}>
+          <Paper
+            elevation={3}
+            sx={{
+              padding: 2,
+              backgroundColor: "#F4C431",
+              borderRadius: 2,
+              fontWeight: "bold",
+              boxShadow: 3,
+            }}
+          >
+            <Typography variant="h7">Total Expense</Typography>
+            <Typography variant="h4">
+              ₹{formattedCountUp(expenseData.total || 0)}
+            </Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={2.4}>
+          <Paper
+            elevation={3}
+            sx={{
+              padding: 2,
+              backgroundColor: "#F9E79F",
+              borderRadius: 2,
+              fontWeight: "bold",
+              boxShadow: 3,
+            }}
+          >
+            <Typography variant="h7">Today's {todaytext}</Typography>
+            <Typography
+              variant="h4"
+              className={incomeData.today - expenseData.today >= 0}
+            >
+              ₹{formattedCountUp(incomeData.today - expenseData.today)}
+            </Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={2.4}>
+          <Paper
+            elevation={3}
+            sx={{
+              padding: 2,
+              backgroundColor: "#FF6F61", // Light Orange
+              borderRadius: 2,
+              fontWeight: "bold",
+              boxShadow: 3,
+            }}
+          >
+            <Typography variant="h7">7 Day's {_7Daystext}</Typography>
+            <Typography
+              variant="h4"
+              className={incomeData.last7Days - expenseData.last7Days >= 0}
+            >
+              ₹{formattedCountUp(incomeData.last7Days - expenseData.last7Days)}
+            </Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={2.4}>
+          <Paper
+            elevation={3}
+            sx={{
+              padding: 2,
+              backgroundColor: "#3498DB", // Light Orange
+              borderRadius: 2,
+              fontWeight: "bold",
+              boxShadow: 3,
+            }}
+          >
+            <Typography variant="h7">30 Day's {_30Daystext}</Typography>
+            <Typography
+              variant="h4"
+              className={incomeData.last30Days - expenseData.last30Days >= 0}
+            >
+              ₹
+              {formattedCountUp(incomeData.last30Days - expenseData.last30Days)}
+            </Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={2.4}>
+          <Paper
+            elevation={3}
+            sx={{
+              padding: 2,
+              backgroundColor: "#9ACD32", // Light Orange
+              borderRadius: 2,
+              fontWeight: "bold",
+              boxShadow: 3,
+            }}
+          >
+            <Typography variant="h7">365 Day's {_365Daystext}</Typography>
+            <Typography
+              variant="h4"
+              className={incomeData.last365Days - expenseData.last365Days >= 0}
+            >
+              ₹
+              {formattedCountUp(
+                incomeData.last365Days - expenseData.last365Days
+              )}
+            </Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={2.4}>
+          <Paper
+            elevation={3}
+            sx={{
+              padding: 2,
+              backgroundColor: "#F4C431", // Light Orange
+              borderRadius: 2,
+              fontWeight: "bold",
+              boxShadow: 3,
+            }}
+          >
+            <Typography variant="h7">Total {savingsText}</Typography>
+            <Typography
+              variant="h4"
+              className={
+                savingsData >= 0 //? "savings-positive" : "savings-negative"
+              }
+            >
+              ₹{formattedCountUp(savingsData)}
+            </Typography>
+          </Paper>
+        </Grid>
       </Grid>
+
+      {/* pending income & Exepense */}
 
       <Grid container justifyContent="center" spacing={2} mt={2}>
         <Grid item>
@@ -534,8 +800,10 @@ const IncomeExpenseDashboard = () => {
         </Grid>
       )}
 
-      {/* Overall Income and Expense Comparison */}
-      <Grid container spacing={3} style={{ marginTop: "10px" }}>
+      {/* pending inc exp */}
+
+
+      <Grid container spacing={3} style={{ marginTop: "30px" }}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" align="center">
             Overall Income & Expense Comparison
@@ -544,13 +812,14 @@ const IncomeExpenseDashboard = () => {
             <Bar data={overallData} options={overallOptions} />
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={6}>
+
+        <Grid item xs={12} sm={6} className="textField-root">
           <TextField
             select
             label="Year"
             value={year}
             onChange={handleYearChange}
-            fullWidth
+            sx={{ marginTop: "-20px" }}
           >
             {years.map((year) => (
               <MenuItem key={year} value={year}>
@@ -566,9 +835,57 @@ const IncomeExpenseDashboard = () => {
           </Paper>
         </Grid>
       </Grid>
-
-      {/* Income and Expense Categorization */}
-      <Grid container spacing={3} style={{ marginTop: "10px" }}>
+      <Grid
+        container
+        spacing={3}
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          marginTop: "10px",
+        }}
+      >
+        {" "}
+        <Grid
+          container
+          spacing={2}
+          style={{
+            marginBottom: "20px",
+            textAlign: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Grid item xs={12} sm={6} md={2.4} className="textField-root">
+            <TextField
+              select
+              label="Year"
+              value={year}
+              onChange={handleYearChange}
+              fullWidth
+            >
+              {years.map((year) => (
+                <MenuItem key={year} value={year}>
+                  {year}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+          <Grid item xs={12} sm={6} md={2.4} className="textField-root">
+            <TextField
+              select
+              label="Month"
+              value={month}
+              onChange={handleMonthChange}
+              fullWidth
+            >
+              {months.map((month, index) => (
+                <MenuItem key={month} value={index + 1}>
+                  {month}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+        </Grid>
+        <Grid container spacing={3} style={{ marginTop: "10px" }}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom align="center">
             Income Categories ({months[month - 1]} {year})
@@ -604,8 +921,11 @@ const IncomeExpenseDashboard = () => {
           </Paper>
         </Grid>
       </Grid>
+      </Grid>
     </div>
   );
 };
 
 export default IncomeExpenseDashboard;
+
+
