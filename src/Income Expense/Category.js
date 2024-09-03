@@ -927,6 +927,9 @@ const Category = () => {
               Type
             </StyledTableCell> */}
             <StyledTableCell style={{ fontWeight: "bold" }}>
+              ID
+            </StyledTableCell>
+            <StyledTableCell style={{ fontWeight: "bold" }}>
               User
             </StyledTableCell>
             <StyledTableCell style={{ fontWeight: "bold" }}>
@@ -987,7 +990,9 @@ const Category = () => {
             .map((row) => (
               <TableRow key={row.id}>
                 {/* <StyledTableCell>{row.type}</StyledTableCell> */}
-
+                <StyledTableCell style={{ whiteSpace: "nowrap" }}>
+                  {row.id}
+                </StyledTableCell>
                 <StyledTableCell style={{ whiteSpace: "nowrap" }}>
                   {row.user}
                 </StyledTableCell>
