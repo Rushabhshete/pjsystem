@@ -228,7 +228,7 @@ const AdmissionForm = () => {
         
         }}
       >
-        Student Application Form
+        Student Admission Form
       </PopTypography>
       <div maxWidth="lg" className="required-asterisk">
         <form onSubmit={handleFormSubmit}>

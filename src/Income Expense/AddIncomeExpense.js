@@ -785,7 +785,7 @@ const AddIncomeExpense = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handlePrint}>Download PDF</Button>
-          <Button onClick={handleCloseDialog}>Close</Button>
+          <Button onClick={handleCloseDialog} >Close</Button>
         </DialogActions>
       </Dialog>
     </div>

@@ -22,11 +22,13 @@ import {
   DialogTitle,
   styled,
   Typography,
+  TablePagination,
 } from "@mui/material";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Papa from "papaparse";
 import UpdateAdmissionForm from "./UpdateAdmissionForm";
+import { Link } from 'react-router-dom';
 
 const DownloadButton = styled(Button)(({ theme }) => ({
   margin: theme.spacing(1),
@@ -47,13 +49,7 @@ const AlertDialog = ({ open, onClose, onConfirm }) => (
       <Button onClick={onClose} color="primary">
         Cancel
       </Button>
-      <Button
-        onClick={() => {
-          onConfirm();
-          onClose();
-        }}
-        color="error"
-      >
+      <Button onClick={() => { onConfirm(); onClose(); }} color="error">
         Confirm
       </Button>
     </DialogActions>
@@ -62,7 +58,6 @@ const AlertDialog = ({ open, onClose, onConfirm }) => (
 
 const StudentList = () => {
   const [admissions, setAdmissions] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [timeRange, setTimeRange] = useState("All");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -70,51 +65,72 @@ const StudentList = () => {
   const [selectedCourse, setSelectedCourse] = useState("");
   const [selectedGuide, setSelectedGuide] = useState("");
   const [selectedPaymentMode, setSelectedPaymentMode] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState(""); // New state for status
   const [searchQuery, setSearchQuery] = useState("");
   const [courses, setCourses] = useState([]);
   const [sources, setSources] = useState([]);
-  const [guide,setGuide] = useState([]);
+  const [guide, setGuide] = useState([]);
   const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
   const [currentAdmission, setCurrentAdmission] = useState(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const institutecode = localStorage.getItem("institutecode");
   const [admissionIdToDelete, setAdmissionIdToDelete] = useState(null);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(50);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [
-          admissionResponse,
           sourceResponse,
           courseResponse,
           guideResponse,
         ] = await Promise.all([
-          axios.get(
-            `http://localhost:8085/admissions?institutecode=${institutecode}`
-          ),
-          axios.get(
-            `http://localhost:8085/api/sourceBy/getAll?institutecode=${institutecode}`
-          ),
-          axios.get(
-            `http://localhost:8085/getAllCourse?institutecode=${institutecode}`
-          ),
-          axios.get(
-            `http://localhost:8085/api/conductBy/getAllConductBy?institutecode=${institutecode}`
-          ),
+          axios.get(`http://localhost:8085/api/sourceBy/getAll?institutecode=${institutecode}`),
+          axios.get(`http://localhost:8085/getAllCourse?institutecode=${institutecode}`),
+          axios.get(`http://localhost:8085/api/conductBy/getAllConductBy?institutecode=${institutecode}`),
         ]);
-        setAdmissions(admissionResponse.data);
+
         setSources(sourceResponse.data);
         setCourses(courseResponse.data);
         setGuide(guideResponse.data);
       } catch (error) {
         console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchData();
   }, [institutecode]);
+
+  useEffect(() => {
+    const fetchAdmissions = async () => {
+      try {
+        let admissionResponse;
+        switch (timeRange) {
+          case "7Days":
+            admissionResponse = await axios.get(`http://localhost:8085/AdmissionIn7DaysData?institutecode=${institutecode}`);
+            break;
+          case "30Days":
+            admissionResponse = await axios.get(`http://localhost:8085/AdmissionIn30DaysData?institutecode=${institutecode}`);
+            break;
+          case "365Days":
+            admissionResponse = await axios.get(`http://localhost:8085/AdmissionIn365DaysData?institutecode=${institutecode}`);
+            break;
+          case "Custom":
+            admissionResponse = await axios.get(`http://localhost:8085/admissionsBetweenDates?institutecode=${institutecode}&startDate=${startDate}&endDate=${endDate}`);
+            break;
+          default:
+            admissionResponse = await axios.get(`http://localhost:8085/admissions?institutecode=${institutecode}`);
+            break;
+        }
+        setAdmissions(admissionResponse.data);
+      } catch (error) {
+        console.error("Error fetching admissions:", error);
+      }
+    };
+
+    fetchAdmissions();
+  }, [institutecode, timeRange, startDate, endDate]);
 
   const handleTimeRangeChange = (event) => {
     setTimeRange(event.target.value);
@@ -135,10 +151,14 @@ const StudentList = () => {
   const handleCourseMethodChange = (event) => {
     setSelectedCourse(event.target.value);
   };
-  const handleGuideChnage = (event) => {
+
+  const handleGuideChange = (event) => {
     setSelectedGuide(event.target.value);
   };
 
+  const handleStatusChange = (event) => { // New handler for status change
+    setSelectedStatus(event.target.value);
+  };
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
@@ -146,38 +166,16 @@ const StudentList = () => {
 
   const filteredAdmissions = useMemo(() => {
     return admissions.filter((admission) => {
-      const matchesSource = selectedSource
-        ? admission.sourceBy === selectedSource
-        : true;
-      const matchesCourse = selectedCourse
-        ? admission.courses === selectedCourse
-        : true;
-      const matchesPaymentMode = selectedPaymentMode
-        ? admission.paymentMode === selectedPaymentMode
-        : true;
-      const matchesGuideName = selectedGuide
-        ? admission.guideName === selectedGuide
-        : true;
-      const matchesSearchQuery = admission.name
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase());
+      const matchesSource = selectedSource ? admission.sourceBy === selectedSource : true;
+      const matchesCourse = selectedCourse ? admission.courses === selectedCourse : true;
+      const matchesPaymentMode = selectedPaymentMode ? admission.paymentMode === selectedPaymentMode : true;
+      const matchesGuideName = selectedGuide ? admission.guideName === selectedGuide : true;
+      const matchesStatus = selectedStatus ? admission.paymentMethod === selectedStatus : true; // filtering by status
+      const matchesSearchQuery = admission.name.toLowerCase().includes(searchQuery.toLowerCase());
 
-      return (
-        matchesSource &&
-        matchesCourse &&
-        matchesGuideName &&
-        matchesPaymentMode &&
-        matchesSearchQuery 
-      );
+      return matchesSource && matchesCourse && matchesGuideName && matchesPaymentMode && matchesStatus && matchesSearchQuery;
     });
-  }, [
-    admissions,
-    selectedSource,
-    selectedCourse,
-    selectedGuide,
-    selectedPaymentMode,
-    searchQuery,
-  ]);
+  }, [admissions, selectedSource, selectedCourse, selectedGuide, selectedPaymentMode, selectedStatus, searchQuery]);
 
   const handleDownload = () => {
     const doc = new jsPDF({
@@ -187,6 +185,7 @@ const StudentList = () => {
     });
 
     const columns = [
+      {title: "ID", dataKey: "id"},
       { title: "Name", dataKey: "name" },
       { title: "Institute Code", dataKey: "institutecode" },
       { title: "Mobile 1", dataKey: "mobile1" },
@@ -209,6 +208,7 @@ const StudentList = () => {
     ];
 
     const rows = filteredAdmissions.map((admission) => ({
+      id: admission.id,
       name: admission.name,
       institutecode: admission.institutecode,
       mobile1: admission.mobile1,
@@ -263,13 +263,9 @@ const StudentList = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(
-        `http://localhost:8085/deleteAdmission/${admissionIdToDelete}`
-      );
+      await axios.delete(`http://localhost:8085/deleteAdmission/${admissionIdToDelete}`);
       setAdmissions((prevAdmissions) =>
-        prevAdmissions.filter(
-          (admission) => admission.id !== admissionIdToDelete
-        )
+        prevAdmissions.filter((admission) => admission.id !== admissionIdToDelete)
       );
     } catch (error) {
       console.error("Error deleting admission:", error);
@@ -280,51 +276,25 @@ const StudentList = () => {
     setOpenUpdateDialog(false);
   };
 
-  const PopTypography = styled(Typography)`
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  }
 
-    @keyframes pop {
-      0% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.1);
-      }
-      100% {
-        transform: scale(1);
-      }
-    }
-  `;
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
   const formatValue = (value) => Math.abs(value).toLocaleString();
-  const totalAmount = filteredAdmissions.reduce(
-    (acc, item) => acc + item.totalFees,
-    0
-  );
-  const paidAmount = filteredAdmissions.reduce(
-    (acc, item) => acc + item.paidFees,
-    0
-  );
-  const pendingAmount = filteredAdmissions.reduce(
-    (acc, item) => acc + item.pendingFees,
-    0
-  );
+  const totalAmount = filteredAdmissions.reduce((acc, item) => acc + item.totalFees, 0);
+  const paidAmount = filteredAdmissions.reduce((acc, item) => acc + item.paidFees, 0);
+  const pendingAmount = filteredAdmissions.reduce((acc, item) => acc + item.pendingFees, 0);
 
   return (
     <div>
-      <PopTypography
-        variant="h5"
-        gutterBottom
-        sx={{
-          fontWeight: "bold",
-          color: "#fff",
-          textAlign: "center",
-          backgroundColor: "#24A0ED",
-          borderRadius: "150px",
-          padding: "10px",
-          marginBottom: "40px",
-        }}
-      >
+      <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold", color: "#fff", textAlign: "center", backgroundColor: "#24A0ED", borderRadius: "150px", padding: "10px", marginBottom: "40px" }}>
         Admissions List
-      </PopTypography>
+      </Typography>
       <Grid container spacing={2} className="textField-root">
         <Grid item xs={8} sm={1.6} md={2}>
           <TextField
@@ -351,9 +321,7 @@ const StudentList = () => {
                 value={startDate}
                 fullWidth
                 onChange={(e) => setStartDate(e.target.value)}
-                InputLabelProps={{
-                  shrink: true,
-                }}
+                InputLabelProps={{ shrink: true }}
               />
             </Grid>
             <Grid item xs={8} sm={1.6} md={2}>
@@ -363,19 +331,8 @@ const StudentList = () => {
                 fullWidth
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                InputLabelProps={{
-                  shrink: true,
-                }}
+                InputLabelProps={{ shrink: true }}
               />
-            </Grid>
-            <Grid item xs={8} sm={1.6} md={2}>
-              <DownloadButton
-                variant="contained"
-                color="primary"
-                onClick={() => setLoading(true)} // Add your fetch logic here
-              >
-                Fetch Data
-              </DownloadButton>
             </Grid>
           </>
         )}
@@ -410,16 +367,16 @@ const StudentList = () => {
               </MenuItem>
             ))}
           </TextField>
-        </Grid>{" "}
+        </Grid>
         <Grid item xs={8} sm={1.6} md={2}>
           <TextField
             select
             fullWidth
             label="Guide"
             value={selectedGuide}
-            onChange={handleGuideChnage}
+            onChange={handleGuideChange}
           >
-            <MenuItem value="">All Guide</MenuItem>
+            <MenuItem value="">All Guides</MenuItem>
             {guide.map((guide) => (
               <MenuItem key={guide.id} value={guide.guideName}>
                 {guide.guideName}
@@ -443,6 +400,20 @@ const StudentList = () => {
         </Grid>
         <Grid item xs={8} sm={1.6} md={2}>
           <TextField
+            select
+            fullWidth
+            label="Status" // New dropdown for status
+            value={selectedStatus}
+            onChange={handleStatusChange}
+          >
+            <MenuItem value="">All Status</MenuItem>
+            <MenuItem value="Pending">Pending</MenuItem>
+            <MenuItem value="Complete">Complete</MenuItem>
+            <MenuItem value="Partial">Partial</MenuItem>
+          </TextField>
+        </Grid>
+        <Grid item xs={8} sm={1.6} md={2}>
+          <TextField
             label="Search by Student Name"
             value={searchQuery}
             fullWidth
@@ -450,142 +421,116 @@ const StudentList = () => {
           />
         </Grid>
         <Grid item xs={8} sm={1.6} md={2}>
-          <DownloadButton
-            variant="contained"
-            color="primary"
-            onClick={handleDownload}
-          >
+          <DownloadButton variant="contained" color="primary" onClick={handleDownload}>
             Download PDF
           </DownloadButton>
         </Grid>
         <Grid item xs={8} sm={1.6} md={2}>
-          <DownloadButton
-            variant="contained"
-            color="secondary"
-            onClick={handleDownloadCSV}
-          >
+          <DownloadButton variant="contained" color="secondary" onClick={handleDownloadCSV}>
             Download CSV
           </DownloadButton>
         </Grid>
+        <Grid item xs={8} sm={1.6} md={2}>
+        <Link to="/layout/admission-form" style={{ textDecoration: 'none' }}>
+      <Button variant="contained" color="primary">
+        Back to Form
+      </Button>
+    </Link>
+        </Grid>
+        <Grid item xs={8} sm={1.6} md={2}>
+          <Typography>
+            Total Admissions - {filteredAdmissions.length}
+          </Typography>
+        </Grid>
       </Grid>
-      <Box display="flex" marginTop="20px">
-        <Typography
-          variant="h6"
-          gutterBottom
-          sx={{ marginRight: 10, whiteSpace: "nowrap", marginLeft: 5 }}
-        >
-          Total Amount(+GST) : ₹ {formatValue(totalAmount)}
-        </Typography>
-        <Typography
-          variant="h6"
-          gutterBottom
-          sx={{ marginRight: 10, whiteSpace: "nowrap" }}
-        >
-          Paid Amount : ₹ {formatValue(paidAmount)}
-        </Typography>
-        <Typography variant="h6" gutterBottom sx={{ whiteSpace: "nowrap" }}>
-          Pending Amount : ₹ {formatValue(pendingAmount)}
-        </Typography>
-      </Box>
-      {loading ? (
-        <CircularProgress />
-      ) : (
-        <TableContainer style={{ marginTop: "10px" }}>
-          <Table style={{ overflowX: "hidden" }}>
-            <TableHead
-              style={{
-                backgroundColor: "#f2f2f2",
-                justifyContent: "center",
-              }}
-            >
-              <TableRow>
-                <TableCell style={{ fontWeight: "bold" }}>Name</TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>Mobile 1</TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>Email</TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>Course</TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>Duration</TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>
-                  Joining Date
+      <Box display="flex" marginTop="20px" justifyContent="space-between" alignItems="center">
+  <Typography variant="h6" gutterBottom
+    sx={{ flex: 1, marginRight: 2, whiteSpace: "nowrap", marginLeft: 5 }}>
+    Total Amount(+GST) : ₹ {formatValue(totalAmount)}
+  </Typography>
+  <Typography variant="h6" gutterBottom
+    sx={{ flex: 1, marginRight: 2, whiteSpace: "nowrap" }}>
+    Paid Amount : ₹ {formatValue(paidAmount)}
+  </Typography>
+  <Typography variant="h6" gutterBottom
+    sx={{ flex: 1, whiteSpace: "nowrap" }}>
+    Pending Amount : ₹ {formatValue(pendingAmount)}
+  </Typography>
+  <TablePagination
+    sx={{ flex: 1, marginRight: 2, whiteSpace: "nowrap" }}
+    rowsPerPageOptions={[50, 100, 150]}
+    component="div"
+    count={filteredAdmissions.length}
+    rowsPerPage={rowsPerPage}
+    page={page}
+    onPageChange={handleChangePage}
+    onRowsPerPageChange={handleChangeRowsPerPage}
+  />
+</Box>
+
+      
+      <TableContainer style={{ marginTop: "10px" }}>
+        <Table style={{ overflowX: "hidden" }}>
+          <TableHead style={{ backgroundColor: "#f2f2f2", justifyContent: "center" }}>
+            <TableRow>
+            <TableCell style={{ fontWeight: "bold" }}>ID</TableCell>
+              <TableCell style={{ fontWeight: "bold" }}>Name</TableCell>
+              <TableCell style={{ fontWeight: "bold" }}>Mobile 1</TableCell>
+              <TableCell style={{ fontWeight: "bold" }}>Email</TableCell>
+              <TableCell style={{ fontWeight: "bold" }}>Course</TableCell>
+              <TableCell style={{ fontWeight: "bold" }}>Source</TableCell>
+              <TableCell style={{ fontWeight: "bold" }}>Duration</TableCell>
+              <TableCell style={{ fontWeight: "bold" }}>Joining Date</TableCell>
+              <TableCell style={{ fontWeight: "bold" }}>Expiry Date</TableCell>
+              <TableCell style={{ fontWeight: "bold" }}>Total Fees</TableCell>
+              <TableCell style={{ fontWeight: "bold" }}>Paid Fees</TableCell>
+              <TableCell style={{ fontWeight: "bold" }}>Pending Fees</TableCell>
+              <TableCell style={{ fontWeight: "bold" }}>Payment Mode</TableCell>
+              <TableCell style={{ fontWeight: "bold" }}>Transaction ID</TableCell>
+              <TableCell style={{ fontWeight: "bold" }}>Status</TableCell>
+              <TableCell style={{ fontWeight: "bold" }}>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {filteredAdmissions.map((admission) => (
+              <TableRow key={admission.id}>
+                <TableCell>{admission.id}</TableCell>
+                <TableCell>{admission.name}</TableCell>
+                <TableCell>{admission.mobile1}</TableCell>
+                <TableCell>{admission.email}</TableCell>
+                <TableCell>{admission.courses}</TableCell>
+                <TableCell>{admission.sourceBy}</TableCell>
+                <TableCell>{admission.duration}</TableCell>
+                <TableCell>{new Date(admission.date).toLocaleDateString()}</TableCell>
+                <TableCell>{new Date(admission.dueDate).toLocaleDateString()}</TableCell>
+                <TableCell>{admission.totalFees}</TableCell>
+                <TableCell>{admission.paidFees}</TableCell>
+                <TableCell>{admission.pendingFees}</TableCell>
+                <TableCell>{admission.paymentMode}</TableCell>
+                <TableCell>{admission.transactionid}</TableCell>
+                <TableCell style={{
+                  fontWeight: "bold",
+                  color: admission.paymentMethod === "Pending" ? "red"
+                    : admission.paymentMethod === "Partial" ? "purple"
+                    : admission.paymentMethod === "Complete" ? "green"
+                    : "green",
+                }}>
+                  {admission.paymentMethod}
                 </TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>
-                  Expiry Date
+                <TableCell style={{ whiteSpace: "nowrap" }}>
+                  <IconButton variant="contained" color="primary" onClick={() => handleEditClick(admission)}>
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton color="error" onClick={() => handleDeleteClick(admission.id)} variant="contained">
+                    <DeleteIcon />
+                  </IconButton>
                 </TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>Total Fees</TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>Paid Fees</TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>
-                  Pending Fees
-                </TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>
-                  Payment Mode
-                </TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>
-                  Transaction ID
-                </TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>Status</TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>Actions</TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {filteredAdmissions.map((admission) => (
-                <TableRow key={admission.id}>
-                  <TableCell>{admission.name}</TableCell>
-                  <TableCell>{admission.mobile1}</TableCell>
-                  <TableCell>{admission.email}</TableCell>
-                  <TableCell>{admission.courses}</TableCell>
-                  <TableCell>{admission.duration}</TableCell>
-                  <TableCell>
-                    {new Date(admission.date).toLocaleDateString()}
-                  </TableCell>
-                  <TableCell>
-                    {new Date(admission.dueDate).toLocaleDateString()}
-                  </TableCell>
-                  <TableCell>{admission.totalFees}</TableCell>
-                  <TableCell>{admission.paidFees}</TableCell>
-                  <TableCell>{admission.pendingFees}</TableCell>
-                  <TableCell>{admission.paymentMode}</TableCell>
-                  <TableCell>{admission.transactionid}</TableCell>
-                  <TableCell
-                    style={{
-                      fontWeight: "bold",
-                      color:
-                        admission.paymentMethod === "Pending"
-                          ? "red"
-                          : admission.paymentMethod === "Partial"
-                          ? "purple"
-                          : admission.paymentMethod === "Complete"
-                          ? "green"
-                          : "green",
-                    }}
-                  >
-                    {admission.paymentMethod}
-                  </TableCell>
-                  <TableCell style={{ whiteSpace: "nowrap" }}>
-                    <IconButton
-                      variant="contained"
-                      color="primary"
-                      onClick={() => handleEditClick(admission)}
-                    >
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton
-                      color="error"
-                      onClick={() => handleDeleteClick(admission.id)}
-                      variant="contained"
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      )}
-      <AlertDialog
-        open={confirmOpen}
-        onClose={() => setConfirmOpen(false)}
-        onConfirm={handleDelete}
-      />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <AlertDialog open={confirmOpen} onClose={() => setConfirmOpen(false)} onConfirm={handleDelete} />
       <Dialog open={openUpdateDialog} onClose={handleCloseDialog}>
         <DialogTitle>Update Admission</DialogTitle>
         <DialogContent>
