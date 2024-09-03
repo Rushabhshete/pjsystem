@@ -329,12 +329,15 @@ const AddmissionSource = () => {
         aria-labelledby="delete-source-dialog-title"
         aria-describedby="delete-source-dialog-description"
       >
-        <DialogTitle id="delete-source-dialog-title">Delete Source</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="delete-source-dialog-description">
-            Are you sure you want to delete this source? This action cannot be undone.
-          </DialogContentText>
-        </DialogContent>
+        <DialogTitle color="blue" textAlign={"center"}>
+      Confirm Deletion
+    </DialogTitle>
+    <DialogContent>
+      <Typography>Are you sure you want to delete this Source?</Typography>
+      <Typography color="red" fontWeight={200} variant="body2">
+        *On clicking Confirm, this Source cannot be recovered
+      </Typography>
+    </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDeleteDialog} color="secondary">
             Cancel

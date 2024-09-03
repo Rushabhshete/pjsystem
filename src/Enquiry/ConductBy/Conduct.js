@@ -26,11 +26,14 @@ import { toast, ToastContainer } from "react-toastify";
 
 const ConfirmDialog = ({ open, onClose, onConfirm, conductName }) => (
   <Dialog open={open} onClose={onClose}>
-    <DialogTitle>Confirm Delete</DialogTitle>
+     <DialogTitle color="blue" textAlign={"center"}>
+      Confirm Deletion
+    </DialogTitle>
     <DialogContent>
-      <DialogContentText>
-        Are you sure you want to delete the conduct "{conductName}"?
-      </DialogContentText>
+      <Typography>Are you sure you want to delete this Conduct?</Typography>
+      <Typography color="red" fontWeight={200} variant="body2">
+        *On clicking Confirm, this Conduct cannot be recovered
+      </Typography>
     </DialogContent>
     <DialogActions>
       <Button onClick={onClose} color="primary">

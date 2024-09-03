@@ -148,7 +148,7 @@ export default function AddEnquiry() {
       );
       toast.success("Enquiry Added Successfully");
       // Navigate to /report after successful submission
-      navigate("/layout/report");
+      // navigate("/layout/report");
     } catch (error) {
       console.error(
         "There was an error adding the Enquiry!",
@@ -410,6 +410,13 @@ export default function AddEnquiry() {
           >
             Save
           </Button>
+          <Button
+      variant="contained"
+      color="primary"
+      onClick={() => navigate('/layout/report')}
+    >
+      Submit
+    </Button>
         </Grid>
       </Box>
 

@@ -42,11 +42,14 @@ const PopTypography = styled(Typography)`
 
 const ConfirmDialog = ({ open, onClose, onConfirm, examName }) => (
   <Dialog open={open} onClose={onClose}>
-    <DialogTitle>Confirm Delete</DialogTitle>
+    <DialogTitle color="blue" textAlign={"center"}>
+      Confirm Deletion
+    </DialogTitle>
     <DialogContent>
-      <DialogContentText>
-        Are you sure you want to delete the exam "{examName}"?
-      </DialogContentText>
+      <Typography>Are you sure you want to delete this Exam?</Typography>
+      <Typography color="red" fontWeight={200} variant="body2">
+        *On clicking Confirm, this Exam/Course cannot be recovered
+      </Typography>
     </DialogContent>
     <DialogActions>
       <Button onClick={onClose} color="primary">

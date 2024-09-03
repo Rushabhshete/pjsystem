@@ -24,11 +24,14 @@ import { toast, ToastContainer } from "react-toastify";
 
 const ConfirmDialog = ({ open, onClose, onConfirm, courseName }) => (
   <Dialog open={open} onClose={onClose}>
-    <DialogTitle>Confirm Deletion</DialogTitle>
+    <DialogTitle color="blue" textAlign={"center"}>
+      Confirm Deletion
+    </DialogTitle>
     <DialogContent>
-      <DialogContentText>
-        Are you sure you want to delete the course "{courseName}"?
-      </DialogContentText>
+      <Typography>Are you sure you want to delete this Course?</Typography>
+      <Typography color="red" fontWeight={200} variant="body2">
+        *On clicking Confirm, this Course cannot be recovered
+      </Typography>
     </DialogContent>
     <DialogActions>
       <Button onClick={onClose} color="primary">
