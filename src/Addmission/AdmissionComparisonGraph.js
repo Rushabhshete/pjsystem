@@ -26,7 +26,8 @@ const ComparisonGraph = () => {
       try {
         const institutecode = localStorage.getItem("institutecode"); // Get institute code from local storage
         const resComparison = await axios.get(
-          `http://localhost:8085/count/comparison?institutecode=${institutecode}&year1=${year1}&year2=${year2}`
+          `http://localhost:8085/count/comparison?institutecode=${institutecode}&year1=${year1}&year2=${year2}`,
+          
         );
 
         const data = resComparison.data;
@@ -47,9 +48,10 @@ const ComparisonGraph = () => {
 
         const formattedData = months.map((month) => [
           month,
-          data[`${month}_${year1}`] || 0,
-          data[`${month}_${year2}`] || 0,
+          Number(data[`${month}_${year1}`]) || 0,
+          Number(data[`${month}_${year2}`]) || 0,
         ]);
+        
 
         setChartData([["Month", `${year1}`, `${year2}`], ...formattedData]);
       } catch (error) {

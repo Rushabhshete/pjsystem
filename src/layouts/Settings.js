@@ -18,7 +18,7 @@ import {
 
 import StarIcon from "@mui/icons-material/Star";
 import { policies } from "./policies";
-import PolicyPopup from './PolicyPopup ';
+import PolicyPopup from "./PolicyPopup ";
 
 const Settings = () => {
   const [employeeDetails, setEmployeeDetails] = useState(null);
@@ -101,9 +101,9 @@ const Settings = () => {
       >
         Basic Info.
       </Typography>
-      
+
       <Grid container spacing={2} justifyContent="center">
-      <Grid item xs={12} sm={6} md={4}>
+        <Grid item xs={12} sm={6} md={4}>
           <Typography variant="body1" align="center" style={{ padding: "8px" }}>
             <strong>Admin Name: </strong> {employeeDetails.ownerName}
           </Typography>
@@ -129,9 +129,6 @@ const Settings = () => {
             {employeeDetails.registrationnumber}
           </Typography>
         </Grid>
-      
-       
-      
         <Grid item xs={12} sm={6} md={4}>
           <Typography variant="body1" align="center" style={{ padding: "8px" }}>
             <strong>Contact No. : </strong> {employeeDetails.mobilenumber}
@@ -197,12 +194,12 @@ const Settings = () => {
                 position: "relative",
                 padding: 3,
                 textAlign: "center",
-                height: 350, // Set a fixed height
+                height: 500, // Set a fixed height
                 background: "linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%)",
                 boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
                 borderRadius: 4,
                 transition: "transform 0.3s ease",
-                transform: "scale(1.1)", // Initially make this card bigger
+               // transform: "scale(1.1)", // Initially make this card bigger
                 "&:hover": {
                   transform: "scale(1.2)", // Increase size on hover
                 },
@@ -257,15 +254,32 @@ const Settings = () => {
                   ₹99
                 </Typography>
 
-                <Typography
-                  variant="body1"
-                  sx={{
-                    // color: "#1976D2",
-                    marginBottom: 2,
-                  }}
-                >
-                  <b>Systems : </b> Enquiry, Admission, Income & Expense
-                </Typography>
+                {/* <Typography variant="body1" sx={{ textAlign: "left", marginBottom: 1 }}>
+        CRM Software            ✔
+      </Typography>
+      <Typography variant="body1" sx={{ textAlign: "left", marginBottom: 1 }}>
+        Employee Manage Software ✔
+      </Typography>
+      <Typography variant="body1" sx={{ textAlign: "left", marginBottom: 1 }}>
+        Sub Admin
+      </Typography>
+      <Typography variant="body1" sx={{ textAlign: "left", marginBottom: 1 }}>
+        Multiple Branches
+      </Typography>
+      <Typography variant="body1" sx={{ textAlign: "left", marginBottom: 1 }}>
+        10,000 Entries          ✔
+      </Typography>
+      <Typography variant="body1" sx={{ textAlign: "left", marginBottom: 1 }}>
+        Life Time support 24/7 ✔
+      </Typography> */}
+      <div id="bcard_card" style={{textAlign:'left'}}> 
+            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>CRM Software                                ✔</p>
+            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Employee Manage Software✔</p>
+            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Sub Admin ✘</p>
+            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Multiple Banches ✘</p>
+            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>5000 Entries✔</p>
+            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Life Time support 24/7 ✘</p>
+           </div>
               </CardContent>
             </Card>
           </Grid>
@@ -277,7 +291,7 @@ const Settings = () => {
                 position: "relative",
                 padding: 3,
                 textAlign: "center",
-                height: 350, // Set a fixed height
+                height: 500, // Set a fixed height
                 background: "linear-gradient(135deg, #FFFDE7 0%, #FFF176 100%)",
                 boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
                 borderRadius: 4,
@@ -354,15 +368,14 @@ const Settings = () => {
                   ₹199
                 </Typography>
 
-                <Typography
-                  variant="body1"
-                  sx={{
-                    //  color: "#FBC02D",
-                    marginBottom: 2,
-                  }}
-                >
-                  <b>Systems : </b> Enquiry, Admission, Income & Expense
-                </Typography>
+                <div id="bcard_card" style={{textAlign:'left'}}> 
+            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>CRM Software                                ✔</p>
+            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Employee Manage Software✔</p>
+            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Sub Admin ✘</p>
+            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Multiple Banches ✘</p>
+            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>50,000 Entries✔</p>
+            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Life Time support 24/7 ✘</p>
+           </div>
                 <Box sx={{ marginTop: 3 }}>
                   <Button
                     variant="contained"
@@ -391,7 +404,7 @@ const Settings = () => {
                 position: "relative",
                 padding: 3,
                 textAlign: "center",
-                height: 350, // Set a fixed height
+                height: 500, // Set a fixed height
                 background: "linear-gradient(135deg, #E8F5E9 0%, #A5D6A7 100%)",
                 boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
                 borderRadius: 4,
@@ -447,15 +460,14 @@ const Settings = () => {
                   ₹299
                 </Typography>
 
-                <Typography
-                  variant="body1"
-                  sx={{
-                    // color: "#2E7D32",
-                    marginBottom: 2,
-                  }}
-                >
-                  <b>Systems : </b> Enquiry, Admission, Income & Expense
-                </Typography>
+                <div id="bcard_card" style={{textAlign:'left'}}> 
+            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>CRM Software                                ✔</p>
+            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Employee Manage Software✔</p>
+            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Sub Admin ✔</p>
+            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Multiple Banches ✘</p>
+            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>10,0000 Entries✔</p>
+            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Life Time support 24/7 ✔</p>
+           </div>
                 <Box sx={{ marginTop: 3 }}>
                   <Button
                     variant="contained"
@@ -484,7 +496,7 @@ const Settings = () => {
                 position: "relative",
                 padding: 3,
                 textAlign: "center",
-                height: 350, // Set a fixed height
+                height: 500, // Set a fixed height
                 background: "linear-gradient(135deg, #FFEBEE 0%, #EF9A9A 100%)",
                 boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
                 borderRadius: 4,
@@ -539,15 +551,14 @@ const Settings = () => {
                 >
                   ₹399
                 </Typography>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    // color: "#D32F2F",
-                    marginBottom: 2,
-                  }}
-                >
-                  <b>Systems : </b> Enquiry, Admission, Income & Expense
-                </Typography>
+                <div id="bcard_card" style={{textAlign:'left'}}> 
+            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>CRM Software ✔</p>
+            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Employee Manage Software✔</p>
+            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Sub Admin ✔</p>
+            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Multiple Banches ✔</p>
+            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Unlimited Entries✔</p>
+            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Life Time support 24/7 ✔</p>
+           </div>
                 <Box sx={{ marginTop: 3 }}>
                   <Button
                     variant="contained"
@@ -628,13 +639,18 @@ const Settings = () => {
       </Grid>
 
       {/* Policies Section */}
-      <Grid container spacing={2} justifyContent="center" sx={{ marginTop: "24px" }}>
+      <Grid
+        container
+        spacing={2}
+        justifyContent="center"
+        sx={{ marginTop: "24px" }}
+      >
         <Grid item>
           <Typography
             variant="body1"
             align="center"
             onClick={() => handleClickOpen(policies.privacyPolicy)}
-            sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+            sx={{ cursor: "pointer", textDecoration: "underline" }}
           >
             Privacy Policy
           </Typography>
@@ -644,7 +660,7 @@ const Settings = () => {
             variant="body1"
             align="center"
             onClick={() => handleClickOpen(policies.termsConditions)}
-            sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+            sx={{ cursor: "pointer", textDecoration: "underline" }}
           >
             Terms & Conditions
           </Typography>
@@ -654,7 +670,7 @@ const Settings = () => {
             variant="body1"
             align="center"
             onClick={() => handleClickOpen(policies.dataProductPolicy)}
-            sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+            sx={{ cursor: "pointer", textDecoration: "underline" }}
           >
             Data & Product Policy
           </Typography>
@@ -662,7 +678,7 @@ const Settings = () => {
       </Grid>
 
       {/* Dialog for Policy Information */}
-        
+
       {selectedPolicy && (
         <PolicyPopup
           open={open}
