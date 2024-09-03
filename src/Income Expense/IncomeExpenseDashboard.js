@@ -725,7 +725,7 @@ const IncomeExpenseDashboard = () => {
       <Grid container justifyContent="center" spacing={2} mt={2}>
         <Grid item>
           <Button variant="contained" onClick={togglePending}>
-            {showPending ? "Hide Pending" : "Show Pending"}
+            {showPending ? "Hide Pending Amount" : "Show Pending Amount"}
           </Button>
         </Grid>
       </Grid>
