@@ -561,6 +561,16 @@ const AdminProfile = () => {
                 <Grid item xs={12} sm={6}>
                   <Box display="flex" alignItems="center">
                     <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
+                      Owner's Name:
+                    </Typography>
+                    <Typography variant="h6">
+                      {employeeDetails.ownerName}
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Box display="flex" alignItems="center">
+                    <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
                       Mobile Number 1:
                     </Typography>
                     <Typography variant="h6">
@@ -585,6 +595,16 @@ const AdminProfile = () => {
                   </Typography>
                   <Typography variant="h6">
                     {employeeDetails.address}
+                  </Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Box display="flex" alignItems="center">
+                  <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
+                    Pincode:
+                  </Typography>
+                  <Typography variant="h6">
+                    {employeeDetails.pincode}
                   </Typography>
                   </Box>
                 </Grid>
@@ -631,7 +651,7 @@ const AdminProfile = () => {
                 <Grid item xs={12} sm={6}>
                   <Box display="flex" alignItems="center">
                   <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
-                    Aadhar No:
+                    Owner's Aadhar No:
                   </Typography>
                   <Typography variant="h6">
                     {employeeDetails.aadhar}
@@ -641,7 +661,7 @@ const AdminProfile = () => {
                 <Grid item xs={12} sm={6}>
                   <Box display="flex" alignItems="center">
                   <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
-                    Institute/Company's PAN No:
+                    Owner's PAN No:
                   </Typography>
                   <Typography variant="h6">
                     {employeeDetails.pancard}
@@ -665,6 +685,16 @@ const AdminProfile = () => {
                   </Typography>
                   <Typography variant="h6">
                     {employeeDetails.websitename}
+                  </Typography>
+                 </Box>
+                </Grid>
+                <Grid item xs={12} sm={6} >
+                 <Box display="flex" alignItems="center">
+                 <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
+                    Plan:
+                  </Typography>
+                  <Typography variant="h6">
+                    {employeeDetails.plan}
                   </Typography>
                  </Box>
                 </Grid>
