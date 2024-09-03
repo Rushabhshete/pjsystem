@@ -121,11 +121,11 @@ const EmployeeDetails = ({ formData, handleChange, category }) => {
         <Grid item xs={12} sm={4}>
           <FormControl fullWidth>
             <TextField
-              required
+              // required
               name="employeecategory"
               value={formData.employeecategory}
               onChange={handleChangeWithValidation}
-              InputLabelProps={{ className: "required-asterisk" }}
+              // InputLabelProps={{ className: "required-asterisk" }}
               label="Category"
               select
             >

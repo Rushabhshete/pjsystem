@@ -161,7 +161,13 @@ import EmployeeDashboard from "./Employee_System/Employee/EmployeeDashboard";
 import AddEmployee from "./Employee_System/Employee/AddEmployee";
 import EmployeeList from "./Employee_System/Employee/EmployeeList";
 import CreateAccount from "./layouts/CreateAccount";
-
+import EmpReport from "./Employee_System/Employee/EmpReport";
+import AddEmpcategory from "./Employee_System/Employee/AddEmpcategory";
+import CategoryTable from "./Employee_System/Employee/CategoryTable";
+import AddDepartment from "./Employee_System/Employee/AddDepartment";
+import SalaryDashboard from "./Employee_System/Salary/SalaryDashboard";
+import EmpDetails from "./Employee_System/Salary/EmpDetails";
+import SalaryReport from "./Employee_System/Salary/SalaryReport";
 
 function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -236,6 +242,14 @@ function AppContent() {
           <Route path="empDashboard" element={<EmployeeDashboard />} />
           <Route path="empAdd" element={<AddEmployee />} />
           <Route path="empList" element={<EmployeeList />} />
+          <Route path="EmpReport" element={<EmpReport />}/>
+          <Route path="AddEmpcategory" element={<AddEmpcategory />} />
+          <Route path="CategoryTable" element={<CategoryTable />} />
+          <Route path="AddDepartment" element={<AddDepartment/>}/>
+
+          <Route path="SalaryDashboard" element={<SalaryDashboard/>}/>
+          <Route path="EmpDetails" element={<EmpDetails/>}/>
+          <Route path="SalaryReport" element={<SalaryReport/>}/>
 
           <Route path="helpDesk" element={<HelpDesk />} />
           <Route path="subadmin" element={<AddSubAdmin />} />
