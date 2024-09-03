@@ -456,7 +456,7 @@ const IncomeExpenseDashboard = () => {
         <InfoCard title="Total Savings" value={formattedCountUp(savingsData)} color={savingsData >= 0 ? "#F4C431" : "#F4C431"} />
       </Grid>
 
-      <Grid container justifyContent="center" spacing={2}>
+      <Grid container justifyContent="center" spacing={2} mt={2}>
         <Grid item>
           <Button variant="contained" onClick={togglePending}>
             {showPending ? "Hide Pending" : "Show Pending"}
@@ -465,65 +465,69 @@ const IncomeExpenseDashboard = () => {
       </Grid>
 
       {showPending && (
-        <Grid container spacing={2} style={{ marginTop: "20px" }}>
+        
+        <Grid container spacing={2} style={{ marginTop: "10px" }}>
+          
           {/* Today's Pending Income */}
           <InfoCard 
-            title="Today's Pending Income" 
+          sx={{}}
+            title="Today's Pending INC" 
             value={formattedCountUp(pendingIncomeStats.today?.total || 0)} 
             color="#F9E79F" 
           />
           {/* Last 7 Days Pending Income */}
           <InfoCard 
-            title="7 Days Pending Income" 
+            title="7 Days Pending INC" 
             value={formattedCountUp(pendingIncomeStats.last7Days?.total || 0)} 
             color="#FF6F61" 
           />
           {/* Last 30 Days Pending Income */}
           <InfoCard 
-            title="30 Days Pending Income" 
+            title="30 Days Pending INC" 
             value={formattedCountUp(pendingIncomeStats.last30Days?.total || 0)} 
             color="#3498DB" 
           />
           {/* Last 365 Days Pending Income */}
           <InfoCard 
-            title="365 Days Pending Income" 
+            title={<span style={{ fontSize: '15px' }}>365 Days Pending INC</span>} 
             value={formattedCountUp(pendingIncomeStats.last365Days?.total || 0)} 
             color="#9ACD32" 
           />
           {/* Total Pending Income */}
           <InfoCard 
-            title="Total Pending Income" 
+            title="Total Pending INC" 
             value={formattedCountUp(pendingIncomeStats.total?.total || 0)} 
             color="#F4C431" 
           />
 
           {/* Today's Pending Expense */}
           <InfoCard 
-            title="Today's Pending Expense" 
+            title="Today's Pending EXP" 
             value={formattedCountUp(pendingExpenseStats.today?.total || 0)} 
             color="#F9E79F" 
           />
           {/* Last 7 Days Pending Expense */}
           <InfoCard 
-            title="7 Days Pending Expense" 
+            title="7 Days Pending EXP" 
             value={formattedCountUp(pendingExpenseStats.last7Days?.total || 0)} 
             color="#FF6F61" 
           />
           {/* Last 30 Days Pending Expense */}
           <InfoCard 
-            title="30 Days Pending Expense" 
+            title="30 Days Pending EXP" 
             value={formattedCountUp(pendingExpenseStats.last30Days?.total || 0)} 
             color="#3498DB" 
           />
           {/* Last 365 Days Pending Expense */}
           <InfoCard 
-            title="365 Days Pending Expense" 
-            value={formattedCountUp(pendingExpenseStats.last365Days?.total || 0)} 
-            color="#9ACD32" 
-          />
+    title={<span style={{ fontSize: '15px' }}>365 Days Pending EXP</span>} 
+    value={formattedCountUp(pendingExpenseStats.last365Days?.total || 0)} 
+    color="#9ACD32" 
+/>
+
           {/* Total Pending Expense */}
           <InfoCard 
-            title="Total Pending Expense" 
+            title="Total Pending EXP" 
             value={formattedCountUp(pendingExpenseStats.total?.total || 0)} 
             color="#F4C431" 
           />
