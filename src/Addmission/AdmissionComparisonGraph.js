@@ -32,18 +32,18 @@ const ComparisonGraph = () => {
 
         const data = resComparison.data;
         const months = [
-          "JANUARY",
-          "FEBRUARY",
-          "MARCH",
-          "APRIL",
+          "JAN",
+          "FEB",
+          "MAR",
+          "APR",
           "MAY",
-          "JUNE",
-         "JULY",
-         "AUGUST",
-         "SEPTEMBER",
-          "OCTOBER",
-          "NOVEMBER",
-          "DECEMBER",
+          "JUN",
+         "JUL",
+         "AUG",
+         "SEP",
+          "OCT",
+          "NOV",
+          "DEC",
         ];
 
         const formattedData = months.map((month) => [

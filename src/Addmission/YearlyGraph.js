@@ -12,90 +12,113 @@ import { Chart } from "react-google-charts";
 
 const YearlyGraph = () => {
   const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().getMonth() + 1; // Months are 0-based in JavaScript
   const [selectedYear, setSelectedYear] = useState(currentYear);
-  const [chartData, setChartData] = useState([["Year", "Admissions"]]);
+  const [selectedMonth, setSelectedMonth] = useState(currentMonth);
+  const [chartData, setChartData] = useState([["Date", "Admissions"]]);
   const [loading, setLoading] = useState(true);
   const years = Array.from({ length: 5 }, (_, i) => currentYear - i);
+  
+  // Month options from 1 to 12
+  const months = Array.from({ length: 12 }, (_, i) => i + 1);
 
   useEffect(() => {
-    const fetchYearlyData = async () => {
+    const fetchMonthlyData = async () => {
       setLoading(true);
       try {
-        const institutecode = localStorage.getItem("institutecode"); // Get institute code from local storage
+        const institutecode = localStorage.getItem("institutecode");
         const res = await axios.get(
-          `http://localhost:8085/count/yearly?institutecode=${institutecode}&year=${selectedYear}`
+          `http://localhost:8085/admissioncountofperdaybymonth?institutecode=${institutecode}&month=${selectedMonth}&year=${selectedYear}`
         );
         const data = res.data;
-        const formattedData = [
-          [selectedYear.toString(), data[selectedYear.toString()]],
-        ];
 
-        setChartData([["Year", "Admissions"], ...formattedData]);
+        // Format the data for the chart
+        const formattedData = Object.entries(data)
+          .map(([date, count]) => [new Date(date), count]) // Convert date strings to Date objects
+          .sort((a, b) => a[0] - b[0]) // Sort by date in ascending order
+          .map(([date, count]) => [date.toLocaleDateString(), count]); // Format date for displaying as a string
+
+        // Set chart data
+        setChartData([["Date", "Admissions"], ...formattedData]);
       } catch (error) {
-        console.error("Error fetching yearly data:", error);
+        console.error("Error fetching monthly data:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchYearlyData();
-  }, [selectedYear]);
+    fetchMonthlyData();
+  }, [selectedYear, selectedMonth]);
 
   return (
     <div>
-      {" "}
-      <Grid item xs={12} sm={4} className="textField-root">
-        <TextField
-          select
-          label="Select Year"
-          value={selectedYear}
-          onChange={(e) => setSelectedYear(e.target.value)}
-          variant="outlined"
-          margin="dense"
-          fullWidth
-        >
-          {years.map((year) => (
-            <MenuItem key={year} value={year}>
-              {year}
-            </MenuItem>
-          ))}
-        </TextField>
-      </Grid>{" "}
-      <Typography variant="h5" align="center">Yearly Admissions</Typography>
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={6} className="textField-root">
+          <TextField
+            select
+            label="Select Year"
+            value={selectedYear}
+            onChange={(e) => setSelectedYear(e.target.value)}
+            variant="outlined"
+            margin="dense"
+            fullWidth
+          >
+            {years.map((year) => (
+              <MenuItem key={year} value={year}>
+                {year}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Grid>
+        <Grid item xs={12} sm={6} className="textField-root">
+          <TextField
+            select
+            label="Select Month"
+            value={selectedMonth}
+            onChange={(e) => setSelectedMonth(e.target.value)}
+            variant="outlined"
+            margin="dense"
+            fullWidth
+          >
+            {months.map((month) => (
+              <MenuItem key={month} value={month}>
+                {month}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Grid>
+      </Grid>
+      <Typography variant="h5" align="center">
+        Daily Admissions for {selectedMonth}/{selectedYear}
+      </Typography>
       <Paper elevation={3}>
         {loading ? (
           <div>
             <CircularProgress />
           </div>
         ) : (
-          <>
-            <Chart
-              width={"100%"}
-              height={"400px"}
-              chartType="ColumnChart"
-              loader={<div>Loading Chart...</div>}
-              data={chartData}
-              options={{
-                title: "Yearly Admissions",
-                hAxis: { title: "Year" },
-                vAxis: { title: "Number of Admissions" },
-                colors: [
-                  "#76A7FA",
-                  "#FF5733",
-                  "#33FF57",
-                  "#3357FF",
-                  "#FF33A6",
-                  "#FFD700",
-                  "#FF6F61",
-                  "#8E44AD",
-                  "#3498DB",
-                  "#2ECC71",
-                  "#E74C3C",
-                ],
-              }}
-              legendToggle
-            />
-          </>
+          <Chart
+            width={"100%"}
+            height={"400px"}
+            chartType="ColumnChart"
+            loader={<div>Loading Chart...</div>}
+            data={chartData}
+            options={{
+              title: `Daily Admissions for ${selectedMonth}/${selectedYear}`,
+              hAxis: {
+                title: "Date",
+                format: 'M/d', // Format the date on the x-axis (Month/Day)
+              },
+              vAxis: { title: "Number of Admissions" },
+              colors: ["#76A7FA"],
+              animation: {
+                startup: true, // Start animation on data load
+                duration: 500, // Duration of animation in milliseconds
+                easing: 'out', // Easing function for the animation
+              },
+            }}
+            legendToggle
+          />
         )}
       </Paper>
     </div>

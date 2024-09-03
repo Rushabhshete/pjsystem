@@ -502,7 +502,12 @@ const StudentList = () => {
                 <TableCell>{admission.sourceBy}</TableCell>
                 <TableCell>{admission.duration}</TableCell>
                 <TableCell>{new Date(admission.date).toLocaleDateString()}</TableCell>
-                <TableCell>{new Date(admission.dueDate).toLocaleDateString()}</TableCell>
+                <TableCell>
+  {admission.dueDate ? new Date(admission.dueDate).toLocaleDateString() : "NA"}
+</TableCell>
+                {/* {inquiry.status1 === "Call Back"
+                          ? `${inquiry.callBackDate} ${inquiry.callBackTime}`
+                          : "-----"} */}
                 <TableCell>{admission.totalFees}</TableCell>
                 <TableCell>{admission.paidFees}</TableCell>
                 <TableCell>{admission.pendingFees}</TableCell>
@@ -531,6 +536,7 @@ const StudentList = () => {
         </Table>
       </TableContainer>
       <AlertDialog open={confirmOpen} onClose={() => setConfirmOpen(false)} onConfirm={handleDelete} />
+        
       <Dialog open={openUpdateDialog} onClose={handleCloseDialog}>
         <DialogTitle>Update Admission</DialogTitle>
         <DialogContent>
