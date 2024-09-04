@@ -571,7 +571,7 @@ const AdminProfile = () => {
                 <Grid item xs={12} sm={6}>
                   <Box display="flex" alignItems="center">
                     <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
-                      Mobile Number 1:
+                      Owner Number :
                     </Typography>
                     <Typography variant="h6">
                       {employeeDetails.phonenumber}
@@ -581,7 +581,7 @@ const AdminProfile = () => {
                 <Grid item xs={12} sm={6}>
                   <Box display="flex" alignItems="center">
                     <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
-                      Mobile Number 2:
+                      Institute Number :
                     </Typography>
                     <Typography variant="h6">
                       {employeeDetails.mobilenumber}

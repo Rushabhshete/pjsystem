@@ -20,8 +20,11 @@ import {
   Modal,
   Box,
 } from "@mui/material";
+import PolicyPopup from "./PolicyPopup ";
+import { policies } from "./policies";
 import { useNavigate } from "react-router-dom";
-// Define the CreateAccount component
+import indianStatesAndDistricts from "./indianStatesAndDistricts";
+
 const CreateAccount = () => {
   const [formData, setFormData] = useState({
     emailaddress: "",
@@ -56,15 +59,18 @@ const CreateAccount = () => {
     subscriptionyear: "",
     subscriptstartDate: "",
     subscriptendDate: "",
+    gstNo: "",
+    pincode: "",
   });
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
-  const [termsAccepted, setTermsAccepted] = useState(false);
-  const [showTerms, setShowTerms] = useState(false);
+
   const [imageUpload, setImageUpload] = useState(null);
   const [isSaveSuccessful, setIsSaveSuccessful] = useState(false);
   const [institutecode, setInstituteCode] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [selectedPolicy, setSelectedPolicy] = useState([]);
+  const [open, setOpen] = useState(false);
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
     setFormData((prevData) => ({
@@ -104,16 +110,14 @@ const CreateAccount = () => {
     if (!formData.district) {
       formErrors.district = "District is required.";
     }
-    if (!formData.registrationnumber) {
-      formErrors.registrationnumber = "Registration number is required.";
-    }
+   
     return formErrors;
   };
 
   const handleSave = async (e) => {
     e.preventDefault();
     const formErrors = validateForm();
-    if (Object.keys(formErrors).length === 0 && termsAccepted) {
+    if (Object.keys(formErrors).length === 0 ) {
       try {
         // Prepare data for submission
         const dataToSubmit = {
@@ -134,9 +138,11 @@ const CreateAccount = () => {
           enquirymanagementsystem: formData.enquirymanagementsystem,
           admissionmanagementsystem: formData.admissionmanagementsystem,
           plan: formData.plan,
-          subscriptionyear: formData.subscriptionyear,
+          //subscriptionyear: formData.subscriptionyear,
           subscriptstartDate: formData.subscriptstartDate,
-          subscriptendDate: formData.subscriptendDate,
+          //subscriptendDate: formData.subscriptendDate,
+          pincode:formData.pincode,
+        gstNo:formData.gstNo
         };
         setIsSaveSuccessful(true);
         const response = await axios.post(
@@ -158,18 +164,14 @@ const CreateAccount = () => {
     }
   };
 
-  const handleTermsOpen = () => {
-    setShowTerms(true);
+  const handleClickOpen = (policy) => {
+    setSelectedPolicy(policy);
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
   };
 
-  const handleTermsClose = () => {
-    setShowTerms(false);
-  };
-
-  const handleTermsAccept = () => {
-    setTermsAccepted(true);
-    setShowTerms(false);
-  };
 
   const handleImageUpload = async () => {
     const email = localStorage.getItem("email");
@@ -229,8 +231,13 @@ const CreateAccount = () => {
     }
   };
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(institutecode);
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(institutecode);
+      alert('Copied to clipboard!');
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+    }
   };
 
   const handleClosePopup = () => {
@@ -238,278 +245,330 @@ const CreateAccount = () => {
     navigate("/systems");
   };
 
+  const state = Object.keys(indianStatesAndDistricts);
+  const district = formData.state
+    ? indianStatesAndDistricts[formData.state]
+    : [];
+
   return (
-    <form
-      onSubmit={handleSave}
-      style={{ marginLeft: "100px", marginRight: "100px" }}
+    <div
+      style={{
+        backgroundImage: `url('https://media.idownloadblog.com/wp-content/uploads/2016/02/Twitter-GIF.gif')`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center center',
+        minHeight: '100vh',
+        color: '#ffffff' // Optional: Set text color for contrast
+      }}
     >
-      <Typography variant="h4" gutterBottom textAlign="center">
-        Add Institute
-      </Typography>
+      <form
+        onSubmit={handleSave}
+        style={{ marginLeft: "100px", marginRight: "100px" }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            width: "100%",
+          }}
+        >
+          <Box
+            sx={{
+              flexGrow: 1,
+              height: "1px",
+              backgroundColor: "gold",
+            }}
+          />
+          <Typography variant="h4" sx={{ margin: "0 10px", color: "gold" }}>
+            <b>Create Account</b>
+          </Typography>
+          <Box
+            sx={{
+              flexGrow: 1,
+              height: "1px",
+              backgroundColor: "gold",
+            }}
+          />
+        </Box>
+        <Paper
+          align="center"
+          elevation={3}
+          style={{
+            padding: "20px",
+            align: "center",
+            marginTop: "10px",
+            marginBottom: "10px",
+          }}
+        >
+          <Grid container spacing={2}>
+            {/* Email, Phone Number, Mobile Number */}
+            <Grid item xs={12} sm={3}>
+              <TextField
+                label="Firm / Institute Name"
+                name="institutename"
+                value={formData.institutename}
+                onChange={handleChange}
+                fullWidth
+                required
+                error={!!errors.institutename}
+                helperText={errors.institutename}
+                InputLabelProps={{
+                  className: "required-asterisk",
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <TextField
+                label="Owner's Email Address"
+                name="emailaddress"
+                value={formData.emailaddress}
+                onChange={handleChange}
+                fullWidth
+                required
+                error={!!errors.emailaddress}
+                helperText={errors.emailaddress}
+                InputLabelProps={{
+                  className: "required-asterisk",
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <TextField
+                label="Admin Phone Number"
+                name="phonenumber"
+                value={formData.phonenumber}
+                onChange={handleChange}
+                fullWidth
+                required
+                error={!!errors.phonenumber}
+                helperText={errors.phonenumber}
+                InputLabelProps={{
+                  className: "required-asterisk",
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <TextField
+                label="Firm / Institute Mobile Number"
+                name="mobilenumber"
+                value={formData.mobilenumber}
+                onChange={handleChange}
+                fullWidth
+                required
+                error={!!errors.mobilenumber}
+                helperText={errors.mobilenumber}
+                InputLabelProps={{
+                  className: "required-asterisk",
+                }}
+              />
+            </Grid>
 
-      <Grid container spacing={2}>
-        {/* Email, Phone Number, Mobile Number */}
-        <Grid item xs={12} sm={4}>
-          <TextField
-            label="Email Address"
-            name="emailaddress"
-            value={formData.emailaddress}
-            onChange={handleChange}
-            fullWidth
-            error={!!errors.emailaddress}
-            helperText={errors.emailaddress}
-            InputProps={{
-              endAdornment: <span style={{ color: "red" }}>*</span>,
-            }}
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            label="Phone Number"
-            name="phonenumber"
-            value={formData.phonenumber}
-            onChange={handleChange}
-            fullWidth
-            error={!!errors.phonenumber}
-            helperText={errors.phonenumber}
-            InputProps={{
-              endAdornment: <span style={{ color: "red" }}>*</span>,
-            }}
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            label="Mobile Number"
-            name="mobilenumber"
-            value={formData.mobilenumber}
-            onChange={handleChange}
-            fullWidth
-            error={!!errors.mobilenumber}
-            helperText={errors.mobilenumber}
-            InputProps={{
-              endAdornment: <span style={{ color: "red" }}>*</span>,
-            }}
-          />
-        </Grid>
+            {/* Password, Confirm Password, Institute Name */}
+            <Grid item xs={12} sm={3}>
+              <TextField
+                label="Password"
+                name="password"
+                type="password"
+                value={formData.password}
+                onChange={handleChange}
+                fullWidth
+                required
+                InputLabelProps={{
+                  className: "required-asterisk",
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <TextField
+                label="Confirm Password"
+                name="confirmpassword"
+                type="password"
+                value={formData.confirmpassword}
+                onChange={handleChange}
+                fullWidth
+                error={!!errors.confirmpassword}
+                helperText={errors.confirmpassword}
+                required
+                InputLabelProps={{
+                  className: "required-asterisk",
+                }}
+              />
+            </Grid>
 
-        {/* Password, Confirm Password, Institute Name */}
-        <Grid item xs={12} sm={4}>
-          <TextField
-            label="Password"
-            name="password"
-            type="password"
-            value={formData.password}
-            onChange={handleChange}
-            fullWidth
-            InputProps={{
-              endAdornment: <span style={{ color: "red" }}>*</span>,
-            }}
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            label="Confirm Password"
-            name="confirmpassword"
-            type="password"
-            value={formData.confirmpassword}
-            onChange={handleChange}
-            fullWidth
-            error={!!errors.confirmpassword}
-            helperText={errors.confirmpassword}
-            InputProps={{
-              endAdornment: <span style={{ color: "red" }}>*</span>,
-            }}
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            label="Institute Name"
-            name="institutename"
-            value={formData.institutename}
-            onChange={handleChange}
-            fullWidth
-            error={!!errors.institutename}
-            helperText={errors.institutename}
-            InputProps={{
-              endAdornment: <span style={{ color: "red" }}>*</span>,
-            }}
-          />
-        </Grid>
+            <Grid item xs={12} sm={3}>
+              <TextField
+                label="Owner's Aadhar No."
+                name="aadhar"
+                value={formData.aadhar}
+                onChange={handleChange}
+                fullWidth
+                error={!!errors.aadhar}
+                helperText={errors.aadhar}
+                required
+                InputLabelProps={{
+                  className: "required-asterisk",
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <TextField
+                label="Owner's Pan No."
+                name="pancard"
+                value={formData.pancard}
+                onChange={handleChange}
+                fullWidth
+                error={!!errors.pan}
+                helperText={errors.pan}
+                required
+                InputLabelProps={{
+                  className: "required-asterisk",
+                }}
+              />
+            </Grid>
 
-        <Grid item xs={12} sm={4}>
-          <TextField
-            label="Aadhar"
-            name="aadhar"
-            value={formData.aadhar}
-            onChange={handleChange}
-            fullWidth
-            error={!!errors.aadhar}
-            helperText={errors.aadhar}
-            InputProps={{
-              endAdornment: <span style={{ color: "red" }}>*</span>,
-            }}
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            label="Pan Card"
-            name="pancard"
-            value={formData.pancard}
-            onChange={handleChange}
-            fullWidth
-            error={!!errors.pan}
-            helperText={errors.pan}
-            InputProps={{
-              endAdornment: <span style={{ color: "red" }}>*</span>,
-            }}
-          />
-        </Grid>
+            {/* Website, Address (Full Width), Landmark */}
+            <Grid item xs={12} sm={3}>
+              <TextField
+                label="Website Link"
+                name="websitename"
+                value={formData.websitename}
+                onChange={handleChange}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <TextField
+                label="GST No."
+                name="gstNo"
+                value={formData.gstNo}
+                onChange={handleChange}
+                fullWidth
+              />
+            </Grid>
 
-        {/* Website, Address (Full Width), Landmark */}
-        <Grid item xs={12} sm={4}>
-          <TextField
-            label="Website"
-            name="websitename"
-            value={formData.websitename}
-            onChange={handleChange}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12} sm={12}>
-          <TextField
-            label="Address"
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-            multiline
-            rows={4}
-            fullWidth
-            InputProps={{
-              endAdornment: <span style={{ color: "red" }}>*</span>,
-            }}
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            label="Landmark"
-            name="landmark"
-            value={formData.landmark}
-            onChange={handleChange}
-            fullWidth
-          />
-        </Grid>
+            <Grid item xs={12} sm={3}>
+              <FormControl fullWidth>
+                <TextField
+                  select
+                  label="Plan"
+                  name="plan"
+                  value={formData.plan}
+                  onChange={handleChange}
+                  InputLabelProps={{
+                    className: "required-asterisk",
+                  }}
+                >
+                  <MenuItem value="Demo/free">Demo/free</MenuItem>
+                  <MenuItem value="Basic">Basic</MenuItem>
+                  <MenuItem value="Premium">Premium</MenuItem>
+                  <MenuItem value="Business">Business</MenuItem>
+                </TextField>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <TextField
+                label="Firm / Institute Address"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                multiline
+                // rows={4}
+                fullWidth
+                InputLabelProps={{ className: "required-asterisk" }}
+                required
+              />
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <TextField
+                label="Landmark"
+                name="landmark"
+                value={formData.landmark}
+                onChange={handleChange}
+                fullWidth
+              />
+            </Grid>
 
-        {/* Country, State, District */}
-        <Grid item xs={12} sm={4}>
-          <FormControl fullWidth>
-            <TextField
-              select
-              label="Country"
-              name="country"
-              value={formData.country}
-              onChange={handleChange}
-            >
-              <MenuItem value="India">India</MenuItem>
-            </TextField>
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <FormControl fullWidth required>
-            <TextField
-              select
-              label="State"
-              name="state"
-              value={formData.state}
-              onChange={handleChange}
-              error={!!errors.state}
-            >
-              {states.map((state, index) => (
-                <MenuItem key={index} value={state}>
-                  {state}
-                </MenuItem>
-              ))}
-            </TextField>
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <FormControl fullWidth required>
-          
-            <TextField
-              select
-              label="District"
-              
-              name="district"
-              value={formData.district}
-              onChange={handleChange}
-              error={!!errors.district}
-            >
-              {districts.map((district, index) => (
-                <MenuItem key={index} value={district}>
-                  {district}
-                </MenuItem>
-              ))}
-            </TextField>
-          </FormControl>
-        </Grid>
+            {/* Country, State, District */}
+            <Grid item xs={12} sm={3}>
+              <FormControl fullWidth>
+                <TextField
+                  select
+                  label="Country"
+                  name="country"
+                  value={formData.country}
+                  onChange={handleChange}
+                >
+                  <MenuItem value="India">India</MenuItem>
+                </TextField>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <FormControl fullWidth>
+                <TextField
+                  select
+                  label="State"
+                  name="state"
+                  value={formData.state}
+                  onChange={handleChange}
+                  InputLabelProps={{ className: "required-asterisk" }}
+                  required
+                >
+                  {state.map((state) => (
+                    <MenuItem key={state} value={state}>
+                      {state}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <FormControl fullWidth>
+                <TextField
+                  select
+                  label="District"
+                  name="district"
+                  value={formData.district}
+                  onChange={handleChange}
+                  disabled={!formData.state}
+                  InputLabelProps={{ className: "required-asterisk" }}
+                  required
+                >
+                  {district.map((district) => (
+                    <MenuItem key={district} value={district}>
+                      {district}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </FormControl>
+            </Grid>
 
-        {/* City, Registration Number */}
-        <Grid item xs={12} sm={4}>
-          <FormControl fullWidth required>
-            <TextField
-              select
-              label="City"
-              name="city"
-              value={formData.city}
-              onChange={handleChange}
-              error={!!errors.city}
-            >
-              {cities.map((city, index) => (
-                <MenuItem key={index} value={city}>
-                  {city}
-                </MenuItem>
-              ))}
-            </TextField>
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            label="Registration Number"
-            name="registrationnumber"
-            value={formData.registrationnumber}
-            onChange={handleChange}
-            fullWidth
-            error={!!errors.registrationnumber}
-            helperText={errors.registrationnumber}
-            InputProps={{
-              endAdornment: <span style={{ color: "red" }}>*</span>,
-            }}
-          />
-        </Grid>
+            {/* City, Registration Number */}
+            <Grid item xs={12} sm={3}>
+              <FormControl fullWidth required>
+                <TextField
+                  label="City"
+                  name="city"
+                  value={formData.city}
+                  onChange={handleChange}
+                  error={!!errors.city}
+                  InputLabelProps={{ className: "required-asterisk" }}
+                  required
+                ></TextField>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <TextField
+                label="Pincode"
+                name="pincode"
+                required
+                value={formData.pincode}
+                onChange={handleChange}
+                fullWidth
+                InputLabelProps={{ className: "required-asterisk" }}
+              />
+            </Grid>
 
-        {/* Plan, Subscription Year, Subscription Start Date */}
-        <Grid item xs={12} sm={4}>
-          <FormControl fullWidth>
-            <InputLabel id="plan-label">Plan *</InputLabel>
-            <TextField
-              select
-              label="Plan"
-              labelId="plan-label"
-              id="plan"
-              name="plan"
-              value={formData.plan}
-              onChange={handleChange}
-              InputProps={{
-                endAdornment: <span style={{ color: "red" }}>*</span>,
-              }}
-            >
-              <MenuItem value="Demo/free">Demo/free</MenuItem>
-              <MenuItem value="Basic">Basic</MenuItem>
-              <MenuItem value="Premium">Premium</MenuItem>
-              <MenuItem value="Business">Business</MenuItem>
-            </TextField>
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={4}>
+            {/* <Grid item xs={12} sm={3}>
           <TextField
             InputLabelProps={{ shrink: true }}
             label="Subscription Start Date"
@@ -518,316 +577,244 @@ const CreateAccount = () => {
             onChange={handleChange}
             type="date"
             fullWidth
-            InputProps={{
-              endAdornment: <span style={{ color: "red" }}>*</span>,
+            InputLabelProps={{
+              className: "required-asterisk"
             }}
           />
-        </Grid>
-      </Grid>
-
-      <Paper
-        align="center"
-        elevation={3}
-        style={{ padding: "16px", align: "center" }}
-      >
-        <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-          {" "}
-          Select the Systems
-        </Typography>
-        <Grid container spacing={2}>
-          {/* Checkboxes for Management Systems */}
-          <Grid item xs={12}>
-            <Grid container spacing={2}>
-              <Grid item xs={4}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={formData.employeemanagementsystem}
-                      onChange={handleChange}
-                      name="employeemanagementsystem"
-                      color="primary"
-                    />
-                  }
-                  label="Employee Management System"
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={formData.studentmanagementsystem}
-                      onChange={handleChange}
-                      name="studentmanagementsystem"
-                      color="primary"
-                    />
-                  }
-                  label="Student Management System"
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={formData.feesmanagementsystem}
-                      onChange={handleChange}
-                      name="feesmanagementsystem"
-                      color="primary"
-                    />
-                  }
-                  label="Fees Management System"
-                />
-              </Grid>
-            </Grid>
+        </Grid> */}
           </Grid>
 
-          {/* Income and Expense, Enquiry, Admission */}
-          <Grid item xs={12}>
+          <Paper
+            align="center"
+            elevation={3}
+            style={{ padding: "16px", align: "center", marginTop: "10px" ,backgroundColor:"#003366" }}
+          >
+            <Typography variant="h6" sx={{ fontWeight: "bold", color:"gold"}} >
+              {" "}
+              Select the Systems 
+            </Typography>
             <Grid container spacing={2}>
-              <Grid item xs={4}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={formData.incomeandexpense}
-                      onChange={handleChange}
-                      name="incomeandexpense"
-                      color="primary"
+              {/* Checkboxes for Management Systems */}
+              <Grid item xs={12}>
+                <Grid container spacing={2} sx={{color:"white"}}>
+                  <Grid item xs={4}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={formData.employeemanagementsystem}
+                          onChange={handleChange}
+                          name="employeemanagementsystem"
+                          color="primary"
+
+                        />
+                      }
+                      label="Employee Management System"
                     />
-                  }
-                  label="Income and Expense Management"
-                />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={formData.studentmanagementsystem}
+                          onChange={handleChange}
+                          name="studentmanagementsystem"
+                          color="primary"
+                        />
+                      }
+                      label="Student Management System"
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={formData.feesmanagementsystem}
+                          onChange={handleChange}
+                          name="feesmanagementsystem"
+                          color="primary"
+                        />
+                      }
+                      label="Fees Management System"
+                    />
+                  </Grid>
+                </Grid>
               </Grid>
-              <Grid item xs={4}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={formData.enquirymanagementsystem}
-                      onChange={handleChange}
-                      name="enquirymanagementsystem"
-                      color="primary"
+
+              {/* Income and Expense, Enquiry, Admission */}
+              <Grid item xs={12} sx={{color:"white"}}>
+                <Grid container spacing={2}>
+                  <Grid item xs={4}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={formData.incomeandexpense}
+                          onChange={handleChange}
+                          name="incomeandexpense"
+                          color="primary"
+                        />
+                      }
+                      label="Income and Expense Management"
                     />
-                  }
-                  label="Enquiry Management System"
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={formData.admissionmanagementsystem}
-                      onChange={handleChange}
-                      name="admissionmanagementsystem"
-                      color="primary"
+                  </Grid>
+                  <Grid item xs={4}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={formData.enquirymanagementsystem}
+                          onChange={handleChange}
+                          name="enquirymanagementsystem"
+                          color="primary"
+                        />
+                      }
+                      label="Enquiry Management System"
                     />
-                  }
-                  label="Admission Management System"
-                />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={formData.admissionmanagementsystem}
+                          onChange={handleChange}
+                          name="admissionmanagementsystem"
+                          color="primary"
+                        />
+                      }
+                      label="Admission Management System"
+                    />
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        </Grid>
-      </Paper>
+          </Paper>
 
-      {/* Terms and Conditions */}
-      <Grid item xs={12}>
-        <Button onClick={handleTermsOpen} color="primary">
-          Before submitting the form read the terms and conditions = click here
-        </Button>
-      </Grid>
+          {/* Terms and Conditions */}
 
-      {/* Submit Button */}
-      <Grid item xs={12}>
-        <Button variant="contained" type="submit" fullWidth>
-          Save
-        </Button>
-      </Grid>
-
-      {/* Dialog for Terms and Conditions */}
-      <Dialog
-        open={showTerms}
-        onClose={handleTermsClose}
-        PaperProps={{ style: { padding: "20px", backgroundColor: "#f5f5f5" } }}
-      >
-        <DialogTitle style={{ fontWeight: "bold", fontSize: "1.5rem" }}>
-          Terms and Conditions
-        </DialogTitle>
-        <DialogContent>
-          <Typography variant="body2" style={{ lineHeight: "1.5" }}>
-            <ul>
-              <li>
-                Term 1: All users must be at least 18 years old to access our
-                services.
-              </li>
-              <li>
-                Term 2: Users agree to provide accurate information during
-                registration.
-              </li>
-              <li>
-                Term 3: We reserve the right to suspend or terminate accounts
-                for any violations.
-              </li>
-              <li>
-                Term 4: All content and intellectual property are owned by the
-                company.
-              </li>
-              <li>
-                Term 5: By using our services, you agree to receive
-                communications from us.
-              </li>
-            </ul>
-          </Typography>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={termsAccepted}
-                onChange={(e) => setTermsAccepted(e.target.checked)}
-                color="primary"
+          <Grid
+            container
+            spacing={2}
+            justifyContent="center"
+            sx={{ marginTop: "24px" }}
+          >
+            <Grid item>
+              <FormControlLabel
+                control={<Checkbox />}
+                label={
+                  <Typography
+                    variant="body1"
+                    align="center"
+                    onClick={() => handleClickOpen(policies.privacyPolicy)}
+                    sx={{ cursor: "pointer", textDecoration: "underline" }}
+                  >
+                    Privacy Policy
+                  </Typography>
+                }
               />
-            }
-            label={
-              <span style={{ fontWeight: "normal", fontSize: "0.875rem" }}>
-                I agree to the terms and conditions
-              </span>
-            }
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={handleTermsClose}
-            color="primary"
-            style={{ textTransform: "none" }}
-          >
-            Close
-          </Button>
-          <Button
-            onClick={handleTermsAccept}
-            color="primary"
-            style={{
-              textTransform: "none",
-              backgroundColor: "#3f51b5",
-              color: "#fff",
-            }}
-          >
-            Accept
-          </Button>
-        </DialogActions>
-      </Dialog>
+            </Grid>
+            <Grid item>
+              <FormControlLabel
+                control={<Checkbox />}
+                label={
+                  <Typography
+                    variant="body1"
+                    align="center"
+                    onClick={() => handleClickOpen(policies.termsConditions)}
+                    sx={{ cursor: "pointer", textDecoration: "underline" }}
+                  >
+                    Terms & Conditions
+                  </Typography>
+                }
+              />
+            </Grid>
+            <Grid item>
+              <FormControlLabel
+                control={<Checkbox />}
+                label={
+                  <Typography
+                    variant="body1"
+                    align="center"
+                    onClick={() => handleClickOpen(policies.dataProductPolicy)}
+                    sx={{ cursor: "pointer", textDecoration: "underline" }}
+                  >
+                    Data & Product Policy
+                  </Typography>
+                }
+              />
+            </Grid>
+          </Grid>
+          {/* Dialog for Policy Information */}
+          {selectedPolicy && (
+            <PolicyPopup
+              open={open}
+              onClose={handleClose}
+              policy={selectedPolicy}
+            />
+          )}
 
-      {/* Upload Image Section */}
-      <Grid item xs={12} mt={2}>
-        <ImageUploadButton
-          variant="contained"
-          onClick={() => document.getElementById("image-upload").click()}
-        >
-          Upload Image
-        </ImageUploadButton>
-      </Grid>
-      <input
-        type="file"
-        id="image-upload"
-        style={{ display: "none" }}
-        onChange={(e) => {
-          setImageUpload(e.target.files[0]);
-        }}
-      />
-      <Grid item xs={12}>
-        {imageUpload && (
-          <Button variant="contained" onClick={handleImageUpload} mt={2}>
-            Confirm Image Upload
-          </Button>
-        )}
-      </Grid>
-      {isSaveSuccessful && (
-        <Button variant="contained" color="primary" onClick={handleSubmit}>
-          Submit
-        </Button>
-      )}
-      <Modal open={isPopupOpen} onClose={handleClosePopup}>
-        <Box sx={{ padding: 4, backgroundColor: "white", borderRadius: 2 }}>
-          <Typography variant="h6">Institute Code: {institutecode}</Typography>
-          <Button variant="outlined" onClick={handleCopy}>
-            Copy
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={handleClosePopup}
-          >
-            Close
-          </Button>
-        </Box>
-      </Modal>
-    </form>
+          {/* Submit Button */}
+          <Grid item xs={12} >
+            <Button variant="contained" type="submit" fullWidth sx={{backgroundColor:"#003366",color:"gold"}} >
+              Create Account
+            </Button>
+          </Grid>
+
+          {/* Dialog for Terms and Conditions */}
+        
+           
+          {/* Upload Image Section */}
+          <Grid item xs={12} mt={2}>
+            <ImageUploadButton
+              variant="contained"
+              onClick={() => document.getElementById("image-upload").click()}
+              sx={{backgroundColor:"#003366",color:"gold"}}
+            >
+              Upload Image / Logo
+            </ImageUploadButton>
+          </Grid>
+          <input
+            type="file"
+            id="image-upload"
+            style={{ display: "none" }}
+            onChange={(e) => {
+              setImageUpload(e.target.files[0]);
+            }}
+          />
+          <Grid item xs={12}>
+            {imageUpload && (
+              <Button variant="contained" onClick={handleImageUpload} mt={2}>
+                Confirm Image Upload
+              </Button>
+            )}
+          </Grid>
+          {isSaveSuccessful && (
+            <Button variant="contained" color="primary" onClick={handleSubmit}>
+              Get Your Institute Code
+            </Button>
+          )}
+          <Modal open={isPopupOpen} onClose={handleClosePopup}>
+          <Box sx={{ padding: 4, backgroundColor: "white", borderRadius: 2 }}>
+  <Typography variant="h6">
+    Institute Code: {institutecode}
+  </Typography>
+  <Typography variant="body2" sx={{ color: "red", marginTop: 1 }}>
+    Write Down Institute Code, do not forget, cannot recover
+  </Typography>
+  <Button variant="outlined" onClick={handleCopy}>
+    Copy
+  </Button>
+  <Button
+    variant="contained"
+    color="secondary"
+    onClick={handleClosePopup}
+  >
+    Close
+  </Button>
+</Box>
+
+          </Modal>
+        </Paper>
+      </form>
+    </div>
   );
 };
-
-const states = ["Maharashtra"];
-const districts = [
-  "Ahmednagar",
-  "Akola",
-  "Amravati",
-  "Aurangabad",
-  "Beed",
-  "Bhandara",
-  "Buldhana",
-  "Chandrapur",
-  "Dhule",
-  "Gadchiroli",
-  "Gondia",
-  "Hingoli",
-  "Jalgaon",
-  "Jalna",
-  "Kolhapur",
-  "Latur",
-  "Mumbai City",
-  "Mumbai Suburban",
-  "Nagpur",
-  "Nanded",
-  "Nandurbar",
-  "Nashik",
-  "Osmanabad",
-  "Palghar",
-  "Parbhani",
-  "Pune",
-  "Raigad",
-  "Ratnagiri",
-  "Sindhudurg",
-  "Solapur",
-  "Thane",
-  "Wardha",
-  "Washim",
-  "Yavatmal",
-];
-const cities = [
-  "Pune",
-  "Aundh",
-  "Hinjewadi",
-  "Kharadi",
-  "Hadapsar",
-  "Wakad",
-  "Viman Nagar",
-  "Pimpri-Chinchwad",
-  "Loni Kalbhor",
-  "Bavdhan",
-  "Shivajinagar",
-  "Kothrud",
-  "Nigdi",
-  "Dhankawadi",
-  "Wanawadi",
-  "Sangamner",
-  "Kasarwadi",
-  "Bhosari",
-  "Yerawada",
-  "Bavdhan",
-  "Dapodi",
-  "Kothrud",
-  "Chinchwad",
-  "Hinjewadi",
-  "Kharadi",
-  "Wagholi",
-  "Pimpri",
-  "Moshi",
-  "Ravet",
-  "Alandi",
-];
 
 export default CreateAccount;
