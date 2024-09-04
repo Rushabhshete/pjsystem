@@ -220,22 +220,11 @@ const sidebarOptions = [
              route: "/layout/empReport",
             icon: <NotificationsIcon />,
           },
-          {
-            name: "Add Category",
-            icon: <NotificationsIcon />,
-            subSubOptions: [
               {
                 name: "Add Category",
                 route: "/layout/addEmpcategory",
-                icon: <Person sx={{ color: "green" }} />,
+                icon: <Person />,
               },
-              {
-                name: "Category Table",
-                route: "/layout/CategoryTable",
-                icon: <Person sx={{ color: "blue" }} />,
-              },
-            ],
-          },
           {
             name: "Add Department",
              route: "/layout/AddDepartment",
