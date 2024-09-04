@@ -217,7 +217,7 @@ const sidebarOptions = [
           },
           {
             name: "Report",
-            // route: "/employee/hr/delete",
+             route: "/layout/empReport",
             icon: <NotificationsIcon />,
           },
           {
@@ -226,15 +226,20 @@ const sidebarOptions = [
             subSubOptions: [
               {
                 name: "Add Category",
-                // route: "/employee/hr/addcategory",
+                route: "/layout/addEmpcategory",
                 icon: <Person sx={{ color: "green" }} />,
               },
               {
-                name: "Category List",
-                // route: "/employee/hr/categorylist",
+                name: "Category Table",
+                route: "/layout/CategoryTable",
                 icon: <Person sx={{ color: "blue" }} />,
               },
             ],
+          },
+          {
+            name: "Add Department",
+             route: "/layout/AddDepartment",
+            icon: <NotificationsIcon />,
           },
         ],
       },
@@ -281,17 +286,17 @@ const sidebarOptions = [
         subSubOptions: [
           {
             name: "Dashboard",
-            // route: "/employee/hr/add",
+            route: "/layout/SalaryDashboard",
             icon: <DashboardIcon />,
           },
           {
-            name: "Add Salary",
-            // route: "/employee/hr/manage",
+            name: "Employee Salary",
+            route: "/layout/EmpDetails",
             icon: <NotificationsIcon />,
           },
           {
             name: "Report",
-            // route: "/employee/hr/delete",
+            route: "/layout/SalaryReport",
             icon: <NotificationsIcon />,
           },
         ],
