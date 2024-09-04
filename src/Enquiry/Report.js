@@ -577,7 +577,7 @@ export default function Report() {
                       <b>
                         {inquiry.status1 === "Call Back"
                           ? `${inquiry.callBackDate} ${inquiry.callBackTime}`
-                          : "-----"}
+                          : "NA"}
                       </b>
                     </TableCell>
                     <TableCell>{inquiry.remark}</TableCell>

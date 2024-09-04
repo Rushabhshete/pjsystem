@@ -12,7 +12,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { styled } from "@mui/system";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const AdmissionForm = () => {
   const institutecode = localStorage.getItem("institutecode");
@@ -115,7 +115,7 @@ const AdmissionForm = () => {
     if (formData.paymentMethod === "Complete") {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        paidFees: prevFormData.totalFees
+        paidFees: prevFormData.totalFees,
       }));
     } else if (formData.paymentMethod === "Partial") {
       // Handle Partial Payment if needed
@@ -149,7 +149,7 @@ const AdmissionForm = () => {
   };
 
   const handleFinalSubmit = () => {
-    navigate('/layout/students');
+    navigate("/layout/students");
   };
 
   const handleFileUpload = async (fieldName, endpoint) => {
@@ -183,7 +183,7 @@ const AdmissionForm = () => {
     ) {
       return formData.totalFees - formData.paidFees;
     }
-    
+
     return 0; // No balance for other payment methods
   };
 
@@ -225,14 +225,13 @@ const AdmissionForm = () => {
           borderRadius: "150px",
           padding: "10px",
           marginBottom: "20px",
-        
         }}
       >
         Student Admission Form
       </PopTypography>
       <div maxWidth="lg" className="required-asterisk">
         <form onSubmit={handleFormSubmit}>
-          <Grid container spacing={3} className="textField-root" >
+          <Grid container spacing={3} className="textField-root">
             <Grid item xs={12} sm={6} md={4}>
               <TextField
                 fullWidth
@@ -242,7 +241,6 @@ const AdmissionForm = () => {
                 value={formData.name}
                 onChange={handleInputChange}
                 required
-                
               />
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
@@ -331,7 +329,6 @@ const AdmissionForm = () => {
                 onChange={handleInputChange}
                 select
                 required
-
               >
                 <MenuItem value="1 Months">1 Months</MenuItem>
                 <MenuItem value="2 Months">2 Months</MenuItem>
@@ -344,7 +341,6 @@ const AdmissionForm = () => {
                 <MenuItem value="48 Months">48 Months</MenuItem>
               </TextField>
             </Grid>
-          
             <Grid item xs={12} sm={6} md={4}>
               <TextField
                 fullWidth
@@ -354,7 +350,8 @@ const AdmissionForm = () => {
                 value={formData.totalFees}
                 onChange={handleInputChange}
               />
-            </Grid>  <Grid item xs={12} sm={4}>
+            </Grid>{" "}
+            <Grid item xs={12} sm={4}>
               <TextField
                 fullWidth
                 id="paymentMethod"
@@ -379,7 +376,6 @@ const AdmissionForm = () => {
                 value={formData.paidFees}
                 onChange={handleInputChange}
                 required
-
               />
             </Grid>
             {formData.paymentMethod === "Pending" ||
@@ -395,7 +391,6 @@ const AdmissionForm = () => {
                 />
               </Grid>
             ) : null}
-           
             <Grid item xs={12} sm={6} md={4}>
               <TextField
                 fullWidth
@@ -406,26 +401,24 @@ const AdmissionForm = () => {
                 onChange={handleInputChange}
                 select
                 required
-
               >
-              <MenuItem value="Cheque">Cheque</MenuItem>
-              <MenuItem value="UPI">UPI</MenuItem>
-              <MenuItem value="Cash">Cash</MenuItem>
-              <MenuItem value="Bank Transfer">Bank Transfer</MenuItem>
-            
+                <MenuItem value="Cheque">Cheque</MenuItem>
+                <MenuItem value="UPI">UPI</MenuItem>
+                <MenuItem value="Cash">Cash</MenuItem>
+                <MenuItem value="Bank Transfer">Bank Transfer</MenuItem>
               </TextField>
             </Grid>
             {formData.paymentMode !== "Cash" ? (
-            <Grid item xs={12} sm={6} md={4}>
-              <TextField
-                fullWidth
-                id="transactionid"
-                name="transactionid"
-                label="Transaction ID"
-                value={formData.transactionid}
-                onChange={handleInputChange}
-              />
-            </Grid>
+              <Grid item xs={12} sm={6} md={4}>
+                <TextField
+                  fullWidth
+                  id="transactionid"
+                  name="transactionid"
+                  label="Transaction ID"
+                  value={formData.transactionid}
+                  onChange={handleInputChange}
+                />
+              </Grid>
             ) : null}
             <Grid item xs={12} sm={6} md={4}>
               <TextField
@@ -437,7 +430,6 @@ const AdmissionForm = () => {
                 onChange={handleInputChange}
                 select
                 required
-
               >
                 {source.map((src) => (
                   <MenuItem key={src.id} value={src.sourceBy}>
@@ -456,7 +448,6 @@ const AdmissionForm = () => {
                 onChange={handleInputChange}
                 select
                 required
-
               >
                 {guide.map((g) => (
                   <MenuItem key={g.id} value={g.guideName}>
@@ -475,7 +466,6 @@ const AdmissionForm = () => {
                 onChange={handleInputChange}
                 type="date"
                 required
-
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -483,23 +473,22 @@ const AdmissionForm = () => {
             </Grid>
             {formData.paymentMethod === "Pending" ||
             formData.paymentMethod === "Partial" ? (
-            <Grid item xs={12} sm={6} md={4}>
-              <TextField
-                fullWidth
-                id="dueDate"
-                name="dueDate"
-                label="Due Date"
-                value={formData.dueDate}
-                onChange={handleInputChange}
-                type="date"
-                required
-
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            </Grid>
-): null}
+              <Grid item xs={12} sm={6} md={4}>
+                <TextField
+                  fullWidth
+                  id="dueDate"
+                  name="dueDate"
+                  label="Due Date"
+                  value={formData.dueDate}
+                  onChange={handleInputChange}
+                  type="date"
+                  required
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+            ) : null}
             <Grid item xs={12} sm={6} md={4}>
               <TextField
                 fullWidth
@@ -511,17 +500,29 @@ const AdmissionForm = () => {
                 rows={4}
               />
             </Grid>
-            <Grid container spacing={3} style={{ marginTop: "10px",justifyContent:"center" }} >
+            <Grid
+              container
+              spacing={3}
+              style={{ marginTop: "10px", justifyContent: "center" }}
+            >
               <Grid item>
-                <Button type="submit" variant="contained" color="primary" >
+                <Button type="submit" variant="contained" color="primary">
                   Save Data
                 </Button>
               </Grid>
             </Grid>
-           
-            <Grid container spacing={1} justifyContent="space-evenly" display="flex">
+            <Grid
+              container
+              spacing={1}
+              justifyContent="space-evenly"
+              display="flex"
+            >
               <Grid item xs={12} sm={6} md={4}>
-                <Button variant="outlined" component="label" style={{marginRight:"10px"}}>
+                <Button
+                  variant="outlined"
+                  component="label"
+                  style={{ marginRight: "10px" }}
+                >
                   Upload Fees Receipt Photo
                   <input
                     type="file"
@@ -544,7 +545,11 @@ const AdmissionForm = () => {
                 </Button>
               </Grid>
               <Grid item xs={12} sm={6} md={4}>
-                <Button variant="outlined" component="label" style={{marginRight:"10px"}}>
+                <Button
+                  variant="outlined"
+                  component="label"
+                  style={{ marginRight: "10px" }}
+                >
                   Upload Student Photo
                   <input
                     type="file"
@@ -570,9 +575,18 @@ const AdmissionForm = () => {
               </Grid>
             </Grid>
             {isFormSaved && (
-              <Grid container justifyContent="center" spacing={3} style={{ marginTop: "10px" }}>
+              <Grid
+                container
+                justifyContent="center"
+                spacing={3}
+                style={{ marginTop: "10px" }}
+              >
                 <Grid item>
-                  <Button variant="contained" onClick={handleFinalSubmit} color="primary">
+                  <Button
+                    variant="contained"
+                    onClick={handleFinalSubmit}
+                    color="primary"
+                  >
                     Submit
                   </Button>
                 </Grid>
@@ -580,18 +594,18 @@ const AdmissionForm = () => {
             )}
           </Grid>
         </form>
-      
       </div>
       <ToastContainer
-      autoClose={1000} // Toast will close automatically after 5 seconds
-      position="top-right" // Position of the toast
-      hideProgressBar={false} // Show or hide the progress bar
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover/>
+        autoClose={1000} // Toast will close automatically after 5 seconds
+        position="top-right" // Position of the toast
+        hideProgressBar={false} // Show or hide the progress bar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   );
 };

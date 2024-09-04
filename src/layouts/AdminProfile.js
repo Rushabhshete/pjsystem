@@ -186,16 +186,16 @@ const AdminProfile = () => {
     setSelectedFile(null);
   };
 
- 
+
   const handleSave = async () => {
     if (!selectedFile) {
       alert('Please select an image file to upload.');
       return;
     }
-  
+
     const formData = new FormData();
     formData.append('instituteimage', selectedFile);
-  
+
     try {
       const response = await axios.post(
         `http://localhost:8081/updateimage/${email}`,
@@ -206,7 +206,7 @@ const AdminProfile = () => {
           },
         }
       );
-  
+
       alert(response.data);
       setEmployeeDetails((prevDetails) => ({
         ...prevDetails,
@@ -497,152 +497,241 @@ const AdminProfile = () => {
 
         <Grid item xs={12} md={8}>
           <CardContainer>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Basic Information
+            {/* Institute Code Section */}
+            <Grid
+              container
+              alignItems="center"
+              justifyContent="center"
+              style={{
+                backgroundColor: "#f0f4f8",
+                padding: "16px",
+                borderRadius: "8px",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <Typography
+                variant="h5"
+                style={{
+                  fontWeight: "bold",
+                  color: "#333",
+                }}
+              >
+                Institute Code - {employeeDetails.institutecode}
               </Typography>
-              <GridContainer container spacing={3}>
+            </Grid>
+
+            {/* Basic Information Section */}
+            <CardContent>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100%",
+                }}
+              >
+                <Box
+                  sx={{
+                    flexGrow: 1,
+                    height: "1px",
+                    backgroundColor: "#0D47A1",
+                  }}
+                />
+                <Typography variant="h5" sx={{ margin: "0 10px" }}>
+                  <b>BASIC  INFORMATION</b>
+                </Typography>
+                <Box
+                  sx={{
+                    flexGrow: 1,
+                    height: "1px",
+                    backgroundColor: "#0D47A1",
+                  }}
+                />
+              </Box>
+              <GridContainer container spacing={2} mt={1}>
                 <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    label="Institute Name"
-                    value={employeeDetails.institutename}
-                    InputProps={{ readOnly: true }}
-                    variant="outlined"
-                  />
+                  <Box display="flex" alignItems="center">
+                    <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
+                      Institute Name:
+                    </Typography>
+                    <Typography variant="h6">
+                      {employeeDetails.institutename}
+                    </Typography>
+                  </Box>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    label="Institute Code"
-                    value={employeeDetails.institutecode}
-                    InputProps={{ readOnly: true }}
-                    variant="outlined"
-                  />
+                  <Box display="flex" alignItems="center">
+                    <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
+                      Owner's Name:
+                    </Typography>
+                    <Typography variant="h6">
+                      {employeeDetails.ownerName}
+                    </Typography>
+                  </Box>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <StyledTextField
-                    fullWidth
-                    label="Mobile Number 1"
-                    value={employeeDetails.phonenumber}
-                    InputProps={{ readOnly: true }}
-                    variant="outlined"
-                  />
-                </Grid>{" "}
-                <Grid item xs={12} sm={6}>
-                  <StyledTextField
-                    fullWidth
-                    label="Mobile Number 2"
-                    value={employeeDetails.mobilenumber}
-                    InputProps={{ readOnly: true }}
-                    variant="outlined"
-                  />
+                  <Box display="flex" alignItems="center">
+                    <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
+                      Mobile Number 1:
+                    </Typography>
+                    <Typography variant="h6">
+                      {employeeDetails.phonenumber}
+                    </Typography>
+                  </Box>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    label="Date"
-                    value={new Date(
-                      employeeDetails.createdAt
-                    ).toLocaleDateString()}
-                    InputProps={{ readOnly: true }}
-                    variant="outlined"
-                  />
+                  <Box display="flex" alignItems="center">
+                    <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
+                      Mobile Number 2:
+                    </Typography>
+                    <Typography variant="h6">
+                      {employeeDetails.mobilenumber}
+                    </Typography>
+                  </Box>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <StyledTextField
-                    fullWidth
-                    label="Website Name"
-                    value={employeeDetails.websitename}
-                    InputProps={{ readOnly: true }}
-                    variant="outlined"
-                  />
+                  <Box display="flex" alignItems="center">
+                  <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
+                    Address:
+                  </Typography>
+                  <Typography variant="h6">
+                    {employeeDetails.address}
+                  </Typography>
+                  </Box>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    label="Address"
-                    value={employeeDetails.address}
-                    InputProps={{ readOnly: true }}
-                    variant="outlined"
-                  />
+                  <Box display="flex" alignItems="center">
+                  <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
+                    Pincode:
+                  </Typography>
+                  <Typography variant="h6">
+                    {employeeDetails.pincode}
+                  </Typography>
+                  </Box>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    label="Landmark"
-                    value={employeeDetails.landmark}
-                    InputProps={{ readOnly: true }}
-                    variant="outlined"
-                  />
+                  <Box display="flex" alignItems="center">
+                  <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
+                    Landmark:
+                  </Typography>
+                  <Typography variant="h6">
+                    {employeeDetails.landmark}
+                  </Typography>
+                  </Box>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    label="City"
-                    value={employeeDetails.city}
-                    InputProps={{ readOnly: true }}
-                    variant="outlined"
-                  />
+                  <Box display="flex" alignItems="center">
+                  <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
+                    City:
+                  </Typography>
+                  <Typography variant="h6">
+                    {employeeDetails.city}
+                  </Typography>
+                  </Box>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <StyledTextField
-                    fullWidth
-                    label="Country"
-                    value={employeeDetails.country}
-                    InputProps={{ readOnly: true }}
-                    variant="outlined"
-                  />
+                  <Box display="flex" alignItems="center">
+                  <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
+                    State:
+                  </Typography>
+                  <Typography variant="h6">
+                    {employeeDetails.state}
+                  </Typography>
+                  </Box>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <StyledTextField
-                    fullWidth
-                    label="State"
-                    value={employeeDetails.state}
-                    InputProps={{ readOnly: true }}
-                    variant="outlined"
-                  />
+                  <Box display="flex" alignItems="center">
+                  <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
+                    Country:
+                  </Typography>
+                  <Typography variant="h6">
+                    {employeeDetails.country}
+                  </Typography>
+                  </Box>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <StyledTextField
-                    fullWidth
-                    label="Registration Number"
-                    value={employeeDetails.registrationnumber}
-                    InputProps={{ readOnly: true }}
-                    variant="outlined"
-                  />
+                  <Box display="flex" alignItems="center">
+                  <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
+                    Owner's Aadhar No:
+                  </Typography>
+                  <Typography variant="h6">
+                    {employeeDetails.aadhar}
+                  </Typography>
+                  </Box>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    label="Aadhar No"
-                    value={employeeDetails.aadhar}
-                    InputProps={{ readOnly: true }}
-                    variant="outlined"
-                  />
+                  <Box display="flex" alignItems="center">
+                  <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
+                    Owner's PAN No:
+                  </Typography>
+                  <Typography variant="h6">
+                    {employeeDetails.pancard}
+                  </Typography>
+                  </Box>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    label="Institute/Companys PAN No"
-                    value={employeeDetails.pancard}
-                    InputProps={{ readOnly: true }}
-                    variant="outlined"
-                  />
+                  <Box display="flex" alignItems="center"> 
+                  <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
+                    Registration Number:
+                  </Typography>
+                  <Typography variant="h6">
+                    {employeeDetails.registrationnumber}
+                  </Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={6} >
+                 <Box display="flex" alignItems="center">
+                 <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
+                    Website Name:
+                  </Typography>
+                  <Typography variant="h6">
+                    {employeeDetails.websitename}
+                  </Typography>
+                 </Box>
+                </Grid>
+                <Grid item xs={12} sm={6} >
+                 <Box display="flex" alignItems="center">
+                 <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
+                    Plan:
+                  </Typography>
+                  <Typography variant="h6">
+                    {employeeDetails.plan}
+                  </Typography>
+                 </Box>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <StyledTextField
-                    fullWidth
-                    label="GST No."
-                    value={employeeDetails.gstNo}
-                    InputProps={{ readOnly: true }}
-                    variant="outlined"
-                  />
+                  <Box display="flex" alignItems="center">
+                  <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
+                    Date:
+                  </Typography>
+                  <Typography variant="h6">
+                    {new Date(employeeDetails.createdAt).toLocaleDateString()}
+                  </Typography>
+                  </Box>
+                </Grid>
+                
+                
+                
+                
+               
+                
+                
+                
+                
+                <Grid item xs={12} sm={6}>
+                  <Box display="flex" alignItems="center">
+                  <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
+                    GST No.:
+                  </Typography>
+                  <Typography variant="h6">
+                    {employeeDetails.gstNo}
+                  </Typography>
+                  </Box>
                 </Grid>
               </GridContainer>
             </CardContent>
           </CardContainer>
         </Grid>
+
       </Grid>
 
       <Dialog open={open} onClose={handleClose}>
@@ -651,8 +740,8 @@ const AdminProfile = () => {
           {editingField === "profile"
             ? "Profile Information"
             : editingField === "basic"
-            ? "Basic Information"
-            : "Password"}
+              ? "Basic Information"
+              : "Password"}
         </DialogTitle>
         <DialogContent>
           {editingField === "profile" || editingField === "basic" ? (
@@ -709,7 +798,7 @@ const AdminProfile = () => {
           </Button>
         </DialogActions>
       </Dialog>
-      
+
     </div>
   );
 };

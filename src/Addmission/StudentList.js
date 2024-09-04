@@ -77,7 +77,7 @@ const StudentList = () => {
   const [admissionIdToDelete, setAdmissionIdToDelete] = useState(null);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(50);
-
+  const [selectedAdmission, setSelectedAdmission] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -251,11 +251,19 @@ const StudentList = () => {
     document.body.removeChild(link);
   };
 
-  const handleEditClick = (admission) => {
-    setCurrentAdmission(admission);
-    setOpenUpdateDialog(true);
+  const handleUpdateClick = (admission) => {
+    setSelectedAdmission(admission);
   };
 
+  const handleUpdateAdmission = (updatedAdmission) => {
+    // Update the list with the updated admission details
+    setAdmissions((prevAdmissions) =>
+      prevAdmissions.map((ad) =>
+        ad.id === updatedAdmission.id ? updatedAdmission : ad
+      )
+    );
+    setSelectedAdmission(null); // Close the popup after updating
+  };
   const handleDeleteClick = (id) => {
     setAdmissionIdToDelete(id);
     setConfirmOpen(true);
@@ -502,7 +510,12 @@ const StudentList = () => {
                 <TableCell>{admission.sourceBy}</TableCell>
                 <TableCell>{admission.duration}</TableCell>
                 <TableCell>{new Date(admission.date).toLocaleDateString()}</TableCell>
-                <TableCell>{new Date(admission.dueDate).toLocaleDateString()}</TableCell>
+                <TableCell>
+  {admission.dueDate ? new Date(admission.dueDate).toLocaleDateString() : "NA"}
+</TableCell>
+                {/* {inquiry.status1 === "Call Back"
+                          ? `${inquiry.callBackDate} ${inquiry.callBackTime}`
+                          : "-----"} */}
                 <TableCell>{admission.totalFees}</TableCell>
                 <TableCell>{admission.paidFees}</TableCell>
                 <TableCell>{admission.pendingFees}</TableCell>
@@ -518,7 +531,7 @@ const StudentList = () => {
                   {admission.paymentMethod}
                 </TableCell>
                 <TableCell style={{ whiteSpace: "nowrap" }}>
-                  <IconButton variant="contained" color="primary" onClick={() => handleEditClick(admission)}>
+                  <IconButton variant="contained" color="primary" onClick={() => handleUpdateClick(admission)}>
                     <EditIcon />
                   </IconButton>
                   <IconButton color="error" onClick={() => handleDeleteClick(admission.id)} variant="contained">
@@ -531,6 +544,7 @@ const StudentList = () => {
         </Table>
       </TableContainer>
       <AlertDialog open={confirmOpen} onClose={() => setConfirmOpen(false)} onConfirm={handleDelete} />
+        
       <Dialog open={openUpdateDialog} onClose={handleCloseDialog}>
         <DialogTitle>Update Admission</DialogTitle>
         <DialogContent>
@@ -542,6 +556,12 @@ const StudentList = () => {
           </Button>
         </DialogActions>
       </Dialog>
+      {selectedAdmission && (
+        <UpdateAdmissionForm
+          admission={selectedAdmission}
+          onUpdate={handleUpdateAdmission}
+        />
+      )}
     </div>
   );
 };
