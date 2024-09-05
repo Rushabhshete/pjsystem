@@ -285,7 +285,7 @@ const sidebarOptions = [
           },
           {
             name: "Report",
-            route: "/layout/SalaryReport",
+            route: "/layout/SalaryTable",
             icon: <NotificationsIcon />,
           },
         ],

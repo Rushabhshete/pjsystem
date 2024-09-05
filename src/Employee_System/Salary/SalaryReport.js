@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { useEffect, useState, useRef } from 'react';
 import {
@@ -492,22 +490,6 @@ const handleSaveTransactionId = async (id) => {
   };
 
 
-  const PopTypography = styled(Typography)`
-  @keyframes pop {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.1);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-
-  animation: pop 2s ease;
-`;
-
   if (loading) return <CircularProgress />;
   if (error) return <Alert severity="error">{error}</Alert>;
 
@@ -638,7 +620,7 @@ if (error) return <Alert severity="error">{error}</Alert>;
 
   return (
     <Grid Container padding={'1%'} >
-      <PopTypography
+      <Typography
       variant="h5"
       gutterBottom
       sx={{
@@ -652,10 +634,10 @@ if (error) return <Alert severity="error">{error}</Alert>;
       }}
     >
       Salary Report
-      </PopTypography>
+      </Typography>
 
       <Grid container spacing={2} alignItems="center" mt={2}>
-      <Grid item xs={12} sm={6} md={3}>
+      <Grid item xs={12} sm={1.7}>
         <TextField
           size="small"
           variant="outlined"
@@ -665,7 +647,7 @@ if (error) return <Alert severity="error">{error}</Alert>;
           fullWidth
         />
       </Grid>
-      <Grid item xs={12} sm={6} md={3}>
+      <Grid item xs={12} sm={1.7}>
         <TextField
           select
           label="Select Category"
@@ -681,7 +663,7 @@ if (error) return <Alert severity="error">{error}</Alert>;
           ))}
         </TextField>
       </Grid>
-      <Grid item xs={12} sm={6} md={3}>
+      <Grid item xs={12} sm={1.7}>
         <TextField
           select
           label="Select Department"
@@ -697,7 +679,7 @@ if (error) return <Alert severity="error">{error}</Alert>;
           ))}
         </TextField>
       </Grid>
-      <Grid item xs={12} sm={6} md={3}>
+      <Grid item xs={12} sm={1.7}>
         <TextField
           select
           label="Select Status"
@@ -712,7 +694,7 @@ if (error) return <Alert severity="error">{error}</Alert>;
           <MenuItem value="Pending" sx={{ color: 'red' }}><strong>Pending</strong></MenuItem>
         </TextField>
       </Grid>
-      <Grid item xs={12} sm={6} md={3}>
+      <Grid item xs={12} sm={1.7}>
       <TextField
           select
           label="Select Month"
@@ -728,7 +710,7 @@ if (error) return <Alert severity="error">{error}</Alert>;
           ))}
         </TextField>
       </Grid>
-      <Grid item xs={12} sm={6} md={3}>
+      <Grid item xs={12} sm={1.7}>
         <TextField
           select
           label="Select Year"
@@ -744,12 +726,12 @@ if (error) return <Alert severity="error">{error}</Alert>;
           ))}
         </TextField>
       </Grid>
-      <Grid item xs={12} sm={6} md={3} container justifyContent="flex-end">
+      <Grid item xs={12} sm={1.7} container justifyContent="flex-end">
         <Button onClick={fetchAllSalaries} variant="contained" color="primary" fullWidth>
           Fetch All Salaries
         </Button>
       </Grid>
-      <Grid item xs={12} sm={6} md={3} container>
+      <Grid item xs={12} sm={1.7} container>
         <Typography variant="h6" align="right" padding={'5px'} border={'1px solid grey'} fullWidth>
           Total salaries: {salaries.length}
         </Typography>
@@ -761,7 +743,7 @@ if (error) return <Alert severity="error">{error}</Alert>;
       {/* {showPaidMessage && (
   <Alert severity="error">Status is still pending. Please wait for it to get paid.</Alert>
 )} */}
-        <TableContainer overFlowX={'auto'} >
+        <TableContainer overFlowX="hidden" >
 
        <Table >
         <TableHead sx={{backgroundColor:"#f2f2f2"}}>

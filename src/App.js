@@ -167,6 +167,7 @@ import AddDepartment from "./Employee_System/Employee/AddDepartment";
 import SalaryDashboard from "./Employee_System/Salary/SalaryDashboard";
 import EmpDetails from "./Employee_System/Salary/EmpDetails";
 import SalaryReport from "./Employee_System/Salary/SalaryReport";
+import AddSalary from "./Employee_System/Salary/AddSalary";
 
 function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -246,6 +247,7 @@ function AppContent() {
           <Route path="AddDepartment" element={<AddDepartment/>}/>
 
           <Route path="SalaryDashboard" element={<SalaryDashboard/>}/>
+          <Route path="AddSalary/:empID" element={<AddSalary/>}/>
           <Route path="EmpDetails" element={<EmpDetails/>}/>
           <Route path="SalaryReport" element={<SalaryReport/>}/>
 
