@@ -168,6 +168,7 @@ import AddDepartment from "./Employee_System/Employee/AddDepartment";
 import SalaryDashboard from "./Employee_System/Salary/SalaryDashboard";
 import EmpDetails from "./Employee_System/Salary/EmpDetails";
 import SalaryReport from "./Employee_System/Salary/SalaryReport";
+import ManageLeave from "./Employee_System/Leave/ManageLeave";
 
 function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -251,6 +252,8 @@ function AppContent() {
           <Route path="EmpDetails" element={<EmpDetails/>}/>
           <Route path="SalaryReport" element={<SalaryReport/>}/>
 
+
+<Route path="manageLeave" element={<ManageLeave />} />
           <Route path="helpDesk" element={<HelpDesk />} />
           <Route path="subadmin" element={<AddSubAdmin />} />
           <Route path="Settings" element={<Settings />} />
