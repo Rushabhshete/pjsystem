@@ -259,7 +259,7 @@ const sidebarOptions = [
           },
           {
             name: "Manage Employee",
-            route: "/layout/ManageLeave",
+            // route: "/employee/hr/manage",
             icon: <NotificationsIcon />,
           },
           {
@@ -515,7 +515,7 @@ const Sidebar = () => {
                                     },
                                   }}
                                 >
-                                  <ListItemIcon>
+                                  <ListItemIcon  sx={{ marginLeft:"-20px" }}>
                                     {subSubOption.icon}
                                   </ListItemIcon>
                                   {open && (
@@ -523,7 +523,7 @@ const Sidebar = () => {
                                       primary={
                                         <Typography
                                           variant="body2"
-                                          sx={{ fontSize: "12px" }}
+                                          sx={{ fontSize: "12px",marginLeft:"-20px" }}
                                         >
                                           {subSubOption.name}
                                         </Typography>

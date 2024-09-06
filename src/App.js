@@ -166,13 +166,7 @@ import AddEmpcategory from "./Employee_System/Employee/AddEmpcategory";
 import AddDepartment from "./Employee_System/Employee/AddDepartment";
 import SalaryDashboard from "./Employee_System/Salary/SalaryDashboard";
 import EmpDetails from "./Employee_System/Salary/EmpDetails";
-// import SalaryReport from "./Employee_System/Salary/SalaryReport";
-import AddSalary from "./Employee_System/Salary/AddSalary";
 import SalaryTable from "./Employee_System/Salary/SalaryTable";
-import ManageAttendance from "./Employee_System/Attendance/ManageAttendance";
-import TodaysAttendance from "./Employee_System/Attendance/TodaysAttendance";
-import ViewAttendance from "./Employee_System/Attendance/ViewAttendance";
-import ManageLeave from "./Employee_System/Leave/ManageLeave";
 
 function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -262,6 +256,8 @@ function AppContent() {
 
           <Route path="ManageLeave" element={<ManageLeave/>}/>
 
+
+<Route path="manageLeave" element={<ManageLeave />} />
           <Route path="helpDesk" element={<HelpDesk />} />
           <Route path="subadmin" element={<AddSubAdmin />} />
           <Route path="Settings" element={<Settings />} />

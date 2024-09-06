@@ -199,7 +199,7 @@ const Settings = () => {
                 boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
                 borderRadius: 4,
                 transition: "transform 0.3s ease",
-               // transform: "scale(1.1)", // Initially make this card bigger
+                // transform: "scale(1.1)", // Initially make this card bigger
                 "&:hover": {
                   transform: "scale(1.2)", // Increase size on hover
                 },
@@ -253,33 +253,36 @@ const Settings = () => {
                 >
                   ₹99
                 </Typography>
-
-                {/* <Typography variant="body1" sx={{ textAlign: "left", marginBottom: 1 }}>
-        CRM Software            ✔
-      </Typography>
-      <Typography variant="body1" sx={{ textAlign: "left", marginBottom: 1 }}>
-        Employee Manage Software ✔
-      </Typography>
-      <Typography variant="body1" sx={{ textAlign: "left", marginBottom: 1 }}>
-        Sub Admin
-      </Typography>
-      <Typography variant="body1" sx={{ textAlign: "left", marginBottom: 1 }}>
-        Multiple Branches
-      </Typography>
-      <Typography variant="body1" sx={{ textAlign: "left", marginBottom: 1 }}>
-        10,000 Entries          ✔
-      </Typography>
-      <Typography variant="body1" sx={{ textAlign: "left", marginBottom: 1 }}>
-        Life Time support 24/7 ✔
-      </Typography> */}
-      <div id="bcard_card" style={{textAlign:'left'}}> 
-            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>CRM Software                                ✔</p>
-            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Employee Manage Software✔</p>
-            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Sub Admin ✘</p>
-            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Multiple Banches ✘</p>
-            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>5000 Entries✔</p>
-            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Life Time support 24/7 ✘</p>
-           </div>
+                <div id="bcard_card" style={{ textAlign: "left" }}>
+                  <p id="bcp" class="fs-8">
+                    {" "}
+                    <i class="fa-regular fa-circle-check pe-2"></i>CRM Software
+                    ✔
+                  </p>
+                  <p id="bcp" class="fs-8">
+                    {" "}
+                    <i class="fa-regular fa-circle-check pe-2"></i>Employee
+                    Manage Software✔
+                  </p>
+                  <p id="bcp" class="fs-8">
+                    {" "}
+                    <i class="fa-regular fa-circle-check pe-2"></i>Sub Admin ✘
+                  </p>
+                  <p id="bcp" class="fs-8">
+                    {" "}
+                    <i class="fa-regular fa-circle-check pe-2"></i>Multiple
+                    Banches ✘
+                  </p>
+                  <p id="bcp" class="fs-8">
+                    {" "}
+                    <i class="fa-regular fa-circle-check pe-2"></i>5000 Entries✔
+                  </p>
+                  <p id="bcp" class="fs-8">
+                    {" "}
+                    <i class="fa-regular fa-circle-check pe-2"></i>Life Time
+                    support 24/7 ✘
+                  </p>
+                </div>
               </CardContent>
             </Card>
           </Grid>
@@ -368,14 +371,37 @@ const Settings = () => {
                   ₹199
                 </Typography>
 
-                <div id="bcard_card" style={{textAlign:'left'}}> 
-            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>CRM Software                                ✔</p>
-            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Employee Manage Software✔</p>
-            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Sub Admin ✘</p>
-            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Multiple Banches ✘</p>
-            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>50,000 Entries✔</p>
-            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Life Time support 24/7 ✘</p>
-           </div>
+                <div id="bcard_card" style={{ textAlign: "left" }}>
+                  <p id="bcp" class="fs-8">
+                    {" "}
+                    <i class="fa-regular fa-circle-check pe-2"></i>CRM Software
+                    ✔
+                  </p>
+                  <p id="bcp" class="fs-8">
+                    {" "}
+                    <i class="fa-regular fa-circle-check pe-2"></i>Employee
+                    Manage Software✔
+                  </p>
+                  <p id="bcp" class="fs-8">
+                    {" "}
+                    <i class="fa-regular fa-circle-check pe-2"></i>Sub Admin ✘
+                  </p>
+                  <p id="bcp" class="fs-8">
+                    {" "}
+                    <i class="fa-regular fa-circle-check pe-2"></i>Multiple
+                    Banches ✘
+                  </p>
+                  <p id="bcp" class="fs-8">
+                    {" "}
+                    <i class="fa-regular fa-circle-check pe-2"></i>50,000
+                    Entries✔
+                  </p>
+                  <p id="bcp" class="fs-8">
+                    {" "}
+                    <i class="fa-regular fa-circle-check pe-2"></i>Life Time
+                    support 24/7 ✘
+                  </p>
+                </div>
                 <Box sx={{ marginTop: 3 }}>
                   <Button
                     variant="contained"
@@ -460,14 +486,37 @@ const Settings = () => {
                   ₹299
                 </Typography>
 
-                <div id="bcard_card" style={{textAlign:'left'}}> 
-            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>CRM Software                                ✔</p>
-            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Employee Manage Software✔</p>
-            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Sub Admin ✔</p>
-            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Multiple Banches ✘</p>
-            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>10,0000 Entries✔</p>
-            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Life Time support 24/7 ✔</p>
-           </div>
+                <div id="bcard_card" style={{ textAlign: "left" }}>
+                  <p id="bcp" class="fs-8">
+                    {" "}
+                    <i class="fa-regular fa-circle-check pe-2"></i>CRM Software
+                    ✔
+                  </p>
+                  <p id="bcp" class="fs-8">
+                    {" "}
+                    <i class="fa-regular fa-circle-check pe-2"></i>Employee
+                    Manage Software✔
+                  </p>
+                  <p id="bcp" class="fs-8">
+                    {" "}
+                    <i class="fa-regular fa-circle-check pe-2"></i>Sub Admin ✔
+                  </p>
+                  <p id="bcp" class="fs-8">
+                    {" "}
+                    <i class="fa-regular fa-circle-check pe-2"></i>Multiple
+                    Banches ✘
+                  </p>
+                  <p id="bcp" class="fs-8">
+                    {" "}
+                    <i class="fa-regular fa-circle-check pe-2"></i>10,0000
+                    Entries✔
+                  </p>
+                  <p id="bcp" class="fs-8">
+                    {" "}
+                    <i class="fa-regular fa-circle-check pe-2"></i>Life Time
+                    support 24/7 ✔
+                  </p>
+                </div>
                 <Box sx={{ marginTop: 3 }}>
                   <Button
                     variant="contained"
@@ -551,14 +600,37 @@ const Settings = () => {
                 >
                   ₹399
                 </Typography>
-                <div id="bcard_card" style={{textAlign:'left'}}> 
-            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>CRM Software ✔</p>
-            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Employee Manage Software✔</p>
-            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Sub Admin ✔</p>
-            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Multiple Banches ✔</p>
-            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Unlimited Entries✔</p>
-            <p id="bcp" class="fs-8"> <i class="fa-regular fa-circle-check pe-2"></i>Life Time support 24/7 ✔</p>
-           </div>
+                <div id="bcard_card" style={{ textAlign: "left" }}>
+                  <p id="bcp" class="fs-8">
+                    {" "}
+                    <i class="fa-regular fa-circle-check pe-2"></i>CRM Software
+                    ✔
+                  </p>
+                  <p id="bcp" class="fs-8">
+                    {" "}
+                    <i class="fa-regular fa-circle-check pe-2"></i>Employee
+                    Manage Software✔
+                  </p>
+                  <p id="bcp" class="fs-8">
+                    {" "}
+                    <i class="fa-regular fa-circle-check pe-2"></i>Sub Admin ✔
+                  </p>
+                  <p id="bcp" class="fs-8">
+                    {" "}
+                    <i class="fa-regular fa-circle-check pe-2"></i>Multiple
+                    Banches ✔
+                  </p>
+                  <p id="bcp" class="fs-8">
+                    {" "}
+                    <i class="fa-regular fa-circle-check pe-2"></i>Unlimited
+                    Entries✔
+                  </p>
+                  <p id="bcp" class="fs-8">
+                    {" "}
+                    <i class="fa-regular fa-circle-check pe-2"></i>Life Time
+                    support 24/7 ✔
+                  </p>
+                </div>
                 <Box sx={{ marginTop: 3 }}>
                   <Button
                     variant="contained"
