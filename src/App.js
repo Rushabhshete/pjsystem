@@ -163,13 +163,12 @@ import EmployeeList from "./Employee_System/Employee/EmployeeList";
 import CreateAccount from "./layouts/CreateAccount";
 import EmpReport from "./Employee_System/Employee/EmpReport";
 import AddEmpcategory from "./Employee_System/Employee/AddEmpcategory";
-import CategoryTable from "./Employee_System/Employee/CategoryTable";
 import AddDepartment from "./Employee_System/Employee/AddDepartment";
 import SalaryDashboard from "./Employee_System/Salary/SalaryDashboard";
 import EmpDetails from "./Employee_System/Salary/EmpDetails";
 import SalaryReport from "./Employee_System/Salary/SalaryReport";
 import ManageLeave from "./Employee_System/Leave/ManageLeave";
-
+import SalaryTable from "./Employee_System/Salary/SalaryTable";
 function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem("isAuthenticated") === "true"
@@ -245,12 +244,11 @@ function AppContent() {
           <Route path="empList" element={<EmployeeList />} />
           <Route path="EmpReport" element={<EmpReport />}/>
           <Route path="AddEmpcategory" element={<AddEmpcategory />} />
-          <Route path="CategoryTable" element={<CategoryTable />} />
           <Route path="AddDepartment" element={<AddDepartment/>}/>
 
           <Route path="SalaryDashboard" element={<SalaryDashboard/>}/>
           <Route path="EmpDetails" element={<EmpDetails/>}/>
-          <Route path="SalaryReport" element={<SalaryReport/>}/>
+          <Route path="SalaryTable" element={<SalaryTable/>}/>
 
 
 <Route path="manageLeave" element={<ManageLeave />} />

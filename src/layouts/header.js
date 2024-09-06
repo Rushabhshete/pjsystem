@@ -54,6 +54,7 @@ const Header = () => {
 
   const navigate = useNavigate();
   const email = localStorage.getItem("email");
+  const institutecode = localStorage.getItem("institutecode") || ""; // Default to an empty string if not found
 
   useEffect(() => {
     const fetchEmployeeDetails = async () => {
@@ -84,7 +85,7 @@ const Header = () => {
       try {
         // Replace with your actual API endpoint
         const response = await axios.get(
-          "http://localhost:8081/getNotifications"
+          `http://localhost:8081/getnotificationByInstitutecode?institutecode=${institutecode}`
         );
         setNotifications(response.data);
         setNotificationCount(response.data.length);
