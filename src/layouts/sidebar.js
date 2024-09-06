@@ -259,7 +259,7 @@ const sidebarOptions = [
           },
           {
             name: "Manage Employee",
-            // route: "/employee/hr/manage",
+            route: "/layout/ManageLeave",
             icon: <NotificationsIcon />,
           },
           {

@@ -167,7 +167,11 @@ import AddDepartment from "./Employee_System/Employee/AddDepartment";
 import SalaryDashboard from "./Employee_System/Salary/SalaryDashboard";
 import EmpDetails from "./Employee_System/Salary/EmpDetails";
 import SalaryTable from "./Employee_System/Salary/SalaryTable";
-
+import AddSalary from "./Employee_System/Salary/AddSalary";
+import ManageAttendance from "./Employee_System/Attendance/ManageAttendance";
+import ViewAttendance from "./Employee_System/Attendance/ViewAttendance";
+import ManageLeave from "./Employee_System/Leave/ManageLeave";
+import TodaysAttendance from "./Employee_System/Attendance/TodaysAttendance";
 function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem("isAuthenticated") === "true"
