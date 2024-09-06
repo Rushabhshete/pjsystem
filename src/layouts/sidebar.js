@@ -238,12 +238,12 @@ const sidebarOptions = [
         subSubOptions: [
           {
             name: "Today's Attendance",
-            // route: "/employee/hr/add",
+            route: "/layout/TodaysAttendance",
             icon: <NotificationsIcon />,
           },
           {
             name: "Attendance report",
-            // route: "/employee/hr/manage",
+            route: "/layout/ManageAttendance",
             icon: <NotificationsIcon />,
           },
         ],
@@ -259,7 +259,7 @@ const sidebarOptions = [
           },
           {
             name: "Manage Employee",
-            // route: "/employee/hr/manage",
+            route: "/layout/ManageLeave",
             icon: <NotificationsIcon />,
           },
           {

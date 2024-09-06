@@ -60,7 +60,7 @@ const PreviewComponent = ({ formData }) => {
   };
 
   const handleBackClick = () => {
-    navigate('/layout/EmployeeDashboard');
+    navigate('/layout/empDashboard');
   };
 
   // Helper function to format field names

@@ -29,7 +29,7 @@ import 'react-toastify/dist/ReactToastify.css'; // Ensure this is imported
 import jsPDF from 'jspdf';
 import { styled } from '@mui/system';
 import 'jspdf-autotable';
-import {BG, Gender, EmployeeType, DutyType, ShiftType,District } from "./dropdownData";
+import {BG, Gender, EmployeeType, DutyType, ShiftType} from "./dropdownData";
 import { Country, State, City } from 'country-state-city';
 
 
@@ -490,8 +490,8 @@ const fetchDepartments = async () => {
       labelRowsPerPage="Entries per Page"
     />
       <TableContainer>
-      <Table aria-label="user table" className="table">
-        <TableHead>
+      <Table>
+        <TableHead sx={{backgroundColor:'#f2f2f2'}}>
           <TableRow>
             <TableCell>
               <Typography variant="subtitle1" sx={{ fontWeight: 'bold', textAlign: 'center' }}>
