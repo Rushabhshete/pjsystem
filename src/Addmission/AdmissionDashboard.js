@@ -155,6 +155,11 @@ const Dashboard = () => {
           </Grid>
         ))}
       </Grid>
+      <Grid item xs={12} style={{ marginBottom: '16px', display: 'flex', justifyContent: 'center' }}>
+          <Paper style={{ padding: '16px', boxShadow: '0px 2px 5px rgba(0,0,0,0.2)', width: '100%' }}>
+            <YearlyGraph />
+          </Paper>
+        </Grid>
       <Grid container spacing={1} style={{ marginTop: '16px' }}>
         <Grid item xs={12} md={6} style={{ marginBottom: '16px', display: 'flex', justifyContent: 'center' }}>
           <Paper style={{ padding: '16px', boxShadow: '0px 2px 5px rgba(0,0,0,0.2)', width: '100%' }}>
@@ -176,11 +181,7 @@ const Dashboard = () => {
             <CourseGraph />
           </Paper>
         </Grid>
-        <Grid item xs={12} style={{ marginBottom: '16px', display: 'flex', justifyContent: 'center' }}>
-          <Paper style={{ padding: '16px', boxShadow: '0px 2px 5px rgba(0,0,0,0.2)', width: '100%' }}>
-            <YearlyGraph />
-          </Paper>
-        </Grid>
+       
       </Grid>
     </div>
   );
