@@ -66,7 +66,7 @@
 //   const [errors, setErrors] = useState({});
 
 //   const [imageUpload, setImageUpload] = useState(null);
-//   const [isSaveSuccessful, setIsSaveSuccessful] = useState(false);
+// const [isSaveSuccessful, setIsSaveSuccessful] = useState(false);
 //   const [institutecode, setInstituteCode] = useState("");
 // const [isPopupOpen, setIsPopupOpen] = useState(false);
 //   const [selectedPolicy, setSelectedPolicy] = useState([]);
@@ -233,77 +233,77 @@
 //     setOpen(false);
 //   };
 
-//   const handleImageUpload = async () => {
-//     const email = localStorage.getItem("email");
+// const handleImageUpload = async () => {
+//   const email = localStorage.getItem("email");
 
-//     if (email && imageUpload) {
-//       const formDataImage = new FormData();
-//       formDataImage.append("instituteimage", imageUpload);
+//   if (email && imageUpload) {
+//     const formDataImage = new FormData();
+//     formDataImage.append("instituteimage", imageUpload);
 
-//       try {
-//         const response = await axios.post(
-//           `http://localhost:8081/uploadimage/${email}`,
-//           formDataImage,
-//           {
-//             headers: {
-//               "Content-Type": "multipart/form-data",
-//             },
-//           }
-//         );
-//         // Alert the user about image upload success
-//         alert("Image Uploaded Successfully");
-//         console.log("Image uploaded successfully:", response.data);
-//         // Clear the image upload state
-//         setImageUpload(null);
-//       } catch (error) {
-//         console.error("Error uploading image:", error);
-//         alert(
-//           "Error uploading image: " + (error.response?.data || error.message)
-//         );
-//       }
-//     } else {
-//       alert("Email or file not found!");
-//     }
-//   };
-
-//   const ImageUploadButton = styled(Button)(({ theme }) => ({
-//     backgroundColor: theme.palette.primary.main,
-//     color: theme.palette.common.white,
-//     "&:hover": {
-//       backgroundColor: theme.palette.primary.dark,
-//     },
-//   }));
-
-//   const handleSubmit = async () => {
 //     try {
-//       const response = await axios.get(
-//         `http://localhost:8081/findInstitutesby/email?emailaddress=${formData.emailaddress}`
+//       const response = await axios.post(
+//         `http://localhost:8081/uploadimage/${email}`,
+//         formDataImage,
+//         {
+//           headers: {
+//             "Content-Type": "multipart/form-data",
+//           },
+//         }
 //       );
-
-//       if (response.data && response.data.institutecode) {
-//         setInstituteCode(response.data.institutecode);
-//         setIsPopupOpen(true);
-//       } else {
-//         console.error("No institute code found for the provided email.");
-//       }
+//       // Alert the user about image upload success
+//       alert("Image Uploaded Successfully");
+//       console.log("Image uploaded successfully:", response.data);
+//       // Clear the image upload state
+//       setImageUpload(null);
 //     } catch (error) {
-//       console.error("API call failed", error);
+//       console.error("Error uploading image:", error);
+//       alert(
+//         "Error uploading image: " + (error.response?.data || error.message)
+//       );
 //     }
-//   };
+//   } else {
+//     alert("Email or file not found!");
+//   }
+// };
 
-//   const handleCopy = async () => {
-//     try {
-//       await navigator.clipboard.writeText(institutecode);
-//       alert("Copied to clipboard!");
-//     } catch (err) {
-//       console.error("Failed to copy: ", err);
+// const ImageUploadButton = styled(Button)(({ theme }) => ({
+//   backgroundColor: theme.palette.primary.main,
+//   color: theme.palette.common.white,
+//   "&:hover": {
+//     backgroundColor: theme.palette.primary.dark,
+//   },
+// }));
+
+// const handleSubmit = async () => {
+//   try {
+//     const response = await axios.get(
+//       `http://localhost:8081/findInstitutesby/email?emailaddress=${formData.emailaddress}`
+//     );
+
+//     if (response.data && response.data.institutecode) {
+//       setInstituteCode(response.data.institutecode);
+//       setIsPopupOpen(true);
+//     } else {
+//       console.error("No institute code found for the provided email.");
 //     }
-//   };
+//   } catch (error) {
+//     console.error("API call failed", error);
+//   }
+// };
 
-//   const handleClosePopup = () => {
-//     setIsPopupOpen(false);
-//     navigate("/systems");
-//   };
+// const handleCopy = async () => {
+//   try {
+//     await navigator.clipboard.writeText(institutecode);
+//     alert("Copied to clipboard!");
+//   } catch (err) {
+//     console.error("Failed to copy: ", err);
+//   }
+// };
+
+// const handleClosePopup = () => {
+//   setIsPopupOpen(false);
+//   navigate("/systems");
+// };
 
 //   const state = Object.keys(indianStatesAndDistricts);
 //   const district = formData.state
@@ -855,72 +855,72 @@
 //           {/* Dialog for Terms and Conditions */}
 
 //           {/* Upload Image Section */}
-//           <Grid item xs={12} mt={2}>
-//             <ImageUploadButton
-//               variant="contained"
-//               onClick={() => document.getElementById("image-upload").click()}
-//               sx={{ backgroundColor: "#003366", color: "gold" }}
-//             >
-//               Upload Image / Logo
-//             </ImageUploadButton>
-//           </Grid>
-//           <input
-//             type="file"
-//             id="image-upload"
-//             style={{ display: "none" }}
-//             onChange={(e) => {
-//               setImageUpload(e.target.files[0]);
-//             }}
-//           />
-//           <Grid item xs={12}>
-//             {imageUpload && (
-//               <Button variant="contained" onClick={handleImageUpload} mt={2}>
-//                 Confirm Image Upload
-//               </Button>
-//             )}
-//           </Grid>
-//           {isSaveSuccessful && (
-//             <Button variant="contained" color="primary" onClick={handleSubmit}>
-//               Get Your Institute Code
-//             </Button>
-//           )}
+// <Grid item xs={12} mt={2}>
+//   <ImageUploadButton
+//     variant="contained"
+//     onClick={() => document.getElementById("image-upload").click()}
+//     sx={{ backgroundColor: "#003366", color: "gold" }}
+//   >
+//     Upload Image / Logo
+//   </ImageUploadButton>
+// </Grid>
+// <input
+//   type="file"
+//   id="image-upload"
+//   style={{ display: "none" }}
+//   onChange={(e) => {
+//     setImageUpload(e.target.files[0]);
+//   }}
+// />
+// <Grid item xs={12}>
+//   {imageUpload && (
+//     <Button variant="contained" onClick={handleImageUpload} mt={2}>
+//       Confirm Image Upload
+//     </Button>
+//   )}
+// </Grid>
+// {isSaveSuccessful && (
+//   <Button variant="contained" color="primary" onClick={handleSubmit}>
+//     Get Your Institute Code
+//   </Button>
+// )}
 
 //           {/* Popup for Payment Success */}
-//           <Modal open={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
-//             <Box sx={{ padding: 4, backgroundColor: "white", borderRadius: 2 }}>
-//               <Typography variant="h6">
-//                 Payment Successful!
-//               </Typography>
-//               <Button
-//                 variant="contained"
-//                 color="secondary"
-//                 onClick={() => setIsPopupOpen(false)}
-//               >
-//                 Close
-//               </Button>
-//             </Box>
-//           </Modal>
+// <Modal open={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
+//   <Box sx={{ padding: 4, backgroundColor: "white", borderRadius: 2 }}>
+//     <Typography variant="h6">
+//       Payment Successful!
+//     </Typography>
+//     <Button
+//       variant="contained"
+//       color="secondary"
+//       onClick={() => setIsPopupOpen(false)}
+//     >
+//       Close
+//     </Button>
+//   </Box>
+// </Modal>
 
-//           <Modal open={isPopupOpen} onClose={handleClosePopup}>
-//             <Box sx={{ padding: 4, backgroundColor: "white", borderRadius: 2 }}>
-//               <Typography variant="h6">
-//                 Institute Code: {institutecode}
-//               </Typography>
-//               <Typography variant="body2" sx={{ color: "red", marginTop: 1 }}>
-//                 Write Down Institute Code, do not forget, cannot recover
-//               </Typography>
-//               <Button variant="outlined" onClick={handleCopy}>
-//                 Copy
-//               </Button>
-//               <Button
-//                 variant="contained"
-//                 color="secondary"
-//                 onClick={handleClosePopup}
-//               >
-//                 Close
-//               </Button>
-//             </Box>
-//           </Modal>
+// <Modal open={isPopupOpen} onClose={handleClosePopup}>
+//   <Box sx={{ padding: 4, backgroundColor: "white", borderRadius: 2 }}>
+//     <Typography variant="h6">
+//       Institute Code: {institutecode}
+//     </Typography>
+//     <Typography variant="body2" sx={{ color: "red", marginTop: 1 }}>
+//       Write Down Institute Code, do not forget, cannot recover
+//     </Typography>
+//     <Button variant="outlined" onClick={handleCopy}>
+//       Copy
+//     </Button>
+//     <Button
+//       variant="contained"
+//       color="secondary"
+//       onClick={handleClosePopup}
+//     >
+//       Close
+//     </Button>
+//   </Box>
+// </Modal>
 //         </Paper>
 //       </form>
 //     </div>
@@ -937,17 +937,21 @@ import {
   Typography,
   Box,
   Card,
+  AppBar,
+  Toolbar,
   FormControl,
   MenuItem,
   FormControlLabel,
   Checkbox,
   CardContent,
   Paper,
+  styled,
+  Modal,
 } from "@mui/material";
 import axios from "axios";
 import logo from "../img/logo.jpg";
 import indianStatesAndDistricts from "./indianStatesAndDistricts";
-
+import { useNavigate } from "react-router-dom";
 const CreateAccount = () => {
   const [formData, setFormData] = useState({
     emailaddress: "",
@@ -974,12 +978,16 @@ const CreateAccount = () => {
     gstNo: "",
     pincode: "",
   });
+  const navigate = useNavigate();
   const [selectedCard, setSelectedCard] = useState(null);
   const [showOptionalFields, setShowOptionalFields] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [paymentSuccessful, setPaymentSuccessful] = useState(false);
   const [amount, setAmount] = useState(0);
   const [amountPerMonth, setAmountPerMonth] = useState(0);
+  const [imageUpload, setImageUpload] = useState(null);
+  const [isSaveSuccessful, setIsSaveSuccessful] = useState(false);
+  const [institutecode, setInstituteCode] = useState("");
   const gstPercentage = 18;
 
   const handleCardSelect = (cardIndex) => {
@@ -1001,7 +1009,7 @@ const CreateAccount = () => {
     }
 
     // Calculate amount for the selected plan and subscription years
-    const totalAmount = amountPerMonth * 12;
+    const totalAmount = amountPerMonth * 12 ;
 
     // Add GST
     const gstAmount = totalAmount * (gstPercentage / 100);
@@ -1063,13 +1071,35 @@ const CreateAccount = () => {
       [name]: type === "checkbox" ? checked : value,
     }));
   };
-
+  const plans = ["Demo / Free", "Basic", "Premium", "Business"];
   const handleSubmit = async (e) => {
     e.preventDefault();
     const dataToSubmit = {
       emailaddress: formData.emailaddress,
       password: formData.password,
       confirmpassword: formData.confirmpassword,
+      phonenumber:formData.phonenumber,
+      institutename:formData.institutename,
+      mobilenumber:formData.mobilenumber,
+      websitename:formData.websitename,
+      address:formData.address,
+      landmark:formData.landmark,
+      city:formData.city,
+      state:formData.state,
+      district:formData.district,
+      aadhar:formData.aadhar,
+      pancard:formData.pancard,
+      country:formData.country,
+      employeemanagementsystem:formData.employeemanagementsystem,
+      studentmanagementsystem:formData.studentmanagementsystem,
+      feesmanagementsystem:formData.feesmanagementsystem,
+      incomeandexpense:formData.incomeandexpense,
+      enquirymanagementsystem:formData.enquirymanagementsystem,
+      admissionmanagementsystem:formData.admissionmanagementsystem,
+      gstNo:formData.gstNo,
+      pincode:formData.pincode,
+      incomeandexpense:formData.incomeandexpense,
+      plan: plans[selectedCard],
     };
 
     try {
@@ -1077,6 +1107,7 @@ const CreateAccount = () => {
         "http://localhost:8081/saveinstitude",
         dataToSubmit
       );
+      setIsSaveSuccessful(true);
       console.log(response.data); // handle response
     } catch (error) {
       console.error(error); // handle error
@@ -1086,6 +1117,78 @@ const CreateAccount = () => {
   const district = formData.state
     ? indianStatesAndDistricts[formData.state]
     : [];
+
+  const handleImageUpload = async () => {
+    const email = localStorage.getItem("email");
+
+    if (email && imageUpload) {
+      const formDataImage = new FormData();
+      formDataImage.append("instituteimage", imageUpload);
+
+      try {
+        const response = await axios.post(
+          `http://localhost:8081/uploadimage/${email}`,
+          formDataImage,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        // Alert the user about image upload success
+        alert("Image Uploaded Successfully");
+        console.log("Image uploaded successfully:", response.data);
+        // Clear the image upload state
+        setImageUpload(null);
+      } catch (error) {
+        console.error("Error uploading image:", error);
+        alert(
+          "Error uploading image: " + (error.response?.data || error.message)
+        );
+      }
+    } else {
+      alert("Email or file not found!");
+    }
+  };
+
+  const handleGetInstituteCode = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8081/findInstitutesby/email?emailaddress=${formData.emailaddress}`
+      );
+
+      if (response.data && response.data.institutecode) {
+        setInstituteCode(response.data.institutecode);
+        setIsPopupOpen(true);
+      } else {
+        console.error("No institute code found for the provided email.");
+      }
+    } catch (error) {
+      console.error("API call failed", error);
+    }
+  };
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(institutecode);
+      alert("Copied to clipboard!");
+    } catch (err) {
+      console.error("Failed to copy: ", err);
+    }
+  };
+
+  const handleClosePopup = () => {
+    setIsPopupOpen(false);
+    navigate("/systems");
+  };
+
+  const ImageUploadButton = styled(Button)(({ theme }) => ({
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
+    "&:hover": {
+      backgroundColor: theme.palette.primary.dark,
+    },
+  }));
 
   const featureList = {
     0: {
@@ -1127,42 +1230,36 @@ const CreateAccount = () => {
   };
   return (
     <>
-      <Grid
-        item
-        xs={4}
-        display="flex"
-        alignItems="center"
-        justifyContent="center" // Center horizontally
-        marginTop="30px"
+      <AppBar
+        position="fixed"
+        sx={{
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          backgroundImage: "radial-gradient(circle, #FF564E, #FAD126)",
+        }}
       >
-        <Box
-          sx={{
-            flexGrow: 1,
-            height: "5px",
-            backgroundColor: "#0D47A1",
-            marginLeft: "30px",
-          }}
-        />
-        <img
-          src={logo}
-          alt="Logo"
-          style={{ height: "30px", marginRight: "10px" }}
-        />
-        <Typography variant="h4" noWrap color="purple">
-          PJSOFTTECH
-        </Typography>
-        <Box
-          sx={{
-            flexGrow: 1,
-            height: "5px",
-            backgroundColor: "#0D47A1",
-            marginRight: "30px",
-          }}
-        />
-      </Grid>
+        <Toolbar>
+          <Grid container justifyContent="center" alignItems="center">
+            <Grid item display="flex" alignItems="center">
+              <img
+                src={logo}
+                alt="Logo"
+                style={{ marginRight: "8px", height: "30px" }}
+              />
+              <Typography
+                variant="h5"
+                color="black"
+                textAlign="center"
+                fontWeight="bold"
+              >
+                PJSOFTTECH
+              </Typography>
+            </Grid>
+          </Grid>
+        </Toolbar>
+      </AppBar>
 
       <div
-        style={{ marginRight: "50px", marginLeft: "50px", marginTop: "30px" }}
+        style={{ marginRight: "50px", marginLeft: "50px", marginTop: "80px" }}
       >
         {/* Grid to align image and text on the same line */}
         <Grid container alignItems="center" justifyContent="space-between">
@@ -1171,7 +1268,7 @@ const CreateAccount = () => {
             <Typography
               variant="h4"
               align="left"
-              color="Orange"
+              color="purple"
               fontWeight="19px"
             >
               You’re almost there! Complete your order
@@ -1180,11 +1277,11 @@ const CreateAccount = () => {
 
           {/* Money-back guarantee text */}
           <Grid item>
-            <Typography variant="h6" align="right" color="Orange">
+            <Typography variant="h6" align="right" color="purple">
               <img
                 src="https://cart.hostinger.com/assets/MoneyBackGuarantee.svg"
                 alt="30-day money-back guarantee"
-                style={{ maxWidth: "50px" }}
+                style={{ maxWidth: "40px" }}
               />{" "}
               30-day money-back guarantee
             </Typography>
@@ -1195,11 +1292,16 @@ const CreateAccount = () => {
       <div
         style={{ marginLeft: "50px", marginRight: "50px", marginTop: "20px" }}
       >
-        <Typography variant="h4" style={{ marginBottom: "2px" }} color="purple">
-          Select Plan
-        </Typography>
         <Grid container spacing={2}>
           <Grid item xs={12} md={5} lg={4}>
+            <Typography
+              variant="h4"
+              style={{ marginBottom: "2px" }}
+              color="purple"
+              textAlign="center"
+            >
+              Select Plan
+            </Typography>
             <Grid container spacing={2} marginTop="5px">
               {["Demo / Free", "Basic", "Premium", "Business"].map(
                 (plan, index) => (
@@ -1364,15 +1466,15 @@ const CreateAccount = () => {
 
           {/* Right side: Form (60% width) */}
           <Grid item xs={12} md={7} lg={8} className="textField-root">
+            <Typography
+              variant="h4"
+              textAlign="center"
+              //style={{ marginTop: "10px" }}
+              color="purple"
+            >
+              Create your account
+            </Typography>
             <Paper elevation={3} style={{ padding: "30px", marginTop: "20px" }}>
-              <Typography
-                variant="h4"
-                textAlign="center"
-                style={{ marginTop: "10px" }}
-                color="purple"
-              >
-                Create your account
-              </Typography>
               <form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={4}>
@@ -1491,7 +1593,7 @@ const CreateAccount = () => {
                     </Grid>
                     <Grid item xs={12} sm={3}>
                       <TextField
-                        label="Owner's Pan No."
+                        label="Pan No."
                         name="pancard"
                         value={formData.pancard}
                         onChange={handleChange}
@@ -1504,7 +1606,7 @@ const CreateAccount = () => {
                         }}
                       />
                     </Grid>
-                    <Grid item xs={12} sm={3}>
+                    {/* <Grid item xs={12} sm={3}>
                       <FormControl fullWidth>
                         <TextField
                           select
@@ -1525,7 +1627,7 @@ const CreateAccount = () => {
                           <MenuItem value="10">10 years</MenuItem>
                         </TextField>
                       </FormControl>
-                    </Grid>
+                    </Grid> */}
                     <Grid item xs={12} sm={3}>
                       <TextField
                         label="Firm / Institute Address"
@@ -1855,6 +1957,114 @@ const CreateAccount = () => {
                       Create Account
                     </Button>
                   </Grid>
+                  <Grid item xs={12} mt={2} display="flex" alignItems="center" gap={2}>
+  {/* Upload Image Button */}
+  <Grid item xs={12} mt={2} display="flex" alignItems="center" gap={2}>
+  {/* Upload Image Button */}
+  <ImageUploadButton
+    variant="contained"
+    onClick={() => document.getElementById("image-upload").click()}
+    sx={{ backgroundColor: "#003366", color: "gold" }}
+  >
+    Upload Image / Logo
+  </ImageUploadButton>
+
+  {/* Hidden Input for File Upload */}
+  <input
+    type="file"
+    id="image-upload"
+    style={{ display: "none" }}
+    onChange={(e) => {
+      setImageUpload(e.target.files[0]);
+    }}
+  />
+
+  {/* Conditionally Render Confirm Button if Image is Selected */}
+  {imageUpload && (
+    <Button
+      variant="contained"
+      color="success"
+      onClick={handleImageUpload} // function to confirm upload
+    >
+      Confirm Image Upload
+    </Button>
+  )}
+   {isSaveSuccessful && (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleGetInstituteCode}
+                    >
+                      Get Your Institute Code
+                    </Button>
+                  )}
+</Grid>
+</Grid>
+                 
+                  {/* <Grid item xs={12}>
+                    {imageUpload && (
+                      <Button
+                        variant="contained"
+                        onClick={handleImageUpload}
+                        mt={2}
+                      >
+                        Confirm Image Upload
+                      </Button>
+                    )}
+                  </Grid> */}
+                 
+
+                  <Modal
+                    open={isPopupOpen}
+                    onClose={() => setIsPopupOpen(false)}
+                  >
+                    <Box
+                      sx={{
+                        padding: 4,
+                        backgroundColor: "white",
+                        borderRadius: 2,
+                      }}
+                    >
+                      <Typography variant="h6">Payment Successful!</Typography>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => setIsPopupOpen(false)}
+                      >
+                        Close
+                      </Button>
+                    </Box>
+                  </Modal>
+
+                  <Modal open={isPopupOpen} onClose={handleClosePopup}>
+                    <Box
+                      sx={{
+                        padding: 4,
+                        backgroundColor: "white",
+                        borderRadius: 2,
+                      }}
+                    >
+                      <Typography variant="h6">
+                        Institute Code: {institutecode}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{ color: "red", marginTop: 1 }}
+                      >
+                        Write Down Institute Code, do not forget, cannot recover
+                      </Typography>
+                      <Button variant="outlined" onClick={handleCopy}>
+                        Copy
+                      </Button>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={handleClosePopup}
+                      >
+                        Close
+                      </Button>
+                    </Box>
+                  </Modal>
                 </Grid>
               </form>
             </Paper>
