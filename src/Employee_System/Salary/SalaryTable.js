@@ -1179,7 +1179,7 @@ import { Box } from "@mui/system";
 import { useReactToPrint } from "react-to-print";
 import {  toast, ToastContainer } from 'react-toastify';
  import 'react-toastify/dist/ReactToastify.css';
-import logo from '../img/logo.jpg';
+ import logo from "../Salary/logo.jpg";
 import { Modal } from 'reactstrap';
 import { ModalHeader } from 'react-bootstrap';
 import { Print } from '@mui/icons-material';
@@ -2302,7 +2302,7 @@ const SalaryTable = ({ id, initialStatus }) => {
     <Container ref={componentRef} maxWidth={'100%'} border={'0.5px solid lightgray'} sx={{ fontFamily: "Arial, sans-serif",  }}>
       <Grid container alignItems="center" display={'inline-flex'} justifyContent="center" padding={'15px'}>
         <Grid item xs={12} align="left" position={'relative'}>
-          <img src={logo} alt="Logo" className="logo mb-6" />
+          <img src={logo} alt="Logo" className="logo mb-6" style={{width:'60px', marginBottom:'20px'}} />
           <Typography color='black' variant="subtitle1" marginTop={'-20px'}>
             <strong>PJSoftTech</strong>
           </Typography>
