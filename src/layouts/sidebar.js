@@ -229,21 +229,21 @@ const sidebarOptions = [
         name: "Leave",
         icon: <TimeToLeaveIcon />,
         subSubOptions: [
+          // {
+          //   name: "Dashboard",
+          //   // route: "/employee/hr/add",
+          //   icon: <DashboardIcon />,
+          // },
           {
-            name: "Dashboard",
-            // route: "/employee/hr/add",
-            icon: <DashboardIcon />,
-          },
-          {
-            name: "Manage Employee",
+            name: "Manage Leave",
             route: "/layout/ManageLeave",
             icon: <NotificationsIcon />,
           },
-          {
-            name: "Delete Employee",
-            // route: "/employee/hr/delete",
-            icon: <NotificationsIcon />,
-          },
+          // {
+          //   name: "Delete Employee",
+          //   // route: "/employee/hr/delete",
+          //   icon: <NotificationsIcon />,
+          // },
         ],
       },
       {
