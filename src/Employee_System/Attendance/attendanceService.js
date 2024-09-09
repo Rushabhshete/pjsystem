@@ -50,7 +50,7 @@
  // Fetch last 7 days attendance records by employee ID
  export const getLast7DaysAttendance = async (empID) => {
    try {
-     const response = await axios.get(`${API_URL}/getLast7DaysAttendenceByEmpId/${empID}`);
+     const response = await axios.get(`${API_URL}/last7days/${empID}`);
      return response.data;
    } catch (error) {
      console.error('Error fetching last 7 days attendance:', error);
@@ -61,7 +61,7 @@
  // Fetch last 30 days attendance records by employee ID
  export const getLastMonthAttendance = async (empID) => {
    try {
-     const response = await axios.get(`${API_URL}/getLast30DaysAttendenceByEmpId/${empID}`);
+     const response = await axios.get(`${API_URL}/last30days/${empID}`);
      return response.data;
    } catch (error) {
      console.error('Error fetching last 30 days attendance:', error);
@@ -72,7 +72,7 @@
  // Fetch last 365 days attendance records by employee ID
  export const getLast365DaysAttendance = async (empID) => {
    try {
-     const response = await axios.get(`${API_URL}/getLast365DaysAttendenceByEmpId/${empID}`);
+     const response = await axios.get(`${API_URL}/last365days/${empID}`);
      return response.data;
    } catch (error) {
      console.error('Error fetching last 365 days attendance:', error);

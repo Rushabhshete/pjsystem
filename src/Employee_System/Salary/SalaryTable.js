@@ -1164,7 +1164,7 @@ import { Box } from '@mui/system';
 import { useReactToPrint } from "react-to-print";
 import {  toast, ToastContainer } from 'react-toastify';
  import 'react-toastify/dist/ReactToastify.css';
-import logo from '../img/logo.jpg';
+import logo from '../Salary/logo.jpg';
 import { Modal } from 'reactstrap';
 import { ModalHeader } from 'react-bootstrap';
 import { Print } from '@mui/icons-material';
@@ -1771,9 +1771,9 @@ if (error) return <Alert severity="error">{error}</Alert>;
 
 
   return (
-    <Grid Container padding={'1%'} >
+    <Container>
        <ToastContainer />
-      <PopTypography
+      <Typography
       variant="h5"
       gutterBottom
       sx={{
@@ -1787,7 +1787,7 @@ if (error) return <Alert severity="error">{error}</Alert>;
       }}
     >
       Salary Report
-      </PopTypography>
+      </Typography>
 
       <Grid container spacing={2} alignItems="center" mt={2}>
       <Grid item xs={12} sm={4}>
@@ -2138,7 +2138,7 @@ if (error) return <Alert severity="error">{error}</Alert>;
     <Container ref={componentRef} maxWidth={'100%'} border={'0.5px solid lightgray'} sx={{ fontFamily: "Arial, sans-serif",  }}>
       <Grid container alignItems="center" display={'inline-flex'} justifyContent="center" padding={'15px'}>
         <Grid item xs={12} align="left" position={'relative'}>
-          <img src={logo} alt="Logo" className="logo mb-6" />
+          <img src={logo} alt="Logo" className="logo mb-6"style={{width:'60px', marginBottom:'15px', marginLeft:'8px'}}/>
           <Typography color='black' variant="subtitle1" marginTop={'-20px'}>
             <strong>PJSoftTech</strong>
           </Typography>
@@ -2312,7 +2312,7 @@ if (error) return <Alert severity="error">{error}</Alert>;
 
 
  
-    </Grid>
+    </Container>
   );
 };
 
