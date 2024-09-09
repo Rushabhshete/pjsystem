@@ -168,30 +168,7 @@ const sidebarOptions = [
       },
     ],
   },
-  {
-    name: "Student System",
-    icon: <EmojiPeopleRoundedIcon sx={{ color: "brown" }} />,
-    subOptions: [
-      { name: "Dashboard",  icon: <DashboardIcon /> },
-      { name: "Student Form",  icon: <WorkspacesIcon /> },
-      {
-        name: "Student List",
-        // route: "/memo/delete",
-        icon: <FormatListBulletedIcon />,
-      },
-      {
-        name: "Student Report",
-        // route: "/memo/delete",
-        icon: <AssessmentIcon />,
-      },
-      {
-        name: "Student Request",
-        // route: "/memo/delete",
-        icon: <DoneOutlineIcon />,
-      },
-      { name: "Add Fields", icon: <CategoryIcon /> },
-    ],
-  },
+ 
   {
     name: "Employee System",
     icon: <PeopleIcon sx={{ color: "blue" }} />,
@@ -290,6 +267,30 @@ const sidebarOptions = [
           },
         ],
       },
+    ],
+  },
+  {
+    name: "Student System",
+    icon: <EmojiPeopleRoundedIcon sx={{ color: "brown" }} />,
+    subOptions: [
+      { name: "Dashboard",  icon: <DashboardIcon /> },
+      { name: "Student Form",  icon: <WorkspacesIcon /> },
+      {
+        name: "Student List",
+        // route: "/memo/delete",
+        icon: <FormatListBulletedIcon />,
+      },
+      {
+        name: "Student Report",
+        // route: "/memo/delete",
+        icon: <AssessmentIcon />,
+      },
+      {
+        name: "Student Request",
+        // route: "/memo/delete",
+        icon: <DoneOutlineIcon />,
+      },
+      { name: "Add Fields", icon: <CategoryIcon /> },
     ],
   },
   {
