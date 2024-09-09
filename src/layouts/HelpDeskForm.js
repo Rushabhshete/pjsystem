@@ -7,9 +7,8 @@ import {
   TextField,
   Button,
   MenuItem,
-  Select,
-  InputLabel,
   FormControl,
+  InputLabel
 } from "@mui/material";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
@@ -22,25 +21,40 @@ import {
 const HelpDeskForm = ({ open, onClose }) => {
   const [formData, setFormData] = useState({
     name: "",
-    adminemail: "",
     error: "",
     description: "",
-    status: "Pending",
+    systemName: "",
+    image: null,
   });
+
   const institutecode = () => localStorage.getItem("institutecode");
+  const email = localStorage.getItem("email"); // Retrieve email from localStorage
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, files } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: files ? files[0] : value, // Handle file input
     }));
   };
 
   const handleSubmit = async () => {
+    const formDataToSend = new FormData();
+    // Append form data
+    Object.keys(formData).forEach((key) => {
+      formDataToSend.append(key, formData[key]);
+    });
+    formDataToSend.append("emailaddress", email); // Append email address
+
     try {
       const response = await axios.post(
         `http://localhost:8081/createTicket?institutecode=${institutecode()}`,
-        formData
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // Ensure content type is set for file upload
+          },
+        }
       );
       console.log("Ticket created:", response.data);
       toast.success("Ticket is raised");
@@ -52,31 +66,9 @@ const HelpDeskForm = ({ open, onClose }) => {
 
   return (
     <>
-      <Dialog open={open} onClose={onClose} maxWidth="lg" >
+      <Dialog open={open} onClose={onClose} maxWidth="lg">
         <DialogTitle>Help Desk Form</DialogTitle>
         <DialogContent>
-          {/* <TextField
-            autoFocus
-            margin="dense"
-            name="name"
-            label="Name"
-            type="text"
-            fullWidth
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            name="adminemail"
-            label="Email"
-            type="text"
-            fullWidth
-            value={formData.adminemail}
-            onChange={handleChange}
-            required
-          /> */}
           <FormControl fullWidth margin="dense">
             <TextField
               label="Select System"
@@ -121,6 +113,16 @@ const HelpDeskForm = ({ open, onClose }) => {
             onChange={handleChange}
             required
           />
+          <FormControl fullWidth margin="dense">
+     
+            <input
+              type="file"
+              name="image" // This should match the name in your backend @RequestParam
+              label="Upload Image"
+              onChange={handleChange}
+              required
+            />
+          </FormControl>
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose} color="secondary">
@@ -132,15 +134,16 @@ const HelpDeskForm = ({ open, onClose }) => {
         </DialogActions>
       </Dialog>
       <ToastContainer
-      autoClose={1000} // Toast will close automatically after 5 seconds
-      position="top-right" // Position of the toast
-      hideProgressBar={false} // Show or hide the progress bar
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover/>
+        autoClose={1000}
+        position="top-right"
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   );
 };

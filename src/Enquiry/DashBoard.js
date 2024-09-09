@@ -610,41 +610,8 @@ export default function DashBoard() {
           </Typography>
         </Grid>
 
-        <Grid
-          container
-          mt={1}
-          spacing={3}
-          justifyContent="center"
-          className="textField-root"
-        >
-          {/* Exam Chart and Source Chart in one line */}
-          <Grid item xs={12} md={6}>
-            <Paper elevation={3} style={{ padding: "16px" }}>
-              <Typography variant="h6">Exam Chart</Typography>
-              <Chart
-                chartType="ColumnChart"
-                data={examChartData}
-                options={examChartOptions}
-                width="100%"
-                height="400px"
-              />
-            </Paper>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Paper elevation={3} style={{ padding: "16px" }}>
-              <Typography variant="h6">Source Chart</Typography>
-              <Chart
-                chartType="ColumnChart"
-                data={sourceChartData}
-                options={sourceChartOptions}
-                width="100%"
-                height="400px"
-              />
-            </Paper>
-          </Grid>
 
-
-          <Paper elevation={3} style={{ padding: '16px', marginTop: '24px' }}>
+        <Paper elevation={3} style={{ padding: '16px', marginTop: '24px' }}>
             <Grid container spacing={2} alignItems="center" justifyContent="center" mt={3}>
               {/* Year Change Graph */}
               <Grid item xs={6}> {/* Adjust xs to control width */}
@@ -741,6 +708,43 @@ export default function DashBoard() {
 
             </Grid>
           </Paper>
+
+
+        <Grid
+          container
+          mt={1}
+          spacing={3}
+          justifyContent="center"
+          className="textField-root"
+        >
+          {/* Exam Chart and Source Chart in one line */}
+          <Grid item xs={12} md={6}>
+            <Paper elevation={3} style={{ padding: "16px" }}>
+              <Typography variant="h6">Exam Chart</Typography>
+              <Chart
+                chartType="ColumnChart"
+                data={examChartData}
+                options={examChartOptions}
+                width="100%"
+                height="400px"
+              />
+            </Paper>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Paper elevation={3} style={{ padding: "16px" }}>
+              <Typography variant="h6">Source Chart</Typography>
+              <Chart
+                chartType="ColumnChart"
+                data={sourceChartData}
+                options={sourceChartOptions}
+                width="100%"
+                height="400px"
+              />
+            </Paper>
+          </Grid>
+
+
+         
 
 
 

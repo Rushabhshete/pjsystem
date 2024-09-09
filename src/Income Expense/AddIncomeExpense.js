@@ -35,7 +35,7 @@ import { styled } from "@mui/system";
 import axios from "axios";
 import { debounce } from "lodash"; // Import debounce function from lodash
 import jsPDF from "jspdf"; // Import jsPDF from jspdf
-
+import numberToWords from "number-to-words";
 // Custom styles for Dialog
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   fontWeight: "bold",
@@ -82,7 +82,7 @@ const AddIncomeExpense = () => {
     transactionId: "",
     duedate: "",
     remark: "",
-    invoiceNo:"",
+    invoiceNo: "",
   });
 
   const [showGst, setShowGst] = useState(false);
@@ -234,17 +234,38 @@ const AddIncomeExpense = () => {
       payingAmount: Math.floor(parseFloat(formData.payingAmount)),
       pendingAmount: Math.floor(parseFloat(formData.pendingAmount)),
     };
+
     const apiUrl =
       formData.type === "Income"
         ? `http://localhost:8087/incomes/save?institutecode=${getInstituteCode()}`
         : `http://localhost:8087/expenses/save?institutecode=${getInstituteCode()}`;
 
     try {
-      await axios.post(apiUrl, integerFormData);
-      setSubmittedData(integerFormData);
+      const response = await axios.post(apiUrl, integerFormData);
+
+      const responseData = response.data;
+      const submittedId = responseData.id;
+
+      console.log("Submitted ID:", submittedId); // Log the ID to the console
+
+      // Determine the GET API URL based on the type
+      const getApiUrl =
+        formData.type === "Income"
+          ? `http://localhost:8087/incomes/getIncomeById/${submittedId}`
+          : `http://localhost:8087/expenses/getExpenseById/${submittedId}`;
+
+      // Fetch the data using the ID
+      const getResponse = await axios.get(getApiUrl);
+      const fetchedData = getResponse.data;
+
+      console.log("Fetched Data:", fetchedData); // Log the fetched data
+
+      setSubmittedData(fetchedData); // Store the fetched data for display
       setOpenDialog(true);
-      toast.success("Form submitted successfully!");
-    
+
+      toast.success("Form submitted and data fetched successfully!");
+
+      // Reset form data
       setFormData({
         type: "",
         user: "",
@@ -266,9 +287,8 @@ const AddIncomeExpense = () => {
       });
       setSearchTerm("");
       setShowGst(false);
-      
     } catch (error) {
-      toast.error("Error submitting form. Please try again.");
+      toast.error("Error submitting form or fetching data. Please try again.");
     }
   };
 
@@ -321,86 +341,112 @@ const AddIncomeExpense = () => {
     const doc = new jsPDF();
 
     // Set up title
-    const title = `${submittedData.user} ${submittedData.type} Recipt`;
+    const title = `${submittedData.user} ${submittedData.type} Receipt`;
     const pageWidth = doc.internal.pageSize.getWidth();
     const titleWidth = doc.getTextWidth(title);
     const titleX = (pageWidth - titleWidth) / 2;
+
+    // Generated date
+    const generatedDate = `Generated On: ${new Date().toLocaleDateString()}`;
+
+    // Invoice number on top-left corner
+    const invoiceNo = `Invoice No: ${submittedData.invoiceNo}`;
+
     doc.setFontSize(18);
     doc.text(title, titleX, 15);
 
-    // Prepare table data with capitalized and bold field names
+    // Generated date on the top right
+    doc.setFontSize(12);
+    doc.text(
+      generatedDate,
+      pageWidth - doc.getTextWidth(generatedDate) - 15,
+      25
+    );
+
+    // Invoice number on the top left
+    doc.text(invoiceNo, 15, 25);
+
+    // Prepare table data with labels and one key-value pair per row
     const tableData = [];
-    const entries = Object.entries(submittedData);
+    const labels = {
+      amount: "Amount",
+      billType: "Bill Type",
+      category: "Category",
+      date: "Date",
+      gst: "GST",
+      id: "ID",
+      paidBy: "Paid By",
+      particular: "Particular",
+      payingAmount: "Paying Amount",
+      paymentMethod: "Payment Method",
+      pendingAmount: "Pending Amount",
+      remark: "Remark",
+      total: "Total",
+      transactionId: "Transaction ID",
+      type: "Type",
+      user: "User",
+    };
 
-    // Create rows with two field-value pairs per row
-    for (let i = 0; i < entries.length; i += 2) {
-      const row = [];
-      const [key1, value1] = entries[i];
-      row.push(
-        { content: capitalizeFirstLetter(key1), styles: { fontStyle: "bold" } },
-        value1
-      );
+    // Filter out unwanted fields from table
+    const entries = Object.entries(submittedData).filter(
+      ([key]) => key !== "invoiceNo" && key !== "institutecode"
+    );
 
-      if (i + 1 < entries.length) {
-        const [key2, value2] = entries[i + 1];
-        row.push(
-          {
-            content: capitalizeFirstLetter(key2),
-            styles: { fontStyle: "bold" },
-          },
-          value2
-        );
-      } else {
-        row.push("", ""); // Add empty cells if there's no second pair
-      }
-
-      tableData.push(row);
+    // Create rows with one field-value pair per row
+    for (const [key, value] of entries) {
+      tableData.push([
+        {
+          content: `${labels[key] || capitalizeFirstLetter(key)}:`,
+          styles: { fontStyle: "bold" },
+        },
+        value,
+      ]);
     }
 
+    // Add total amount in words as a row in the table
+    const totalInWords = numberToWords.toWords(submittedData.total);
+    tableData.push([
+      { content: "Total in Words:", styles: { fontStyle: "bold" } },
+      totalInWords,
+    ]);
+
     // Adjust marginTop as needed
-    const marginTop = 25; // Space between title and table
+    const marginTop = 35; // Space between title and table
     doc.autoTable({
-      // head: [["Field", "Value", "Field", "Value"]],
       body: tableData,
       theme: "grid",
       startY: 15 + marginTop, // Start below the title
       columnStyles: {
         0: { fontStyle: "bold" }, // Make the first column (Field) bold
-        2: { fontStyle: "bold" }, // Make the third column (Field) bold
       },
       margin: { top: 20 }, // Adjust the margin if needed
+      styles: {
+        cellPadding: 2, // Adjust cell padding if needed
+      },
+      columnStyles: {
+        0: { cellWidth: "auto" }, // Adjust column width for key
+        1: { cellWidth: "auto" }, // Adjust column width for value
+      },
     });
+
+    // Add section for authorized signature below the table
+    doc.text("Authorized Signature:", 15, doc.lastAutoTable.finalY + 30);
+    doc.line(
+      15,
+      doc.lastAutoTable.finalY + 32,
+      80,
+      doc.lastAutoTable.finalY + 32
+    ); // Draw line for signature
 
     doc.save(`${submittedData.user}_data.pdf`);
   };
 
-  // Utility function to capitalize the first letter of a string
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
-
   return (
     <div>
-      {/* <ToastContainer
-      autoClose={1000} // Toast will close automatically after 5 seconds
-      position="top-right" // Position of the toast
-      hideProgressBar={false} // Show or hide the progress bar
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover/> */}
-      <ToastContainer
-      autoClose={1000} // Toast will close automatically after 5 seconds
-      position="top-right" // Position of the toast
-      hideProgressBar={false} // Show or hide the progress bar
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover/>
+      <ToastContainer />
 
       <PopTypography
         variant="h5"
@@ -785,7 +831,7 @@ const AddIncomeExpense = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handlePrint}>Download PDF</Button>
-          <Button onClick={handleCloseDialog} >Close</Button>
+          <Button onClick={handleCloseDialog}>Close</Button>
         </DialogActions>
       </Dialog>
     </div>

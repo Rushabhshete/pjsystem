@@ -205,7 +205,7 @@ export default function UpdateEnquiry() {
       { label: "Source By:", value: source_by },
       { label: "Conducted By:", value: conduct_by },
       { label: "Status:", value: status1 },
-      ...(status1 === "Call"
+      ...(status1 === "Call Back"
         ? [
             { label: "Call Back Date:", value: callBackDate },
             { label: "Call Back Time:", value: callBackTime },
@@ -444,7 +444,7 @@ export default function UpdateEnquiry() {
               </FormControl>
             </Grid>
 
-            {status1 === "Call" && (
+            {status1 === "Call Back" && (
               <>
                 <Grid item xs={12} sm={6}>
                   <TextField

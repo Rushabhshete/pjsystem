@@ -26,6 +26,7 @@ export const paymentMethodOption = [
 ];
 
 export const studentManagementErrors = {
+  other:'"Other (Issue Not Present in List)"',
   requiredField: '"This field is required."',
   invalidFormat: '"The input format is invalid."',
   minLength: '"The input is too short."',
