@@ -28,7 +28,7 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Papa from "papaparse";
 import UpdateAdmissionForm from "./UpdateAdmissionForm";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const DownloadButton = styled(Button)(({ theme }) => ({
   margin: theme.spacing(1),
@@ -49,7 +49,13 @@ const AlertDialog = ({ open, onClose, onConfirm }) => (
       <Button onClick={onClose} color="primary">
         Cancel
       </Button>
-      <Button onClick={() => { onConfirm(); onClose(); }} color="error">
+      <Button
+        onClick={() => {
+          onConfirm();
+          onClose();
+        }}
+        color="error"
+      >
         Confirm
       </Button>
     </DialogActions>
@@ -81,15 +87,18 @@ const StudentList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [
-          sourceResponse,
-          courseResponse,
-          guideResponse,
-        ] = await Promise.all([
-          axios.get(`http://localhost:8085/api/sourceBy/getAll?institutecode=${institutecode}`),
-          axios.get(`http://localhost:8085/getAllCourse?institutecode=${institutecode}`),
-          axios.get(`http://localhost:8085/api/conductBy/getAllConductBy?institutecode=${institutecode}`),
-        ]);
+        const [sourceResponse, courseResponse, guideResponse] =
+          await Promise.all([
+            axios.get(
+              `http://localhost:8085/api/sourceBy/getAll?institutecode=${institutecode}`
+            ),
+            axios.get(
+              `http://localhost:8085/getAllCourse?institutecode=${institutecode}`
+            ),
+            axios.get(
+              `http://localhost:8085/api/conductBy/getAllConductBy?institutecode=${institutecode}`
+            ),
+          ]);
 
         setSources(sourceResponse.data);
         setCourses(courseResponse.data);
@@ -107,20 +116,35 @@ const StudentList = () => {
       try {
         let admissionResponse;
         switch (timeRange) {
+          case "Today":
+            admissionResponse = await axios.get(
+              `http://localhost:8085/getAdmissionsByTodayByInstitutecode?institutecode=${institutecode}`
+            );
+            break;
           case "7Days":
-            admissionResponse = await axios.get(`http://localhost:8085/AdmissionIn7DaysData?institutecode=${institutecode}`);
+            admissionResponse = await axios.get(
+              `http://localhost:8085/AdmissionIn7DaysData?institutecode=${institutecode}`
+            );
             break;
           case "30Days":
-            admissionResponse = await axios.get(`http://localhost:8085/AdmissionIn30DaysData?institutecode=${institutecode}`);
+            admissionResponse = await axios.get(
+              `http://localhost:8085/AdmissionIn30DaysData?institutecode=${institutecode}`
+            );
             break;
           case "365Days":
-            admissionResponse = await axios.get(`http://localhost:8085/AdmissionIn365DaysData?institutecode=${institutecode}`);
+            admissionResponse = await axios.get(
+              `http://localhost:8085/AdmissionIn365DaysData?institutecode=${institutecode}`
+            );
             break;
           case "Custom":
-            admissionResponse = await axios.get(`http://localhost:8085/admissionsBetweenDates?institutecode=${institutecode}&startDate=${startDate}&endDate=${endDate}`);
+            admissionResponse = await axios.get(
+              `http://localhost:8085/admissionsBetweenDates?institutecode=${institutecode}&startDate=${startDate}&endDate=${endDate}`
+            );
             break;
           default:
-            admissionResponse = await axios.get(`http://localhost:8085/admissions?institutecode=${institutecode}`);
+            admissionResponse = await axios.get(
+              `http://localhost:8085/admissions?institutecode=${institutecode}`
+            );
             break;
         }
         setAdmissions(admissionResponse.data);
@@ -156,7 +180,8 @@ const StudentList = () => {
     setSelectedGuide(event.target.value);
   };
 
-  const handleStatusChange = (event) => { // New handler for status change
+  const handleStatusChange = (event) => {
+    // New handler for status change
     setSelectedStatus(event.target.value);
   };
 
@@ -166,16 +191,43 @@ const StudentList = () => {
 
   const filteredAdmissions = useMemo(() => {
     return admissions.filter((admission) => {
-      const matchesSource = selectedSource ? admission.sourceBy === selectedSource : true;
-      const matchesCourse = selectedCourse ? admission.courses === selectedCourse : true;
-      const matchesPaymentMode = selectedPaymentMode ? admission.paymentMode === selectedPaymentMode : true;
-      const matchesGuideName = selectedGuide ? admission.guideName === selectedGuide : true;
-      const matchesStatus = selectedStatus ? admission.paymentMethod === selectedStatus : true; // filtering by status
-      const matchesSearchQuery = admission.name.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesSource = selectedSource
+        ? admission.sourceBy === selectedSource
+        : true;
+      const matchesCourse = selectedCourse
+        ? admission.courses === selectedCourse
+        : true;
+      const matchesPaymentMode = selectedPaymentMode
+        ? admission.paymentMode === selectedPaymentMode
+        : true;
+      const matchesGuideName = selectedGuide
+        ? admission.guideName === selectedGuide
+        : true;
+      const matchesStatus = selectedStatus
+        ? admission.paymentMethod === selectedStatus
+        : true; // filtering by status
+      const matchesSearchQuery = admission.name
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase());
 
-      return matchesSource && matchesCourse && matchesGuideName && matchesPaymentMode && matchesStatus && matchesSearchQuery;
+      return (
+        matchesSource &&
+        matchesCourse &&
+        matchesGuideName &&
+        matchesPaymentMode &&
+        matchesStatus &&
+        matchesSearchQuery
+      );
     });
-  }, [admissions, selectedSource, selectedCourse, selectedGuide, selectedPaymentMode, selectedStatus, searchQuery]);
+  }, [
+    admissions,
+    selectedSource,
+    selectedCourse,
+    selectedGuide,
+    selectedPaymentMode,
+    selectedStatus,
+    searchQuery,
+  ]);
 
   const handleDownload = () => {
     const doc = new jsPDF({
@@ -183,36 +235,30 @@ const StudentList = () => {
       unit: "mm",
       format: "a4",
     });
-
-    const columns = [
-      {title: "ID", dataKey: "id"},
+  
+    const columns = [ 
+      { title: "ID", dataKey: "id" },
       { title: "Name", dataKey: "name" },
-      { title: "Institute Code", dataKey: "institutecode" },
       { title: "Mobile 1", dataKey: "mobile1" },
-      { title: "Mobile 2", dataKey: "mobile2" },
       { title: "Email", dataKey: "email" },
       { title: "Course", dataKey: "courses" },
       { title: "Duration", dataKey: "duration" },
       { title: "Joining Date", dataKey: "joiningDate" },
-      { title: "Expiry Date", dataKey: "expiryDate" },
+      { title: "Due Date", dataKey: "expiryDate" },
       { title: "Total Fees", dataKey: "totalFees" },
       { title: "Paid Fees", dataKey: "paidFees" },
       { title: "Pending Fees", dataKey: "pendingFees" },
       { title: "Payment Mode", dataKey: "paymentMode" },
-      { title: "Transaction ID", dataKey: "transactionid" },
       { title: "Guide Name", dataKey: "guideName" },
       { title: "Source By", dataKey: "sourceBy" },
       { title: "Medium", dataKey: "medium" },
-      { title: "Remark", dataKey: "remark" },
-      { title: "Status", dataKey: "status" },
+     
     ];
-
+  
     const rows = filteredAdmissions.map((admission) => ({
       id: admission.id,
       name: admission.name,
-      institutecode: admission.institutecode,
       mobile1: admission.mobile1,
-      mobile2: admission.mobile2,
       email: admission.email,
       courses: admission.courses,
       duration: admission.duration,
@@ -222,22 +268,47 @@ const StudentList = () => {
       paidFees: admission.paidFees,
       pendingFees: admission.pendingFees,
       paymentMode: admission.paymentMode,
-      transactionid: admission.transactionid,
       guideName: admission.guideName,
       sourceBy: admission.sourceBy,
       medium: admission.medium,
-      remark: admission.remark,
-      status: admission.status,
+     
     }));
-
+  
     doc.autoTable({
       columns,
       body: rows,
-      startY: 10,
+      startY: 5,
+      columnStyles: {
+        id: { cellWidth: 10 },  // Reduced width for smaller columns
+        name: { cellWidth: 30 },
+        mobile1: { cellWidth: 20 },
+        email: { cellWidth: 50 },
+        courses: { cellWidth: 15 },
+        duration: { cellWidth: 15 },
+        joiningDate: { cellWidth: 17 },
+        expiryDate: { cellWidth: 17 },
+        totalFees: { cellWidth: 12 },
+        paidFees: { cellWidth: 12 },
+        pendingFees: { cellWidth: 12 },
+        paymentMode: { cellWidth: 15 },
+        guideName: { cellWidth: 20 },
+        sourceBy: { cellWidth: 20 },
+        medium: { cellWidth: 15 },
+      
+      },
+      styles: {
+        //cellPadding: 2,
+        overflow: 'linebreak', // Enable text wrapping
+        fontSize: 7, // Reduce font size if necessary
+      },
+      headStyles: {
+        fillColor: [22, 160, 133],
+      },
     });
-
+  
     doc.save("admissions.pdf");
   };
+  
 
   const handleDownloadCSV = () => {
     const csvData = Papa.unparse(filteredAdmissions);
@@ -271,9 +342,13 @@ const StudentList = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:8085/deleteAdmission/${admissionIdToDelete}`);
+      await axios.delete(
+        `http://localhost:8085/deleteAdmission/${admissionIdToDelete}`
+      );
       setAdmissions((prevAdmissions) =>
-        prevAdmissions.filter((admission) => admission.id !== admissionIdToDelete)
+        prevAdmissions.filter(
+          (admission) => admission.id !== admissionIdToDelete
+        )
       );
     } catch (error) {
       console.error("Error deleting admission:", error);
@@ -287,20 +362,41 @@ const StudentList = () => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
-  }
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
   const formatValue = (value) => Math.abs(value).toLocaleString();
-  const totalAmount = filteredAdmissions.reduce((acc, item) => acc + item.totalFees, 0);
-  const paidAmount = filteredAdmissions.reduce((acc, item) => acc + item.paidFees, 0);
-  const pendingAmount = filteredAdmissions.reduce((acc, item) => acc + item.pendingFees, 0);
+  const totalAmount = filteredAdmissions.reduce(
+    (acc, item) => acc + item.totalFees,
+    0
+  );
+  const paidAmount = filteredAdmissions.reduce(
+    (acc, item) => acc + item.paidFees,
+    0
+  );
+  const pendingAmount = filteredAdmissions.reduce(
+    (acc, item) => acc + item.pendingFees,
+    0
+  );
 
   return (
     <div>
-      <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold", color: "#fff", textAlign: "center", backgroundColor: "#24A0ED", borderRadius: "150px", padding: "10px", marginBottom: "40px" }}>
+      <Typography
+        variant="h5"
+        gutterBottom
+        sx={{
+          fontWeight: "bold",
+          color: "#fff",
+          textAlign: "center",
+          backgroundColor: "#24A0ED",
+          borderRadius: "150px",
+          padding: "10px",
+          marginBottom: "40px",
+        }}
+      >
         Admissions List
       </Typography>
       <Grid container spacing={2} className="textField-root">
@@ -314,6 +410,7 @@ const StudentList = () => {
             label="TimeRange"
           >
             <MenuItem value="All">All</MenuItem>
+            <MenuItem value="Today">Today</MenuItem>
             <MenuItem value="7Days">Last 7 Days</MenuItem>
             <MenuItem value="30Days">Last 30 Days</MenuItem>
             <MenuItem value="365Days">Last 365 Days</MenuItem>
@@ -400,6 +497,7 @@ const StudentList = () => {
             value={selectedPaymentMode}
             onChange={handlePaymentModeChange}
           >
+            <MenuItem value="">All</MenuItem>
             <MenuItem value="Cheque">Cheque</MenuItem>
             <MenuItem value="UPI">UPI</MenuItem>
             <MenuItem value="Cash">Cash</MenuItem>
@@ -429,21 +527,29 @@ const StudentList = () => {
           />
         </Grid>
         <Grid item xs={8} sm={1.6} md={2}>
-          <DownloadButton variant="contained" color="primary" onClick={handleDownload}>
+          <DownloadButton
+            variant="contained"
+            color="primary"
+            onClick={handleDownload}
+          >
             Download PDF
           </DownloadButton>
         </Grid>
         <Grid item xs={8} sm={1.6} md={2}>
-          <DownloadButton variant="contained" color="secondary" onClick={handleDownloadCSV}>
+          <DownloadButton
+            variant="contained"
+            color="secondary"
+            onClick={handleDownloadCSV}
+          >
             Download CSV
           </DownloadButton>
         </Grid>
         <Grid item xs={8} sm={1.6} md={2}>
-        <Link to="/layout/admission-form" style={{ textDecoration: 'none' }}>
-      <Button variant="contained" color="primary">
-        Back to Form
-      </Button>
-    </Link>
+          <Link to="/layout/admission-form" style={{ textDecoration: "none" }}>
+            <Button variant="contained" color="primary">
+              Back to Form
+            </Button>
+          </Link>
         </Grid>
         <Grid item xs={8} sm={1.6} md={2}>
           <Typography>
@@ -451,37 +557,52 @@ const StudentList = () => {
           </Typography>
         </Grid>
       </Grid>
-      <Box display="flex" marginTop="20px" justifyContent="space-between" alignItems="center">
-  <Typography variant="h6" gutterBottom
-    sx={{ flex: 1, marginRight: 2, whiteSpace: "nowrap", marginLeft: 5 }}>
-    Total Amount(+GST) : ₹ {formatValue(totalAmount)}
-  </Typography>
-  <Typography variant="h6" gutterBottom
-    sx={{ flex: 1, marginRight: 2, whiteSpace: "nowrap" }}>
-    Paid Amount : ₹ {formatValue(paidAmount)}
-  </Typography>
-  <Typography variant="h6" gutterBottom
-    sx={{ flex: 1, whiteSpace: "nowrap" }}>
-    Pending Amount : ₹ {formatValue(pendingAmount)}
-  </Typography>
-  <TablePagination
-    sx={{ flex: 1, marginRight: 2, whiteSpace: "nowrap" }}
-    rowsPerPageOptions={[50, 100, 150]}
-    component="div"
-    count={filteredAdmissions.length}
-    rowsPerPage={rowsPerPage}
-    page={page}
-    onPageChange={handleChangePage}
-    onRowsPerPageChange={handleChangeRowsPerPage}
-  />
-</Box>
+      <Box
+        display="flex"
+        marginTop="20px"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Typography
+          variant="h6"
+          gutterBottom
+          sx={{ flex: 1, marginRight: 2, whiteSpace: "nowrap", marginLeft: 5 }}
+        >
+          Total Amount(+GST) : ₹ {formatValue(totalAmount)}
+        </Typography>
+        <Typography
+          variant="h6"
+          gutterBottom
+          sx={{ flex: 1, marginRight: 2, whiteSpace: "nowrap" }}
+        >
+          Paid Amount : ₹ {formatValue(paidAmount)}
+        </Typography>
+        <Typography
+          variant="h6"
+          gutterBottom
+          sx={{ flex: 1, whiteSpace: "nowrap" }}
+        >
+          Pending Amount : ₹ {formatValue(pendingAmount)}
+        </Typography>
+        <TablePagination
+          sx={{ flex: 1, marginRight: 2, whiteSpace: "nowrap" }}
+          rowsPerPageOptions={[50, 100, 150]}
+          component="div"
+          count={filteredAdmissions.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Box>
 
-      
       <TableContainer style={{ marginTop: "10px" }}>
         <Table style={{ overflowX: "hidden" }}>
-          <TableHead style={{ backgroundColor: "#f2f2f2", justifyContent: "center" }}>
+          <TableHead
+            style={{ backgroundColor: "#f2f2f2", justifyContent: "center" }}
+          >
             <TableRow>
-            <TableCell style={{ fontWeight: "bold" }}>ID</TableCell>
+              <TableCell style={{ fontWeight: "bold" }}>ID</TableCell>
               <TableCell style={{ fontWeight: "bold" }}>Name</TableCell>
               <TableCell style={{ fontWeight: "bold" }}>Mobile 1</TableCell>
               <TableCell style={{ fontWeight: "bold" }}>Email</TableCell>
@@ -489,12 +610,14 @@ const StudentList = () => {
               <TableCell style={{ fontWeight: "bold" }}>Source</TableCell>
               <TableCell style={{ fontWeight: "bold" }}>Duration</TableCell>
               <TableCell style={{ fontWeight: "bold" }}>Joining Date</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Expiry Date</TableCell>
+              <TableCell style={{ fontWeight: "bold" }}>Due Date</TableCell>
               <TableCell style={{ fontWeight: "bold" }}>Total Fees</TableCell>
               <TableCell style={{ fontWeight: "bold" }}>Paid Fees</TableCell>
               <TableCell style={{ fontWeight: "bold" }}>Pending Fees</TableCell>
               <TableCell style={{ fontWeight: "bold" }}>Payment Mode</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Transaction ID</TableCell>
+              <TableCell style={{ fontWeight: "bold" }}>
+                Transaction ID
+              </TableCell>
               <TableCell style={{ fontWeight: "bold" }}>Status</TableCell>
               <TableCell style={{ fontWeight: "bold" }}>Actions</TableCell>
             </TableRow>
@@ -509,10 +632,14 @@ const StudentList = () => {
                 <TableCell>{admission.courses}</TableCell>
                 <TableCell>{admission.sourceBy}</TableCell>
                 <TableCell>{admission.duration}</TableCell>
-                <TableCell>{new Date(admission.date).toLocaleDateString()}</TableCell>
                 <TableCell>
-  {admission.dueDate ? new Date(admission.dueDate).toLocaleDateString() : "NA"}
-</TableCell>
+                  {new Date(admission.date).toLocaleDateString()}
+                </TableCell>
+                <TableCell>
+                  {admission.dueDate
+                    ? new Date(admission.dueDate).toLocaleDateString()
+                    : "NA"}
+                </TableCell>
                 {/* {inquiry.status1 === "Call Back"
                           ? `${inquiry.callBackDate} ${inquiry.callBackTime}`
                           : "-----"} */}
@@ -521,20 +648,34 @@ const StudentList = () => {
                 <TableCell>{admission.pendingFees}</TableCell>
                 <TableCell>{admission.paymentMode}</TableCell>
                 <TableCell>{admission.transactionid}</TableCell>
-                <TableCell style={{
-                  fontWeight: "bold",
-                  color: admission.paymentMethod === "Pending" ? "red"
-                    : admission.paymentMethod === "Partial" ? "purple"
-                    : admission.paymentMethod === "Complete" ? "green"
-                    : "green",
-                }}>
+                <TableCell
+                  style={{
+                    fontWeight: "bold",
+                    color:
+                      admission.paymentMethod === "Pending"
+                        ? "red"
+                        : admission.paymentMethod === "Partial"
+                        ? "purple"
+                        : admission.paymentMethod === "Complete"
+                        ? "green"
+                        : "green",
+                  }}
+                >
                   {admission.paymentMethod}
                 </TableCell>
                 <TableCell style={{ whiteSpace: "nowrap" }}>
-                  <IconButton variant="contained" color="primary" onClick={() => handleUpdateClick(admission)}>
+                  <IconButton
+                    variant="contained"
+                    color="primary"
+                    onClick={() => handleUpdateClick(admission)}
+                  >
                     <EditIcon />
                   </IconButton>
-                  <IconButton color="error" onClick={() => handleDeleteClick(admission.id)} variant="contained">
+                  <IconButton
+                    color="error"
+                    onClick={() => handleDeleteClick(admission.id)}
+                    variant="contained"
+                  >
                     <DeleteIcon />
                   </IconButton>
                 </TableCell>
@@ -543,8 +684,12 @@ const StudentList = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <AlertDialog open={confirmOpen} onClose={() => setConfirmOpen(false)} onConfirm={handleDelete} />
-        
+      <AlertDialog
+        open={confirmOpen}
+        onClose={() => setConfirmOpen(false)}
+        onConfirm={handleDelete}
+      />
+
       <Dialog open={openUpdateDialog} onClose={handleCloseDialog}>
         <DialogTitle>Update Admission</DialogTitle>
         <DialogContent>

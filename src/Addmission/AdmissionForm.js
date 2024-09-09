@@ -372,7 +372,7 @@ const AdmissionForm = () => {
                 fullWidth
                 id="paidFees"
                 name="paidFees"
-                label="Paid Fees"
+                label="Fees Paying"
                 value={formData.paidFees}
                 onChange={handleInputChange}
                 required
@@ -385,7 +385,7 @@ const AdmissionForm = () => {
                   fullWidth
                   id="balanceAmount"
                   name="balanceAmount"
-                  label="Balance Amount"
+                  label="Pending Fees"
                   value={calculateBalance()}
                   InputProps={{ readOnly: true }}
                 />
