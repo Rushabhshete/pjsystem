@@ -85,7 +85,7 @@ const TodaysAttendance = () => {
 
     if (search) {
       mergedData = mergedData.filter(employee =>
-        employee.name.toLowerCase().includes(search.toLowerCase())
+        employee.name && employee.name.toLowerCase().includes(search.toLowerCase())
       );
     }
 
