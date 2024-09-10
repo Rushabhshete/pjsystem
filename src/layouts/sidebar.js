@@ -207,6 +207,11 @@ const sidebarOptions = [
              route: "/layout/AddDepartment",
             icon: <NotificationsIcon />,
           },
+          {
+            name: "Add Holiday",
+             route: "/layout/ManageHoliday",
+            icon: <NotificationsIcon />,
+          },
         ],
       },
       {

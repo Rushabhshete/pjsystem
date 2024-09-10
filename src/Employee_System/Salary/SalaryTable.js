@@ -1822,7 +1822,7 @@ const SalaryTable = ({ id, initialStatus }) => {
   if (error) return <Alert severity="error">{error}</Alert>;
 
   return (
-    <Grid Container padding={'1%'} >
+    <Container>
        <ToastContainer />
       <PopTypography
       variant="h5"
@@ -2549,7 +2549,7 @@ const SalaryTable = ({ id, initialStatus }) => {
 
 
  
-    </Grid>
+    </Container>
   );
 };
 
