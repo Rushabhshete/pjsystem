@@ -1364,7 +1364,7 @@ import {
   TablePagination,
   Select
 } from '@mui/material';
-import { Delete, Edit, Info} from '@mui/icons-material'; // Material Icons
+import { Delete, Edit, Info, Cancel} from '@mui/icons-material'; // Material Icons
 import axios from 'axios';
 import Userservice from './Userservice';
 import { toast, ToastContainer  } from 'react-toastify'; // Import toast from react-toastify
@@ -1430,6 +1430,7 @@ useEffect(() => {
   if (selectedDesignation) {
     filtered = filtered.filter(user => user.workDetail === selectedDesignation);
   }
+
 
    // Search functionality
    if (searchTerm) {
@@ -1594,6 +1595,26 @@ const fetchDepartments = async () => {
       }
     }
   };
+
+  
+  const handleCancel = async (empID) => {
+    const confirmation = window.confirm('Are You Sure You Want To Terminate This Employee?');
+    if (confirmation) {
+    try {
+      const response = await axios.put(`http://localhost:8082/updateEmployeeStatus/${empID}`, {
+        status: 'Terminated' // Or whatever status you want to set
+      });
+      if (response.status === 200) {
+        // toast.success('Employee status updated successfully.');
+      }
+      fetchUsers(); // Refresh users after status update
+    } catch (error) {
+      console.error('Error updating employee status:', error);
+      toast.error('Error updating employee status.');
+    }
+  }
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
   
@@ -1994,6 +2015,9 @@ const fetchDepartments = async () => {
                 <IconButton onClick={() => handleDelete(user.empID)} aria-label="delete" sx={{ color: 'red' }}>
                   <Delete />
                 </IconButton>
+                <IconButton onClick={() => handleCancel(user.empID)} aria-label="cancel" sx={{ color: 'red' }}>
+                      <Cancel />
+                    </IconButton> {/* Cancel icon */}
               </TableCell>
             </TableRow>
           ))}
@@ -2357,7 +2381,7 @@ select
                   value={selectedUser?.joiningDate}
                   onChange={handleInputChange}
                   fullWidth
-                  InputLabelProps={{ shrink: true }}
+                 // InputLabelProps={{ shrink: true }}
                 />
               </Grid>
               <Grid item xs={12} sm={4}>

@@ -19,6 +19,7 @@
 // } from "@mui/material";
 // import { styled } from "@mui/system";
 // import MuiAlert from "@mui/material/Alert";
+// import Calendar from 'react-awesome-calendar';  // Import the calendar
 
 // const Alert = React.forwardRef((props, ref) => (
 //   <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
@@ -308,13 +309,25 @@
 //       >
 //         Add Holiday
 //       </PopTypography>
-//       <Grid container spacing={2} className="textField-root">
+//          {/* Calendar display */}
+//          <div style={{ marginTop: "20px", width:"600px"}}>
+//         <Calendar
+//           events={Users.map(user => ({
+//             id: user.id,
+//             title: user.holidayName,
+//             startDate: new Date(user.date),
+//             endDate: new Date(new Date(user.date).setHours(new Date(user.date).getHours() + 1)), // 1 hour events
+//             color: '#24A0ED',
+//           }))}
+//         />
+//       </div>
+//       <Grid container spacing={2} className="textField-root" sx={{marginTop:'10px'}}>
 //         <Typography
 //           variant="h6"
 //           gutterBottom
 //           sx={{ marginTop: 3, whiteSpace: "nowrap" }}
 //         >
-//           Total Users : {Users.length}
+//           Total Holiday : {Users.length}
 //         </Typography>
 
 //         <Grid item xs={12} sm={1.6}>
@@ -527,8 +540,6 @@
 
 // export default ManageHoliday;
 
-
-
 import React, { useState, useEffect } from "react";
 import {
   Button,
@@ -551,6 +562,7 @@ import {
 import { styled } from "@mui/system";
 import MuiAlert from "@mui/material/Alert";
 import Calendar from 'react-awesome-calendar';  // Import the calendar
+import { Edit, Delete } from '@mui/icons-material'; // Import Material Icons
 
 const Alert = React.forwardRef((props, ref) => (
   <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
@@ -585,7 +597,6 @@ const AlertDialog = ({ open, onClose, onConfirm }) => (
 );
 
 const ManageHoliday = () => {
-  // State Variables
   const [open, setOpen] = useState(false);
   const [holidayName, setNewUser] = useState("");
   const [date, setDate] = useState("");
@@ -617,7 +628,6 @@ const ManageHoliday = () => {
         console.error("Error fetching Users: ", error);
       }
     };
-
     fetchUsers();
   }, [getInstituteCode()]);
 
@@ -644,8 +654,8 @@ const ManageHoliday = () => {
   const handleClose = () => {
     setOpen(false);
     setError(""); 
-    setDate(""); // Clear the date
-    setDay(""); // Clear the day
+    setDate(""); 
+    setDay(""); 
   };
 
   const handleChange = (event) => {
@@ -661,8 +671,6 @@ const ManageHoliday = () => {
   };
 
   const handleSubmit = async () => {
-    const getInstituteCode = () => localStorage.getItem("institutecode");
-    
     if (holidayName.trim() === "") {
       setError("User name cannot be empty");
     } else if (!date) {
@@ -691,7 +699,7 @@ const ManageHoliday = () => {
         if (response.ok) {
           setSnackbarMessage("User added successfully");
           setSnackbarOpen(true);
-
+  
           const updatedResponse = await fetch(
             `http://localhost:8082/getAllHolidays?institutecode=${getInstituteCode()}`
           );
@@ -840,45 +848,101 @@ const ManageHoliday = () => {
       >
         Add Holiday
       </PopTypography>
-         {/* Calendar display */}
-         <div style={{ marginTop: "20px", width:"600px"}}>
-        <Calendar
-          events={Users.map(user => ({
-            id: user.id,
-            title: user.holidayName,
-            startDate: new Date(user.date),
-            endDate: new Date(new Date(user.date).setHours(new Date(user.date).getHours() + 1)), // 1 hour events
-            color: '#24A0ED',
-          }))}
-        />
-      </div>
-      <Grid container spacing={2} className="textField-root" sx={{marginTop:'10px'}}>
-        <Typography
-          variant="h6"
-          gutterBottom
-          sx={{ marginTop: 3, whiteSpace: "nowrap" }}
-        >
-          Total Holiday : {Users.length}
-        </Typography>
 
-        <Grid item xs={12} sm={1.6}>
-          <TextField
-            label="Search Holiday"
-            variant="outlined"
-            value={searchTerm}
-            onChange={handleSearchChange}
+      <Grid container spacing={2} style={{ marginTop: "20px" }}>
+        {/* Left Side - Calendar */}
+        <Grid item xs={12} md={4} style={{ display: "flex", justifyContent: "center" }}>
+          <Calendar
+            events={Users.map(user => ({
+              id: user.id,
+              title: user.holidayName,
+              startDate: new Date(user.date),
+              endDate: new Date(new Date(user.date).setHours(new Date(user.date).getHours() + 1)),
+              color: '#24A0ED',
+            }))}
+            style={{ maxWidth: "400px" }} // Decreased calendar width
           />
         </Grid>
 
-        <Grid item xs={12} sm={1.6}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleClickOpen}
-            sx={{ marginTop: 1 }}
-          >
-            Add
-          </Button>
+        {/* Right Side - User Management */}
+        <Grid item xs={12} md={8}>
+          <Typography variant="h6" gutterBottom sx={{ marginTop: 3, whiteSpace: "nowrap" }}>
+            Total Holiday : {Users.length}
+          </Typography>
+
+          <Grid container spacing={2} className="textField-root">
+            <Grid item xs={12} sm={4}>
+              <TextField
+                label="Search Holiday"
+                variant="outlined"
+                value={searchTerm}
+                onChange={handleSearchChange}
+                fullWidth
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={2}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleClickOpen}
+                fullWidth
+              >
+                Add
+              </Button>
+            </Grid>
+          </Grid>
+
+          <TableContainer>
+            <Table sx={{ minWidth: 300, marginTop: 3 }}> {/* Increased table width */}
+              <TableHead>
+                <TableRow>
+                  <TableCell sx={{ padding: "4px", fontWeight: "bold", backgroundColor: "#f5f5f5" }}>
+                    ID
+                  </TableCell>
+                  <TableCell sx={{ padding: "4px", fontWeight: "bold", backgroundColor: "#f5f5f5" }}>
+                    Holiday Name
+                  </TableCell>
+                  <TableCell sx={{ padding: "4px", fontWeight: "bold", backgroundColor: "#f5f5f5" }}>
+                    Holiday Date
+                  </TableCell>
+                  <TableCell sx={{ padding: "4px", fontWeight: "bold", backgroundColor: "#f5f5f5" }}>
+                    Holiday Day
+                  </TableCell>
+                  <TableCell sx={{ padding: "4px", fontWeight: "bold", backgroundColor: "#f5f5f5" }}>
+                    Actions
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {filteredUsers.map((user) => (
+                  <TableRow key={user.id}>
+                    <TableCell sx={{ padding: "4px" }}>{user.id}</TableCell>
+                    <TableCell sx={{ padding: "4px" }}>{user.holidayName}</TableCell>
+                    <TableCell sx={{ padding: "4px" }}>{user.date}</TableCell>
+                    <TableCell sx={{ padding: "4px" }}>{user.day}</TableCell>
+                    <TableCell sx={{ padding: "4px" }}>
+                      <Button
+                        onClick={() => handleEditClickOpen(user.id)}
+                        color="success" // Green color for update icon
+                      >
+                        <Edit />
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          setUserIdToDelete(user.id);
+                          setConfirmOpen(true);
+                        }}
+                        color="error" // Red color for delete icon
+                      >
+                        <Delete />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Grid>
       </Grid>
 
@@ -1012,59 +1076,6 @@ const ManageHoliday = () => {
         onClose={() => setConfirmOpen(false)}
         onConfirm={() => handleDelete(userIdToDelete)}
       />
-      <TableContainer>
-        <Table sx={{ minWidth: 250, justifyContent: "center", marginTop: 3 }}>
-          <TableHead>
-            <TableRow>
-              <TableCell sx={{ padding: "4px", fontWeight: "bold", backgroundColor: "#f5f5f5" }}>
-                User ID
-              </TableCell>
-              <TableCell sx={{ padding: "4px", fontWeight: "bold", backgroundColor: "#f5f5f5" }}>
-                Holiday Name
-              </TableCell>
-              <TableCell sx={{ padding: "4px", fontWeight: "bold", backgroundColor: "#f5f5f5" }}>
-                Holiday Date
-              </TableCell>
-              <TableCell sx={{ padding: "4px", fontWeight: "bold", backgroundColor: "#f5f5f5" }}>
-                Holiday Day
-              </TableCell>
-              <TableCell sx={{ padding: "4px", fontWeight: "bold", backgroundColor: "#f5f5f5" }}>
-                Actions
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {filteredUsers.map((user) => (
-              <TableRow key={user.id}>
-                <TableCell sx={{ padding: "4px" }}>{user.id}</TableCell>
-                <TableCell sx={{ padding: "4px" }}>{user.holidayName}</TableCell>
-                <TableCell sx={{ padding: "4px" }}>{user.date}</TableCell>
-                <TableCell sx={{ padding: "4px" }}>{user.day}</TableCell>
-                <TableCell sx={{ padding: "4px" }}>
-                  <Button
-                    onClick={() => handleEditClickOpen(user.id)}
-                    color="primary"
-                    variant="contained"
-                    style={{ marginRight: "10px" }}
-                  >
-                    Update
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      setUserIdToDelete(user.id);
-                      setConfirmOpen(true);
-                    }}
-                    color="error"
-                    variant="contained"
-                  >
-                    Delete
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
     </div>
   );
 };

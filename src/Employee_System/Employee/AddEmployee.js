@@ -59,7 +59,7 @@ const UserComponent = () => {
     professionalQualification: "",
     shiftStartTime: "",
     shiftEndTime: "",
-    status: "",
+    status: "Joined",
     shift: "",
   });
 

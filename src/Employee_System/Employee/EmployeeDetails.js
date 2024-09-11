@@ -303,7 +303,7 @@ const EmployeeDetails = ({ formData, handleChange, category }) => {
             InputLabelProps={{className: "required-asterisk", shrink: true }}
           />
         </Grid>
-        <Grid item xs={12} sm={4}>
+        {/* <Grid item xs={12} sm={4}>
           <FormControl fullWidth>
             <TextField
               required
@@ -329,7 +329,7 @@ const EmployeeDetails = ({ formData, handleChange, category }) => {
             fullWidth
             InputLabelProps={{ shrink: true }}
           />
-        </Grid>
+        </Grid> */}
       </Grid>
     </>
   );
