@@ -1559,10 +1559,26 @@ const fetchDepartments = async () => {
       setFilteredUsers(filtered);
     }
   };
+  // const fetchUserById = async (id) => {
+  //   try {
+  //     const response = await Userservice.getUserById(id);
+  //     setSelectedUser(response.data);
+  //     setShowUpdateModal(true);
+  //   } catch (error) {
+  //     console.error('Error fetching user by ID:', error);
+  //   }
+  // };
   const fetchUserById = async (id) => {
     try {
       const response = await Userservice.getUserById(id);
-      setSelectedUser(response.data);
+      // Make sure to format the dates before setting the state
+      const userData = {
+        ...response.data,
+        dob: response.data.dob.substring(0, 10), // format 'YYYY-MM-DD'
+        joiningDate: response.data.joiningDate.substring(0, 10), // format 'YYYY-MM-DD'
+        enddate: response.data.enddate?.substring(0, 10), // format 'YYYY-MM-DD'
+      };
+      setSelectedUser(userData);
       setShowUpdateModal(true);
     } catch (error) {
       console.error('Error fetching user by ID:', error);
@@ -1644,7 +1660,13 @@ const fetchDepartments = async () => {
         [name]: value,
         permanentcity: '',  // Reset permanent city
       }));
-    } else {
+    } 
+    else if (name === 'dob' || name === 'joiningDate' || name === 'enddate') {
+      setSelectedUser((prevState) => ({
+        ...prevState,
+        [name]: value, // value should be in the format `YYYY-MM-DD`
+      }));
+    }else {
       setSelectedUser((prevState) => ({
         ...prevState,
         [name]: value,
@@ -1943,6 +1965,7 @@ const fetchDepartments = async () => {
       rowsPerPageOptions={[10, 20, 50]}
       labelRowsPerPage="Entries per Page"
     />
+    <div style={{maxWidth:'1200px',overflowX:'auto' }}>
       <TableContainer>
       <Table>
         <TableHead sx={{backgroundColor:'#f2f2f2'}}>
@@ -1984,6 +2007,16 @@ const fetchDepartments = async () => {
             </TableCell>
             <TableCell>
               <Typography variant="subtitle1" sx={{ fontWeight: 'bold', textAlign: 'center' }}>
+                Joining Date
+              </Typography>
+            </TableCell>
+            <TableCell>
+              <Typography variant="subtitle1" sx={{ fontWeight: 'bold', textAlign: 'center' }}>
+                End Date
+              </Typography>
+            </TableCell>
+            <TableCell>
+              <Typography variant="subtitle1" sx={{ fontWeight: 'bold', textAlign: 'center' }}>
                 Status
               </Typography>
             </TableCell>
@@ -2004,6 +2037,8 @@ const fetchDepartments = async () => {
               <TableCell>{user.employeecategory}</TableCell>
               <TableCell>{user.workDetail}</TableCell>
               <TableCell>{user.city}</TableCell>
+              <TableCell>{new Date(user.joiningDate).toLocaleDateString('en-GB')}</TableCell>
+              <TableCell>{user.enddate ? new Date(user.enddate).toLocaleDateString('en-GB') : ''}</TableCell>
               <TableCell style={{ color: getStatusColor(user.status), fontWeight: 'bold' }}>{user.status}</TableCell>
               <TableCell sx={{ whiteSpace: 'nowrap', textAlign: 'center' }}>
                 <IconButton onClick={() => handleShowInfo(user.empID)} aria-label="info" sx={{ color: 'green' }}>
@@ -2024,6 +2059,7 @@ const fetchDepartments = async () => {
         </TableBody>
       </Table>
     </TableContainer>
+    </div>
     <TablePagination
       component="div"
       count={filteredUsers.length}
@@ -2573,7 +2609,7 @@ select
                   InputLabelProps={{ shrink: true }}
                 />
               </Grid>
-                <Grid item xs={12} sm={4}>
+                {/* <Grid item xs={12} sm={4}>
                 <FormControl fullWidth>
                   <TextField
                     
@@ -2602,7 +2638,7 @@ select
                   fullWidth
                   InputLabelProps={{ shrink: true }}
                 />
-              </Grid>
+              </Grid> */}
                 <Grid item xs={12} sx={{ mt: 2, ml:75 }}>
                   <Button variant="contained" onClick={handleUpdate}>Update</Button>
                   <Button
@@ -2751,8 +2787,9 @@ select
         <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mr: 1 }}>Joining Date:</Typography> {new Date(selectedUser?.joiningDate).toLocaleDateString('en-GB')}
       </Grid>
       <Grid item xs={12} sm={6} sx={{ display: 'flex', alignItems: 'center' }}>
-        <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mr: 1 }}>End Date:</Typography> {new Date(selectedUser?.enddate).toLocaleDateString('en-GB')}
-      </Grid>
+  <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mr: 1 }}>End Date:</Typography> 
+  {selectedUser?.enddate ? new Date(selectedUser.enddate).toLocaleDateString('en-GB') : ''}
+</Grid>
       <Grid item xs={12} sm={6} sx={{ display: 'flex', alignItems: 'center' }}>
         <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mr: 1 }}>Salary:</Typography> {selectedUser?.salary}
       </Grid>

@@ -49,7 +49,7 @@ const UserComponent = () => {
     permanentstate: "",
     cpfNo: "",
     employeeType: "",
-    enddate: "",
+    // enddate: "",
     esicNo: "",
     pinCode: "",
     permanentpinCode: "",
