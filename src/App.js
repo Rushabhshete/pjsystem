@@ -164,6 +164,7 @@ import CreateAccount from "./layouts/CreateAccount";
 import EmpReport from "./Employee_System/Employee/EmpReport";
 import AddEmpcategory from "./Employee_System/Employee/AddEmpcategory";
 import AddDepartment from "./Employee_System/Employee/AddDepartment";
+import ManageHoliday from "./Employee_System/Employee/ManageHoliday";
 import SalaryDashboard from "./Employee_System/Salary/SalaryDashboard";
 import EmpDetails from "./Employee_System/Salary/EmpDetails";
 import SalaryTable from "./Employee_System/Salary/SalaryTable";
@@ -247,7 +248,8 @@ function AppContent() {
           <Route path="empList" element={<EmployeeList />} />
           <Route path="EmpReport" element={<EmpReport />} />
           <Route path="AddEmpcategory" element={<AddEmpcategory />} />
-          <Route path="AddDepartment" element={<AddDepartment />} />
+          <Route path="AddDepartment" element={<AddDepartment/>}/>
+          <Route path="ManageHoliday" element={<ManageHoliday/>}/>
 
           <Route path="SalaryDashboard" element={<SalaryDashboard />} />
           <Route path="AddSalary/:empID" element={<AddSalary />} />
