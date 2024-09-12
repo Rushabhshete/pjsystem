@@ -611,10 +611,72 @@ export default function DashBoard() {
         </Grid>
 
 
-        <Paper elevation={3} style={{ padding: '16px', marginTop: '24px' }}>
+       
             <Grid container spacing={2} alignItems="center" justifyContent="center" mt={3}>
               {/* Year Change Graph */}
+             
+              {/* Monthly Inquiry Count Chart */}
+              <Grid item xs={6}>
+              <Paper style={{ padding: '16px', textAlign: 'center', minHeight: '470px' }}>
+                <Grid container alignItems="center" justifyContent="center" gap={1}>
+                  <Grid item>
+                    <Typography variant="h6">Monthly Inquiry Count Chart</Typography>
+                  </Grid>
+                  <Grid item style={{ display: "flex" }}>
+                    <TextField
+                      select
+                      value={perYear}
+                      onChange={handlePerYearChange}
+                      label="Year"
+                    >
+                      {peryears.map((yr) => (
+                        <MenuItem key={yr} value={yr}>
+                          {yr}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                    <TextField
+                      select
+                      value={month}
+                      onChange={handleMonthChange}
+                      label="Month"
+                    //  style={{ marginLeft: '16px' }} // Optional styling for spacing
+                    >
+                      {Array.from({ length: 12 }, (v, k) => (
+                        <MenuItem key={k + 1} value={k + 1}>
+                          {new Date(0, k).toLocaleString('default', { month: 'long' })}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  </Grid>
+                </Grid>
+                <div style={{ width: "100%", marginTop: "16px" }}>
+                  {perData.length > 0 ? (
+                    <BarChart
+                      width={window.innerWidth * 0.4} // Match the width to the Year Change Chart
+                      height={500}
+                      data={perData}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="date" tickFormatter={(date) => new Date(date).getDate()} />
+                      <YAxis />
+                      <Tooltip />
+                      <Legend />
+                      <Bar dataKey="count" fill="#76A7FA" />
+                    </BarChart>
+                  ) : (
+                   
+                      <Typography variant="h6">No data available for selected month and year.</Typography>
+           
+                  )}
+                </div>
+                </Paper>
+              </Grid>
+
+
+           
               <Grid item xs={6}> {/* Adjust xs to control width */}
+              <Paper elevation={3} style={{ padding: "16x" }}>
                 <Grid container alignItems="center" justifyContent="center" gap={1}>
                   <Grid item>
                     <Typography variant="h6">Year Change Chart</Typography>
@@ -648,66 +710,11 @@ export default function DashBoard() {
                     <Bar dataKey="count" fill="#76A7FA" />
                   </BarChart>
                 </div>
-              </Grid>
+                </Paper> </Grid>
 
-              {/* Monthly Inquiry Count Chart */}
-              <Grid item xs={6}>
-                <Grid container alignItems="center" justifyContent="center" gap={1}>
-                  <Grid item>
-                    <Typography variant="h6">Monthly Inquiry Count Chart</Typography>
-                  </Grid>
-                  <Grid item style={{ display: "flex" }}>
-                    <TextField
-                      select
-                      value={perYear}
-                      onChange={handlePerYearChange}
-                      label="Year"
-                    >
-                      {peryears.map((yr) => (
-                        <MenuItem key={yr} value={yr}>
-                          {yr}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                    <TextField
-                      select
-                      value={month}
-                      onChange={handleMonthChange}
-                      label="Month"
-                      style={{ marginLeft: '16px' }} // Optional styling for spacing
-                    >
-                      {Array.from({ length: 12 }, (v, k) => (
-                        <MenuItem key={k + 1} value={k + 1}>
-                          {new Date(0, k).toLocaleString('default', { month: 'long' })}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </Grid>
-                </Grid>
-                <div style={{ width: "100%", marginTop: "16px" }}>
-                  {perData.length > 0 ? (
-                    <BarChart
-                      width={window.innerWidth * 0.4} // Match the width to the Year Change Chart
-                      height={400}
-                      data={perData}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="date" tickFormatter={(date) => new Date(date).getDate()} />
-                      <YAxis />
-                      <Tooltip />
-                      <Legend />
-                      <Bar dataKey="count" fill="#76A7FA" />
-                    </BarChart>
-                  ) : (
-                    <Paper style={{ padding: '16px', textAlign: 'center', minHeight: '400px' }}>
-                      <Typography variant="h6">No data available for selected month and year.</Typography>
-                    </Paper>
-                  )}
-                </div>
-              </Grid>
 
             </Grid>
-          </Paper>
+      
 
 
         <Grid

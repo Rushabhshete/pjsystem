@@ -177,7 +177,7 @@ function AppContent() {
     localStorage.getItem("isAuthenticated") === "true"
   );
   const location = useLocation();
-  const showHelpDeskButton = location.pathname !== "/";
+  const showHelpDeskButton = location.pathname !== "/systems/" ;
 
   useEffect(() => {
     const checkAuth = () => {
@@ -245,23 +245,22 @@ function AppContent() {
           <Route path="empDashboard" element={<EmployeeDashboard />} />
           <Route path="empAdd" element={<AddEmployee />} />
           <Route path="empList" element={<EmployeeList />} />
-          <Route path="EmpReport" element={<EmpReport />}/>
+          <Route path="EmpReport" element={<EmpReport />} />
           <Route path="AddEmpcategory" element={<AddEmpcategory />} />
-          <Route path="AddDepartment" element={<AddDepartment/>}/>
+          <Route path="AddDepartment" element={<AddDepartment />} />
 
-          <Route path="SalaryDashboard" element={<SalaryDashboard/>}/>
-          <Route path="AddSalary/:empID" element={<AddSalary/>}/>
-          <Route path="SalaryTable" element={<SalaryTable/>}/>
-          <Route path="EmpDetails" element={<EmpDetails/>}/>
+          <Route path="SalaryDashboard" element={<SalaryDashboard />} />
+          <Route path="AddSalary/:empID" element={<AddSalary />} />
+          <Route path="SalaryTable" element={<SalaryTable />} />
+          <Route path="EmpDetails" element={<EmpDetails />} />
 
-          <Route path="ManageAttendance" element={<ManageAttendance/>}/>
-          <Route path="TodaysAttendance" element={<TodaysAttendance/>}/>
-          <Route path="ViewAttendance/:empID" element={<ViewAttendance/>}/>
+          <Route path="ManageAttendance" element={<ManageAttendance />} />
+          <Route path="TodaysAttendance" element={<TodaysAttendance />} />
+          <Route path="ViewAttendance/:empID" element={<ViewAttendance />} />
 
-          <Route path="ManageLeave" element={<ManageLeave/>}/>
+          <Route path="ManageLeave" element={<ManageLeave />} />
 
-
-<Route path="manageLeave" element={<ManageLeave />} />
+          <Route path="manageLeave" element={<ManageLeave />} />
           <Route path="helpDesk" element={<HelpDesk />} />
           <Route path="subadmin" element={<AddSubAdmin />} />
           <Route path="Settings" element={<Settings />} />

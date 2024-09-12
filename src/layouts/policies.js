@@ -4,7 +4,7 @@ export const policies = {
       "sections": [
         {
           "heading": "Introduction",
-          "content": "Welcome to PJSOFTTECH PVT LTD. We are committed to protecting your personal information and your right to privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our systems, including Student Management, Employee Management, and Income & Expense Management."
+          "content": "At Pjsofttech, we strive to deliver high-quality software solutions that meet your business needs. If you are not satisfied with our services or products, we offer refunds under specific circumstances outlined in this policy. Please review the details carefully to understand your rights and obligations."
         },
         {
           "heading": "Information We Collect",
@@ -27,19 +27,19 @@ export const policies = {
           ]
         },
         {
-          "heading": "How We Use Your Information",
-          "content": "We use the information we collect or receive to:\n- Provide, operate, and maintain our systems\n- Improve, personalize, and expand our systems\n- Understand and analyze how you use our systems\n- Develop new products, services, features, and functionality\n- Communicate with you, either directly or through one of our partners\n- Process your transactions\n- Find and prevent fraud"
+          "heading": "Eligibility for Refunds",
+          "content": "Refund requests may be considered under the following conditions:•	The request is made within [7 days] of the purchase or initial service agreement.•	The software solution provided does not perform as described or fails to meet the agreed-upon specifications.•	The client has made all reasonable efforts to resolve any issues with the software or service through our support team.Non-Refundable ServicesThe following services are non-refundable:•	Custom software development, once the development phase has commenced and agreed-upon milestones have been delivered.•	Any consulting or advisory services that have already been rendered.•	Monthly/Yearly subscription fees for software-as-a-service (SaaS) products after the trial period has ended.•	Maintenance and support services already performed."
         },
         {
-          "heading": "Data Security",
-          "content": "We implement a variety of security measures to maintain the safety of your personal information. Your personal information is contained behind secured networks and is only accessible by a limited number of persons who have special access rights to such systems."
+          "heading": "Refund Process",
+          "content": "If eligible for a refund, please follow these steps:1.	Contact our support team at [sales@pjsofttech] or call [9923570901] to initiate the refund process.2.	Provide all relevant details, including proof of purchase, service agreement, and a description of the issues encountered.3.	Our team will review your case within [3-5 business days] and determine if a refund is warranted based on the specific circumstances.Upon approval, the refund will be processed within [7] business days and applied to your original method of payment."
         },
         {
-          "heading": "Data Sharing and Disclosure",
-          "content": "We do not sell, trade, or otherwise transfer your personal information to outside parties except as described in this Privacy Policy. This does not include trusted third parties who assist us in operating our systems, conducting our business, or servicing you, so long as those parties agree to keep this information confidential."
+          "heading": "Partial Refunds",
+          "content": "In cases where partial services have been delivered or milestones completed, a partial refund may be granted. The refund will reflect the portion of the services that have not yet been fulfilled, based on the contract or agreement.Subscription-Based ServicesFor clients using subscription-based software:•	If a cancellation request is received after the billing cycle has started, the service will remain active for the remainder of the billing period, but no refund will be issued for that period.•	Clients who cancel during a trial period will not be charged, and no refund will be necessary.Disputed ChargesIf you believe that there is an error in billing or charges, please contact our billing department within [10] days of the charge. We will investigate and resolve any discrepancies.Limitations"
         },
         {
-          "heading": "Your Rights",
+          "heading": "Refunds are not available for issues resulting from:",
           "content": "You have the right to:\n- Access your personal information\n- Correct any inaccuracies in your personal information\n- Request deletion of your personal information\n- Object to or restrict the processing of your personal information\n- Request data portability"
         },
         {

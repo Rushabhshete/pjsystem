@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   Drawer,
   List,
@@ -56,18 +56,55 @@ import HelpIcon from "@mui/icons-material/Help";
 const drawerWidth = 240;
 const collapsedWidth = 60;
 
+const Sidebar = () => {
+  const [expanded, setExpanded] = useState({});
+  const location = useLocation();
+  const [open, setOpen] = useState(true); 
+  const [systemValues, setSystemValues] = useState(null);
+  const institutecode = () => localStorage.getItem("institutecode");
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:8081/getSystemValueByInstitutecode?institutecode=${institutecode()}`);
+        const data = await response.json();
+        setSystemValues(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleDrawerToggle = () => {
+    setOpen(!open);
+  };
+
+  const isActive = (route) => location.pathname === route;
+
+  const handleToggle = (option) => {
+    setExpanded((prevExpanded) => ({
+      ...prevExpanded,
+      [option]: !prevExpanded[option],
+    }));
+  };
+
 const sidebarOptions = [
   {
     name: "Main Dashboard",
     icon: <DashboardIcon color="primary" />,
     route: "/layout/combineDash",
     subOptions: [],
+    show:systemValues?.incomeandexpense && systemValues?.enquirymanagementsystem && systemValues?.admissionmanagementsystem,
   },
  
 
   {
     name: "Enquiry System",
     icon: <PersonSearchRoundedIcon sx={{ color: "orange" }} />,
+    show: systemValues?.enquirymanagementsystem, // Conditionally render based on API response
     subOptions: [
       {
         name: "Dashboard",
@@ -104,6 +141,7 @@ const sidebarOptions = [
   {
     name: "Admission System",
     icon: <AddHomeRoundedIcon sx={{ color: "#FF1493" }} />,
+    show:systemValues?.admissionmanagementsystem,
     subOptions: [
       {
         name: "Dashboard",
@@ -140,6 +178,7 @@ const sidebarOptions = [
   {
     name: "Income  & Expense",
     icon: <CurrencyRupeeRoundedIcon sx={{ color: "green" }} />,
+    show:systemValues?.incomeandexpense,
     subOptions: [
       {
         name: "Dashboard",
@@ -172,6 +211,8 @@ const sidebarOptions = [
   {
     name: "Employee System",
     icon: <PeopleIcon sx={{ color: "blue" }} />,
+       show: systemValues?.employeemanagementsystem, // Conditionally render based on API response
+
     subOptions: [
       {
         name: "Employee",
@@ -272,6 +313,7 @@ const sidebarOptions = [
   {
     name: "Student System",
     icon: <EmojiPeopleRoundedIcon sx={{ color: "brown" }} />,
+    show:systemValues?.studentmanagementsystem,
     subOptions: [
       { name: "Dashboard",  icon: <DashboardIcon /> },
       { name: "Student Form",  icon: <WorkspacesIcon /> },
@@ -296,6 +338,7 @@ const sidebarOptions = [
   {
     name: "Classroom Management",
     icon: <SchoolRoundedIcon sx={{ color: "purple" }} />,
+    
     subOptions: [
       { name: "Classroom",  icon: <AnnouncementIcon /> },
       { name: "Subject",  icon: <SubjectIcon /> },
@@ -355,23 +398,7 @@ const sidebarOptions = [
   // Add more options similarly
 ];
 
-const Sidebar = () => {
-  const [expanded, setExpanded] = useState({});
-  const location = useLocation();
-  const [open, setOpen] = useState(true); // true for expanded, false for collapsed
-
-  const handleDrawerToggle = () => {
-    setOpen(!open);
-  };
-
-  const isActive = (route) => location.pathname === route;
-
-  const handleToggle = (option) => {
-    setExpanded((prevExpanded) => ({
-      ...prevExpanded,
-      [option]: !prevExpanded[option],
-    }));
-  };
+const filteredSidebarOptions = sidebarOptions.filter((option) => option.show !== false);
   return (
     <Drawer
     variant="persistent"
@@ -395,7 +422,7 @@ const Sidebar = () => {
     </Box>
     <Box sx={{ overflowY: "auto" }}>
       <List>
-        {sidebarOptions.map((option, index) => (
+        {filteredSidebarOptions.map((option, index) => (
           <div key={index}>
             <ListItem
               button
@@ -551,3 +578,209 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
+// import React, { useEffect, useState } from "react";
+// import {
+//   Drawer,
+//   List,
+//   ListItem,
+//   ListItemIcon,
+//   ListItemText,
+//   Collapse,
+//   Box,
+//   Typography,
+//   IconButton,
+// } from "@mui/material";
+// import { Link } from "react-router-dom";
+// import {
+//   Add,
+//   Remove,
+//   Dashboard as DashboardIcon,
+//   Announcement as AnnouncementIcon,
+//   People as PeopleIcon,
+//   Person,
+//   AddHomeRoundedIcon,
+//   CurrencyRupeeRoundedIcon,
+//   SchoolRoundedIcon,
+// } from "@mui/icons-material";
+// import { useLocation } from "react-router-dom";
+// import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+// import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+// import NotificationsIcon from "@mui/icons-material/Notifications";
+
+// const drawerWidth = 240;
+// const collapsedWidth = 60;
+
+// const Sidebar = () => {
+//   const [expanded, setExpanded] = useState({});
+//   const location = useLocation();
+//   const [open, setOpen] = useState(true);
+//   const [systemValues, setSystemValues] = useState(null);
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       try {
+//         const response = await fetch("http://localhost:8081/getSystemValueByInstitutecode?institutecode=Rush@gmail.com");
+//         const data = await response.json();
+//         setSystemValues(data);
+//       } catch (error) {
+//         console.error("Error fetching data:", error);
+//       }
+//     };
+
+//     fetchData();
+//   }, []);
+
+//   const handleDrawerToggle = () => {
+//     setOpen(!open);
+//   };
+
+//   const isActive = (route) => location.pathname === route;
+
+//   const handleToggle = (option) => {
+//     setExpanded((prevExpanded) => ({
+//       ...prevExpanded,
+//       [option]: !prevExpanded[option],
+//     }));
+//   };
+
+//   const sidebarOptions = [
+//     // Define your sidebar options here...
+//     {
+//       name: "Enquiry System",
+//       icon: <Person sx={{ color: "orange" }} />,
+//       show: systemValues?.enquirymanagementsystem, // Conditionally render based on API response
+//       subOptions: [
+//         {
+//           name: "Dashboard",
+//           route: "/layout/dashboard",
+//           icon: <DashboardIcon sx={{ color: "blue" }} />,
+//         },
+//         // Include more options if necessary...
+//       ],
+//     },
+//     {
+//       name: "Employee System",
+//       icon: <PeopleIcon sx={{ color: "blue" }} />,
+//       show: systemValues?.employeemanagementsystem, // Conditionally render based on API response
+//       subOptions: [
+//         {
+//           name: "Employee",
+//           route: "/layout/empDashboard",
+//           icon: <DashboardIcon />,
+//         },
+//       ],
+//     },
+//     // Other options...
+//   ].filter(option => option.show); // Filter to only include options that should be shown
+
+//   return (
+//     <Drawer
+//       variant="persistent"
+//       anchor="left"
+//       open
+//       sx={{
+//         width: open ? drawerWidth : collapsedWidth,
+//         transition: "width 0.3s",
+//         "& .MuiDrawer-paper": {
+//           width: open ? drawerWidth : collapsedWidth,
+//           transition: "width 0.3s",
+//           overflowX: "hidden",
+//         },
+//       }}
+//     >
+//       <Box sx={{ display: "flex", alignItems: "center", p: 1 }}>
+//         <IconButton onClick={handleDrawerToggle} sx={{ marginLeft: 'auto', marginTop: "60px" }}>
+//           {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+//         </IconButton>
+//       </Box>
+//       <Box sx={{ overflowY: "auto" }}>
+//         <List>
+//           {sidebarOptions.map((option, index) => (
+//             <div key={index}>
+//               <ListItem
+//                 button
+//                 onClick={() => handleToggle(option.name)}
+//                 component={Link}
+//                 to={option.route}
+//                 sx={{
+//                   backgroundColor: isActive(option.route)
+//                     ? "rgba(0, 0, 0, 0.1)"
+//                     : "transparent",
+//                   "&:hover": {
+//                     backgroundColor: isActive(option.route)
+//                       ? "rgba(0, 0, 0, 0.1)"
+//                       : "rgba(0, 0, 0, 0.05)",
+//                     marginLeft: "-10px",
+//                   },
+//                 }}
+//               >
+//                 <ListItemIcon>{option.icon}</ListItemIcon>
+//                 {open && (
+//                   <ListItemText
+//                     primary={
+//                       <Typography variant="body2" sx={{ fontWeight: "bold", fontSize: "12px", marginLeft: "-20px" }}>
+//                         {option.name}
+//                       </Typography>
+//                     }
+//                   />
+//                 )}
+//                 {option.subOptions.length > 0 && (
+//                   <ListItemIcon>
+//                     {expanded[option.name] ? <Remove sx={{ color: "red" }} /> : <Add sx={{ color: "green" }} />}
+//                   </ListItemIcon>
+//                 )}
+//               </ListItem>
+//               {open && option.subOptions.length > 0 && (
+//                 <Collapse
+//                   in={expanded[option.name]}
+//                   timeout="auto"
+//                   unmountOnExit
+//                   sx={{ transition: "all 0.3s ease" }}
+//                 >
+//                   <List component="div" disablePadding>
+//                     {option.subOptions.map((subOption, subIndex) => (
+//                       <ListItem
+//                         button
+//                         key={subIndex}
+//                         component={Link}
+//                         to={subOption.route}
+//                         sx={{
+//                           pl: 4,
+//                           backgroundColor: isActive(subOption.route)
+//                             ? "rgba(0, 0, 0, 0.1)"
+//                             : "transparent",
+//                           "&:hover": {
+//                             backgroundColor: isActive(subOption.route)
+//                               ? "rgba(0, 0, 0, 0.1)"
+//                               : "rgba(0, 0, 0, 0.05)",
+//                           },
+//                         }}
+//                       >
+//                         <ListItemIcon>{subOption.icon}</ListItemIcon>
+//                         {open && (
+//                           <ListItemText
+//                             primary={
+//                               <Typography
+//                                 variant="body2"
+//                                 sx={{ fontSize: "13px", marginLeft: "-20px" }}
+//                               >
+//                                 {subOption.name}
+//                               </Typography>
+//                             }
+//                           />
+//                         )}
+//                       </ListItem>
+//                     ))}
+//                   </List>
+//                 </Collapse>
+//               )}
+//             </div>
+//           ))}
+//         </List>
+//       </Box>
+//     </Drawer>
+//   );
+// };
+
+// export default Sidebar;
