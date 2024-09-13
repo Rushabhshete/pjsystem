@@ -449,23 +449,43 @@ const EmpDetails = ({ empID }) => {
     fetchCategoryNames();
   }, [institutecode]);
 
+  // const fetchUsers = async () => {
+  //   try {
+  //     const response = await axios.get(`http://localhost:8082/getAllemp?institutecode=${institutecode}`);
+  //     const formattedUsers = response.data.map(user => ({
+  //       empID: user.empID,
+  //       fullName: user.fullName,
+  //       email: user.email,
+  //       employeecategory: user.employeecategory,
+  //       department: user.department,
+  //       salary: user.salary
+  //     }));
+  //     setUsers(formattedUsers);
+  //     setFilteredUsers(formattedUsers);
+  //   } catch (error) {
+  //     console.error('Error fetching users:', error);
+  //   }
+  // };
+
   const fetchUsers = async () => {
+    const status = 'Joined'; // Set the desired status
     try {
-      const response = await axios.get(`http://localhost:8082/getAllemp?institutecode=${institutecode}`);
-      const formattedUsers = response.data.map(user => ({
-        empID: user.empID,
-        fullName: user.fullName,
-        email: user.email,
-        employeecategory: user.employeecategory,
-        department: user.department,
-        salary: user.salary
-      }));
-      setUsers(formattedUsers);
-      setFilteredUsers(formattedUsers);
+        const response = await axios.get(`http://localhost:8082/employees/status/${status}?institutecode=${institutecode}`);
+        const formattedUsers = response.data.map(user => ({
+            empID: user.empID,
+            fullName: user.fullName,
+            email: user.email,
+            employeecategory: user.employeecategory,
+            department: user.department,
+            salary: user.salary
+        }));
+        setUsers(formattedUsers);
+        setFilteredUsers(formattedUsers);
     } catch (error) {
-      console.error('Error fetching users:', error);
+        console.error('Error fetching users:', error);
     }
-  };
+};
+
 
   const fetchAllEmployees = async () => {
     try {

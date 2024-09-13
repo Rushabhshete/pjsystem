@@ -53,6 +53,9 @@ import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import HelpIcon from "@mui/icons-material/Help";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
+import NoteAltIcon from '@mui/icons-material/NoteAlt';
+import StickyNote2Icon from '@mui/icons-material/StickyNote2';
+import MapsUgcIcon from '@mui/icons-material/MapsUgc';
 
 const drawerWidth = 240;
 const collapsedWidth = 60;
@@ -317,6 +320,34 @@ const Sidebar = () => {
             },
           ],
         },
+        {
+          name: "Memo",
+          icon: <NoteAltIcon sx={{ color: "#4682b4" }} />,
+          subSubOptions: [
+            {
+              name: "Add Memo",
+              route: "/layout/AddMemo",
+              icon: <MapsUgcIcon sx={{ color: "#76A7FA" }} />,
+            },
+            {
+              name: "Manage Memo",
+              route: "/layout/ManageEmpMemo",
+              icon: <CurrencyRupeeIcon sx={{ color: "#76A7FA" }} />,
+            }
+          ]
+        },
+        {
+          name: "Notice",
+          icon: <StickyNote2Icon sx={{ color: "#4682b4" }} />,
+          subSubOptions: [
+            {
+              name: "Add Notice",
+              route: "/layout/AddNotice",
+              icon: <MapsUgcIcon sx={{ color: "#76A7FA" }} />,
+            }
+          ]
+        },
+        
       ],
     },
     {
@@ -365,27 +396,27 @@ const Sidebar = () => {
         { name: "Result", icon: <NotificationsIcon /> },
       ],
     },
-    {
-      name: "Memo / Notification",
-      icon: <AnnouncementIcon sx={{ color: "purple" }} />,
-      subOptions: [
-        {
-          name: "Memo",
-          route: "/layout/memo",
-          icon: <AnnouncementIcon sx={{ color: "blue" }} />,
-        },
-        {
-          name: "Manage Memo",
-          route: "/layout/manage-memo",
-          icon: <NotificationsIcon sx={{ color: "#4682b4" }} />,
-        },
-        {
-          name: "Manage Notification",
-          route: "/layout/manage-notifications",
-          icon: <NotificationsIcon sx={{ color: "#4682b4" }} />,
-        },
-      ],
-    },
+    // {
+    //   name: "Memo / Notification",
+    //   icon: <AnnouncementIcon sx={{ color: "purple" }} />,
+    //   subOptions: [
+    //     {
+    //       name: "Memo",
+    //       route: "/layout/memo",
+    //       icon: <AnnouncementIcon sx={{ color: "blue" }} />,
+    //     },
+    //     {
+    //       name: "Manage Memo",
+    //       route: "/layout/manage-memo",
+    //       icon: <NotificationsIcon sx={{ color: "#4682b4" }} />,
+    //     },
+    //     {
+    //       name: "Manage Notification",
+    //       route: "/layout/manage-notifications",
+    //       icon: <NotificationsIcon sx={{ color: "#4682b4" }} />,
+    //     },
+    //   ],
+    // },
     {
       name: "Add Sub-Admin",
       icon: <AdminPanelSettingsIcon color="primary" />,
