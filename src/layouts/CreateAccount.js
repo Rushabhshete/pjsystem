@@ -941,13 +941,23 @@ import {
   Toolbar,
   FormControl,
   MenuItem,
+  Divider,
   FormControlLabel,
   Checkbox,
   CardContent,
   Paper,
   styled,
   Modal,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
 } from "@mui/material";
+import html2pdf from 'html2pdf.js'; // Importing html2pdf.js
+//import logo from '../img/logo.jpg'; 
 import { policies } from "./policies";
 import axios from "axios";
 import logo from "../img/logo.jpg";
@@ -956,6 +966,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import indianStatesAndDistricts from "./indianStatesAndDistricts";
 import PolicyPopup from "./PolicyPopup ";
 import { useNavigate } from "react-router-dom";
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
 const CreateAccount = () => {
   const [formData, setFormData] = useState({
     emailaddress: "",
@@ -999,7 +1011,9 @@ const CreateAccount = () => {
   const [open, setOpen] = useState(false);
   const [savings, setSavings] = useState(0); // Initialize savings state
   const [originalYearlyAmount, setOriginalYearlyAmount] = useState(0); // Initialize original amount state
-
+  const [showReceipt, setShowReceipt] = useState(false);
+  const [paymentDetails, setPaymentDetails] = useState({});
+  const [openReceipt, setOpenReceipt] = useState(false);
   const gstPercentage = 18;
   const handleSubscriptionYearChange = (e) => {
     setSubscriptionYear(e.target.value);
@@ -1043,6 +1057,33 @@ const CreateAccount = () => {
       gstAmount,
     };
   };
+  const a = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+  const b = ['', 'Ten', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+  const c = ['', 'Hundred', 'Thousand', 'Lakh', 'Crore'];
+  // Function to convert numbers to words
+  function convertNumberToWords(num) {
+    const numberToWords = (n) => {
+      if (n === 0) return 'Zero';
+      if (n < 10) return a[n];
+      if (n < 100) return b[Math.floor(n / 10)] + (n % 10 !== 0 ? ' ' + a[n % 10] : '');
+      if (n < 1000) return a[Math.floor(n / 100)] + ' Hundred' + (n % 100 !== 0 ? ' ' + numberToWords(n % 100) : '');
+      if (n < 100000) {
+        const thousands = Math.floor(n / 1000);
+        const rest = n % 1000;
+        return numberToWords(thousands) + ' Thousand' + (rest !== 0 ? ' ' + numberToWords(rest) : '');
+      }
+      if (n < 10000000) {
+        const lakhs = Math.floor(n / 100000);
+        const rest = n % 100000;
+        return numberToWords(lakhs) + ' Lakh' + (rest !== 0 ? ' ' + numberToWords(rest) : '');
+      }
+      // Extend this function for larger numbers as needed (e.g., Crores)
+
+      return n; // Fallback in case of any issues
+    };
+
+    return numberToWords(num);
+  }
 
   const calculateSavings = (selectedCard, subscriptionYear) => {
     let originalAmountPerMonth;
@@ -1104,6 +1145,8 @@ const CreateAccount = () => {
   const handlePayment = () => {
     const { finalAmount } = calculateAmount();
     const options = {
+      // key: "rzp_live_x3jjvYlvth6Ke",
+      // key_secret: "FAQE2PwPBrTkB0xC2pzPM3I", // Replace with your Razorpay key
       key: "rzp_test_vv1FCZvuDRF6lQ",
       key_secret: "P4JAUwn4VdE6xDLJ6p2Zy8RQ", // Replace with your Razorpay key
       amount: finalAmount, // Amount in paisa (10000 paisa = INR 100)
@@ -1111,8 +1154,13 @@ const CreateAccount = () => {
       name: "PJSOFTTECH PTV. LTD",
       description: "Test Transaction",
       handler: function (response) {
-        // Handle payment success
-        setPaymentSuccessful(true);
+        // After successful payment
+        setPaymentDetails({
+          instituteName: formData.institutename,
+          amount: finalAmount / 100,
+          date: new Date().toLocaleDateString(),
+        });
+        setShowReceipt(true); // Show receipt
       },
       prefill: {
         name: formData.institutename,
@@ -1316,6 +1364,19 @@ const CreateAccount = () => {
   // const renderFeatureIcon = (isAvailable) => {
   //   return isAvailable ? "✔" : "✘";
   // };
+
+  const downloadReceipt = () => {
+    const receiptElement = document.getElementById('receipt'); // Reference to receipt element
+    const opt = {
+      margin: 0.5,
+      filename: 'receipt.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    html2pdf().from(receiptElement).set(opt).save();
+  };
   return (
     <>
       <AppBar
@@ -2208,7 +2269,6 @@ const CreateAccount = () => {
                         variant="contained"
                         onClick={() =>
                           document.getElementById("image-upload").click()
-                          
                         }
                         disabled={!paymentSuccessful}
                         sx={{ backgroundColor: "#003366", color: "gold" }}
@@ -2317,6 +2377,177 @@ const CreateAccount = () => {
           </Grid>
         </Grid>
       </div>
+      <Dialog
+        open={showReceipt}
+        onClose={() => setShowReceipt(false)}
+        maxWidth="md"
+        fullWidth
+      >
+        <DialogContent sx={{ p: 2 }}>
+          {formData ? (
+            <Box id="receipt">
+              <DialogTitle
+                align="center"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <img
+                    src={logo}
+                    alt="Logo"
+                    style={{ width: "50px", marginRight: "10px" }}
+                  />
+                  <Typography variant="h5">Billing Receipt</Typography>
+                </div>
+              </DialogTitle>
+
+              <Typography
+                variant="body2"
+                align="left"
+                sx={{ mb: 0.5, ml: 1 }}
+                mt={3}
+              >
+                <strong>Bill To:</strong>
+                <br /> {formData.institutename}
+                <br />
+              </Typography>
+
+              <Typography variant="body2" align="left" sx={{ mb: 1, ml: 1 }}>
+                <strong>Address:</strong>
+                <br />
+                {formData.address}, {formData.city},{" "}
+                {formData.state}, {formData.country},{" "}
+                {formData.pincode}
+                <br />
+                {formData.emailaddress},<br />{" "}
+                {formData.mobilenumber}
+              </Typography>
+
+              <Divider sx={{ my: 3 }} />
+
+              <Box display="flex" justifyContent="space-between" mb={1}>
+                <Box flex="1" ml={1}>
+                  <Typography variant="body1" sx={{ mb: 0.5 }}>
+                    <strong>Owner:</strong> {formData.ownerName}
+                  </Typography>
+                  <Typography variant="body1" sx={{ mb: 0.5 }}>
+                    <strong>Plan:</strong> {formData.plan}
+                  </Typography>
+                  <Typography variant="body1" sx={{ mb: 0.5 }}>
+                    <strong>Subscription Start Date:</strong>{" "}
+                    {formData.subscriptstartDate}
+                  </Typography>
+                </Box>
+                <Box flex="1" mr={1}>
+                  <Typography variant="body1" sx={{ mb: 0.5 }}>
+                    <strong>GST No:</strong> {formData.gstNo}
+                  </Typography>
+                  <Typography variant="body1" sx={{ mb: 0.5 }}>
+                    <strong>Subscription Year:</strong>{" "}
+                    {formData.subscriptionyear}
+                  </Typography>
+                  <Typography variant="body1" sx={{ mb: 0.5 }}>
+                    <strong>Subscription End Date:</strong>{" "}
+                    {formData.subscriptendDate}
+                  </Typography>
+                </Box>
+              </Box>
+
+              <Typography variant="h6" align="center" gutterBottom>
+                Payment Details
+              </Typography>
+
+              <Box
+                sx={{
+                  border: "1px solid #ccc",
+                  borderRadius: "8px",
+                  p: 1,
+                  mb: 1,
+                }}
+              >
+                <Table>
+                  <TableBody>
+                    {[
+                      { label: "Plan Name", value: formData.plan },
+                      // {
+                      //   label: "Transaction ID",
+                      //   value: formData.transactionId,
+                      // },
+                      {
+                        label: "Amount",
+                        value: `${yearlyAmount} Rs.`,
+                      },
+                      {
+                        label: "GST Percentage",
+                        value: `${gstPercentage}%`,
+                      },
+                      {
+                        label: <strong>Total Amount</strong>,
+                        value: (
+                          <strong>
+                            Rs. {amount}
+                          </strong>
+                        ),
+                      },
+                    ].map((row, index) => (
+                      <TableRow key={index}>
+                        <TableCell>{row.label}</TableCell>
+                        <TableCell>{row.value}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </Box>
+
+              <Typography variant="body1" align="center" sx={{ mb: 2 }}>
+                <strong>Total Amount in Words:</strong>{" "}
+                {convertNumberToWords(formData.totalAmount)} Only
+              </Typography>
+
+              <Box mt={2} display="flex" justifyContent="space-between" mb={2}>
+                <Box textAlign="center">
+                  <Typography variant="body2">Authorized Signature</Typography>
+                  <Box mt={4} borderBottom="1px solid #000" width="150px" />
+                </Box>
+                <Box textAlign="center">
+                  <Typography variant="body2">Client Signature</Typography>
+                  <Box mt={4} borderBottom="1px solid #000" width="150px" />
+                </Box>
+              </Box>
+
+              <Divider sx={{ my: 2 }} />
+
+              <Typography variant="body2" align="center" sx={{ mb: 1 }}>
+                203, 2nd floor, Mangalmurti Complex, behind ABIL Tower hirabaugh
+                chowk, Tilak Road
+                <br />
+              </Typography>
+              <Typography variant="body2" align="center" sx={{ mb: 1 }}>
+                Website: http://www.pjsofttech.com | Phone: +919923570901
+              </Typography>
+              <Typography variant="body2" align="center">
+                Email: sales@pjsofttech.com
+              </Typography>
+
+              <Button
+                sx={{ mt: 2 }}
+                variant="contained"
+                color="primary"
+                onClick={downloadReceipt}
+              >
+                Download Receipt
+              </Button>
+            </Box>
+          ) : (
+            <Typography variant="body2" color="red" align="center">
+              Receipt data is not available.
+            </Typography>
+          )}
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
