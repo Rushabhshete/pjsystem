@@ -226,7 +226,7 @@
 //     }
 //   }
 
-//   animation: pop 2s ease;
+//  
 // `;
 
 //   return (
@@ -633,7 +633,7 @@ const EmpDetails = ({ empID }) => {
     }
   }
 
-  animation: pop 2s ease;
+ 
 `;
 
   return (

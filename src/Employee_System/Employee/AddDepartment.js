@@ -122,7 +122,7 @@ const Department = () => {
       50% { transform: scale(1.1); }
       100% { transform: scale(1); }
     }
-    animation: pop 2s ease;
+   
   `;
 
   return (

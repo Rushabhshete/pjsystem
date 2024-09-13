@@ -46,7 +46,7 @@ export default function Report() {
   const [selectedStatus, setSelectedStatus] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-
+  const [error, setError] = useState("");
   // New states for month and year
   const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
@@ -73,17 +73,26 @@ export default function Report() {
 
   const loadUsers = async (start = "", end = "") => {
     let url = `http://localhost:8086/get/getALLEnquiryByInstitutecode?institutecode=${getInstituteCode()}`;
-
+  
     // Update URL based on date, month and year filters
     if (start && end) {
       url = `http://localhost:8086/enquiryBetweenDates?startDate=${start}&endDate=${end}&institutecode=${getInstituteCode()}`;
     } else if (selectedYear && selectedMonth) {
       url = `http://localhost:8086/enquiryByMonthAndYear?month=${selectedMonth}&year=${selectedYear}&institutecode=${getInstituteCode()}`;
     }
-
-    const result = await axios.get(url);
-    setInquiries(result.data);
+  
+    try {
+      const result = await axios.get(url);
+      setInquiries(result.data);
+    } catch (error) {
+      // Handle the error
+      console.error("Error fetching data:", error);
+  
+      // Optionally, you can set an error state to display an error message to the user
+      setError("An error occurred while fetching data. Please try again later.");
+    }
   };
+  
 
   const loadExams = async () => {
     try {

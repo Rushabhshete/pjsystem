@@ -669,6 +669,21 @@ const SalaryDashBoard = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <Typography
+        variant="h5"
+        gutterBottom
+        sx={{
+          fontWeight: "bold",
+          color: "#fff",
+          textAlign: "center",
+          backgroundColor: "#24A0ED",
+          borderRadius: "150px",
+          padding: "10px",
+          marginBottom: "20px",
+        }}
+      >
+        Salary Dashboard
+      </Typography>
       <Container>
         <Grid container spacing={3} justifyContent="center">
           <Grid container spacing={2} justifyContent="left" mt={1}>

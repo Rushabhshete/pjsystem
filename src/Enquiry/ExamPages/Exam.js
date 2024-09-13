@@ -37,7 +37,7 @@ const PopTypography = styled(Typography)`
     }
   }
 
-  animation: pop 2s ease;
+ 
 `;
 
 const ConfirmDialog = ({ open, onClose, onConfirm, examName }) => (

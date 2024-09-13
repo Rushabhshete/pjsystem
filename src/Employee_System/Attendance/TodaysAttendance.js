@@ -99,6 +99,21 @@ const TodaysAttendance = () => {
 
   return (
     <Container>
+       <Typography
+        variant="h5"
+        gutterBottom
+        sx={{
+          fontWeight: "bold",
+          color: "#fff",
+          textAlign: "center",
+          backgroundColor: "#24A0ED",
+          borderRadius: "150px",
+          padding: "10px",
+          marginBottom: "20px",
+        }}
+      >
+        Attendane Dashboard
+      </Typography>
       <Grid container spacing={2} sx={{ marginBottom: 3 }}>
         <Grid item xs={12} md={4}>
           <Card sx={{backgroundColor:'#3498DB'}}>

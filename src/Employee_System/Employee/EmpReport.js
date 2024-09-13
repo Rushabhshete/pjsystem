@@ -215,7 +215,7 @@ const EmpReport = () => {
     }
   }
 
-  animation: pop 2s ease;
+ 
 `;
 
   return (

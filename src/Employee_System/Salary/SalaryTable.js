@@ -559,7 +559,7 @@
 //       }
 //     }
 
-//     animation: pop 2s ease;
+//    
 //   `;
 
 //   if (loading) return <CircularProgress />;

@@ -132,7 +132,7 @@ export default function AddSalary() {
         transform: scale(1);
       }
     }
-    animation: pop 2s ease;
+   
   `;
 
   return (
