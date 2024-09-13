@@ -651,7 +651,7 @@ const AdminProfile = () => {
                 <Grid item xs={12} sm={6}>
                   <Box display="flex" alignItems="center">
                   <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
-                    Owner's Aadhar No:
+                    Owner's Aadhar:
                   </Typography>
                   <Typography variant="h6">
                     {employeeDetails.aadhar}
@@ -661,7 +661,7 @@ const AdminProfile = () => {
                 <Grid item xs={12} sm={6}>
                   <Box display="flex" alignItems="center">
                   <Typography variant="h6" style={{ marginRight: '8px', fontWeight: 'bold' }}>
-                    Owner's PAN No:
+                    Owner's PAN:
                   </Typography>
                   <Typography variant="h6">
                     {employeeDetails.pancard}

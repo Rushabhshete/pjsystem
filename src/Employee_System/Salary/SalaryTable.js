@@ -1995,7 +1995,7 @@ useEffect(() => {
   if (error) return <Alert severity="error">{error}</Alert>;
 
   return (
-    <Container maxWidth='false'>
+    <div>
       <ToastContainer />
       <PopTypography
         variant="h5"
@@ -2746,7 +2746,7 @@ useEffect(() => {
           </Button>
         </Box>
       </Dialog>
-    </Container>
+    </div>
   );
 };
 
