@@ -273,6 +273,7 @@ const Settings = () => {
             borderRadius: 4,
             transition: "height 0.3s ease", // Transition for smooth height change
             height: openItem === index ? 600 : 'auto', // Adjust height dynamically
+           // fontSize: "0.45rem",
           }}
         >
           {plan.isBestSeller && (
@@ -290,7 +291,7 @@ const Settings = () => {
                 justifyContent: "center",
                 color: "gold",
                 fontWeight: "bold",
-                fontSize: "0.75rem",
+                fontSize: "0.65rem",
               }}
             >
               <StarIcon sx={{ color: "gold", marginRight: 0.5 }} />
@@ -354,14 +355,15 @@ const Settings = () => {
                     alignItems: "center",
                     cursor: "pointer",
                     color: "rgb(252, 74, 26)",
-                    paddingTop: 1,
+                    paddingTop: 0.5,
                     whiteSpace: "nowrap", // Prevent text from wrapping
                     overflow: "hidden", // Hide overflowing text
                     textOverflow: "ellipsis", // Add ellipsis if text overflows
+                    fontSize: ""
                   }}
                   onClick={() => toggleDropdown(`${index}-${i}`)}
                 >
-                  <Typography>{feature.feature}</Typography>
+                  <Typography  sx={{ fontSize: "0.85rem" }}>{feature.feature}</Typography>
                   <Typography>
                     {feature.included === true ? "✔" : feature.included === false ? "✘" : `(${feature.included})`}
                   </Typography>
