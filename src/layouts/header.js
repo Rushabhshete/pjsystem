@@ -66,7 +66,7 @@ const Header = () => {
         }
 
         const response = await axios.get(
-          `http://13.233.43.240:8081/findInstitutesby/email?emailaddress=${email}`
+          `http://localhost:8081/findInstitutesby/email?emailaddress=${email}`
         );
         setEmployeeDetails(response.data);
         setLoading(false);
@@ -85,7 +85,7 @@ const Header = () => {
       try {
         // Replace with your actual API endpoint
         const response = await axios.get(
-          `http://13.233.43.240:8081/getnotificationByInstitutecode?institutecode=${institutecode}`
+          `http://localhost:8081/getnotificationByInstitutecode?institutecode=${institutecode}`
         );
         setNotifications(response.data);
         setNotificationCount(response.data.length);

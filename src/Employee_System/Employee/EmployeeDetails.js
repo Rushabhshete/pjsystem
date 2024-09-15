@@ -17,7 +17,7 @@ const EmployeeDetails = ({ formData, handleChange, category }) => {
 
   const fetchCategories = async () =>{
     try {
-      const response = await axios.get(`http://13.233.43.240:8082/categories/all?institutecode=${institutecode}`);
+      const response = await axios.get(`http://localhost:8082/categories/all?institutecode=${institutecode}`);
       setCategories(response.data);
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -35,7 +35,7 @@ const EmployeeDetails = ({ formData, handleChange, category }) => {
 
   const fetchDepartments = async () => {
     try {
-      const response = await axios.get(`http://13.233.43.240:8082/departments/allDepartment?institutecode=${institutecode}`);
+      const response = await axios.get(`http://localhost:8082/departments/allDepartment?institutecode=${institutecode}`);
       setDepartments(response.data);
     } catch (error) {
       console.error('Error fetching departments:', error);

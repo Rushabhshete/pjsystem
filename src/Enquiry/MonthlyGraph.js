@@ -36,7 +36,7 @@ export default function MonthlyGraph() {
             }
 
             try {
-                const response = await fetch(`http://13.233.43.240:8086/inquiriesCountBymonthofallDays?month=${month}&year=${perYear}&institutecode=${instituteCode}`);
+                const response = await fetch(`http://localhost:8086/inquiriesCountBymonthofallDays?month=${month}&year=${perYear}&institutecode=${instituteCode}`);
                 const result = await response.json();
 
                 // Sort the result by date in ascending order

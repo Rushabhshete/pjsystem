@@ -64,7 +64,7 @@ export default function DashBoard() {
   const fetchData = async (selectedYear) => {
     try {
       const response = await axios.get(
-        "http://13.233.43.240:8086/getYearlyEnquiryCountOfAllMonths",
+        "http://localhost:8086/getYearlyEnquiryCountOfAllMonths",
         {
           params: {
             year: selectedYear,
@@ -117,7 +117,7 @@ export default function DashBoard() {
       }
 
       try {
-        const response = await fetch(`http://13.233.43.240:8086/inquiriesCountBymonthofallDays?month=${month}&year=${perYear}&institutecode=${instituteCode}`);
+        const response = await fetch(`http://localhost:8086/inquiriesCountBymonthofallDays?month=${month}&year=${perYear}&institutecode=${instituteCode}`);
         const result = await response.json();
 
         // Sort the result by date in ascending order
@@ -138,7 +138,7 @@ export default function DashBoard() {
     if (startDate && endDate) {
       try {
         const response = await axios.get(
-          `http://13.233.43.240:8086/get/getALLEnquiryByInstitutecode?institutecode=${institutecode}`
+          `http://localhost:8086/get/getALLEnquiryByInstitutecode?institutecode=${institutecode}`
         );
         const data = response.data;
         const filteredEnquiries = data.filter((enquiry) => {
@@ -190,7 +190,7 @@ export default function DashBoard() {
   const fetchTotalEnquiries = async () => {
     try {
       const response = await axios.get(
-        `http://13.233.43.240:8086/get/getALLEnquiryByInstitutecode?institutecode=${institutecode}`
+        `http://localhost:8086/get/getALLEnquiryByInstitutecode?institutecode=${institutecode}`
       );
       setNumberFromApi(response.data.totalEnquiries);
     } catch (error) {
@@ -215,9 +215,9 @@ export default function DashBoard() {
   }, [selectedApi]);
 
   const apiUrls = {
-    "7Days": `http://13.233.43.240:8086/numberOfEnquiry7days?institutecode=${institutecode}`,
-    "30Days": `http://13.233.43.240:8086/numberOfEnquiry30days?institutecode=${institutecode}`,
-    "365Days": `http://13.233.43.240:8086/numberOfEnquiry365days?institutecode=${institutecode}`,
+    "7Days": `http://localhost:8086/numberOfEnquiry7days?institutecode=${institutecode}`,
+    "30Days": `http://localhost:8086/numberOfEnquiry30days?institutecode=${institutecode}`,
+    "365Days": `http://localhost:8086/numberOfEnquiry365days?institutecode=${institutecode}`,
   };
 
   const months = [
@@ -236,7 +236,7 @@ export default function DashBoard() {
   ];
 
   useEffect(() => {
-    const apiUrl = `http://13.233.43.240:8086/getenquiryCount?institutecode=${institutecode}`;
+    const apiUrl = `http://localhost:8086/getenquiryCount?institutecode=${institutecode}`;
 
     fetch(apiUrl)
       .then((response) => response.json())
@@ -253,7 +253,7 @@ export default function DashBoard() {
 
   const [sevenDaysApplication, setSevenDaysApplication] = useState(0);
   useEffect(() => {
-    const apiUrl = `http://13.233.43.240:8086/numberOfEnquiry7days?institutecode=${institutecode}`;
+    const apiUrl = `http://localhost:8086/numberOfEnquiry7days?institutecode=${institutecode}`;
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
@@ -268,7 +268,7 @@ export default function DashBoard() {
   const [thirtyDaysApplication, setThirtyDaysApplication] = useState(0);
 
   useEffect(() => {
-    const apiUrl = `http://13.233.43.240:8086/numberOfEnquiry30days?institutecode=${institutecode}`;
+    const apiUrl = `http://localhost:8086/numberOfEnquiry30days?institutecode=${institutecode}`;
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
@@ -284,7 +284,7 @@ export default function DashBoard() {
     useState(0);
 
   useEffect(() => {
-    const apiUrl = `http://13.233.43.240:8086/numberOfEnquiry365days?institutecode=${institutecode}`;
+    const apiUrl = `http://localhost:8086/numberOfEnquiry365days?institutecode=${institutecode}`;
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
@@ -351,13 +351,13 @@ export default function DashBoard() {
       try {
         // Fetch today's enquiry count directly
         const todaysResponse = await axios.get(
-          `http://13.233.43.240:8086/getenquiryCount/today?institutecode=${institutecode}`
+          `http://localhost:8086/getenquiryCount/today?institutecode=${institutecode}`
         );
         setTodaysApplications(todaysResponse.data);
         console.log("Data from todays:", todaysResponse.data);
         // Fetch all enquiries to calculate exam and source counts
         const allEnquiriesResponse = await axios.get(
-          `http://13.233.43.240:8086/get/getALLEnquiryByInstitutecode?institutecode=${institutecode}`
+          `http://localhost:8086/get/getALLEnquiryByInstitutecode?institutecode=${institutecode}`
         );
         const allEnquiriesData = allEnquiriesResponse.data;
         setTotalApplications(allEnquiriesData.length); // Assuming you want the total count of all enquiries

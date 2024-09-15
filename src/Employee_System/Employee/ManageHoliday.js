@@ -78,7 +78,7 @@
 //     const fetchUsers = async () => {
 //       try {
 //         const response = await fetch(
-//           `http://13.233.43.240:8082/getAllHolidays?institutecode=${getInstituteCode()}`
+//           `http://localhost:8082/getAllHolidays?institutecode=${getInstituteCode()}`
 //         );
 //         const result = await response.json();
 //         setUsers(result);
@@ -143,7 +143,7 @@
 //     } else {
 //       try {
 //         const response = await fetch(
-//           `http://13.233.43.240:8082/addHoliday?institutecode=${getInstituteCode()}`,
+//           `http://localhost:8082/addHoliday?institutecode=${getInstituteCode()}`,
 //           {
 //             method: "POST",
 //             headers: {
@@ -162,7 +162,7 @@
 //           setSnackbarOpen(true);
 
 //           const updatedResponse = await fetch(
-//             `http://13.233.43.240:8082/getAllHolidays?institutecode=${getInstituteCode()}`
+//             `http://localhost:8082/getAllHolidays?institutecode=${getInstituteCode()}`
 //           );
 //           const updatedUser = await updatedResponse.json();
 //           setUsers(updatedUser);
@@ -183,7 +183,7 @@
 
 //   const handleEditClickOpen = async (id) => {
 //     try {
-//       const response = await fetch(`http://13.233.43.240:8082/getHolidayById/${id}`);
+//       const response = await fetch(`http://localhost:8082/getHolidayById/${id}`);
 //       const result = await response.json();
 //       setEditUser(result);
 //       setEditOpen(true);
@@ -220,7 +220,7 @@
 //     } else {
 //       try {
 //         const response = await fetch(
-//           `http://13.233.43.240:8082/updateHoliday/${id}`,
+//           `http://localhost:8082/updateHoliday/${id}`,
 //           {
 //             method: "PUT",
 //             headers: {
@@ -236,7 +236,7 @@
 //         );
 //         if (response.ok) {
 //           const updatedResponse = await fetch(
-//             `http://13.233.43.240:8082/getAllHolidays?institutecode=${getInstituteCode()}`
+//             `http://localhost:8082/getAllHolidays?institutecode=${getInstituteCode()}`
 //           );
 //           const updatedUser = await updatedResponse.json();
 //           setUsers(updatedUser);
@@ -256,14 +256,14 @@
 //   const handleDelete = async (id) => {
 //     try {
 //       const response = await fetch(
-//         `http://13.233.43.240:8082/deleteHoliday/${id}`,
+//         `http://localhost:8082/deleteHoliday/${id}`,
 //         {
 //           method: "DELETE",
 //         }
 //       );
 //       if (response.ok) {
 //         const updatedResponse = await fetch(
-//           `http://13.233.43.240:8082/getAllHolidays?institutecode=${getInstituteCode()}`
+//           `http://localhost:8082/getAllHolidays?institutecode=${getInstituteCode()}`
 //         );
 //         const updatedUser = await updatedResponse.json();
 //         setUsers(updatedUser);
@@ -620,7 +620,7 @@ const ManageHoliday = () => {
     const fetchUsers = async () => {
       try {
         const response = await fetch(
-          `http://13.233.43.240:8082/getAllHolidays?institutecode=${getInstituteCode()}`
+          `http://localhost:8082/getAllHolidays?institutecode=${getInstituteCode()}`
         );
         const result = await response.json();
         setUsers(result);
@@ -682,7 +682,7 @@ const ManageHoliday = () => {
     } else {
       try {
         const response = await fetch(
-          `http://13.233.43.240:8082/addHoliday?institutecode=${getInstituteCode()}`,
+          `http://localhost:8082/addHoliday?institutecode=${getInstituteCode()}`,
           {
             method: "POST",
             headers: {
@@ -701,7 +701,7 @@ const ManageHoliday = () => {
           setSnackbarOpen(true);
   
           const updatedResponse = await fetch(
-            `http://13.233.43.240:8082/getAllHolidays?institutecode=${getInstituteCode()}`
+            `http://localhost:8082/getAllHolidays?institutecode=${getInstituteCode()}`
           );
           const updatedUser = await updatedResponse.json();
           setUsers(updatedUser);
@@ -722,7 +722,7 @@ const ManageHoliday = () => {
 
   const handleEditClickOpen = async (id) => {
     try {
-      const response = await fetch(`http://13.233.43.240:8082/getHolidayById/${id}`);
+      const response = await fetch(`http://localhost:8082/getHolidayById/${id}`);
       const result = await response.json();
       setEditUser(result);
       setEditOpen(true);
@@ -759,7 +759,7 @@ const ManageHoliday = () => {
     } else {
       try {
         const response = await fetch(
-          `http://13.233.43.240:8082/updateHoliday/${id}`,
+          `http://localhost:8082/updateHoliday/${id}`,
           {
             method: "PUT",
             headers: {
@@ -775,7 +775,7 @@ const ManageHoliday = () => {
         );
         if (response.ok) {
           const updatedResponse = await fetch(
-            `http://13.233.43.240:8082/getAllHolidays?institutecode=${getInstituteCode()}`
+            `http://localhost:8082/getAllHolidays?institutecode=${getInstituteCode()}`
           );
           const updatedUser = await updatedResponse.json();
           setUsers(updatedUser);
@@ -795,14 +795,14 @@ const ManageHoliday = () => {
   const handleDelete = async (id) => {
     try {
       const response = await fetch(
-        `http://13.233.43.240:8082/deleteHoliday/${id}`,
+        `http://localhost:8082/deleteHoliday/${id}`,
         {
           method: "DELETE",
         }
       );
       if (response.ok) {
         const updatedResponse = await fetch(
-          `http://13.233.43.240:8082/getAllHolidays?institutecode=${getInstituteCode()}`
+          `http://localhost:8082/getAllHolidays?institutecode=${getInstituteCode()}`
         );
         const updatedUser = await updatedResponse.json();
         setUsers(updatedUser);

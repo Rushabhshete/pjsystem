@@ -26,7 +26,7 @@ const ComparisonGraph = () => {
       try {
         const institutecode = localStorage.getItem("institutecode"); // Get institute code from local storage
         const resComparison = await axios.get(
-          `http://13.233.43.240:8085/count/comparison?institutecode=${institutecode}&year1=${year1}&year2=${year2}`,
+          `http://localhost:8085/count/comparison?institutecode=${institutecode}&year1=${year1}&year2=${year2}`,
           
         );
 

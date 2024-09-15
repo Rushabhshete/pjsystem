@@ -47,7 +47,7 @@ const HelpDesk = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://13.233.43.240:8081/getAllTickets?institutecode=${institutecode()}`
+        `http://localhost:8081/getAllTickets?institutecode=${institutecode()}`
       );
       if (response.ok) {
         const data = await response.json();
@@ -82,7 +82,7 @@ const HelpDesk = () => {
 
     // Here you would typically send the chat message to the server.
     try {
-      const response = await fetch("http://13.233.43.240:8081/sendChat", {
+      const response = await fetch("http://localhost:8081/sendChat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -107,7 +107,7 @@
 //     if (rowToDelete) {
 //       try {
 //         await axios.delete(
-//           `http://13.233.43.240:8082/salaries/deletesalary/${rowToDelete}`
+//           `http://localhost:8082/salaries/deletesalary/${rowToDelete}`
 //         );
 //         setSalaries(salaries.filter((salary) => salary.id !== rowToDelete));
 //         toast.success("Row deleted successfully");
@@ -327,7 +327,7 @@
 //     setError(null);
 //     try {
 //       const response = await axios.get(
-//         `http://13.233.43.240:8082/salaries/byEmployeeIdAndMonthAndYear?empID=${empID}&month=${month}&year=${year}&institutecode=${institutecode}`
+//         `http://localhost:8082/salaries/byEmployeeIdAndMonthAndYear?empID=${empID}&month=${month}&year=${year}&institutecode=${institutecode}`
 //       );
 //       setSalaries(response.data);
 //     } catch (error) {
@@ -346,7 +346,7 @@
 //     setError(null);
 //     try {
 //       const response = await axios.get(
-//         `http://13.233.43.240:8082/salaries/all?institutecode=${institutecode}`
+//         `http://localhost:8082/salaries/all?institutecode=${institutecode}`
 //       );
 //       const filteredSalaries = response.data.filter(
 //         (salary) => salary.month === month && salary.year === year
@@ -415,7 +415,7 @@
 //     const updatedTransactionId = transactionIdInputs[id];
 //     try {
 //       await axios.put(
-//         `http://13.233.43.240:8082/salaries/${id}/transaction?transactionID=${updatedTransactionId}`
+//         `http://localhost:8082/salaries/${id}/transaction?transactionID=${updatedTransactionId}`
 //       );
 //       fetchData();
 //       toast.success("Transaction ID updated successfully");
@@ -433,9 +433,9 @@
 //     setLoading(true);
 //     setError(null);
 //     try {
-//       let url = `http://13.233.43.240:8082/salaries/all?institutecode=${institutecode}`;
+//       let url = `http://localhost:8082/salaries/all?institutecode=${institutecode}`;
 //       if (paymentDate) {
-//         url = `http://13.233.43.240:8082/salaries/paymentdate?paymentDate=${paymentDate}&institutecode=${institutecode}`;
+//         url = `http://localhost:8082/salaries/paymentdate?paymentDate=${paymentDate}&institutecode=${institutecode}`;
 //       }
 //       const response = await axios.get(url);
 //       setSalaries(response.data);
@@ -450,7 +450,7 @@
 //   const fetchCategoryNames = async () => {
 //     try {
 //       const response = await axios.get(
-//         `http://13.233.43.240:8082/categories/all?institutecode=${institutecode}`
+//         `http://localhost:8082/categories/all?institutecode=${institutecode}`
 //       );
 //       setCategoryNames(response.data.map((category) => category.categoryName));
 //     } catch (error) {
@@ -485,7 +485,7 @@
 //     setError(null);
 //     try {
 //       const response = await axios.get(
-//         `http://13.233.43.240:8082/salaries/byCategoryName/${categoryName}?institutecode=${institutecode}`
+//         `http://localhost:8082/salaries/byCategoryName/${categoryName}?institutecode=${institutecode}`
 //       );
 //       setSalaries(response.data);
 //     } catch (error) {
@@ -501,7 +501,7 @@
 //     setError(null);
 //     try {
 //       const response = await axios.get(
-//         `http://13.233.43.240:8082/salaries/salaries/${department}?institutecode=${institutecode}`
+//         `http://localhost:8082/salaries/salaries/${department}?institutecode=${institutecode}`
 //       );
 //       setSalaries(response.data);
 //     } catch (error) {
@@ -517,7 +517,7 @@
 //     setError(null);
 //     try {
 //       const response = await axios.get(
-//         `http://13.233.43.240:8082/salaries/all?institutecode=${institutecode}`
+//         `http://localhost:8082/salaries/all?institutecode=${institutecode}`
 //       );
 //       const filteredSalaries = response.data.filter(
 //         (salary) => salary.status === status
@@ -534,7 +534,7 @@
 //   const fetchAllSalaries = async () => {
 //     try {
 //       const response = await fetch(
-//         `http://13.233.43.240:8082/salaries/all?institutecode=${institutecode}`
+//         `http://localhost:8082/salaries/all?institutecode=${institutecode}`
 //       );
 //       if (!response.ok) {
 //         throw new Error("Network response was not ok");
@@ -571,7 +571,7 @@
 //     if (value.trim() !== "") {
 //       try {
 //         const response = await axios.get(
-//           `http://13.233.43.240:8082/salaries/salaries/${value.trim()}`,
+//           `http://localhost:8082/salaries/salaries/${value.trim()}`,
 //           selectedSalary
 //         );
 //         const usersData = Array.isArray(response.data)
@@ -590,7 +590,7 @@
 //   const fetchDepartments = async () => {
 //     try {
 //       const response = await axios.get(
-//         `http://13.233.43.240:8082/departments/allDepartment?institutecode=${institutecode}`
+//         `http://localhost:8082/departments/allDepartment?institutecode=${institutecode}`
 //       );
 //       setDepartments(response.data);
 //     } catch (error) {
@@ -612,7 +612,7 @@
 //     try {
 //       const today = new Date().toISOString().slice(0, 10); // Get today's date in YYYY-MM-DD format
 //       const response = await axios.put(
-//         `http://13.233.43.240:8082/salaries/${id}/updatePaymentDate?status=Paid&paymentDate=${today}`
+//         `http://localhost:8082/salaries/${id}/updatePaymentDate?status=Paid&paymentDate=${today}`
 //       );
 
 //       // Check the response status to ensure it was successful
@@ -649,7 +649,7 @@
 //     try {
 //       // Fetch the salaries based on the selected status
 //       const response = await axios.get(
-//         `http://13.233.43.240:8082/salaries/all?institutecode=${institutecode}`
+//         `http://localhost:8082/salaries/all?institutecode=${institutecode}`
 //       );
 //       const filteredSalaries = response.data.filter(
 //         (salary) => salary.status === status
@@ -1501,7 +1501,7 @@ useEffect(() => {
   const fetchDepartments = async () => {
     try {
       const response = await axios.get(
-        `http://13.233.43.240:8082/departments/allDepartment?institutecode=${institutecode}`
+        `http://localhost:8082/departments/allDepartment?institutecode=${institutecode}`
       );
       setDepartments(response.data);
     } catch (error) {
@@ -1513,7 +1513,7 @@ useEffect(() => {
   const fetchEmployeeCategories = async () => {
     try {
       const response = await axios.get(
-        `http://13.233.43.240:8082/categories/all?institutecode=${institutecode}`
+        `http://localhost:8082/categories/all?institutecode=${institutecode}`
       );
       setEmployeeCategories(response.data);
     } catch (error) {
@@ -1552,7 +1552,7 @@ useEffect(() => {
     if (rowToDelete) {
       try {
         await axios.delete(
-          `http://13.233.43.240:8082/salaries/deletesalary/${rowToDelete}`
+          `http://localhost:8082/salaries/deletesalary/${rowToDelete}`
         );
         setSalaries(salaries.filter((salary) => salary.id !== rowToDelete));
         toast.success("Row deleted successfully");
@@ -1750,9 +1750,9 @@ useEffect(() => {
     setError(null);
     try {
         // Build URL based on payment date or all data
-        let url = `http://13.233.43.240:8082/salaries/all?institutecode=${institutecode}`;
+        let url = `http://localhost:8082/salaries/all?institutecode=${institutecode}`;
         if (paymentDate) {
-            url = `http://13.233.43.240:8082/salaries/paymentdate?paymentDate=${paymentDate}&institutecode=${institutecode}`;
+            url = `http://localhost:8082/salaries/paymentdate?paymentDate=${paymentDate}&institutecode=${institutecode}`;
         }
 
         const response = await axios.get(url);
@@ -1799,7 +1799,7 @@ useEffect(() => {
     setError(null);
     try {
       const response = await axios.get(
-        `http://13.233.43.240:8082/salaries/byEmployeeIdAndMonthAndYear?empID=${empID}&month=${month}&year=${year}&institutecode=${institutecode}`
+        `http://localhost:8082/salaries/byEmployeeIdAndMonthAndYear?empID=${empID}&month=${month}&year=${year}&institutecode=${institutecode}`
       );
       setSalaries(response.data);
     } catch (error) {
@@ -1818,7 +1818,7 @@ useEffect(() => {
     setError(null);
     try {
       const response = await axios.get(
-        `http://13.233.43.240:8082/salaries/all?institutecode=${institutecode}`
+        `http://localhost:8082/salaries/all?institutecode=${institutecode}`
       );
       const filteredSalaries = response.data.filter(
         (salary) => salary.month === month && salary.year === year
@@ -1860,7 +1860,7 @@ useEffect(() => {
     const updatedTransactionId = transactionIdInputs[id];
     try {
       await axios.put(
-        `http://13.233.43.240:8082/salaries/${id}/transaction?transactionID=${updatedTransactionId}`
+        `http://localhost:8082/salaries/${id}/transaction?transactionID=${updatedTransactionId}`
       );
       fetchData();
       toast.success("Transaction ID updated successfully");
@@ -1878,9 +1878,9 @@ useEffect(() => {
   //   setLoading(true);
   //   setError(null);
   //   try {
-  //     let url = `http://13.233.43.240:8082/salaries/all?institutecode=${institutecode}`;
+  //     let url = `http://localhost:8082/salaries/all?institutecode=${institutecode}`;
   //     if (paymentDate) {
-  //       url = `http://13.233.43.240:8082/salaries/paymentdate?paymentDate=${paymentDate}&institutecode=${institutecode}`;
+  //       url = `http://localhost:8082/salaries/paymentdate?paymentDate=${paymentDate}&institutecode=${institutecode}`;
   //     }
   //     const response = await axios.get(url);
   //     setSalaries(response.data);
@@ -1944,7 +1944,7 @@ useEffect(() => {
     try {
       const today = new Date().toISOString().slice(0, 10); // Get today's date in YYYY-MM-DD format
       const response = await axios.put(
-        `http://13.233.43.240:8082/salaries/${id}/updatePaymentDate?status=Paid&paymentDate=${today}`
+        `http://localhost:8082/salaries/${id}/updatePaymentDate?status=Paid&paymentDate=${today}`
       );
 
       if (response.status === 200) {
@@ -1977,7 +1977,7 @@ useEffect(() => {
 
   //   try {
   //     const response = await axios.get(
-  //       `http://13.233.43.240:8082/salaries/all?institutecode=${institutecode}`
+  //       `http://localhost:8082/salaries/all?institutecode=${institutecode}`
   //     );
   //     const filteredSalaries = response.data.filter(
   //       (salary) => salary.status === status
