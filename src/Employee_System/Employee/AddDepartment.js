@@ -46,7 +46,7 @@ const Department = () => {
   // Function to fetch departments
   const fetchDepartments = async () => {
     try {
-      const response = await axios.get(`http://localhost:8082/departments/allDepartment?institutecode=${institutecode}`);
+      const response = await axios.get(`http://13.233.43.240:8082/departments/allDepartment?institutecode=${institutecode}`);
       setDepartments(response.data);
     } catch (error) {
       console.error('Error fetching departments:', error);
@@ -63,7 +63,7 @@ const Department = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:8082/departments/addDepartment?institutecode=${institutecode}`, { department });
+      const response = await axios.post(`http://13.233.43.240:8082/departments/addDepartment?institutecode=${institutecode}`, { department });
       console.log('Department added successfully:', response.data);
       toast.success('Department added successfully');
       setDepartment(''); // Reset the form
@@ -93,7 +93,7 @@ const Department = () => {
 
   const handleEditSubmit = async () => {
     try {
-      const response = await axios.put(`http://localhost:8082/departments/updateDepartment/${currentDepartment.id}`, { department: updatedDepartmentName });
+      const response = await axios.put(`http://13.233.43.240:8082/departments/updateDepartment/${currentDepartment.id}`, { department: updatedDepartmentName });
       console.log('Department updated successfully:', response.data);
       toast.success('Department updated successfully');
       fetchDepartments(); // Refresh the departments list
@@ -106,7 +106,7 @@ const Department = () => {
 
   const handleDeleteSubmit = async () => {
     try {
-      await axios.delete(`http://localhost:8082/departments/deleteDepartment/${currentDepartment.id}`);
+      await axios.delete(`http://13.233.43.240:8082/departments/deleteDepartment/${currentDepartment.id}`);
       toast.success('Department deleted successfully');
       fetchDepartments(); // Refresh the departments list
       setOpenDeleteDialog(false);

@@ -28,7 +28,7 @@
 //       try {
 //         const institutecode = localStorage.getItem("institutecode");
 //         const res = await axios.get(
-//           `http://localhost:8085/admissioncountofperdaybymonth?institutecode=${institutecode}&month=${selectedMonth}&year=${selectedYear}`
+//           `http://13.233.43.240:8085/admissioncountofperdaybymonth?institutecode=${institutecode}&month=${selectedMonth}&year=${selectedYear}`
 //         );
 //         const data = res.data;
 
@@ -164,7 +164,7 @@ const YearlyGraph = () => {
       try {
         const institutecode = localStorage.getItem("institutecode");
         const res = await axios.get(
-          `http://localhost:8085/admissioncountofperdaybymonth?institutecode=${institutecode}&month=${selectedMonth}&year=${selectedYear}`
+          `http://13.233.43.240:8085/admissioncountofperdaybymonth?institutecode=${institutecode}&month=${selectedMonth}&year=${selectedYear}`
         );
         const data = res.data;
 
@@ -193,7 +193,7 @@ const YearlyGraph = () => {
       try {
         const institutecode = localStorage.getItem("institutecode") || "Rush@gmail.com";
         const res = await axios.get(
-          `http://localhost:8085/getRevenueBySpecificDates?institutecode=${institutecode}&year=${selectedYear}&month=${selectedMonth}`
+          `http://13.233.43.240:8085/getRevenueBySpecificDates?institutecode=${institutecode}&year=${selectedYear}&month=${selectedMonth}`
         );
         const data = res.data;
 

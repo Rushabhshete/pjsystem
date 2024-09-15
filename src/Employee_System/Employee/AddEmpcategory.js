@@ -61,7 +61,7 @@
 
 //   const fetchDepartments = async () => {
 //     try {
-//       const response = await axios.get(`http://localhost:8082/departments/allDepartment?institutecode=${institutecode}`);
+//       const response = await axios.get(`http://13.233.43.240:8082/departments/allDepartment?institutecode=${institutecode}`);
 //       setDepartments(response.data);
 //     } catch (error) {
 //       console.error('Error fetching departments:', error);
@@ -72,7 +72,7 @@
 //     setLoading(true);
 //     setError(null);
 //     try {
-//       const response = await axios.get(`http://localhost:8082/categories/all?institutecode=${institutecode}`);
+//       const response = await axios.get(`http://13.233.43.240:8082/categories/all?institutecode=${institutecode}`);
 //       setCategories(response.data);
 //     } catch (error) {
 //       console.error('Error fetching categories:', error);
@@ -90,7 +90,7 @@
 //   const handleUpdate = async (e) => {
 //     e.preventDefault();
 //     try {
-//       await axios.put(`http://localhost:8082/categories/updateCategoryById/${selectedCategory.id}`, selectedCategory);
+//       await axios.put(`http://13.233.43.240:8082/categories/updateCategoryById/${selectedCategory.id}`, selectedCategory);
 //       setShowUpdateModal(false);
 //       await fetchData();
 //       setSelectedCategory(null);
@@ -110,7 +110,7 @@
 //     const confirmation = window.confirm("Are you sure you want to delete this category?");
 //     if (confirmation && id) {
 //       try {
-//         await axios.delete(`http://localhost:8082/categories/delete/employeecategory/${id}`);
+//         await axios.delete(`http://13.233.43.240:8082/categories/delete/employeecategory/${id}`);
 //         await fetchData();
 //         toast.success('Category deleted successfully');
 //       } catch (error) {
@@ -136,7 +136,7 @@
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
 //     try {
-//       await axios.post(`http://localhost:8082/categories/addEmployeeCategory?institutecode=${institutecode}`, formData);
+//       await axios.post(`http://13.233.43.240:8082/categories/addEmployeeCategory?institutecode=${institutecode}`, formData);
 //       // toast.success('Category added successfully');
 //       await fetchData(); // Refresh the category list
 //       resetForm(); // Reset form
@@ -641,7 +641,7 @@ function Category() {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get(`http://localhost:8082/categories/all?institutecode=${institutecode}`);
+      const response = await axios.get(`http://13.233.43.240:8082/categories/all?institutecode=${institutecode}`);
       setCategories(response.data);
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -669,7 +669,7 @@ function Category() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8082/categories/updateCategoryById/${selectedCategory.id}`, selectedCategory);
+      await axios.put(`http://13.233.43.240:8082/categories/updateCategoryById/${selectedCategory.id}`, selectedCategory);
       setShowUpdateModal(false);
       await fetchData();
       setSelectedCategory(null);
@@ -685,7 +685,7 @@ function Category() {
     const confirmation = window.confirm("Are you sure you want to delete this category?");
     if (confirmation && id) {
       try {
-        await axios.delete(`http://localhost:8082/categories/delete/employeecategory/${id}`);
+        await axios.delete(`http://13.233.43.240:8082/categories/delete/employeecategory/${id}`);
         await fetchData();
         // toast.success('Category deleted successfully');
       } catch (error) {
@@ -706,7 +706,7 @@ function Category() {
   
   const fetchDepartments = async () => {
     try {
-      const response = await axios.get(`http://localhost:8082/departments/allDepartment?institutecode=${institutecode}`);
+      const response = await axios.get(`http://13.233.43.240:8082/departments/allDepartment?institutecode=${institutecode}`);
       setDepartments(response.data);
     } catch (error) {
       console.error('Error fetching departments:', error);
@@ -740,7 +740,7 @@ function Category() {
   const handleSubmittable = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:8082/categories/addEmployeeCategory?institutecode=${institutecode}`, formData);
+      const response = await axios.post(`http://13.233.43.240:8082/categories/addEmployeeCategory?institutecode=${institutecode}`, formData);
       console.log('Form submitted successfully:', response.data);
       // toast.success('Form submitted successfully');
       fetchData(); // Show success toast
