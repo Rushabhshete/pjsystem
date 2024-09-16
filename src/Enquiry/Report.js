@@ -519,7 +519,7 @@ export default function Report() {
         <TablePagination
         rowsPerPageOptions={[50, 100, 150]}
         component="div"
-        count={filterInquiries.length}
+        count={filteredInquiries.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

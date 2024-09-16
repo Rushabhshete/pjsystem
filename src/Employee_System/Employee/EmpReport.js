@@ -238,16 +238,8 @@ const EmpReport = () => {
       {/* <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh"> */}
         {/* <Container component="main" maxWidth="xl">
           <Paper variant="outlined" style={{ padding: "16px", marginTop: "16px", minHeight: "80vh" }}> */}
-            <Grid container spacing={2} style={{ marginBottom: "16px",marginTop:"10px" }}>
-              <Grid item xs={12} sm={2}>
-                <TextField
-                  label="Search"
-                  value={searchQuery}
-                  onChange={handleSearch}
-                  size="small"
-                  style={{ marginBottom: "16px" }}
-                />
-              </Grid>
+            <Grid container spacing={2} style={{ marginBottom: "16px",marginTop:"10px" }} className="textField-root">
+             
               <Grid item xs={12} sm={2}>
                 <Select
                   value={filter}
@@ -348,7 +340,15 @@ const EmpReport = () => {
                     />
                   </Grid>
                 </>
-              )}
+              )} <Grid item xs={12} sm={2}>
+              <TextField
+                label="Search"
+                value={searchQuery}
+                onChange={handleSearch}
+                size="small"
+                style={{ marginBottom: "16px" }}
+              />
+            </Grid>
               <Grid item xs={12} sm={2}>
                 <Button
                   variant="contained"
@@ -412,7 +412,7 @@ const EmpReport = () => {
                 </TableBody>
               </Table>
             </TableContainer>
-            <TablePagination
+            {/* <TablePagination
               rowsPerPageOptions={[10, 20, 30]}
               component="div"
               count={filteredUsers.length}
@@ -421,7 +421,7 @@ const EmpReport = () => {
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
               labelRowsPerPage="Rows per Page"
-            />
+            /> */}
           {/* </Paper>
         </Container> */}
       {/* </Box> */}
