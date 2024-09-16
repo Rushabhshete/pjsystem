@@ -48,8 +48,6 @@ const CourseByGraph = () => {
   return (
     <div>
       <Typography variant="h6" align="center">Admissions by Course</Typography>
-
-      <Paper elevation={3}>
         <Grid>
           <Chart
             width={"100%"}
@@ -63,7 +61,6 @@ const CourseByGraph = () => {
             }}
           />
         </Grid>
-      </Paper>
     </div>
   );
 };

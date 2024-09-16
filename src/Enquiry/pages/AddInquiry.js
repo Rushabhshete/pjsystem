@@ -745,7 +745,7 @@ export default function AddEnquiry() {
       </TextField>
     </FormControl>
   </Grid>
-  <Grid item xs={12} sm={6} >
+  <Grid item xs={12} sm={4} >
     <FormControl fullWidth variant="outlined" size="small">
       <TextField
         select
@@ -768,7 +768,7 @@ export default function AddEnquiry() {
 
   {Enquiry.status1 === "Call Back" && (
     <>
-      <Grid item xs={12} sm={6} >
+      <Grid item xs={12} sm={4} >
         <TextField
           label="Select Date"
           type="date"
@@ -780,7 +780,7 @@ export default function AddEnquiry() {
           InputLabelProps={{ shrink: true }}
         />
       </Grid>
-      <Grid item xs={12} sm={6} >
+      <Grid item xs={12} sm={4} >
         <TextField
           label="Select Time"
           type="time"
@@ -795,7 +795,7 @@ export default function AddEnquiry() {
       </Grid>
     </>
   )}
-  <Grid item xs={12} sm={6} >
+  <Grid item xs={12} sm={4} >
     <TextField
       label="Enquiry Date"
       type="date"
@@ -807,21 +807,21 @@ export default function AddEnquiry() {
       InputLabelProps={{ shrink: true }}
     />
   </Grid>
- 
-</Grid>
-<Grid item xs={12} sm={4} mt={2} className="textField-root">
+
+  <Grid item xs={12} sm={4} className="textField-root">
     <TextField
       label="Remark"
       variant="outlined"
       name="remark"
       value={Enquiry.remark}
       onChange={onInputChange}
-      multiline
-      rows={3}
       fullWidth
       sx={{ '& .MuiInputBase-root': { minHeight: '50px' }}}
     />
   </Grid>
+ 
+</Grid>
+
 
 {/* Adjusting button grid layout */}
 <Grid mt={1} gap={2} item xs={12} sm={6} display="flex" justifyContent="center">

@@ -189,7 +189,7 @@ export default function MonthlyGraph() {
                     </TextField>
                 </Grid>
             </Grid>
-            <div style={{ width: "80%", marginTop: "16px" }}>
+            <div style={{ width: "69%", marginTop: "16px" }}>
                 <LineChart
                     width={window.innerWidth * 0.3}
                     height={400}
