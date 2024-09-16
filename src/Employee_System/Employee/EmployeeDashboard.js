@@ -175,7 +175,7 @@ const EmployeeDashboard = () => {
     };
 
     return (
-        <Container maxWidth="lg">
+        <div maxWidth="lg">
             <Typography
         variant="h5"
         gutterBottom
@@ -288,7 +288,7 @@ const EmployeeDashboard = () => {
                     </Paper>
                 </Grid>
             </Grid>
-        </Container>
+        </div>
     );
 };
 

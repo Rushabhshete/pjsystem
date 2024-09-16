@@ -138,16 +138,15 @@ const Department = () => {
           backgroundColor: '#24A0ED',
           borderRadius: '150px',
           padding: '10px',
-          marginRight: '380px',
-          marginLeft: '380px',
+        
           marginBottom: '-2px'
         }}
       >
         Add Department 
       </Typography>
-      <Container maxWidth="sm" className='textField-root' sx={{ border: "1px solid grey", width: "fit-content", marginTop: "40px", padding: "20px" }}>
-        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
-          <Grid container spacing={2}>
+      <div className='textField-root' >
+       
+          <Grid container spacing={2} onSubmit={handleSubmit}>
             <Grid item xs={12}>
               <TextField
                 required
@@ -168,11 +167,11 @@ const Department = () => {
               </Box>
             </Grid>
           </Grid>
-        </Box>
-      </Container>
+      
+      </div>
 
       {/* Manage Departments Section */}
-      <Container maxWidth="md" sx={{ marginTop: '30px' }}>
+      <div  sx={{ marginTop: '30px' }}>
         <TableContainer component={Paper}>
           <Table>
             <TableHead sx={{ background: '#f2f2f2'}}>
@@ -289,7 +288,7 @@ const Department = () => {
             </Button>
           </DialogActions>
         </Dialog>
-      </Container>
+      </div>
       <ToastContainer />
     </>
   );

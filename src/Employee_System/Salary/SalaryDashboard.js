@@ -708,7 +708,7 @@ const SalaryDashBoard = () => {
             <Grid item xs={12} md={4}>
               <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#90ee90', borderRadius: '10px' }}>
                 <Typography variant="h6">Total Salary:</Typography>
-                <Typography variant="h5">{grossSalary !== null ? grossSalary : 0}</Typography>
+                <Typography variant="h5">{grossSalary || "0"}</Typography>
               </Paper>
             </Grid>
             <Grid item xs={12} md={4}>
