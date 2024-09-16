@@ -851,8 +851,8 @@ const ManageHoliday = () => {
       </PopTypography>
       <Grid container spacing={2} style={{ marginTop: "20px" }}>
   {/* Left Side - Calendar */}
-  <Grid item xs={12} md={4} style={{ display: "flex", justifyContent: "center" }}>
-    <Paper elevation={3} style={{ padding: "20px", width: "100%", maxWidth: "400px" }}> 
+  <Grid item xs={4}  >
+    <Paper elevation={3} style={{padding:"20px"}}> 
       <Calendar
         events={Users.map(user => ({
           id: user.id,
@@ -861,13 +861,13 @@ const ManageHoliday = () => {
           endDate: new Date(new Date(user.date).setHours(new Date(user.date).getHours() + 1)),
           color: '#24A0ED',
         }))}
-        style={{ width: "100%" }} // Ensures full width on smaller screens
+        // Ensures full width on smaller screens
       />
     </Paper>
   </Grid>
 
   {/* Right Side - User Management */}
-  <Grid item xs={12} md={8}>
+  <Grid item xs={8} >
     <Paper elevation={3} style={{ padding: "20px", width: "100%" }}> 
       <Typography variant="h6" gutterBottom sx={{ marginTop: 3, whiteSpace: "nowrap" }}>
         Total Holiday : {Users.length}
