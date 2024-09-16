@@ -979,10 +979,10 @@ function Category() {
       <ToastContainer />
       </form>
     </div>
-    <div maxWidth="lg" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div >
       {loading && <CircularProgress />}
       {error && <Alert severity="error">{error}</Alert>}
-      <TableContainer component={Paper} sx={{ width: '100%', maxWidth: '1200px', marginTop: "20px" }}>
+      <TableContainer component={Paper} sx={{  marginTop: "20px" }}>
         <Table>
           <TableHead  sx={{ background: '#f2f2f2'}}>
             <TableRow>

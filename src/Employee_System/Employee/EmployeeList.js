@@ -1965,7 +1965,7 @@ const fetchDepartments = async () => {
       rowsPerPageOptions={[10, 20, 50]}
       labelRowsPerPage="Entries per Page"
     />
-    <div style={{maxWidth:'1200px',overflowX:'auto' }}>
+    <div >
       <TableContainer>
       <Table>
         <TableHead sx={{backgroundColor:'#f2f2f2'}}>
