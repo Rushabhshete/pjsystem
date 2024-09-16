@@ -632,7 +632,7 @@ export default function DashBoard() {
                 </Grid>
               </Grid>
               <div style={{ width: "90%", marginTop: "16px" }}>
-                {perData.length > 0 ? (
+              
                   <ResponsiveContainer width="100%" height={400}>
                     <LineChart
                     data={perData}
@@ -654,11 +654,7 @@ export default function DashBoard() {
                     />
                   </LineChart>
                   </ResponsiveContainer>
-                ) : (
-                  <Typography variant="h6">
-                    No data available for selected month and year.
-                  </Typography>
-                )}
+              
               </div>
             </Paper>
           </Grid>
