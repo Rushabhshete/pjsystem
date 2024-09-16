@@ -489,7 +489,33 @@ export default function Report() {
           </Grid>
         </Grid>
 
-        <Box mt={4}>
+        <Grid container spacing={2} justifyContent="flex-start" mt={1}>
+          <Grid item>
+            <Typography variant="h6" gutterBottom>
+              Total Inquiries: {inquiryCount}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleDownloadPDF}
+            >
+              Download PDF
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleDownloadCSV}
+            >
+              Download CSV
+            </Button>
+          </Grid>
+        </Grid>
+
+        <Box mt={-5}>
         <TablePagination
         rowsPerPageOptions={[50, 100, 150]}
         component="div"
@@ -629,31 +655,7 @@ export default function Report() {
           </TableContainer>
         </Box>
 
-        <Grid container spacing={2} justifyContent="flex-end" mt={1}>
-          <Grid item>
-            <Typography variant="h6" gutterBottom>
-              Total Inquiries: {inquiryCount}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleDownloadPDF}
-            >
-              Download PDF
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleDownloadCSV}
-            >
-              Download CSV
-            </Button>
-          </Grid>
-        </Grid>
+        
 
         <Dialog open={smsDialogOpen} onClose={handleCloseSmsDialog}>
           <DialogTitle>Send SMS</DialogTitle>
