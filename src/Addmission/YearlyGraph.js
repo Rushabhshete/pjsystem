@@ -363,7 +363,6 @@ const YearlyGraph = () => {
           <Typography variant="h5" align="center">
             Daily Revenue for {selectedMonth}/{selectedYear}
           </Typography>
-          <Paper elevation={3}>
             {revenueLoading ? (
               <CircularProgress />
             ) : (
@@ -378,7 +377,6 @@ const YearlyGraph = () => {
                 </BarChart>
               </ResponsiveContainer>
             )}
-          </Paper>
         </Grid>
 
         {/* Admissions Graph */}
@@ -386,7 +384,6 @@ const YearlyGraph = () => {
           <Typography variant="h5" align="center">
             Daily Admissions for {selectedMonth}/{selectedYear}
           </Typography>
-          <Paper elevation={3}>
             {loading ? (
               <CircularProgress />
             ) : (
@@ -401,7 +398,6 @@ const YearlyGraph = () => {
                 </BarChart>
               </ResponsiveContainer>
             )}
-          </Paper>
         </Grid>
       </Grid>
     </div>

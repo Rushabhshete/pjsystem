@@ -688,13 +688,13 @@ const SalaryDashBoard = () => {
         <Grid container spacing={3} justifyContent="center">
           <Grid container spacing={2} justifyContent="left" mt={1}>
             <Grid item xs={12} md={4}>
-              <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#FFCCCB', borderRadius: '10px' }}>
+              <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#F4C431', borderRadius: '10px' }}>
                 <Typography variant="h6">Total Salaries:</Typography>
                 <Typography variant="h5">{totalEmployees !== null ? totalEmployees : 0}</Typography>
               </Paper>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#ffa07a', borderRadius: '10px' }}>
+              <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#9ACD32', borderRadius: '10px' }}>
                 <Typography variant="h6">Paid Salary:</Typography>
                 <Typography variant="h5">{paidEmployees !== null ? paidEmployees : 0}</Typography>
               </Paper>
@@ -706,7 +706,7 @@ const SalaryDashBoard = () => {
               </Paper>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#90ee90', borderRadius: '10px' }}>
+              <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#F4C431', borderRadius: '10px' }}>
                 <Typography variant="h6">Total Salary:</Typography>
                 <Typography variant="h5">{grossSalary || "0"}</Typography>
               </Paper>
@@ -718,7 +718,7 @@ const SalaryDashBoard = () => {
               </Paper>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#FFD700', borderRadius: '10px' }}>
+              <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#FF6F61', borderRadius: '10px' }}>
                 <Typography variant="h6">Pending Amount:</Typography>
                 <Typography variant="h5">{pendingAmount !== null ? pendingAmount : 0}</Typography>
               </Paper>

@@ -586,7 +586,7 @@ export default function DashBoard() {
           className="textField-root"
         >
           {/* Monthly Inquiry Count Chart */}
-          <Grid item xs={6} style={{ padding: "16px" }}>
+          <Grid item xs={12} sm={6} style={{ padding: "16px" }}>
             <Paper
               elevation={3} style={{ padding: "16px", height: "100%" }}
             >
@@ -633,9 +633,8 @@ export default function DashBoard() {
               </Grid>
               <div style={{ width: "90%", marginTop: "16px" }}>
                 {perData.length > 0 ? (
-                  <LineChart
-                    width={window.innerWidth * 0.35} // Match the width to the Year Change Chart
-                    height={400}
+                  <ResponsiveContainer width="100%" height={400}>
+                    <LineChart
                     data={perData}
                     connectNulls={true} // This property connects the line if data points are null
                   >
@@ -654,6 +653,7 @@ export default function DashBoard() {
                       dot={false}
                     />
                   </LineChart>
+                  </ResponsiveContainer>
                 ) : (
                   <Typography variant="h6">
                     No data available for selected month and year.
@@ -694,9 +694,8 @@ export default function DashBoard() {
                 </Grid>
               </Grid>
               <div style={{ width: "90%", marginTop: "16px" }}>
+                <ResponsiveContainer width="100%" height={400}>
                 <BarChart
-                  width={window.innerWidth * 0.35} // Set width same for both charts
-                  height={400}
                   data={data}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
@@ -706,6 +705,7 @@ export default function DashBoard() {
                   <Legend />
                   <Bar dataKey="count" fill="#76A7FA" />
                 </BarChart>
+                </ResponsiveContainer>
               </div>
             </Paper>
           </Grid>
