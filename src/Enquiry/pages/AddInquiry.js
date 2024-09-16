@@ -331,7 +331,7 @@ export default function AddEnquiry() {
 
           {Enquiry.status1 === "Call Back" && (
             <>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={4}>
                 <TextField
                   label="Select Date"
                   type="date"
@@ -344,7 +344,7 @@ export default function AddEnquiry() {
                   size="small"
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={4}>
                 <TextField
                   label="Select Time"
                   type="time"
