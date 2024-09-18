@@ -114,7 +114,6 @@ export default function YearlyGraph() {
         </ResponsiveContainer>
       </Paper> */}
 
-<Paper elevation={3} >
   <ResponsiveContainer width="100%" height={410}>
     <BarChart
       data={data}
@@ -132,7 +131,6 @@ export default function YearlyGraph() {
       <Bar dataKey="count" fill="#90EE90" barSize={30} /> {/* Adjust bar size if needed */}
     </BarChart>
   </ResponsiveContainer>
-</Paper>
 
     </div>
   )
