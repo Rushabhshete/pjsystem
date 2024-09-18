@@ -450,7 +450,7 @@ const Department = () => {
           variant="contained"
           color="primary"
           sx={{ marginTop: 1 }}>
-          Add Department
+          Add 
         </Button>
       </Grid>
       </Grid>
