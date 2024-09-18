@@ -668,7 +668,7 @@ const SalaryDashBoard = () => {
   const COLORS = ['#8884d8', '#82ca9d'];
 
   return (
-    <ThemeProvider theme={theme}>
+    <div sx={{ padding: 2, width: "100%" }}>
       <Typography
         variant="h5"
         gutterBottom
@@ -684,9 +684,8 @@ const SalaryDashBoard = () => {
       >
         Salary Dashboard
       </Typography>
-      <Container>
-        <Grid container spacing={3} justifyContent="center">
-          <Grid container spacing={2} justifyContent="left" mt={1}>
+        <Grid container  justifyContent="center" >
+          <Grid container spacing={2}  mt={1}>
             <Grid item xs={12} md={4}>
               <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#F4C431', borderRadius: '10px' }}>
                 <Typography variant="h6">Total Salaries:</Typography>
@@ -723,7 +722,7 @@ const SalaryDashBoard = () => {
                 <Typography variant="h5">{pendingAmount !== null ? pendingAmount : 0}</Typography>
               </Paper>
             </Grid>
-            <Grid item xs={12} sm={6} md={6}>
+            <Grid item xs={12} sm={6} md={6} className='textField-root'>
               <FormControl fullWidth size="small" style={{ marginBottom: '16px' }}>
                 <TextField
                   select
@@ -740,7 +739,7 @@ const SalaryDashBoard = () => {
                 </TextField>
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={6} md={6}>
+            <Grid item xs={12} sm={6} md={6} className='textField-root'>
               <FormControl fullWidth size="small">
                 <TextField
                   select
@@ -759,180 +758,173 @@ const SalaryDashBoard = () => {
             </Grid>
           </Grid>
         </Grid>
+
+        
         {/* comparison charts */}
-        <Grid container spacing={2} mt={2} display="flex">
-          <Grid item xs={12} sm={6}>
-            <Box
-              sx={{
-                textAlign: 'left',
-                padding: '16px',
-                borderRadius: '10px',
-                boxShadow: 3,
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-              }}
+        <Grid container spacing={2} mt={2} display="flex" className='textField-root'>
+        <Grid item xs={12} sm={6}>
+  <Paper elevation={3}  style={{ padding: '16px', height:'550px' }}>
+    <Box display="flex" flexDirection="column" alignItems="center">
+      <Typography variant="h5" gutterBottom align="center">
+        Monthly Comparison Chart
+      </Typography>
+      <Grid item xs={12} sm={8} display="flex" justifyContent="center" padding={'2%'}>
+        <Box display="flex" flexDirection="row" alignItems="center" gap={2}>
+          <FormControl size="small" variant="outlined" style={{ minWidth: 150 }}>
+            <InputLabel id="select-chart-month-label">Select Month</InputLabel>
+            <Select
+              labelId="select-chart-month-label"
+              value={selectChartMonth}
+              onChange={handleChartMonthChange}
+              label="Select Month"
             >
-              <Typography variant="h5" gutterBottom>
-                Monthly Comparison Chart
-              </Typography>
-              <Grid item xs={12} sm={8} display="flex" justifyContent="flex-start" padding={'2%'}>
-                <Box display="flex" flexDirection="row" alignItems="center" gap={2}>
-                  <FormControl size="small" variant="outlined" style={{ minWidth: 150 }}>
-                    <InputLabel id="select-chart-month-label">Select Month</InputLabel>
-                    <Select
-                      labelId="select-chart-month-label"
-                      value={selectChartMonth}
-                      onChange={handleChartMonthChange}
-                      label="Select Month"
-                    >
-                      {months.map((month) => (
-                        <MenuItem key={month.value} value={month.value}>
-                          {month.name}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                  <FormControl size="small" variant="outlined" style={{ minWidth: 150 }}>
-                    <InputLabel id="select-chart-year-label">Select Year</InputLabel>
-                    <Select
-                      labelId="select-chart-year-label"
-                      value={selectChartYear}
-                      onChange={handleChartYearChange}
-                      label="Select Year"
-                    >
-                      {years.map((year) => (
-                        <MenuItem key={year} value={year}>
-                          {year}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-              <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <ResponsiveContainer width="90%" height={400}>
-                  <BarChart data={formattedChartData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="currentMonthTotal" fill="#76A7FA" name="Current Month" />
-                    <Bar dataKey="previousMonthTotal" fill="#FF5733" name="Previous Month" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </Box>
-            </Box>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Box
-              sx={{
-                textAlign: 'left',
-                padding: '16px',
-                borderRadius: '10px',
-                boxShadow: 3,
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-              }}
+              {months.map((month) => (
+                <MenuItem key={month.value} value={month.value}>
+                  {month.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl size="small" variant="outlined" style={{ minWidth: 150 }}>
+            <InputLabel id="select-chart-year-label">Select Year</InputLabel>
+            <Select
+              labelId="select-chart-year-label"
+              value={selectChartYear}
+              onChange={handleChartYearChange}
+              label="Select Year"
             >
-              <Typography variant="h5" gutterBottom>
-                Yearly Comparison Chart
-              </Typography>
-              <Grid item xs={12} sm={8} display="flex" justifyContent="flex-start" padding={'2%'}>
-                <Box display="flex" flexDirection="row" alignItems="center" gap={2}>
-                  <FormControl size="small" variant="outlined" style={{ minWidth: 150 }}>
-                    <InputLabel>Select Start Year</InputLabel>
-                    <Select
-                      value={selectedStartYear}
-                      onChange={handleStartYearChange}
-                      label="Select Start Year"
-                    >
-                      {years.map((year) => (
-                        <MenuItem key={year} value={year}>
-                          {year}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                  <FormControl size="small" variant="outlined" style={{ minWidth: 150 }}>
-                    <InputLabel>Select End Year</InputLabel>
-                    <Select
-                      value={selectedEndYear}
-                      onChange={handleEndYearChange}
-                      label="Select End Year"
-                    >
-                      {years.map((year) => (
-                        <MenuItem key={year} value={year}>
-                          {year}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Grid>
-              <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <ResponsiveContainer width="90%" height={400}>
-                  <PieChart>
-                    <Pie
-                      data={formattedComparisonData}
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={150}
-                      fill="#8884d8"
-                      dataKey="value"
-                      label
-                    >
-                      {formattedComparisonData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip />
-                    <Legend />
-                  </PieChart>
-                </ResponsiveContainer>
-              </Box>
-            </Box>
-          </Grid>
-        </Grid>
-        <Box mt={3}>
-          <Paper elevation={3} style={{ padding: '16px', borderRadius: '10px' }}>
-            <Grid container alignItems="center" spacing={2}>
-              <Grid item>
-                <Typography variant="h6">Monthly Final Net Salary:</Typography>
-              </Grid>
-              <Grid item>
-                <FormControl fullWidth size="small" style={{ marginBottom: '16px' }}>
-                  <InputLabel>Select Year</InputLabel>
-                  <Select
-                    value={selectedChart2Year}
-                    onChange={(e) => setSelectedChart2Year(e.target.value)}
-                    label='Select Year'
-                  >
-                    {years.map((year) => (
-                      <MenuItem key={year} value={year}>
-                        {year}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-            </Grid>
-            <ResponsiveContainer mt={2} width="100%" height={400}>
-              <BarChart data={chart2Data}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="finalNetSalary" fill="#8884d8" />
-              </BarChart>
-            </ResponsiveContainer>
-          </Paper>
+              {years.map((year) => (
+                <MenuItem key={year} value={year}>
+                  {year}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Box>
-      </Container>
-    </ThemeProvider>
+      </Grid>
+    </Box>
+    <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 2 }}>
+      <ResponsiveContainer width="90%" height={400}>
+        <BarChart data={formattedChartData}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="currentMonthTotal" fill="#76A7FA" name="Current Month" />
+          <Bar dataKey="previousMonthTotal" fill="#FF5733" name="Previous Month" />
+        </BarChart>
+      </ResponsiveContainer>
+    </Box>
+  </Paper>
+</Grid>
+
+<Grid item xs={12} sm={6} className='textField-root'>
+  <Paper elevation={3} style={{ padding: '16px', height:'550px' }}>
+    <Typography variant="h5" gutterBottom align='center'>
+      Yearly Comparison Chart
+    </Typography>
+
+    {/* Wrap FormControls in a Box for centering */}
+    <Box display="flex" justifyContent="center" padding={'2%'}>
+      <Box display={'flex'} flexDirection="row" alignItems="center" gap={2}>
+        <FormControl size="small" variant="outlined" style={{ minWidth: 150 }}>
+          <InputLabel>Select Start Year</InputLabel>
+          <Select
+            value={selectedStartYear}
+            onChange={handleStartYearChange}
+            label="Select Start Year"
+          >
+            {years.map((year) => (
+              <MenuItem key={year} value={year}>
+                {year}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl size="small" variant="outlined" style={{ minWidth: 150 }}>
+          <InputLabel>Select End Year</InputLabel>
+          <Select
+            value={selectedEndYear}
+            onChange={handleEndYearChange}
+            label="Select End Year"
+          >
+            {years.map((year) => (
+              <MenuItem key={year} value={year}>
+                {year}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
+    </Box>
+
+    <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <ResponsiveContainer width="90%" height={400}>
+        <PieChart>
+          <Pie
+            data={formattedComparisonData}
+            cx="50%"
+            cy="50%"
+            outerRadius={150}
+            fill="#8884d8"
+            dataKey="value"
+            label
+          >
+            {formattedComparisonData.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip />
+          <Legend />
+        </PieChart>
+      </ResponsiveContainer>
+    </Box>
+  </Paper>
+</Grid>
+
+        </Grid>
+
+
+        <Box mt={3}>
+  <Paper elevation={3} style={{ padding: '16px' }}>
+    <Grid container alignItems="center" spacing={2} justifyContent="center">
+      <Grid item xs={6} align="center">
+        <Typography variant="h6">Monthly Final Net Salary:</Typography>
+      </Grid>
+      <Grid item xs={6} className='textField-root'>
+        <FormControl size="small" style={{ marginBottom: '16px', width: '100%' }}>
+          <InputLabel>Select Year</InputLabel>
+          <Select
+            value={selectedChart2Year}
+            onChange={(e) => setSelectedChart2Year(e.target.value)}
+            label='Select Year'
+          >
+            {years.map((year) => (
+              <MenuItem key={year} value={year}>
+                {year}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Grid>
+    </Grid>
+    <ResponsiveContainer mt={2} width="100%" height={400}>
+      <BarChart data={chart2Data}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Bar dataKey="finalNetSalary" fill="#8884d8" />
+      </BarChart>
+    </ResponsiveContainer>
+  </Paper>
+</Box>
+
+
+
+      </div>
   );
 };
 
