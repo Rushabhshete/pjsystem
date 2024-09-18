@@ -181,7 +181,9 @@ function AppContent() {
     localStorage.getItem("isAuthenticated") === "true"
   );
   const location = useLocation();
-  const showHelpDeskButton = location.pathname !== "/systems/" ;
+  const showHelpDeskButton = location.pathname !== "/" && location.pathname !== "/create-account";
+
+
 
   useEffect(() => {
     const checkAuth = () => {
@@ -199,7 +201,7 @@ function AppContent() {
   return (
     <>
       <Routes>
-        <Route path="/systems/" element={<Login onLogin={handleLogin} />} />
+        <Route path="/" element={<Login onLogin={handleLogin} />} />
         <Route path="/create-account" element={<CreateAccount />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         {/* <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}> */}

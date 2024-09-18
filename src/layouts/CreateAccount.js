@@ -1308,7 +1308,7 @@ const CreateAccount = () => {
                           color="primary"
                           type="submit"
                           fullWidth
-                        //  disabled={!paymentSuccessful} // Disable if payment is not successful
+                          disabled={!paymentSuccessful} // Disable if payment is not successful
                         >
                           Create Account
                         </Button>
