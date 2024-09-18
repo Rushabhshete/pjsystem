@@ -707,7 +707,9 @@ export default function DashBoard() {
           </Grid>
         </Grid>
 
-        <Grid
+
+       <Paper elevation={3} style={{ padding: "15px" }}>
+       <Grid
           mt={4}
           align={"left"}
           display={"inline-flex"}
@@ -757,7 +759,6 @@ export default function DashBoard() {
         >
           {/* Exam Chart and Source Chart in one line */}
           <Grid item xs={12} md={6}>
-            <Paper elevation={3} style={{ padding: "16px" }}>
               <Typography variant="h6">Exam Chart</Typography>
               <Chart
                 chartType="ColumnChart"
@@ -766,10 +767,8 @@ export default function DashBoard() {
                 width="100%"
                 height="400px"
               />
-            </Paper>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Paper elevation={3} style={{ padding: "16px" }}>
               <Typography variant="h6">Source Chart</Typography>
               <Chart
                 chartType="ColumnChart"
@@ -778,9 +777,12 @@ export default function DashBoard() {
                 width="100%"
                 height="400px"
               />
-            </Paper>
           </Grid>
         </Grid>
+       </Paper>
+       
+
+
       </Box>
     </div>
   );
