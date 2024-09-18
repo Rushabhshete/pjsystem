@@ -557,6 +557,7 @@ import {
   Typography,
   Snackbar,
   Grid,
+  Paper,
   MenuItem,
 } from "@mui/material";
 import { styled } from "@mui/system";
@@ -848,103 +849,87 @@ const ManageHoliday = () => {
       >
         Add Holiday
       </PopTypography>
-
       <Grid container spacing={2} style={{ marginTop: "20px" }}>
-        {/* Left Side - Calendar */}
-        <Grid item xs={12} md={4} style={{ display: "flex", justifyContent: "center" }}>
-          <Calendar
-            events={Users.map(user => ({
-              id: user.id,
-              title: user.holidayName,
-              startDate: new Date(user.date),
-              endDate: new Date(new Date(user.date).setHours(new Date(user.date).getHours() + 1)),
-              color: '#24A0ED',
-            }))}
-            style={{ maxWidth: "400px" }} // Decreased calendar width
+  {/* Left Side - Calendar */}
+  <Grid item xs={4}  >
+    <Paper elevation={3} style={{padding:"20px"}}> 
+      <Calendar
+        events={Users.map(user => ({
+          id: user.id,
+          title: user.holidayName,
+          startDate: new Date(user.date),
+          endDate: new Date(new Date(user.date).setHours(new Date(user.date).getHours() + 1)),
+          color: '#24A0ED',
+        }))}
+        // Ensures full width on smaller screens
+      />
+    </Paper>
+  </Grid>
+
+  {/* Right Side - User Management */}
+  <Grid item xs={8} >
+    <Paper elevation={3} style={{ padding: "20px", width: "100%" }}> 
+      <Typography variant="h6" gutterBottom sx={{ marginTop: 3, whiteSpace: "nowrap" }}>
+        Total Holiday : {Users.length}
+      </Typography>
+
+      <Grid container spacing={2} className="textField-root">
+        <Grid item xs={12} sm={4}>
+          <TextField
+            label="Search Holiday"
+            variant="outlined"
+            value={searchTerm}
+            onChange={handleSearchChange}
+            fullWidth
           />
         </Grid>
 
-        {/* Right Side - User Management */}
-        <Grid item xs={12} md={8}>
-          <Typography variant="h6" gutterBottom sx={{ marginTop: 3, whiteSpace: "nowrap" }}>
-            Total Holiday : {Users.length}
-          </Typography>
-
-          <Grid container spacing={2} className="textField-root">
-            <Grid item xs={12} sm={4}>
-              <TextField
-                label="Search Holiday"
-                variant="outlined"
-                value={searchTerm}
-                onChange={handleSearchChange}
-                fullWidth
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={2}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleClickOpen}
-                fullWidth
-              >
-                Add
-              </Button>
-            </Grid>
-          </Grid>
-
-          <TableContainer>
-            <Table sx={{ minWidth: 300, marginTop: 3 }}> {/* Increased table width */}
-              <TableHead>
-                <TableRow>
-                  <TableCell sx={{ padding: "4px", fontWeight: "bold", backgroundColor: "#f5f5f5" }}>
-                    ID
-                  </TableCell>
-                  <TableCell sx={{ padding: "4px", fontWeight: "bold", backgroundColor: "#f5f5f5" }}>
-                    Holiday Name
-                  </TableCell>
-                  <TableCell sx={{ padding: "4px", fontWeight: "bold", backgroundColor: "#f5f5f5" }}>
-                    Holiday Date
-                  </TableCell>
-                  <TableCell sx={{ padding: "4px", fontWeight: "bold", backgroundColor: "#f5f5f5" }}>
-                    Holiday Day
-                  </TableCell>
-                  <TableCell sx={{ padding: "4px", fontWeight: "bold", backgroundColor: "#f5f5f5" }}>
-                    Actions
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {filteredUsers.map((user) => (
-                  <TableRow key={user.id}>
-                    <TableCell sx={{ padding: "4px" }}>{user.id}</TableCell>
-                    <TableCell sx={{ padding: "4px" }}>{user.holidayName}</TableCell>
-                    <TableCell sx={{ padding: "4px" }}>{user.date}</TableCell>
-                    <TableCell sx={{ padding: "4px" }}>{user.day}</TableCell>
-                    <TableCell sx={{ padding: "4px" }}>
-                      <Button
-                        onClick={() => handleEditClickOpen(user.id)}
-                        color="success" // Green color for update icon
-                      >
-                        <Edit />
-                      </Button>
-                      <Button
-                        onClick={() => {
-                          setUserIdToDelete(user.id);
-                          setConfirmOpen(true);
-                        }}
-                        color="error" // Red color for delete icon
-                      >
-                        <Delete />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+        <Grid item xs={12} sm={2}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleClickOpen}
+            fullWidth
+          >
+            Add
+          </Button>
         </Grid>
       </Grid>
+
+      <TableContainer>
+        <Table sx={{ minWidth: 300, marginTop: 3, width: "100%" }}> {/* Ensures full width */}
+          <TableHead>
+            <TableRow>
+              <TableCell sx={{ padding: "4px", fontWeight: "bold", backgroundColor: "#f5f5f5" }}>ID</TableCell>
+              <TableCell sx={{ padding: "4px", fontWeight: "bold", backgroundColor: "#f5f5f5" }}>Holiday Name</TableCell>
+              <TableCell sx={{ padding: "4px", fontWeight: "bold", backgroundColor: "#f5f5f5" }}>Holiday Date</TableCell>
+              <TableCell sx={{ padding: "4px", fontWeight: "bold", backgroundColor: "#f5f5f5" }}>Holiday Day</TableCell>
+              <TableCell sx={{ padding: "4px", fontWeight: "bold", backgroundColor: "#f5f5f5" }}>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {filteredUsers.map((user) => (
+              <TableRow key={user.id}>
+                <TableCell sx={{ padding: "4px" }}>{user.id}</TableCell>
+                <TableCell sx={{ padding: "4px" }}>{user.holidayName}</TableCell>
+                <TableCell sx={{ padding: "4px" }}>{user.date}</TableCell>
+                <TableCell sx={{ padding: "4px" }}>{user.day}</TableCell>
+                <TableCell sx={{ padding: "4px" }}>
+                  <Button onClick={() => handleEditClickOpen(user.id)} color="success">
+                    <Edit />
+                  </Button>
+                  <Button onClick={() => { setUserIdToDelete(user.id); setConfirmOpen(true); }} color="error">
+                    <Delete />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Paper>
+  </Grid>
+</Grid>
 
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add New Holiday</DialogTitle>

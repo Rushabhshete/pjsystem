@@ -20,12 +20,86 @@ import StarIcon from "@mui/icons-material/Star";
 import { policies } from "./policies";
 import PolicyPopup from "./PolicyPopup ";
 
+const plans = [
+  {
+    title: "Free/Demo",
+    price: 0,
+    oldPrice: 99,
+    save: 75,
+    features: [
+      { feature: "CRM Software", items: ["Enquiry", "Admission", "Income Expense", "Fees Generation"], included: true },
+      { feature: "Employee Management System", items: ["Attendance", "Leave", "Salary", "Employee Dashboard"], included: true },
+      { feature: "Class Room Management", items: ["Create Class", "Create Teacher", "Create Student", "Create Test"], included: true },
+      { feature: "Entry Limit", included: "10000" },
+      { feature: "24x7 Support", included: true },
+      { feature: "Cloud Storage", included: true },
+      { feature: "Advance Security Layer", included: true },
+      { feature: "Sub Admin", included: false },
+    ],
+    background: "linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%)",
+  },
+  {
+    title: "Basic",
+    price: 199,
+    oldPrice: 299,
+    features: [
+      { feature: "CRM Software", items: ["Enquiry", "Admission", "Income Expense", "Fees Generation"], included: true },
+      { feature: "Employee Management System", items: ["Attendance", "Leave", "Salary", "Employee Dashboard"], included: true },
+      { feature: "Class Room Management", items: ["Create Class", "Create Teacher", "Create Student", "Create Test"], included: false },
+      { feature: "Entry Limit", included: "50000" },
+      { feature: "24x7 Support", included: true },
+      { feature: "Cloud Storage", included: true },
+      { feature: "Advance Security Layer", included: true },
+      { feature: "Sub Admin", included: true },
+    ],
+    background: "linear-gradient(135deg, #FFFDE7 0%, #FFF176 100%)",
+    isBestSeller: true,
+  },
+  {
+    title: "Premium",
+    price: 299,
+    oldPrice: 399,
+    features: [
+      { feature: "CRM Software", items: ["Enquiry", "Admission", "Income Expense", "Fees Generation"], included: true },
+      { feature: "Employee Management System", items: ["Attendance", "Leave", "Salary", "Employee Dashboard"], included: true },
+      { feature: "Class Room Management", items: ["Create Class", "Create Teacher", "Create Student", "Create Test"], included: true },
+      { feature: "Entry Limit", included: "100000" },
+      { feature: "24x7 Support", included: true },
+      { feature: "Cloud Storage", included: true },
+      { feature: "Advance Security Layer", included: true },
+      { feature: "Sub Admin", included: true },
+    ],
+    background: "linear-gradient(135deg, #E8F5E9 0%, #A5D6A7 100%)",
+  },
+  {
+    title: "Business",
+    price: 499,
+    oldPrice: 599,
+    features: [
+      { feature: "CRM Software", items: ["Enquiry", "Admission", "Income Expense", "Fees Generation"], included: true },
+      { feature: "Employee Management System", items: ["Attendance", "Leave", "Salary", "Employee Dashboard"], included: true },
+      { feature: "Class Room Management", items: ["Create Class", "Create Teacher", "Create Student", "Create Test"], included: true },
+      { feature: "Entry Limit", included: "200000" },
+      { feature: "24x7 Support", included: true },
+      { feature: "Cloud Storage", included: true },
+      { feature: "Advance Security Layer", included: true },
+      { feature: "Multiple Branch", included: true },
+    ],
+    background: "linear-gradient(135deg, #9EE2E8 0%, #76D7C4 100%)",
+  },
+];
+
 const Settings = () => {
   const [employeeDetails, setEmployeeDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const email = localStorage.getItem("email");
   const [open, setOpen] = useState(false);
   const [selectedPolicy, setSelectedPolicy] = useState(null);
+  const [openItem, setOpenItem] = useState(null);
+
+  const toggleDropdown = (item) => {
+    setOpenItem(openItem === item ? null : item);
+  };
   useEffect(() => {
     const fetchEmployeeDetails = async () => {
       try {
@@ -186,480 +260,140 @@ const Settings = () => {
       </Grid>
 
       <Box sx={{ flexGrow: 1, padding: 3 }}>
-        <Grid container spacing={3} justifyContent="center">
-          {/* Basic Plan */}
-          <Grid item xs={12} sm={6} md={3}>
-            <Card
+  <Grid container spacing={3} justifyContent="center">
+    {plans.map((plan, index) => (
+      <Grid item xs={12} sm={6} md={3} key={index}>
+        <Card
+          sx={{
+            position: "relative",
+            padding: 1,
+            textAlign: "center",
+            background: plan.background,
+            boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+            borderRadius: 4,
+            transition: "height 0.3s ease", // Transition for smooth height change
+            height: openItem === index ? 600 : 'auto', // Adjust height dynamically
+           // fontSize: "0.45rem",
+          }}
+        >
+          {plan.isBestSeller && (
+            <Box
               sx={{
-                position: "relative",
-                padding: 3,
-                textAlign: "center",
-                height: 500, // Set a fixed height
-                background: "linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%)",
-                boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-                borderRadius: 4,
-                transition: "transform 0.3s ease",
-                // transform: "scale(1.1)", // Initially make this card bigger
-                "&:hover": {
-                  transform: "scale(1.2)", // Increase size on hover
-                },
+                position: "absolute",
+                top: 0,
+                right: 0,
+                width: 70,
+                height: 70,
+                backgroundColor: "#424242",
+                clipPath: "polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "gold",
+                fontWeight: "bold",
+                fontSize: "0.65rem",
               }}
             >
-              {/* Bookmark with Best Seller Star */}
-
-              <CardContent sx={{ height: "400Px" }}>
-                <Typography
-                  variant="h5"
-                  sx={{
-                    marginBottom: 2,
-                    background:
-                      "linear-gradient(90deg, #6A82FB 0%, #1E3A8A 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Free/Demo
-                </Typography>
-                <Box display="flex" alignItems="center">
-                  <Typography
-                    variant="h3"
-                    sx={{
-                      fontWeight: "bold",
-                      color: "#0D47A1",
-                      marginRight: 1, // Add some space between the price and the text
-                    }}
-                  >
-                    ₹0
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: "#1E88E5",
-                    }}
-                  >
-                    /Per Month
-                  </Typography>
-                </Box>
-
-                <Typography
-                  variant="body1"
-                  color="red"
-                  sx={{
-                    textDecoration: "line-through",
-                    fontSize: "1rem",
-                    marginBottom: 2,
-                  }}
-                >
-                  ₹99
-                </Typography>
-                <div id="bcard_card" style={{ textAlign: "left" }}>
-                  <p id="bcp" class="fs-8">
-                    {" "}
-                    <i class="fa-regular fa-circle-check pe-2"></i>CRM Software
-                    ✔
-                  </p>
-                  <p id="bcp" class="fs-8">
-                    {" "}
-                    <i class="fa-regular fa-circle-check pe-2"></i>Employee
-                    Manage Software✔
-                  </p>
-                  <p id="bcp" class="fs-8">
-                    {" "}
-                    <i class="fa-regular fa-circle-check pe-2"></i>Sub Admin ✘
-                  </p>
-                  <p id="bcp" class="fs-8">
-                    {" "}
-                    <i class="fa-regular fa-circle-check pe-2"></i>Multiple
-                    Banches ✘
-                  </p>
-                  <p id="bcp" class="fs-8">
-                    {" "}
-                    <i class="fa-regular fa-circle-check pe-2"></i>5000 Entries✔
-                  </p>
-                  <p id="bcp" class="fs-8">
-                    {" "}
-                    <i class="fa-regular fa-circle-check pe-2"></i>Life Time
-                    support 24/7 ✘
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          {/* Gold Plan */}
-          <Grid item xs={12} sm={6} md={3}>
-            <Card
+              <StarIcon sx={{ color: "gold", marginRight: 0.5 }} />
+              Best Seller
+            </Box>
+          )}
+          <CardContent>
+            <Typography
+              variant="h5"
               sx={{
-                position: "relative",
-                padding: 3,
-                textAlign: "center",
-                height: 500, // Set a fixed height
-                background: "linear-gradient(135deg, #FFFDE7 0%, #FFF176 100%)",
-                boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-                borderRadius: 4,
-                transition: "transform 0.3s ease",
-                "&:hover": {
-                  transform: "scale(1.2)", // Increase size on hover
-                },
+                marginBottom: 2,
+                background: "linear-gradient(90deg, #0e05fa 0%, #1109eb 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                fontWeight: "bold",
+                whiteSpace: "nowrap", // Prevent text from wrapping
+                overflow: "hidden", // Hide overflowing text
+                textOverflow: "ellipsis", // Add ellipsis if text overflows
               }}
             >
-              {" "}
-              <Box
+              {plan.title}
+            </Typography>
+
+            <Box sx={{ marginTop: 3 }}>
+              <Button
+                variant="contained"
                 sx={{
-                  position: "absolute",
-                  top: 0,
-                  right: 0,
-                  width: 70,
-                  height: 70,
-                  backgroundColor: "#424242",
-                  clipPath: "polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "gold",
+                  background: "linear-gradient(90deg, #FBC02D 0%, #FFA726 100%)",
+                  color: "#fff",
                   fontWeight: "bold",
-                  fontSize: "0.75rem",
+                  "&:hover": {
+                    background: "linear-gradient(90deg, #F57C00 0%, #FF9800 100%)",
+                  },
                 }}
               >
-                <StarIcon sx={{ color: "gold", marginRight: 0.5 }} />
-                Best Seller
-              </Box>
-              <CardContent>
-                <Typography
-                  variant="h5"
-                  sx={{
-                    marginBottom: 2,
-                    background:
-                      "linear-gradient(90deg, #FFEB3B 0%, #FFC107 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Basic
-                </Typography>
-                <Box display="flex" alignItems="center">
-                  <Typography
-                    variant="h3"
-                    sx={{
-                      fontWeight: "bold",
-                      color: "#0D47A1",
-                      marginRight: 1, // Add some space between the price and the text
-                    }}
-                  >
-                    ₹99
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: "#1E88E5",
-                    }}
-                  >
-                    /Per Month
-                  </Typography>
-                </Box>
-                <Typography
-                  variant="body1"
-                  color="red"
-                  sx={{
-                    textDecoration: "line-through",
-                    fontSize: "1rem",
-                    marginBottom: 2,
-                  }}
-                >
-                  ₹199
-                </Typography>
+                UPGRADE
+              </Button>
+            </Box>
 
-                <div id="bcard_card" style={{ textAlign: "left" }}>
-                  <p id="bcp" class="fs-8">
-                    {" "}
-                    <i class="fa-regular fa-circle-check pe-2"></i>CRM Software
-                    ✔
-                  </p>
-                  <p id="bcp" class="fs-8">
-                    {" "}
-                    <i class="fa-regular fa-circle-check pe-2"></i>Employee
-                    Manage Software✔
-                  </p>
-                  <p id="bcp" class="fs-8">
-                    {" "}
-                    <i class="fa-regular fa-circle-check pe-2"></i>Sub Admin ✘
-                  </p>
-                  <p id="bcp" class="fs-8">
-                    {" "}
-                    <i class="fa-regular fa-circle-check pe-2"></i>Multiple
-                    Banches ✘
-                  </p>
-                  <p id="bcp" class="fs-8">
-                    {" "}
-                    <i class="fa-regular fa-circle-check pe-2"></i>50,000
-                    Entries✔
-                  </p>
-                  <p id="bcp" class="fs-8">
-                    {" "}
-                    <i class="fa-regular fa-circle-check pe-2"></i>Life Time
-                    support 24/7 ✘
-                  </p>
-                </div>
-                <Box sx={{ marginTop: 3 }}>
-                  <Button
-                    variant="contained"
-                    sx={{
-                      background:
-                        "linear-gradient(90deg, #FBC02D 0%, #FFA726 100%)",
-                      color: "#fff",
-                      fontWeight: "bold",
-                      "&:hover": {
-                        background:
-                          "linear-gradient(90deg, #F57C00 0%, #FF9800 100%)",
-                      },
-                    }}
-                  >
-                    Upgrade
-                  </Button>
-                </Box>
-              </CardContent>
-            </Card>
-          </Grid>
+            <Box display="flex" alignItems="center" justifyContent="center" mt={2}>
+              <Typography variant="h3" sx={{ fontWeight: "bold", color: "#0D47A1", marginRight: 1 }}>
+                ₹{plan.price}
+              </Typography>
+              <Typography variant="body2" sx={{ color: "#1E88E5" }}>
+                /Month
+              </Typography>
 
-          {/* Platinum Plan */}
-          <Grid item xs={12} sm={6} md={3}>
-            <Card
-              sx={{
-                position: "relative",
-                padding: 3,
-                textAlign: "center",
-                height: 500, // Set a fixed height
-                background: "linear-gradient(135deg, #E8F5E9 0%, #A5D6A7 100%)",
-                boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-                borderRadius: 4,
-                transition: "transform 0.3s ease",
-                "&:hover": {
-                  transform: "scale(1.2)", // Increase size on hover
-                },
-              }}
-            >
-              <CardContent>
-                <Typography
-                  variant="h5"
-                  sx={{
-                    marginBottom: 2,
-                    background:
-                      "linear-gradient(90deg, #66BB6A 0%, #388E3C 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Premium
+             
+            </Box>
+            {plan.oldPrice && (
+                <Typography variant="body1" color="red" sx={{ textDecoration: "line-through", fontSize: "1rem"}}>
+                  ₹{plan.oldPrice}
                 </Typography>
-                <Box display="flex" alignItems="center">
-                  <Typography
-                    variant="h3"
-                    sx={{
-                      fontWeight: "bold",
-                      color: "#0D47A1",
-                      marginRight: 1, // Add some space between the price and the text
-                    }}
-                  >
-                    ₹149
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: "#1E88E5",
-                    }}
-                  >
-                    /Per Month
+              )}
+            {plan.features.map((feature, i) => (
+              <div key={i}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    cursor: "pointer",
+                    color: "rgb(252, 74, 26)",
+                    paddingTop: 0.5,
+                    whiteSpace: "nowrap", // Prevent text from wrapping
+                    overflow: "hidden", // Hide overflowing text
+                    textOverflow: "ellipsis", // Add ellipsis if text overflows
+                    fontSize: ""
+                  }}
+                  onClick={() => toggleDropdown(`${index}-${i}`)}
+                >
+                  <Typography  sx={{ fontSize: "0.85rem" }}>{feature.feature}</Typography>
+                  <Typography>
+                    {feature.included === true ? "✔" : feature.included === false ? "✘" : `(${feature.included})`}
                   </Typography>
                 </Box>
-                <Typography
-                  variant="body1"
-                  color="red"
-                  sx={{
-                    textDecoration: "line-through",
-                    fontSize: "1rem",
-                    marginBottom: 2,
-                  }}
-                >
-                  ₹299
-                </Typography>
 
-                <div id="bcard_card" style={{ textAlign: "left" }}>
-                  <p id="bcp" class="fs-8">
-                    {" "}
-                    <i class="fa-regular fa-circle-check pe-2"></i>CRM Software
-                    ✔
-                  </p>
-                  <p id="bcp" class="fs-8">
-                    {" "}
-                    <i class="fa-regular fa-circle-check pe-2"></i>Employee
-                    Manage Software✔
-                  </p>
-                  <p id="bcp" class="fs-8">
-                    {" "}
-                    <i class="fa-regular fa-circle-check pe-2"></i>Sub Admin ✔
-                  </p>
-                  <p id="bcp" class="fs-8">
-                    {" "}
-                    <i class="fa-regular fa-circle-check pe-2"></i>Multiple
-                    Banches ✘
-                  </p>
-                  <p id="bcp" class="fs-8">
-                    {" "}
-                    <i class="fa-regular fa-circle-check pe-2"></i>10,0000
-                    Entries✔
-                  </p>
-                  <p id="bcp" class="fs-8">
-                    {" "}
-                    <i class="fa-regular fa-circle-check pe-2"></i>Life Time
-                    support 24/7 ✔
-                  </p>
-                </div>
-                <Box sx={{ marginTop: 3 }}>
-                  <Button
-                    variant="contained"
-                    sx={{
-                      background:
-                        "linear-gradient(90deg, #43A047 0%, #66BB6A 100%)",
-                      color: "#fff",
-                      fontWeight: "bold",
-                      "&:hover": {
-                        background:
-                          "linear-gradient(90deg, #388E3C 0%, #2E7D32 100%)",
-                      },
-                    }}
-                  >
-                    Upgrade
-                  </Button>
-                </Box>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          {/* Premium Plan */}
-          <Grid item xs={12} sm={6} md={3}>
-            <Card
-              sx={{
-                position: "relative",
-                padding: 3,
-                textAlign: "center",
-                height: 500, // Set a fixed height
-                background: "linear-gradient(135deg, #FFEBEE 0%, #EF9A9A 100%)",
-                boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-                borderRadius: 4,
-                transition: "transform 0.3s ease",
-                "&:hover": {
-                  transform: "scale(1.2)", // Increase size on hover
-                },
-              }}
-            >
-              <CardContent>
-                <Typography
-                  variant="h5"
-                  sx={{
-                    marginBottom: 2,
-                    background:
-                      "linear-gradient(90deg, #F44336 0%, #E57373 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Business
-                </Typography>
-                <Box display="flex" alignItems="center">
-                  <Typography
-                    variant="h3"
-                    sx={{
-                      fontWeight: "bold",
-                      color: "#0D47A1",
-                      marginRight: 1, // Add some space between the price and the text
-                    }}
-                  >
-                    ₹299
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: "#1E88E5",
-                    }}
-                  >
-                    /Per Month
-                  </Typography>
-                </Box>
-                <Typography
-                  variant="body1"
-                  color="red"
-                  sx={{
-                    textDecoration: "line-through",
-                    fontSize: "1rem",
-                    marginBottom: 2,
-                  }}
-                >
-                  ₹399
-                </Typography>
-                <div id="bcard_card" style={{ textAlign: "left" }}>
-                  <p id="bcp" class="fs-8">
-                    {" "}
-                    <i class="fa-regular fa-circle-check pe-2"></i>CRM Software
-                    ✔
-                  </p>
-                  <p id="bcp" class="fs-8">
-                    {" "}
-                    <i class="fa-regular fa-circle-check pe-2"></i>Employee
-                    Manage Software✔
-                  </p>
-                  <p id="bcp" class="fs-8">
-                    {" "}
-                    <i class="fa-regular fa-circle-check pe-2"></i>Sub Admin ✔
-                  </p>
-                  <p id="bcp" class="fs-8">
-                    {" "}
-                    <i class="fa-regular fa-circle-check pe-2"></i>Multiple
-                    Banches ✔
-                  </p>
-                  <p id="bcp" class="fs-8">
-                    {" "}
-                    <i class="fa-regular fa-circle-check pe-2"></i>Unlimited
-                    Entries✔
-                  </p>
-                  <p id="bcp" class="fs-8">
-                    {" "}
-                    <i class="fa-regular fa-circle-check pe-2"></i>Life Time
-                    support 24/7 ✔
-                  </p>
-                </div>
-                <Box sx={{ marginTop: 3 }}>
-                  <Button
-                    variant="contained"
-                    sx={{
-                      background:
-                        "linear-gradient(90deg, #F44336 0%, #E57373 100%)",
-                      color: "#fff",
-                      fontWeight: "bold",
-                      "&:hover": {
-                        background:
-                          "linear-gradient(90deg, #D32F2F 0%, #C62828 100%)",
-                      },
-                    }}
-                  >
-                    Upgrade
-                  </Button>
-                </Box>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
-      </Box>
+                {openItem === `${index}-${i}` && feature.items && (
+                  <>
+                    {feature.items.map((item, idx) => (
+                      <Box key={idx} sx={{ display: "flex", justifyContent: "space-between", paddingLeft: 1 }}>
+                        <Typography>{item}</Typography>
+                        <Typography>✔</Typography>
+                      </Box>
+                    ))}
+                  </>
+                )}
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      </Grid>
+    ))}
+  </Grid>
+</Box>
 
       {/* Divider */}
       <Grid item xs={12}>
         <Box
           sx={{
             borderBottom: "2px solid #0D47A1",
-            margin: "24px 0", // Adjust the margin as needed
+            margin: "34px 0", // Adjust the margin as needed
             width: "100%", // Make sure it spans the full width
           }}
         />

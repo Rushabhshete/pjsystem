@@ -173,12 +173,17 @@ import ManageAttendance from "./Employee_System/Attendance/ManageAttendance";
 import ViewAttendance from "./Employee_System/Attendance/ViewAttendance";
 import ManageLeave from "./Employee_System/Leave/ManageLeave";
 import TodaysAttendance from "./Employee_System/Attendance/TodaysAttendance";
+import AddMemo from "./Employee_System/Memo/AddMemo";
+import ManageEmpMemo from "./Employee_System/Memo/ManageEmpMemo";
+import AddNotice from "./Employee_System/Memo/AddNotice";
 function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem("isAuthenticated") === "true"
   );
   const location = useLocation();
-  const showHelpDeskButton = location.pathname !== "/";
+  const showHelpDeskButton = location.pathname !== "/" && location.pathname !== "/create-account";
+
+
 
   useEffect(() => {
     const checkAuth = () => {
@@ -196,7 +201,7 @@ function AppContent() {
   return (
     <>
       <Routes>
-        <Route path="/systems/" element={<Login onLogin={handleLogin} />} />
+        <Route path="/" element={<Login onLogin={handleLogin} />} />
         <Route path="/create-account" element={<CreateAccount />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         {/* <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}> */}
@@ -246,27 +251,32 @@ function AppContent() {
           <Route path="empDashboard" element={<EmployeeDashboard />} />
           <Route path="empAdd" element={<AddEmployee />} />
           <Route path="empList" element={<EmployeeList />} />
-          <Route path="EmpReport" element={<EmpReport />}/>
+          <Route path="EmpReport" element={<EmpReport />} />
           <Route path="AddEmpcategory" element={<AddEmpcategory />} />
           <Route path="AddDepartment" element={<AddDepartment/>}/>
           <Route path="ManageHoliday" element={<ManageHoliday/>}/>
 
-          <Route path="SalaryDashboard" element={<SalaryDashboard/>}/>
-          <Route path="AddSalary/:empID" element={<AddSalary/>}/>
-          <Route path="SalaryTable" element={<SalaryTable/>}/>
-          <Route path="EmpDetails" element={<EmpDetails/>}/>
+          <Route path="SalaryDashboard" element={<SalaryDashboard />} />
+          <Route path="AddSalary/:empID" element={<AddSalary />} />
+          <Route path="SalaryTable" element={<SalaryTable />} />
+          <Route path="EmpDetails" element={<EmpDetails />} />
 
-          <Route path="ManageAttendance" element={<ManageAttendance/>}/>
-          <Route path="TodaysAttendance" element={<TodaysAttendance/>}/>
-          <Route path="ViewAttendance/:empID" element={<ViewAttendance/>}/>
+          <Route path="ManageAttendance" element={<ManageAttendance />} />
+          <Route path="TodaysAttendance" element={<TodaysAttendance />} />
+          <Route path="ViewAttendance/:empID" element={<ViewAttendance />} />
 
-          <Route path="ManageLeave" element={<ManageLeave/>}/>
+          <Route path="ManageLeave" element={<ManageLeave />} />
 
-
-<Route path="manageLeave" element={<ManageLeave />} />
+          <Route path="manageLeave" element={<ManageLeave />} />
           <Route path="helpDesk" element={<HelpDesk />} />
           <Route path="subadmin" element={<AddSubAdmin />} />
           <Route path="Settings" element={<Settings />} />
+
+
+          <Route path="addmemo" element={<AddMemo/>}/>
+          <Route path="manageEmpmemo" element={<ManageEmpMemo/>}/>
+          <Route path="addnotice" element={<AddNotice/>}/>
+
 
           {/* <Route path="account" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Account /></ProtectedRoute>} /> */}
         </Route>

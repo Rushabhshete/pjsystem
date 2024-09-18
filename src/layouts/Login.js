@@ -7,13 +7,24 @@ import {
   Button,
   Typography,
   Link,
+  Box
 } from "@mui/material";
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import logo from "../img/logo.jpg";
-
+import HomeIcon from "@mui/icons-material/Home";
+import PersonIcon from "@mui/icons-material/Person";
+import SettingsIcon from "@mui/icons-material/Settings";
+import SchoolIcon from "@mui/icons-material/School";
+import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
+import BarChartIcon from "@mui/icons-material/BarChart";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import WorkIcon from "@mui/icons-material/Work";
+import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import HowToRegIcon from "@mui/icons-material/HowToReg";
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -31,7 +42,14 @@ const BackgroundContainer = styled("div")`
   background-color: #0e1a2b;
   padding: 0;
 `;
-
+const GridContainer = styled(Grid)`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  marginleft:80px
+`;
 const ContentWrapper = styled("div")`
   display: flex;
   justify-content: center;
@@ -39,6 +57,7 @@ const ContentWrapper = styled("div")`
   width: 100%;
   max-width: 1300px;
   padding: 10px;
+  
 `;
 
 const GifContainer = styled("div")`
@@ -75,8 +94,8 @@ const LoginPaper = styled(Paper)`
 const Logo = styled("img")`
   display: block;
   margin: 0 auto 20px;
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
   animation: ${fadeIn} 1s ease-in-out;
 `;
 
@@ -184,18 +203,184 @@ function Login({ onLogin }) {
   };
 
   return (
+    <>
+   
+   <Grid item >
+            <Typography
+              variant="h3"
+               component="div"
+              align="center"
+              gutterBottom
+              sx={{
+                fontSize: '40px',
+                fontWeight: 'bold',
+                color: 'white',
+                marginTop:"10px",
+                 marginBottom: '-60px',
+                background: 'white',
+                borderRadius: '10px',
+                boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',
+                textTransform: 'uppercase',
+                letterSpacing: '2px',
+              }}
+            >
+              CRM Software 
+            </Typography>
+          </Grid>
+  
+
+
     <BackgroundContainer>
-      <ContentWrapper>
-        <GifContainer>
-          <GifImage
-            src="https://cdn.dribbble.com/users/2401141/screenshots/5487982/developers-gif-showcase.gif"
-            alt="Animation"
-          />
-        </GifContainer>
+      
+     <ContentWrapper>
+  <GridContainer container spacing={1} alignItems="center" marginTop={7}>
+    {[
+      { icon: <SettingsIcon />, link: "/create-account", label: "Create Account", external: true },
+      { icon: <HomeIcon />, link: "http://pjsofttech.in", label: "Admin", external: true },
+      { icon: <PersonIcon />, link: "http://pjsofttech.in/employee", label: "Employee", external: true },
+      { icon: <SchoolIcon />, link: "http://pjsofttech.in/student", label: "Student", external: true },
+      { icon: <SupervisorAccountIcon />, label: "Principal", external: true },
+      { icon: <SupervisorAccountIcon />, label: "HOD", external: true },
+      { icon: <PersonOutlineIcon />, label: "Teacher", external: true },
+      { icon: <HowToRegIcon />, label: "Parent", external: true },
+      { icon: <QuestionAnswerIcon />, link: "http://pjsofttech.in/enquiry", label: "Librarian", external: true },
+      { icon: <BarChartIcon />, link: "http://pjsofttech.in/sales", label: "Sales", external: true },
+      { icon: <MenuBookIcon />, label: "Accountant", external: true },
+      { icon: <WorkIcon />, label: "Driver", external: true },
+    ].map(({ icon, link, label, external }, index) => (
+      <Grid item lg={3} md={4} sm={6} xs={12} key={index} marginBottom={8}>
+        {external ? (
+          <a href={link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+            <Paper
+              elevation={6}
+              sx={{
+                p: 6,
+                width: "100px",
+                height: "100px",
+                borderRadius: "50%",
+                textAlign: "center",
+                marginLeft: '50px',
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "#f7f7f7",
+                transition: "transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease",
+                "&:hover": {
+                  transform: "scale(1.05)",
+                  boxShadow: "0 8px 25px rgba(0, 0, 0, 0.3)",
+                  backgroundImage: "linear-gradient(88.8deg, rgb(239, 171, 245) 13.4%, rgb(196, 181, 249) 76.3%)",
+                },
+              }}
+            >
+              <div
+                style={{
+                 // marginBottom: "5px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "100px",
+                  height: "100vh",
+                }}
+              >
+                {React.cloneElement(icon, {
+                  sx: {
+                    fontSize: "30px",
+                    color: "#1976d2",
+                    fontFamily: "Roboto, sans-serif",
+                    transition: "color 0.3s ease",
+                    "&:hover": {
+                      color: "purple",
+                    },
+                  },
+                })}
+              </div>
+              <Typography
+                variant="h6"
+                sx={{
+                  mt: 1,
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  color: "black",
+                  textAlign: "center",
+                  fontFamily: "Roboto, sans-serif",
+                }}
+              >
+                {label}
+              </Typography>
+            </Paper>
+          </a>
+        ) : (
+          <Link to={link} style={{ textDecoration: 'none' }}>
+            <Paper
+              elevation={6}
+              sx={{
+                p: 6,
+                width: "120px",
+                height: "120px",
+                borderRadius: "50%",
+                textAlign: "center",
+                marginLeft: '50px',
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "#f7f7f7",
+                transition: "transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease",
+                "&:hover": {
+                  transform: "scale(1.05)",
+                  boxShadow: "0 8px 25px rgba(0, 0, 0, 0.3)",
+                  backgroundImage: "linear-gradient(88.8deg, rgb(239, 171, 245) 13.4%, rgb(196, 181, 249) 76.3%)",
+                },
+              }}
+            >
+              <div
+                style={{
+                  marginBottom: "10px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "100px",
+                  height: "100vh",
+                }}
+              >
+                {React.cloneElement(icon, {
+                  sx: {
+                    fontSize: "30px",
+                    color: "#1976d2",
+                    fontFamily: "Roboto, sans-serif",
+                    transition: "color 0.3s ease",
+                    "&:hover": {
+                      color: "purple",
+                    },
+                  },
+                })}
+              </div>
+              <Typography
+                variant="h6"
+                sx={{
+                  mt: 1,
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  color: "black",
+                  textAlign: "center",
+                  fontFamily: "Roboto, sans-serif",
+                }}
+              >
+                {label}
+              </Typography>
+            </Paper>
+          </Link>
+        )}
+      </Grid>
+    ))}
+  </GridContainer>
+
+
         <LoginContainer>
           <LoginPaper elevation={6}>
             <Logo src={logo} alt="Logo" />
-            <LoginHeader variant="h4">Welcome to PjsoftTech</LoginHeader>
+            <LoginHeader variant="h5" whiteSpace={"nowrap"}>Welcome To PJSOFTTECH</LoginHeader>
             <CustomForm onSubmit={handleSubmit}>
               <FormGroup>
                 <FormControl
@@ -241,9 +426,10 @@ function Login({ onLogin }) {
                 sx={{
                   display: "block",
                   textAlign: "center",
-                  color: "#007BFF",
+                  color: "white",
                   "&:hover": { color: "#0056B3" },
-                  marginBottom: "10px",
+                  marginBottom: "5px",
+                  variant:"h4"
                 }}
               >
                 Create Account
@@ -261,6 +447,7 @@ function Login({ onLogin }) {
         </LoginContainer>
       </ContentWrapper>
     </BackgroundContainer>
+    </>
   );
 }
 

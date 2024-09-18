@@ -142,7 +142,6 @@ const SourceByGraph = () => {
     <div>
       {" "}
       <Typography variant="h6" align="center">Admissions by Source</Typography>{" "}
-      <Paper elevation={3}>
         <Grid>
           <Chart
             width={"100%"}
@@ -156,7 +155,6 @@ const SourceByGraph = () => {
             }}
           />
         </Grid>
-      </Paper>
     </div>
   );
 };

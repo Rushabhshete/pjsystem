@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  Paper, Button, Select, MenuItem, FormControl, Grid, useTheme, useMediaQuery
+  Paper, Button, Select, MenuItem, FormControl, Grid, useTheme, useMediaQuery, Typography
 } from '@mui/material';
 import { IconButton } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -80,7 +80,22 @@ const ManageLeave = () => {
   };
 
   return (
-    <div style={{ padding: '20px', marginTop: '20px' }}>
+    <div style={{ padding: '20px', }}>
+      <Typography
+        variant="h5"
+        gutterBottom
+        sx={{
+          fontWeight: "bold",
+          color: "#fff",
+          textAlign: "center",
+          backgroundColor: "#24A0ED",
+          borderRadius: "150px",
+          padding: "10px",
+          marginBottom: "20px",
+        }}
+      >
+        Manage Leave
+      </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <FormControl fullWidth>

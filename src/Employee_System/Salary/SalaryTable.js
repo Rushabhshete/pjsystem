@@ -559,7 +559,7 @@
 //       }
 //     }
 
-//     animation: pop 2s ease;
+//    
 //   `;
 
 //   if (loading) return <CircularProgress />;
@@ -1995,7 +1995,7 @@ useEffect(() => {
   if (error) return <Alert severity="error">{error}</Alert>;
 
   return (
-    <Container maxWidth='false'>
+    <Container>
       <ToastContainer />
       <PopTypography
         variant="h5"

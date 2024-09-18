@@ -23,6 +23,8 @@ import {
   Tooltip,
   Legend,
   Bar,
+  LineChart,
+  Line,
 } from "recharts";
 import MonthlyGraph from "./MonthlyGraph";
 
@@ -109,22 +111,26 @@ export default function DashBoard() {
 
   useEffect(() => {
     async function fetchPerData() {
-      const instituteCode = localStorage.getItem('institutecode'); // Get instituteCode from local storage
+      const instituteCode = localStorage.getItem("institutecode"); // Get instituteCode from local storage
 
       if (!instituteCode) {
-        console.error('Institute Code not found in local storage.');
+        console.error("Institute Code not found in local storage.");
         return;
       }
 
       try {
-        const response = await fetch(`http://localhost:8086/inquiriesCountBymonthofallDays?month=${month}&year=${perYear}&institutecode=${instituteCode}`);
+        const response = await fetch(
+          `http://localhost:8086/inquiriesCountBymonthofallDays?month=${month}&year=${perYear}&institutecode=${instituteCode}`
+        );
         const result = await response.json();
 
         // Sort the result by date in ascending order
-        const sortedData = result.sort((a, b) => new Date(a.date) - new Date(b.date));
+        const sortedData = result.sort(
+          (a, b) => new Date(a.date) - new Date(b.date)
+        );
         setPerData(sortedData);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     }
 
@@ -397,21 +403,21 @@ export default function DashBoard() {
     ["Exam", "Enquiry Count", { role: "style" }],
     ...(examData.length
       ? examData.map(([ex, count], index) => {
-        const colors = [
-          "#76A7FA",
-          "#FF5733",
-          "#33FF57",
-          "#3357FF",
-          "#FF33A6",
-          "#FFD700",
-          "#FF6F61",
-          "#8E44AD",
-          "#3498DB",
-          "#2ECC71",
-          "#E74C3C",
-        ];
-        return [ex, count, colors[index % colors.length]];
-      })
+          const colors = [
+            "#76A7FA",
+            "#FF5733",
+            "#33FF57",
+            "#3357FF",
+            "#FF33A6",
+            "#FFD700",
+            "#FF6F61",
+            "#8E44AD",
+            "#3498DB",
+            "#2ECC71",
+            "#E74C3C",
+          ];
+          return [ex, count, colors[index % colors.length]];
+        })
       : [["No Data", 0, "color:#DDD"]]),
   ];
 
@@ -434,21 +440,21 @@ export default function DashBoard() {
     ["Source By", "Enquiry Count", { role: "style" }],
     ...(sourceData.length
       ? sourceData.map(([sr, count], index) => {
-        const colors = [
-          "#76A7FA",
-          "#FF5733",
-          "#33FF57",
-          "#3357FF",
-          "#FF33A6",
-          "#FFD700",
-          "#FF6F61",
-          "#8E44AD",
-          "#3498DB",
-          "#2ECC71",
-          "#E74C3C",
-        ];
-        return [sr, count, colors[index % colors.length]];
-      })
+          const colors = [
+            "#76A7FA",
+            "#FF5733",
+            "#33FF57",
+            "#3357FF",
+            "#FF33A6",
+            "#FFD700",
+            "#FF6F61",
+            "#8E44AD",
+            "#3498DB",
+            "#2ECC71",
+            "#E74C3C",
+          ];
+          return [sr, count, colors[index % colors.length]];
+        })
       : [["No Data", 0, "color:#DDD"]]),
   ];
 
@@ -569,7 +575,141 @@ export default function DashBoard() {
           </Grid>
         </Grid>
 
+        
+
         <Grid
+          container
+          spacing={2}
+          alignItems="center"
+          justifyContent="center"
+          mt={3}
+          className="textField-root"
+        >
+          {/* Monthly Inquiry Count Chart */}
+          <Grid item xs={12} sm={6} style={{ padding: "16px" }}>
+            <Paper
+              elevation={3} style={{ padding: "16px", height: "100%" }}
+            >
+              <Grid
+                container
+                alignItems="center"
+                justifyContent="center"
+                gap={1}
+              >
+                <Grid item>
+                  <Typography variant="h6">
+                    Monthly Inquiry Count Chart
+                  </Typography>
+                </Grid>
+                <Grid item style={{ display: "flex" }}>
+                  <TextField
+                    select
+                    value={perYear}
+                    onChange={handlePerYearChange}
+                    label="Year"
+                    style={{ marginRight: "8px" }} // slight margin for spacing
+                  >
+                    {peryears.map((yr) => (
+                      <MenuItem key={yr} value={yr}>
+                        {yr}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                  <TextField
+                    select
+                    value={month}
+                    onChange={handleMonthChange}
+                    label="Month"
+                  >
+                    {Array.from({ length: 12 }, (v, k) => (
+                      <MenuItem key={k + 1} value={k + 1}>
+                        {new Date(0, k).toLocaleString("default", {
+                          month: "long",
+                        })}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+              </Grid>
+              <div style={{ width: "90%", marginTop: "16px" }}>
+              
+                  <ResponsiveContainer width="100%" height={400}>
+                    <LineChart
+                    data={perData}
+                    connectNulls={true} // This property connects the line if data points are null
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis
+                      dataKey="date"
+                      tickFormatter={(date) => new Date(date).getDate()}
+                    />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line
+                      type="monotone"
+                      dataKey="count"
+                      stroke="#76A7FA"
+                      dot={false}
+                    />
+                  </LineChart>
+                  </ResponsiveContainer>
+              
+              </div>
+            </Paper>
+          </Grid>
+
+          {/* Year Change Graph */}
+          <Grid item xs={6} style={{ padding: "16px" }}>
+            {" "}
+            {/* Added padding */}
+            <Paper elevation={3} style={{ padding: "16px", height: "100%" }}>
+              <Grid
+                container
+                alignItems="center"
+                justifyContent="center"
+                gap={1}
+              >
+                <Grid item>
+                  <Typography variant="h6">Year Change Chart</Typography>
+                </Grid>
+                <Grid item style={{ display: "flex" }}>
+                  <TextField
+                    select
+                    value={year}
+                    onChange={handleYearChange}
+                    label="Year"
+                    style={{ marginRight: "8px" }} // slight margin for spacing
+                  >
+                    {years.map((yr) => (
+                      <MenuItem key={yr} value={yr}>
+                        {yr}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+              </Grid>
+              <div style={{ width: "90%", marginTop: "16px" }}>
+                <ResponsiveContainer width="100%" height={400}>
+                <BarChart
+                  data={data}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="month" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="count" fill="#76A7FA" />
+                </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </Paper>
+          </Grid>
+        </Grid>
+
+
+       <Paper elevation={3} style={{ padding: "15px" }}>
+       <Grid
           mt={4}
           align={"left"}
           display={"inline-flex"}
@@ -610,106 +750,6 @@ export default function DashBoard() {
           </Typography>
         </Grid>
 
-
-        <Paper elevation={3} style={{ padding: '16px', marginTop: '24px' }}>
-            <Grid container spacing={2} alignItems="center" justifyContent="center" mt={3}>
-              {/* Year Change Graph */}
-              <Grid item xs={6}> {/* Adjust xs to control width */}
-                <Grid container alignItems="center" justifyContent="center" gap={1}>
-                  <Grid item>
-                    <Typography variant="h6">Year Change Chart</Typography>
-                  </Grid>
-                  <Grid item style={{ display: "flex" }}>
-                    <TextField
-                      select
-                      value={year}
-                      onChange={handleYearChange}
-                      label="Year"
-                    >
-                      {years.map((yr) => (
-                        <MenuItem key={yr} value={yr}>
-                          {yr}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </Grid>
-                </Grid>
-                <div style={{ width: "100%", marginTop: "16px" }}>
-                  <BarChart
-                    width={window.innerWidth * 0.4} // Set width same for both charts
-                    height={400}
-                    data={data}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="month" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="count" fill="#76A7FA" />
-                  </BarChart>
-                </div>
-              </Grid>
-
-              {/* Monthly Inquiry Count Chart */}
-              <Grid item xs={6}>
-                <Grid container alignItems="center" justifyContent="center" gap={1}>
-                  <Grid item>
-                    <Typography variant="h6">Monthly Inquiry Count Chart</Typography>
-                  </Grid>
-                  <Grid item style={{ display: "flex" }}>
-                    <TextField
-                      select
-                      value={perYear}
-                      onChange={handlePerYearChange}
-                      label="Year"
-                    >
-                      {peryears.map((yr) => (
-                        <MenuItem key={yr} value={yr}>
-                          {yr}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                    <TextField
-                      select
-                      value={month}
-                      onChange={handleMonthChange}
-                      label="Month"
-                      style={{ marginLeft: '16px' }} // Optional styling for spacing
-                    >
-                      {Array.from({ length: 12 }, (v, k) => (
-                        <MenuItem key={k + 1} value={k + 1}>
-                          {new Date(0, k).toLocaleString('default', { month: 'long' })}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </Grid>
-                </Grid>
-                <div style={{ width: "100%", marginTop: "16px" }}>
-                  {perData.length > 0 ? (
-                    <BarChart
-                      width={window.innerWidth * 0.4} // Match the width to the Year Change Chart
-                      height={400}
-                      data={perData}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="date" tickFormatter={(date) => new Date(date).getDate()} />
-                      <YAxis />
-                      <Tooltip />
-                      <Legend />
-                      <Bar dataKey="count" fill="#76A7FA" />
-                    </BarChart>
-                  ) : (
-                    <Paper style={{ padding: '16px', textAlign: 'center', minHeight: '400px' }}>
-                      <Typography variant="h6">No data available for selected month and year.</Typography>
-                    </Paper>
-                  )}
-                </div>
-              </Grid>
-
-            </Grid>
-          </Paper>
-
-
         <Grid
           container
           mt={1}
@@ -719,7 +759,6 @@ export default function DashBoard() {
         >
           {/* Exam Chart and Source Chart in one line */}
           <Grid item xs={12} md={6}>
-            <Paper elevation={3} style={{ padding: "16px" }}>
               <Typography variant="h6">Exam Chart</Typography>
               <Chart
                 chartType="ColumnChart"
@@ -728,10 +767,8 @@ export default function DashBoard() {
                 width="100%"
                 height="400px"
               />
-            </Paper>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Paper elevation={3} style={{ padding: "16px" }}>
               <Typography variant="h6">Source Chart</Typography>
               <Chart
                 chartType="ColumnChart"
@@ -740,16 +777,12 @@ export default function DashBoard() {
                 width="100%"
                 height="400px"
               />
-            </Paper>
           </Grid>
-
-
-         
-
-
-
-
         </Grid>
+       </Paper>
+       
+
+
       </Box>
     </div>
   );

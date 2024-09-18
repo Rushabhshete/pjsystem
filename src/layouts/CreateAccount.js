@@ -1,934 +1,3 @@
-// import React, { useState,useEffect } from "react";
-// import axios from "axios";
-// import {
-//   TextField,
-//   Button,
-//   Typography,
-//   Grid,
-//   Checkbox,
-//   Select,
-//   MenuItem,
-//   FormControl,
-//   InputLabel,
-//   FormControlLabel,
-//   styled,
-//   Dialog,
-//   DialogTitle,
-//   DialogContent,
-//   DialogActions,
-//   Paper,
-//   Modal,
-//   Box,
-// } from "@mui/material";
-// import PolicyPopup from "./PolicyPopup ";
-// import { policies } from "./policies";
-// import { useNavigate } from "react-router-dom";
-// import indianStatesAndDistricts from "./indianStatesAndDistricts";
-
-// const CreateAccount = () => {
-//   const [formData, setFormData] = useState({
-//     emailaddress: "",
-//     phonenumber: "",
-//     password: "",
-//     confirmpassword: "",
-//     institutename: "",
-//     institutecode: "",
-//     mobilenumber: "",
-//     websitename: "",
-//     address: "",
-//     landmark: "",
-//     city: "",
-//     state: "",
-//     district: "",
-//     registrationnumber: "",
-//     aadhar: "",
-//     pancard: "",
-//     loa: "",
-//     status: "",
-//     mou: "",
-//     instituteimage: null,
-//     country: "India",
-//     publicid: "",
-//     employeemanagementsystem: false,
-//     studentmanagementsystem: false,
-//     feesmanagementsystem: false,
-//     incomeandexpense: false,
-//     enquirymanagementsystem: false,
-//     admissionmanagementsystem: false,
-//     plan: "",
-//     subscriptionyear: "",
-//     subscriptstartDate: "",
-//     subscriptendDate: "",
-//     gstNo: "",
-//     pincode: "",
-//   });
-//   const navigate = useNavigate();
-//   const [errors, setErrors] = useState({});
-
-//   const [imageUpload, setImageUpload] = useState(null);
-// const [isSaveSuccessful, setIsSaveSuccessful] = useState(false);
-//   const [institutecode, setInstituteCode] = useState("");
-// const [isPopupOpen, setIsPopupOpen] = useState(false);
-//   const [selectedPolicy, setSelectedPolicy] = useState([]);
-//   const [open, setOpen] = useState(false);
-// const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false);
-//   const [amount, setAmount] = useState(0);
-//   const handleChange = (e) => {
-//     const { name, value, type, checked, files } = e.target;
-//     setFormData((prevData) => ({
-//       ...prevData,
-//       [name]:
-//         type === "checkbox" ? checked : type === "file" ? files[0] : value,
-//     }));
-//   };
-
-//   const calculateAmount = () => {
-//     const { plan, subscriptionyear } = formData;
-//     let monthlyRate = 0;
-
-//     switch (plan) {
-//       case 'Basic':
-//         monthlyRate = 199;
-//         break;
-//       case 'Premium':
-//         monthlyRate = 299;
-//         break;
-//       case 'Business':
-//         monthlyRate = 499;
-//         break;
-//       default:
-//         monthlyRate = 0;
-//     }
-
-//     const totalAmount = monthlyRate * 12 * subscriptionyear;
-//     const amountWithGst = totalAmount * 1; // Adding 18% GST
-//     return Math.round(amountWithGst * 100); // Convert to paisa
-//   };
-
-// useEffect(() => {
-//   const calculatedAmount = calculateAmount();
-//   setAmount(calculatedAmount / 100); // Convert paisa back to INR for display
-// }, [formData]);
-
-// const handlePayment = () => {
-//   const amount = calculateAmount();
-//   const options = {
-//     key: "rzp_test_vv1FCZvuDRF6lQ",
-//     key_secret: "P4JAUwn4VdE6xDLJ6p2Zy8RQ", // Replace with your Razorpay key
-//     amount: amount, // Amount in paisa (10000 paisa = INR 100)
-//     currency: "INR",
-//     name: "PJSOFTTECH PTV. LTD",
-//     description: "Test Transaction",
-//     handler: function (response) {
-//       setIsPaymentSuccessful(true);
-//       setIsPopupOpen(false);
-//     },
-//     prefill: {
-//       name: formData.institutename,
-//       email: formData.emailaddress,
-//       contact: formData.phonenumber,
-//     },
-//     notes: {
-//       address: "Razorpay Corporate Office",
-//     },
-//     theme: {
-//       color: "#003366",
-//     },
-//   };
-
-//   const rzp = new window.Razorpay(options);
-//   rzp.open();
-// };
-
-//   const validateForm = () => {
-//     let formErrors = {};
-//     if (!formData.emailaddress.match(/^[a-zA-Z0-9._%+-]+@gmail\.com$/)) {
-//       formErrors.emailaddress =
-//         "Email must be in the format: example@gmail.com";
-//     }
-//     if (!formData.phonenumber.match(/^\d{10}$/)) {
-//       formErrors.phonenumber = "Phone number must be 10 digits.";
-//     }
-//     if (!formData.mobilenumber.match(/^\d{10}$/)) {
-//       formErrors.mobilenumber = "Mobile number must be 10 digits.";
-//     }
-//     if (formData.aadhar.length !== 12 || isNaN(formData.aadhar)) {
-//       formErrors.aadhar = "Aadhar number must be 12 digits.";
-//     }
-//     if (formData.password !== formData.confirmpassword) {
-//       formErrors.confirmpassword = "Confirm password does not match.";
-//     }
-//     if (!formData.institutename) {
-//       formErrors.institutename = "Institute name is required.";
-//     }
-//     if (!formData.city) {
-//       formErrors.city = "City is required.";
-//     }
-//     if (!formData.state) {
-//       formErrors.state = "State is required.";
-//     }
-//     if (!formData.district) {
-//       formErrors.district = "District is required.";
-//     }
-
-//     return formErrors;
-//   };
-
-//   const handleSave = async (e) => {
-//     e.preventDefault();
-//     const formErrors = validateForm();
-//     if (Object.keys(formErrors).length === 0) {
-//       try {
-//         // Prepare data for submission
-// const dataToSubmit = {
-//   emailaddress: formData.emailaddress,
-//   password: formData.password,
-//    confirmpassword:formData.confirmpassword,
-//           phonenumber: formData.phonenumber,
-//           institutename: formData.institutename,
-//           aadhar: formData.aadhar,
-//           mobilenumber: formData.mobilenumber,
-//           registrationnumber: formData.registrationnumber,
-//           state: formData.state,
-//           district: formData.district,
-//           city: formData.city,
-//           employeemanagementsystem: formData.employeemanagementsystem,
-//           studentmanagementsystem: formData.studentmanagementsystem,
-//           feesmanagementsystem: formData.feesmanagementsystem,
-//           incomeandexpense: formData.incomeandexpense,
-//           enquirymanagementsystem: formData.enquirymanagementsystem,
-//           admissionmanagementsystem: formData.admissionmanagementsystem,
-//           plan: formData.plan,
-//           subscriptionyear: formData.subscriptionyear,
-//           subscriptstartDate: formData.subscriptstartDate,
-//           //subscriptendDate: formData.subscriptendDate,
-//           pincode: formData.pincode,
-//           gstNo: formData.gstNo,
-//         };
-//         setIsSaveSuccessful(true);
-//         const response = await axios.post(
-//           "http://localhost:8081/saveinstitude",
-//           dataToSubmit
-//         );
-
-//         // Alert the user about form submission success
-//         alert("Form Submitted Successfully");
-//         console.log("Institute saved successfully:", response.data);
-
-//         // Save email to localStorage for image upload
-//         localStorage.setItem("email", formData.emailaddress);
-//       } catch (error) {
-//         console.error("Error saving institute:", error);
-//       }
-//     } else {
-//       setErrors(formErrors);
-//     }
-//   };
-
-//   const handleClickOpen = (policy) => {
-//     setSelectedPolicy(policy);
-//     setOpen(true);
-//   };
-//   const handleClose = () => {
-//     setOpen(false);
-//   };
-
-// const handleImageUpload = async () => {
-//   const email = localStorage.getItem("email");
-
-//   if (email && imageUpload) {
-//     const formDataImage = new FormData();
-//     formDataImage.append("instituteimage", imageUpload);
-
-//     try {
-//       const response = await axios.post(
-//         `http://localhost:8081/uploadimage/${email}`,
-//         formDataImage,
-//         {
-//           headers: {
-//             "Content-Type": "multipart/form-data",
-//           },
-//         }
-//       );
-//       // Alert the user about image upload success
-//       alert("Image Uploaded Successfully");
-//       console.log("Image uploaded successfully:", response.data);
-//       // Clear the image upload state
-//       setImageUpload(null);
-//     } catch (error) {
-//       console.error("Error uploading image:", error);
-//       alert(
-//         "Error uploading image: " + (error.response?.data || error.message)
-//       );
-//     }
-//   } else {
-//     alert("Email or file not found!");
-//   }
-// };
-
-// const ImageUploadButton = styled(Button)(({ theme }) => ({
-//   backgroundColor: theme.palette.primary.main,
-//   color: theme.palette.common.white,
-//   "&:hover": {
-//     backgroundColor: theme.palette.primary.dark,
-//   },
-// }));
-
-// const handleSubmit = async () => {
-//   try {
-//     const response = await axios.get(
-//       `http://localhost:8081/findInstitutesby/email?emailaddress=${formData.emailaddress}`
-//     );
-
-//     if (response.data && response.data.institutecode) {
-//       setInstituteCode(response.data.institutecode);
-//       setIsPopupOpen(true);
-//     } else {
-//       console.error("No institute code found for the provided email.");
-//     }
-//   } catch (error) {
-//     console.error("API call failed", error);
-//   }
-// };
-
-// const handleCopy = async () => {
-//   try {
-//     await navigator.clipboard.writeText(institutecode);
-//     alert("Copied to clipboard!");
-//   } catch (err) {
-//     console.error("Failed to copy: ", err);
-//   }
-// };
-
-// const handleClosePopup = () => {
-//   setIsPopupOpen(false);
-//   navigate("/systems");
-// };
-
-//   const state = Object.keys(indianStatesAndDistricts);
-//   const district = formData.state
-//     ? indianStatesAndDistricts[formData.state]
-//     : [];
-
-//   return (
-//     <div
-//       style={{
-//         backgroundImage: `url('https://media.idownloadblog.com/wp-content/uploads/2016/02/Twitter-GIF.gif')`,
-//         backgroundSize: "cover",
-//         backgroundRepeat: "no-repeat",
-//         backgroundPosition: "center center",
-//         minHeight: "100vh",
-//         color: "#ffffff", // Optional: Set text color for contrast
-//       }}
-//     >
-//       <form
-//         onSubmit={handleSave}
-//         style={{ marginLeft: "100px", marginRight: "100px" }}
-//       >
-//         <Box
-//           sx={{
-//             display: "flex",
-//             alignItems: "center",
-//             width: "100%",
-//           }}
-//         >
-//           <Box
-//             sx={{
-//               flexGrow: 1,
-//               height: "1px",
-//               backgroundColor: "gold",
-//             }}
-//           />
-//           <Typography variant="h4" sx={{ margin: "0 10px", color: "gold" }}>
-//             <b>Create Account</b>
-//           </Typography>
-//           <Box
-//             sx={{
-//               flexGrow: 1,
-//               height: "1px",
-//               backgroundColor: "gold",
-//             }}
-//           />
-//         </Box>
-//         <Paper
-//           align="center"
-//           elevation={3}
-//           style={{
-//             padding: "20px",
-//             align: "center",
-//             marginTop: "10px",
-//             marginBottom: "10px",
-//           }}
-//         >
-//           <Grid container spacing={2}>
-//             {/* Email, Phone Number, Mobile Number */}
-//             <Grid item xs={12} sm={3}>
-//               <TextField
-//                 label="Firm / Institute Name"
-//                 name="institutename"
-//                 value={formData.institutename}
-//                 onChange={handleChange}
-//                 fullWidth
-//                 required
-//                 // error!!errors.institutename}
-//                 //helperText={errors.institutename}
-//                 InputLabelProps={{
-//                   className: "required-asterisk",
-//                 }}
-//               />
-//             </Grid>
-//             <Grid item xs={12} sm={3}>
-//               <TextField
-//                 label="Owner's Email Address"
-//                 name="emailaddress"
-//                 value={formData.emailaddress}
-//                 onChange={handleChange}
-//                 fullWidth
-//                 required
-//                 // error!!errors.emailaddress}
-//                 //helperText={errors.emailaddress}
-//                 InputLabelProps={{
-//                   className: "required-asterisk",
-//                 }}
-//               />
-//             </Grid>
-//             <Grid item xs={12} sm={3}>
-//               <TextField
-//                 label="Admin Phone Number"
-//                 name="phonenumber"
-//                 value={formData.phonenumber}
-//                 onChange={handleChange}
-//                 fullWidth
-//                 required
-//                 // error!!errors.phonenumber}
-//                 //helperText={errors.phonenumber}
-//                 InputLabelProps={{
-//                   className: "required-asterisk",
-//                 }}
-//               />
-//             </Grid>
-//             <Grid item xs={12} sm={3}>
-//               <TextField
-//                 label="Firm / Institute Mobile Number"
-//                 name="mobilenumber"
-//                 value={formData.mobilenumber}
-//                 onChange={handleChange}
-//                 fullWidth
-//                 required
-//                 // error!!errors.mobilenumber}
-//                 //helperText={errors.mobilenumber}
-//                 InputLabelProps={{
-//                   className: "required-asterisk",
-//                 }}
-//               />
-//             </Grid>
-
-//             {/* Password, Confirm Password, Institute Name */}
-//             <Grid item xs={12} sm={3}>
-//               <TextField
-//                 label="Password"
-//                 name="password"
-//                 type="password"
-//                 value={formData.password}
-//                 onChange={handleChange}
-//                 fullWidth
-//                 required
-//                 InputLabelProps={{
-//                   className: "required-asterisk",
-//                 }}
-//               />
-//             </Grid>
-//             <Grid item xs={12} sm={3}>
-//               <TextField
-//                 label="Confirm Password"
-//                 name="confirmpassword"
-//                 type="password"
-//                 value={formData.confirmpassword}
-//                 onChange={handleChange}
-//                 fullWidth
-//                 // error!!errors.confirmpassword}
-//                 //helperText={errors.confirmpassword}
-//                 required
-//                 InputLabelProps={{
-//                   className: "required-asterisk",
-//                 }}
-//               />
-//             </Grid>
-
-//             <Grid item xs={12} sm={3}>
-//               <TextField
-//                 label="Owner's Aadhar No."
-//                 name="aadhar"
-//                 value={formData.aadhar}
-//                 onChange={handleChange}
-//                 fullWidth
-//                 // error!!errors.aadhar}
-//                 //helperText={errors.aadhar}
-//                 required
-//                 InputLabelProps={{
-//                   className: "required-asterisk",
-//                 }}
-//               />
-//             </Grid>
-//             <Grid item xs={12} sm={3}>
-//               <TextField
-//                 label="Owner's Pan No."
-//                 name="pancard"
-//                 value={formData.pancard}
-//                 onChange={handleChange}
-//                 fullWidth
-//                 // error!!errors.pan}
-//                 //helperText={errors.pan}
-//                 required
-//                 InputLabelProps={{
-//                   className: "required-asterisk",
-//                 }}
-//               />
-//             </Grid>
-
-//             {/* Website, Address (Full Width), Landmark */}
-//             <Grid item xs={12} sm={3}>
-//               <TextField
-//                 label="Website Link"
-//                 name="websitename"
-//                 value={formData.websitename}
-//                 onChange={handleChange}
-//                 fullWidth
-//               />
-//             </Grid>
-//             <Grid item xs={12} sm={3}>
-//               <TextField
-//                 label="GST No."
-//                 name="gstNo"
-//                 value={formData.gstNo}
-//                 onChange={handleChange}
-//                 fullWidth
-//               />
-//             </Grid>
-
-//             <Grid item xs={12} sm={3}>
-//               <FormControl fullWidth>
-//                 <TextField
-//                   select
-//                   label="Plan"
-//                   name="plan"
-//                   value={formData.plan}
-//                   onChange={handleChange}
-//                   InputLabelProps={{
-//                     className: "required-asterisk",
-//                   }}
-//                 >
-//                   <MenuItem value="Demo/free">Demo/free</MenuItem>
-//                   <MenuItem value="Basic">Basic (₹199/month)</MenuItem>
-//                   <MenuItem value="Premium">Premium (₹299/month)</MenuItem>
-//                   <MenuItem value="Business">Business (₹499/month)</MenuItem>
-//                 </TextField>
-//               </FormControl>
-//             </Grid>
-//             <Grid item xs={12} sm={3}>
-//               <FormControl fullWidth>
-//                 <TextField
-//                   select
-//                   label="Subscription Years"
-//                   name="subscriptionyear"
-//                   value={formData.subscriptionyear}
-//                   onChange={handleChange}
-//                   InputLabelProps={{
-//                     className: "required-asterisk",
-//                   }}
-//                   required
-//                 >
-//                   <MenuItem value="1">1 year</MenuItem>
-//                   <MenuItem value="2">2 years</MenuItem>
-//                   <MenuItem value="3">3 years</MenuItem>
-//                   <MenuItem value="4">4 years</MenuItem>
-//                   <MenuItem value="5">5 years</MenuItem>
-//                   <MenuItem value="10">10 years</MenuItem>
-//                 </TextField>
-//               </FormControl>
-//             </Grid>
-//             <Grid item xs={12} sm={3}>
-//               <TextField
-//                 label="Firm / Institute Address"
-//                 name="address"
-//                 value={formData.address}
-//                 onChange={handleChange}
-//                 multiline
-//                 // rows={4}
-//                 fullWidth
-//                 InputLabelProps={{ className: "required-asterisk" }}
-//                 required
-//               />
-//             </Grid>
-//             <Grid item xs={12} sm={3}>
-//               <TextField
-//                 label="Landmark"
-//                 name="landmark"
-//                 value={formData.landmark}
-//                 onChange={handleChange}
-//                 fullWidth
-//               />
-//             </Grid>
-
-//             {/* Country, State, District */}
-//             <Grid item xs={12} sm={3}>
-//               <FormControl fullWidth>
-//                 <TextField
-//                   select
-//                   label="Country"
-//                   name="country"
-//                   value={formData.country}
-//                   onChange={handleChange}
-//                 >
-//                   <MenuItem value="India">India</MenuItem>
-//                 </TextField>
-//               </FormControl>
-//             </Grid>
-//             <Grid item xs={12} sm={3}>
-//               <FormControl fullWidth>
-//                 <TextField
-//                   select
-//                   label="State"
-//                   name="state"
-//                   value={formData.state}
-//                   onChange={handleChange}
-//                   InputLabelProps={{ className: "required-asterisk" }}
-//                   required
-//                 >
-//                   {state.map((state) => (
-//                     <MenuItem key={state} value={state}>
-//                       {state}
-//                     </MenuItem>
-//                   ))}
-//                 </TextField>
-//               </FormControl>
-//             </Grid>
-//             <Grid item xs={12} sm={3}>
-//               <FormControl fullWidth>
-//                 <TextField
-//                   select
-//                   label="District"
-//                   name="district"
-//                   value={formData.district}
-//                   onChange={handleChange}
-//                   disabled={!formData.state}
-//                   InputLabelProps={{ className: "required-asterisk" }}
-//                   required
-//                 >
-//                   {district.map((district) => (
-//                     <MenuItem key={district} value={district}>
-//                       {district}
-//                     </MenuItem>
-//                   ))}
-//                 </TextField>
-//               </FormControl>
-//             </Grid>
-
-//             {/* City, Registration Number */}
-//             <Grid item xs={12} sm={3}>
-//               <FormControl fullWidth required>
-//                 <TextField
-//                   label="City"
-//                   name="city"
-//                   value={formData.city}
-//                   onChange={handleChange}
-//                   // error!!errors.city}
-//                   InputLabelProps={{ className: "required-asterisk" }}
-//                   required
-//                 ></TextField>
-//               </FormControl>
-//             </Grid>
-//             <Grid item xs={12} sm={3}>
-//               <TextField
-//                 label="Pincode"
-//                 name="pincode"
-//                 required
-//                 value={formData.pincode}
-//                 onChange={handleChange}
-//                 fullWidth
-//                 InputLabelProps={{ className: "required-asterisk" }}
-//               />
-//             </Grid>
-//           </Grid>
-
-//           <Paper
-//             align="center"
-//             elevation={3}
-//             style={{
-//               padding: "16px",
-//               align: "center",
-//               marginTop: "10px",
-//               backgroundColor: "#003366",
-//             }}
-//           >
-//             <Typography variant="h6" sx={{ fontWeight: "bold", color: "gold" }}>
-//               {" "}
-//               Select the Systems
-//             </Typography>
-//             <Grid container spacing={2}>
-//               {/* Checkboxes for Management Systems */}
-//               <Grid item xs={12}>
-//                 <Grid container spacing={2} sx={{ color: "white" }}>
-//                   <Grid item xs={4}>
-//                     <FormControlLabel
-//                       control={
-//                         <Checkbox
-//                           checked={formData.employeemanagementsystem}
-//                           onChange={handleChange}
-//                           name="employeemanagementsystem"
-//                           color="primary"
-//                         />
-//                       }
-//                       label="Employee Management System"
-//                     />
-//                   </Grid>
-//                   <Grid item xs={4}>
-//                     <FormControlLabel
-//                       control={
-//                         <Checkbox
-//                           checked={formData.studentmanagementsystem}
-//                           onChange={handleChange}
-//                           name="studentmanagementsystem"
-//                           color="primary"
-//                         />
-//                       }
-//                       label="Student Management System"
-//                     />
-//                   </Grid>
-//                   <Grid item xs={4}>
-//                     <FormControlLabel
-//                       control={
-//                         <Checkbox
-//                           checked={formData.feesmanagementsystem}
-//                           onChange={handleChange}
-//                           name="feesmanagementsystem"
-//                           color="primary"
-//                         />
-//                       }
-//                       label="Fees Management System"
-//                     />
-//                   </Grid>
-//                 </Grid>
-//               </Grid>
-
-//               {/* Income and Expense, Enquiry, Admission */}
-//               <Grid item xs={12} sx={{ color: "white" }}>
-//                 <Grid container spacing={2}>
-//                   <Grid item xs={4}>
-//                     <FormControlLabel
-//                       control={
-//                         <Checkbox
-//                           checked={formData.incomeandexpense}
-//                           onChange={handleChange}
-//                           name="incomeandexpense"
-//                           color="primary"
-//                         />
-//                       }
-//                       label="Income and Expense Management"
-//                     />
-//                   </Grid>
-//                   <Grid item xs={4}>
-//                     <FormControlLabel
-//                       control={
-//                         <Checkbox
-//                           checked={formData.enquirymanagementsystem}
-//                           onChange={handleChange}
-//                           name="enquirymanagementsystem"
-//                           color="primary"
-//                         />
-//                       }
-//                       label="Enquiry Management System"
-//                     />
-//                   </Grid>
-//                   <Grid item xs={4}>
-//                     <FormControlLabel
-//                       control={
-//                         <Checkbox
-//                           checked={formData.admissionmanagementsystem}
-//                           onChange={handleChange}
-//                           name="admissionmanagementsystem"
-//                           color="primary"
-//                         />
-//                       }
-//                       label="Admission Management System"
-//                     />
-//                   </Grid>
-//                 </Grid>
-//               </Grid>
-//             </Grid>
-//           </Paper>
-
-//           {/* Terms and Conditions */}
-
-//           <Grid
-//             container
-//             spacing={2}
-//             justifyContent="center"
-//             sx={{ marginTop: "24px" }}
-//           >
-//             <Grid item>
-//               <FormControlLabel
-//                 control={<Checkbox />}
-//                 label={
-//                   <Typography
-//                     variant="body1"
-//                     align="center"
-//                     onClick={() => handleClickOpen(policies.privacyPolicy)}
-//                     sx={{ cursor: "pointer", textDecoration: "underline" }}
-//                   >
-//                     Privacy Policy
-//                   </Typography>
-//                 }
-//               />
-//             </Grid>
-//             <Grid item>
-//               <FormControlLabel
-//                 control={<Checkbox />}
-//                 label={
-//                   <Typography
-//                     variant="body1"
-//                     align="center"
-//                     onClick={() => handleClickOpen(policies.termsConditions)}
-//                     sx={{ cursor: "pointer", textDecoration: "underline" }}
-//                   >
-//                     Terms & Conditions
-//                   </Typography>
-//                 }
-//               />
-//             </Grid>
-//             <Grid item>
-//               <FormControlLabel
-//                 control={<Checkbox />}
-//                 label={
-//                   <Typography
-//                     variant="body1"
-//                     align="center"
-//                     onClick={() => handleClickOpen(policies.dataProductPolicy)}
-//                     sx={{ cursor: "pointer", textDecoration: "underline" }}
-//                   >
-//                     Data & Product Policy
-//                   </Typography>
-//                 }
-//               />
-//             </Grid>
-//           </Grid>
-//           {/* Dialog for Policy Information */}
-//           {selectedPolicy && (
-//             <PolicyPopup
-//               open={open}
-//               onClose={handleClose}
-//               policy={selectedPolicy}
-//             />
-//           )}
-
-// <Paper align="center" elevation={3} style={{ padding: "20px", marginTop: "10px", marginBottom: "10px" }}>
-//           <Grid container spacing={2}>
-//             {/* Your form fields */}
-
-//             {/* Payment Button */}
-//             <Grid item xs={12}>
-//               <Button
-//                 variant="contained"
-//                 fullWidth
-//                 onClick={handlePayment}
-//                 sx={{ backgroundColor: "#003366", color: "gold" }}
-//               >
-//                 Pay INR ₹ {amount}
-//               </Button>
-//             </Grid>
-// </Grid>
-// </Paper>
-
-//           {/* Submit Button */}
-//           <Grid item xs={12}>
-//           <Button
-//             variant="contained"
-//             type="submit"
-//             fullWidth
-//             sx={{ backgroundColor: "#003366", color: "gold" }}
-//             disabled={!isPaymentSuccessful}
-//           >
-//             Create Account
-//           </Button>
-//         </Grid>
-
-//           {/* Dialog for Terms and Conditions */}
-
-//           {/* Upload Image Section */}
-// <Grid item xs={12} mt={2}>
-//   <ImageUploadButton
-//     variant="contained"
-//     onClick={() => document.getElementById("image-upload").click()}
-//     sx={{ backgroundColor: "#003366", color: "gold" }}
-//   >
-//     Upload Image / Logo
-//   </ImageUploadButton>
-// </Grid>
-// <input
-//   type="file"
-//   id="image-upload"
-//   style={{ display: "none" }}
-//   onChange={(e) => {
-//     setImageUpload(e.target.files[0]);
-//   }}
-// />
-// <Grid item xs={12}>
-//   {imageUpload && (
-//     <Button variant="contained" onClick={handleImageUpload} mt={2}>
-//       Confirm Image Upload
-//     </Button>
-//   )}
-// </Grid>
-// {isSaveSuccessful && (
-//   <Button variant="contained" color="primary" onClick={handleSubmit}>
-//     Get Your Institute Code
-//   </Button>
-// )}
-
-//           {/* Popup for Payment Success */}
-// <Modal open={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
-//   <Box sx={{ padding: 4, backgroundColor: "white", borderRadius: 2 }}>
-//     <Typography variant="h6">
-//       Payment Successful!
-//     </Typography>
-//     <Button
-//       variant="contained"
-//       color="secondary"
-//       onClick={() => setIsPopupOpen(false)}
-//     >
-//       Close
-//     </Button>
-//   </Box>
-// </Modal>
-
-// <Modal open={isPopupOpen} onClose={handleClosePopup}>
-//   <Box sx={{ padding: 4, backgroundColor: "white", borderRadius: 2 }}>
-//     <Typography variant="h6">
-//       Institute Code: {institutecode}
-//     </Typography>
-//     <Typography variant="body2" sx={{ color: "red", marginTop: 1 }}>
-//       Write Down Institute Code, do not forget, cannot recover
-//     </Typography>
-//     <Button variant="outlined" onClick={handleCopy}>
-//       Copy
-//     </Button>
-//     <Button
-//       variant="contained"
-//       color="secondary"
-//       onClick={handleClosePopup}
-//     >
-//       Close
-//     </Button>
-//   </Box>
-// </Modal>
-//         </Paper>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default CreateAccount;
-
 import React, { useState, useEffect } from "react";
 import {
   Grid,
@@ -941,16 +10,30 @@ import {
   Toolbar,
   FormControl,
   MenuItem,
+  Divider,
   FormControlLabel,
   Checkbox,
   CardContent,
   Paper,
   styled,
   Modal,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
 } from "@mui/material";
+import html2pdf from 'html2pdf.js'; // Importing html2pdf.js
+//import logo from '../img/logo.jpg'; 
+import { policies } from "./policies";
 import axios from "axios";
 import logo from "../img/logo.jpg";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 import indianStatesAndDistricts from "./indianStatesAndDistricts";
+import PolicyPopup from "./PolicyPopup ";
 import { useNavigate } from "react-router-dom";
 const CreateAccount = () => {
   const [formData, setFormData] = useState({
@@ -979,7 +62,7 @@ const CreateAccount = () => {
     pincode: "",
   });
   const navigate = useNavigate();
-  const [selectedCard, setSelectedCard] = useState(null);
+  const [selectedCard, setSelectedCard] = useState(1);
   const [showOptionalFields, setShowOptionalFields] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [paymentSuccessful, setPaymentSuccessful] = useState(false);
@@ -988,59 +71,165 @@ const CreateAccount = () => {
   const [imageUpload, setImageUpload] = useState(null);
   const [isSaveSuccessful, setIsSaveSuccessful] = useState(false);
   const [institutecode, setInstituteCode] = useState("");
+  const [subscriptionYear, setSubscriptionYear] = useState(1);
+  const [gstAmount, setGstAmount] = useState(0);
+  const [yearlyAmount, setYearlyAmount] = useState(0);
+  const [selectedPolicy, setSelectedPolicy] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [savings, setSavings] = useState(0); // Initialize savings state
+  const [originalYearlyAmount, setOriginalYearlyAmount] = useState(0); // Initialize original amount state
+  const [showReceipt, setShowReceipt] = useState(false);
+  const [paymentDetails, setPaymentDetails] = useState({});
+  const [openReceipt, setOpenReceipt] = useState(false);
   const gstPercentage = 18;
-
+  const handleSubscriptionYearChange = (e) => {
+    setSubscriptionYear(e.target.value);
+  };
   const handleCardSelect = (cardIndex) => {
     setSelectedCard(cardIndex);
   };
-
   const calculateAmount = () => {
     let amountPerMonth;
 
     // Determine the amount per month based on the selected card
-    if (selectedCard === 1) {
-      amountPerMonth = 199;
+    if (selectedCard === 0) {
+      amountPerMonth = 1; // Demo / Free plan
+    } else if (selectedCard === 1) {
+      amountPerMonth = 199; // Basic plan
     } else if (selectedCard === 2) {
-      amountPerMonth = 299;
+      amountPerMonth = 299; // Premium plan
     } else if (selectedCard === 3) {
-      amountPerMonth = 499;
+      amountPerMonth = 499; // Business plan
     } else {
       return { finalAmount: 0, amountPerMonth: 0, gstAmount: 0 };
     }
 
-    // Calculate amount for the selected plan and subscription years
-    const totalAmount = amountPerMonth * 12 ;
+    // Ensure subscriptionYear is a number
+    const subscriptionYearInt = Number(subscriptionYear) || 0;
 
-    // Add GST
-    const gstAmount = totalAmount * (gstPercentage / 100);
-    const finalAmount = totalAmount + gstAmount;
+    // Calculate the total amount for the selected plan and subscription years
+    const yearlyAmount = amountPerMonth * 12 * subscriptionYearInt;
 
-    // Convert to paisa (1 INR = 100 paisa)
+    // Calculate GST amount
+    const gstAmount = yearlyAmount * (gstPercentage / 100);
+
+    // Calculate the final amount including GST
+    const finalAmount = yearlyAmount + gstAmount;
+
+    // Return all calculated amounts
     return {
-      finalAmount: finalAmount * 100,
+      finalAmount: finalAmount * 100, // converting to paisa
       amountPerMonth,
+      yearlyAmount,
       gstAmount,
     };
   };
+  const a = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+  const b = ['', 'Ten', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+  const c = ['', 'Hundred', 'Thousand', 'Lakh', 'Crore'];
+  // Function to convert numbers to words
+  function convertNumberToWords(num) {
+    const numberToWords = (n) => {
+      if (n === 0) return 'Zero';
+      if (n < 10) return a[n];
+      if (n < 100) return b[Math.floor(n / 10)] + (n % 10 !== 0 ? ' ' + a[n % 10] : '');
+      if (n < 1000) return a[Math.floor(n / 100)] + ' Hundred' + (n % 100 !== 0 ? ' ' + numberToWords(n % 100) : '');
+      if (n < 100000) {
+        const thousands = Math.floor(n / 1000);
+        const rest = n % 1000;
+        return numberToWords(thousands) + ' Thousand' + (rest !== 0 ? ' ' + numberToWords(rest) : '');
+      }
+      if (n < 10000000) {
+        const lakhs = Math.floor(n / 100000);
+        const rest = n % 100000;
+        return numberToWords(lakhs) + ' Lakh' + (rest !== 0 ? ' ' + numberToWords(rest) : '');
+      }
+      // Extend this function for larger numbers as needed (e.g., Crores)
 
+      return n; // Fallback in case of any issues
+    };
+
+    return numberToWords(num);
+  }
+
+  const calculateSavings = (selectedCard, subscriptionYear) => {
+    let originalAmountPerMonth;
+
+    // Set the original price per month based on the selected plan
+    if (selectedCard === 0) {
+      originalAmountPerMonth = 99; // Demo / Free original price
+    } else if (selectedCard === 1) {
+      originalAmountPerMonth = 299; // Basic original price
+    } else if (selectedCard === 2) {
+      originalAmountPerMonth = 399; // Premium original price
+    } else if (selectedCard === 3) {
+      originalAmountPerMonth = 699; // Business original price
+    }
+
+    const subscriptionYearInt = Number(subscriptionYear) || 0;
+
+    // Calculate the original yearly amount based on the original price
+    const originalYearlyAmount =
+      originalAmountPerMonth * 12 * subscriptionYearInt;
+
+    // Calculate the discounted price based on the selected card
+    const { amountPerMonth } = calculateAmount();
+
+    // Calculate the savings
+    const savings =
+      originalYearlyAmount - amountPerMonth * 12 * subscriptionYearInt;
+
+    return {
+      savings,
+      originalYearlyAmount,
+    };
+  };
   useEffect(() => {
-    const { finalAmount, amountPerMonth, gstAmount } = calculateAmount();
-    setAmount(finalAmount / 100); // Convert paisa back to INR for display
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    script.onload = () => {
+      // Now you can use window.Razorpay
+    };
+    document.body.appendChild(script);
+  }, []);
+  useEffect(() => {
+    const { finalAmount, amountPerMonth, gstAmount, yearlyAmount } =
+      calculateAmount();
+    const { savings, originalYearlyAmount } = calculateSavings(
+      selectedCard,
+      subscriptionYear
+    );
+
+    setAmount(finalAmount / 100); // Update amount (converted to INR)
     setAmountPerMonth(amountPerMonth);
-  }, [selectedCard]);
+    setYearlyAmount(yearlyAmount);
+    setSavings(savings); // Set the savings
+    setOriginalYearlyAmount(originalYearlyAmount); // Set the original yearly amount
+    setGstAmount(gstAmount);
+  }, [selectedCard, subscriptionYear]);
 
   const handlePayment = () => {
     const { finalAmount } = calculateAmount();
     const options = {
-      key: "rzp_test_vv1FCZvuDRF6lQ",
-      key_secret: "P4JAUwn4VdE6xDLJ6p2Zy8RQ", // Replace with your Razorpay key
+      key: "rzp_live_x3jjvYlvth6Ke",
+      key_secret: "FAQE2PwPBrTkB0xC2pzPM3I", // Replace with your Razorpay key
+      // key: "rzp_test_vv1FCZvuDRF6lQ",
+      // key_secret: "P4JAUwn4VdE6xDLJ6p2Zy8RQ", // Replace with your Razorpay key
       amount: finalAmount, // Amount in paisa (10000 paisa = INR 100)
       currency: "INR",
       name: "PJSOFTTECH PTV. LTD",
-      description: "Test Transaction",
+      description: "Plan Subscription",
       handler: function (response) {
-        // Handle payment success
-        setPaymentSuccessful(true);
+        // After successful payment
+      //  alert(response.razorpay_payment_id);
+      //  const paymentId = response.razorpay_payment_id;
+        setPaymentDetails({
+          instituteName: formData.institutename,
+          amount: finalAmount / 100,
+          date: new Date().toLocaleDateString(),
+        });
+        setShowReceipt(true); // Show receipt
       },
       prefill: {
         name: formData.institutename,
@@ -1078,28 +267,29 @@ const CreateAccount = () => {
       emailaddress: formData.emailaddress,
       password: formData.password,
       confirmpassword: formData.confirmpassword,
-      phonenumber:formData.phonenumber,
-      institutename:formData.institutename,
-      mobilenumber:formData.mobilenumber,
-      websitename:formData.websitename,
-      address:formData.address,
-      landmark:formData.landmark,
-      city:formData.city,
-      state:formData.state,
-      district:formData.district,
-      aadhar:formData.aadhar,
-      pancard:formData.pancard,
-      country:formData.country,
-      employeemanagementsystem:formData.employeemanagementsystem,
-      studentmanagementsystem:formData.studentmanagementsystem,
-      feesmanagementsystem:formData.feesmanagementsystem,
-      incomeandexpense:formData.incomeandexpense,
-      enquirymanagementsystem:formData.enquirymanagementsystem,
-      admissionmanagementsystem:formData.admissionmanagementsystem,
-      gstNo:formData.gstNo,
-      pincode:formData.pincode,
-      incomeandexpense:formData.incomeandexpense,
+      phonenumber: formData.phonenumber,
+      institutename: formData.institutename,
+      mobilenumber: formData.mobilenumber,
+      websitename: formData.websitename,
+      address: formData.address,
+      landmark: formData.landmark,
+      city: formData.city,
+      state: formData.state,
+      district: formData.district,
+      aadhar: formData.aadhar,
+      pancard: formData.pancard,
+      country: formData.country,
+      employeemanagementsystem: formData.employeemanagementsystem,
+      studentmanagementsystem: formData.studentmanagementsystem,
+      feesmanagementsystem: formData.feesmanagementsystem,
+      incomeandexpense: formData.incomeandexpense,
+      enquirymanagementsystem: formData.enquirymanagementsystem,
+      admissionmanagementsystem: formData.admissionmanagementsystem,
+      gstNo: formData.gstNo,
+      pincode: formData.pincode,
+      incomeandexpense: formData.incomeandexpense,
       plan: plans[selectedCard],
+      subscriptionyear: subscriptionYear,
     };
 
     try {
@@ -1151,6 +341,14 @@ const CreateAccount = () => {
     }
   };
 
+  const handleClickOpen = (policy) => {
+    setSelectedPolicy(policy);
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const handleGetInstituteCode = async () => {
     try {
       const response = await axios.get(
@@ -1189,6 +387,13 @@ const CreateAccount = () => {
       backgroundColor: theme.palette.primary.dark,
     },
   }));
+  const renderFeatureIcon = (isAvailable) => {
+    return isAvailable ? (
+      <CheckIcon color="success" />
+    ) : (
+      <CloseIcon color="error" />
+    );
+  };
 
   const featureList = {
     0: {
@@ -1225,8 +430,21 @@ const CreateAccount = () => {
     },
   };
 
-  const renderFeatureIcon = (isAvailable) => {
-    return isAvailable ? "✔" : "✘";
+  // const renderFeatureIcon = (isAvailable) => {
+  //   return isAvailable ? "✔" : "✘";
+  // };
+
+  const downloadReceipt = () => {
+    const receiptElement = document.getElementById('receipt'); // Reference to receipt element
+    const opt = {
+      margin: 0.5,
+      filename: 'receipt.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    html2pdf().from(receiptElement).set(opt).save();
   };
   return (
     <>
@@ -1383,6 +601,7 @@ const CreateAccount = () => {
                         </Typography>
 
                         <div style={{ textAlign: "left", fontSize: "14px" }}>
+                          {/* Feature List */}
                           <p
                             style={{
                               display: "flex",
@@ -1461,6 +680,30 @@ const CreateAccount = () => {
                   </Grid>
                 )
               )}
+            </Grid>
+
+            {/* Add the TextField below the cards */}
+            <Grid item xs={12} marginTop={2}>
+              <FormControl fullWidth>
+                <TextField
+                  select
+                  label="Subscription Years"
+                  name="subscriptionyear"
+                  value={subscriptionYear} // Corrected to use the state variable
+                  onChange={handleSubscriptionYearChange}
+                  InputLabelProps={{
+                    className: "required-asterisk",
+                  }}
+                  required
+                >
+                  <MenuItem value="1">1 year</MenuItem>
+                  <MenuItem value="2">2 years</MenuItem>
+                  <MenuItem value="3">3 years</MenuItem>
+                  <MenuItem value="4">4 years</MenuItem>
+                  <MenuItem value="5">5 years</MenuItem>
+                  <MenuItem value="10">10 years</MenuItem>
+                </TextField>
+              </FormControl>
             </Grid>
           </Grid>
 
@@ -1606,28 +849,7 @@ const CreateAccount = () => {
                         }}
                       />
                     </Grid>
-                    {/* <Grid item xs={12} sm={3}>
-                      <FormControl fullWidth>
-                        <TextField
-                          select
-                          label="Subscription Years"
-                          name="subscriptionyear"
-                          value={formData.subscriptionyear}
-                          onChange={handleChange}
-                          InputLabelProps={{
-                            className: "required-asterisk",
-                          }}
-                          required
-                        >
-                          <MenuItem value="1">1 year</MenuItem>
-                          <MenuItem value="2">2 years</MenuItem>
-                          <MenuItem value="3">3 years</MenuItem>
-                          <MenuItem value="4">4 years</MenuItem>
-                          <MenuItem value="5">5 years</MenuItem>
-                          <MenuItem value="10">10 years</MenuItem>
-                        </TextField>
-                      </FormControl>
-                    </Grid> */}
+
                     <Grid item xs={12} sm={3}>
                       <TextField
                         label="Firm / Institute Address"
@@ -1778,19 +1000,39 @@ const CreateAccount = () => {
                     </Typography>
                   </Grid>
                   <Paper
-                    align="center"
                     elevation={3}
                     style={{
                       padding: "16px",
-                      align: "center",
                       marginTop: "10px",
-                      backgroundColor: "#003366",
+                      background:
+                        "linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%)", // Use gradient background
+                      // Use textAlign for center alignment
                     }}
                   >
-                    <Grid container>
+                    <Grid container justifyContent="space-between">
                       {/* Checkboxes for Management Systems */}
                       <Grid item xs={12}>
-                        <Grid container spacing={2} sx={{ color: "white" }}>
+                        <Grid
+                          container
+                          spacing={2}
+                          justifyContent="space-between"
+                          marginLeft="3%"
+                        >
+                          {" "}
+                          <Grid item xs={4}>
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={formData.studentmanagementsystem}
+                                  onChange={handleChange}
+                                  name="studentmanagementsystem"
+                                  color="primary"
+                                />
+                              }
+                              label="Student System (School & College)"
+                              style={{ whiteSpace: "nowrap" }}
+                            />
+                          </Grid>
                           <Grid item xs={4}>
                             <FormControlLabel
                               control={
@@ -1808,38 +1050,6 @@ const CreateAccount = () => {
                             <FormControlLabel
                               control={
                                 <Checkbox
-                                  checked={formData.studentmanagementsystem}
-                                  onChange={handleChange}
-                                  name="studentmanagementsystem"
-                                  color="primary"
-                                />
-                              }
-                              label="Student System"
-                            />
-                          </Grid>
-                          <Grid item xs={4}>
-                            <FormControlLabel
-                              control={
-                                <Checkbox
-                                  checked={formData.feesmanagementsystem}
-                                  onChange={handleChange}
-                                  name="feesmanagementsystem"
-                                  color="primary"
-                                />
-                              }
-                              label="Fees System"
-                            />
-                          </Grid>
-                        </Grid>
-                      </Grid>
-
-                      {/* Income and Expense, Enquiry, Admission */}
-                      <Grid item xs={12} sx={{ color: "white" }}>
-                        <Grid container spacing={2}>
-                          <Grid item xs={4}>
-                            <FormControlLabel
-                              control={
-                                <Checkbox
                                   checked={formData.incomeandexpense}
                                   onChange={handleChange}
                                   name="incomeandexpense"
@@ -1847,6 +1057,31 @@ const CreateAccount = () => {
                                 />
                               }
                               label="Income & Expense System"
+                            />
+                          </Grid>
+                        </Grid>
+                      </Grid>
+
+                      {/* Income and Expense, Enquiry, Admission */}
+                      <Grid item xs={12}>
+                        <Grid
+                          container
+                          spacing={2}
+                          justifyContent="space-evenly"
+                          marginLeft="3%"
+                        >
+                          {" "}
+                          <Grid item xs={4}>
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={formData.admissionmanagementsystem}
+                                  onChange={handleChange}
+                                  name="admissionmanagementsystem"
+                                  color="primary"
+                                />
+                              }
+                              label="Admission System(Classroom & Institute)"
                             />
                           </Grid>
                           <Grid item xs={4}>
@@ -1866,19 +1101,20 @@ const CreateAccount = () => {
                             <FormControlLabel
                               control={
                                 <Checkbox
-                                  checked={formData.admissionmanagementsystem}
+                                  checked={formData.feesmanagementsystem}
                                   onChange={handleChange}
-                                  name="admissionmanagementsystem"
+                                  name="feesmanagementsystem"
                                   color="primary"
                                 />
                               }
-                              label="Admission System"
+                              label="Fees System"
                             />
                           </Grid>
                         </Grid>
                       </Grid>
                     </Grid>
                   </Paper>
+
                   <Grid item xs={12}>
                     <Typography
                       variant="h4"
@@ -1895,29 +1131,40 @@ const CreateAccount = () => {
                         variant="body1"
                         style={{
                           display: "flex",
+                          fontWeight: "bold",
                           justifyContent: "space-between",
                         }}
                       >
-                        <strong>Plan Value Per Month</strong>
-                        <span>₹ {amountPerMonth || 0}</span>
+                        <strong>Plan Value</strong>
+                        <span>₹ {amountPerMonth || 0}/ Month</span>
                       </Typography>
+
                       <Typography
                         variant="body1"
                         style={{
                           display: "flex",
                           justifyContent: "space-between",
+                          fontWeight: "bold",
                           marginTop: "5px",
                         }}
                       >
-                        <strong>Taxs & Fees ({gstPercentage}%)</strong>
-                        <span>
-                          ₹{" "}
-                          {(
-                            ((amountPerMonth || 0) * 12 * gstPercentage) /
-                            100
-                          ).toFixed(2)}
-                        </span>
+                        <strong>Total Subscription Years</strong>
+                        <span>{subscriptionYear || 0} Years</span>
                       </Typography>
+
+                      <Typography
+                        variant="body1"
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          fontWeight: "bold",
+                          marginTop: "5px",
+                        }}
+                      >
+                        <strong>Total Amount (Excluding GST)</strong>
+                        <span>₹ {yearlyAmount.toFixed(2)}</span>
+                      </Typography>
+
                       <Typography
                         variant="body1"
                         style={{
@@ -1928,79 +1175,208 @@ const CreateAccount = () => {
                           color: "green",
                         }}
                       >
-                        <strong>Grand Total </strong>
-                        <span>₹ {amount || 0}</span>
+                        <strong>Total Savings</strong>
+                        <span>₹ {savings.toFixed(2)}</span>{" "}
+                        {/* Display savings */}
+                      </Typography>
+
+                      <Typography
+                        variant="body1"
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          fontWeight: "bold",
+                          marginTop: "5px",
+                        }}
+                      >
+                        <strong>Tax & Fees ({gstPercentage}%)</strong>
+                        <span>₹ {gstAmount.toFixed(2)}</span>
+                      </Typography>
+
+                      <Typography
+                        variant="body1"
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          fontWeight: "bold",
+                          marginTop: "5px",
+                          color: "green",
+                        }}
+                      >
+                        <strong>Grand Total (Including GST)</strong>
+                        <span>₹ {amount.toFixed(2)}</span>
                       </Typography>
                     </Grid>
+
+                    <Grid
+                      container
+                      spacing={2}
+                      justifyContent="space-around"
+                      sx={{ marginTop: "24px" }}
+                    >
+                      <Grid item>
+                        <FormControlLabel
+                          control={<Checkbox />}
+                          label={
+                            <Typography
+                              variant="body1"
+                              align="center"
+                              onClick={() =>
+                                handleClickOpen(policies.privacyPolicy)
+                              }
+                              sx={{
+                                cursor: "pointer",
+                                textDecoration: "underline",
+                              }}
+                            >
+                              Privacy Policy
+                            </Typography>
+                          }
+                        />
+                      </Grid>
+                      <Grid item>
+                        <FormControlLabel
+                          control={<Checkbox />}
+                          label={
+                            <Typography
+                              variant="body1"
+                              align="center"
+                              onClick={() =>
+                                handleClickOpen(policies.termsConditions)
+                              }
+                              sx={{
+                                cursor: "pointer",
+                                textDecoration: "underline",
+                              }}
+                            >
+                              Terms & Conditions
+                            </Typography>
+                          }
+                        />
+                      </Grid>
+                      <Grid item>
+                        <FormControlLabel
+                          control={<Checkbox />}
+                          label={
+                            <Typography
+                              variant="body1"
+                              align="center"
+                              onClick={() =>
+                                handleClickOpen(policies.dataProductPolicy)
+                              }
+                              sx={{
+                                cursor: "pointer",
+                                textDecoration: "underline",
+                              }}
+                            >
+                              Data & Product Policy
+                            </Typography>
+                          }
+                        />
+                      </Grid>
+                    </Grid>
+                    {/* Dialog for Policy Information */}
+                    {selectedPolicy && (
+                      <PolicyPopup
+                        open={open}
+                        onClose={handleClose}
+                        policy={selectedPolicy}
+                      />
+                    )}
                     {/* Payment Button */}
-                    <Grid item xs={12}>
-                      <Button
-                        variant="contained"
-                        fullWidth
-                        onClick={handlePayment}
-                        sx={{ backgroundColor: "#003366", color: "gold" }}
-                        disabled={selectedCard === null} // Disable if no plan is selected
-                      >
-                        Pay INR ₹ {amount || 0}
-                      </Button>
+                    <Grid
+                      container
+                      spacing={2}
+                      marginLeft="10px"
+                      marginTop="10px"
+                    >
+                      <Grid item xs={12} sm={4}>
+                        <Button
+                          variant="contained"
+                          fullWidth
+                          onClick={handlePayment}
+                          sx={{ backgroundColor: "#003366", color: "gold" }}
+                          disabled={selectedCard === null} // Disable if no plan is selected
+                        >
+                          Pay INR ₹ {amount || 0}
+                        </Button>
+                      </Grid>
+
+                      <Grid item xs={12} sm={4}>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          type="submit"
+                          fullWidth
+                          disabled={!paymentSuccessful} // Disable if payment is not successful
+                        >
+                          Create Account
+                        </Button>
+                      </Grid>
                     </Grid>
                   </Grid>
 
-                  <Grid item xs={12}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      type="submit"
-                      fullWidth
-                      disabled={!paymentSuccessful} // Disable if payment is not successful
+                  <Grid
+                    item
+                    xs={12}
+                    mt={2}
+                    display="flex"
+                    alignItems="center"
+                    gap={2}
+                  >
+                    {/* Upload Image Button */}
+                    <Grid
+                      item
+                      xs={12}
+                      mt={2}
+                      display="flex"
+                      alignItems="center"
+                      gap={2}
                     >
-                      Create Account
-                    </Button>
+                      {/* Upload Image Button */}
+                      <ImageUploadButton
+                        variant="contained"
+                        onClick={() =>
+                          document.getElementById("image-upload").click()
+                        }
+                        disabled={!paymentSuccessful}
+                        sx={{ backgroundColor: "#003366", color: "gold" }}
+                      >
+                        Upload Image / Logo
+                      </ImageUploadButton>
+
+                      {/* Hidden Input for File Upload */}
+                      <input
+                        type="file"
+                        id="image-upload"
+                        style={{ display: "none" }}
+                        onChange={(e) => {
+                          setImageUpload(e.target.files[0]);
+                        }}
+                      />
+
+                      {/* Conditionally Render Confirm Button if Image is Selected */}
+                      {imageUpload && (
+                        <Button
+                          variant="contained"
+                          color="success"
+                          onClick={handleImageUpload} // function to confirm upload
+                        >
+                          Confirm Image Upload
+                        </Button>
+                      )}
+                      {isSaveSuccessful && (
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={handleGetInstituteCode}
+                        >
+                          Get Your Institute Code
+                        </Button>
+                      )}
+                    </Grid>
                   </Grid>
-                  <Grid item xs={12} mt={2} display="flex" alignItems="center" gap={2}>
-  {/* Upload Image Button */}
-  <Grid item xs={12} mt={2} display="flex" alignItems="center" gap={2}>
-  {/* Upload Image Button */}
-  <ImageUploadButton
-    variant="contained"
-    onClick={() => document.getElementById("image-upload").click()}
-    sx={{ backgroundColor: "#003366", color: "gold" }}
-  >
-    Upload Image / Logo
-  </ImageUploadButton>
 
-  {/* Hidden Input for File Upload */}
-  <input
-    type="file"
-    id="image-upload"
-    style={{ display: "none" }}
-    onChange={(e) => {
-      setImageUpload(e.target.files[0]);
-    }}
-  />
-
-  {/* Conditionally Render Confirm Button if Image is Selected */}
-  {imageUpload && (
-    <Button
-      variant="contained"
-      color="success"
-      onClick={handleImageUpload} // function to confirm upload
-    >
-      Confirm Image Upload
-    </Button>
-  )}
-   {isSaveSuccessful && (
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleGetInstituteCode}
-                    >
-                      Get Your Institute Code
-                    </Button>
-                  )}
-</Grid>
-</Grid>
-                 
                   {/* <Grid item xs={12}>
                     {imageUpload && (
                       <Button
@@ -2012,7 +1388,6 @@ const CreateAccount = () => {
                       </Button>
                     )}
                   </Grid> */}
-                 
 
                   <Modal
                     open={isPopupOpen}
@@ -2071,6 +1446,188 @@ const CreateAccount = () => {
           </Grid>
         </Grid>
       </div>
+      <Dialog
+        open={showReceipt}
+        onClose={() => setShowReceipt(false)}
+        maxWidth="md"
+        fullWidth
+      >
+        <DialogContent sx={{ p: 2 }}>
+          {formData ? (
+            <Box id="receipt">
+              <DialogTitle
+                align="center"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <img
+                    src={logo}
+                    alt="Logo"
+                    style={{ width: "50px", marginRight: "10px" }}
+                  />
+                  <Typography variant="h4" >PJSOFTTECH PVT LTD.</Typography>
+                </div>
+                
+              </DialogTitle>
+              <Typography variant="h5" align="center">Billing Receipt</Typography>
+
+              <Typography
+                variant="body2"
+                align="left"
+                sx={{ mb: 0.5, ml: 1 }}
+                mt={3}
+              >
+                <strong>Bill To:</strong>
+                <br /> {formData.institutename}
+                <br />
+              </Typography>
+
+              <Typography variant="body2" align="left" sx={{ mb: 1, ml: 1 }}>
+                <strong>Address:</strong>
+                <br />
+                {formData.address}, {formData.city},{" "}
+                {formData.state}, {formData.country},{" "}<br />
+                {formData.pincode},
+                <br />
+                {formData.emailaddress},<br />{" "}
+                {formData.mobilenumber}
+              </Typography>
+
+              <Divider sx={{ my: 3 }} />
+
+              <Box display="flex" justifyContent="space-between" mb={1}>
+                <Box flex="1" ml={1}>
+                 
+                  <Typography variant="body1" sx={{ mb: 0.5 }}>
+                    <strong>Plan:</strong> {plans[selectedCard]} Plan
+                  </Typography>
+                  <Typography variant="body1" sx={{ mb: 0.5 }}>
+                    <strong>Contact:</strong> {formData.mobilenumber}
+                  </Typography>
+                  
+                </Box>
+                <Box flex="1" mr={1}>
+                  <Typography variant="body1" sx={{ mb: 0.5 }}>
+                    <strong>GST No:</strong> {formData.gstNo}
+                  </Typography>
+                  <Typography variant="body1" sx={{ mb: 0.5 }}>
+                    <strong>Subscription Year:</strong>{" "}
+                    {subscriptionYear} Years
+                  </Typography>
+                 
+                </Box>
+              </Box>
+
+              <Typography variant="h6" align="center" gutterBottom>
+                Payment Details
+              </Typography>
+
+              <Box
+                sx={{
+                  border: "1px solid #ccc",
+                  borderRadius: "8px",
+                  p: 1,
+                  mb: 1,
+                }}
+              >
+                <Table>
+                  <TableBody>
+                    {[
+                      { label: "Plan Name", value: `${plans[selectedCard]} Plan`  },
+                      {
+                        label: "Plan Value",
+                        value: `${amountPerMonth}/Month`,
+                      },
+                      {
+                        label: "Plan Valid For",
+                        value: `${subscriptionYear} Years`,
+                      },
+                      
+                      {
+                        label: "Amount",
+                        value: `₹ ${yearlyAmount}`,
+                      },
+                      
+                      {
+                        label: "GST Percentage",
+                        value: `${gstPercentage}%`,
+                      },
+                      {
+                        label: "GST Amount",
+                        value: `₹ ${gstAmount} `,
+                      },
+                      {
+                        label: <strong>Total Amount</strong>,
+                        value: (
+                          <strong>
+                            ₹ {amount}
+                          </strong>
+                        ),
+                      },
+                      // {
+                      //   label: "GST Amount",
+                      //   value: {paymentId},
+                      // },
+                    ].map((row, index) => (
+                      <TableRow key={index}>
+                        <TableCell>{row.label}</TableCell>
+                        <TableCell>{row.value}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </Box>
+
+              <Typography variant="body1" align="center" sx={{ mb: 2 }}>
+                <strong>Total Amount in Words:</strong>{" "}
+                {convertNumberToWords(amount)} Only
+              </Typography>
+
+              <Box mt={2} display="flex" justifyContent="space-between" mb={2}>
+                <Box textAlign="center">
+                  <Typography variant="body2">Authorized Signature</Typography>
+                  <Box mt={4} borderBottom="1px solid #000" width="150px" />
+                </Box>
+                <Box textAlign="center">
+                  <Typography variant="body2">Client Signature</Typography>
+                  <Box mt={4} borderBottom="1px solid #000" width="150px" />
+                </Box>
+              </Box>
+
+              <Divider sx={{ my: 2 }} />
+
+              <Typography variant="body2" align="center" sx={{ mb: 1 }}>
+                203, 2nd floor, Mangalmurti Complex, behind ABIL Tower hirabaugh
+                chowk, Tilak Road
+                <br />
+              </Typography>
+              <Typography variant="body2" align="center" sx={{ mb: 1 }}>
+                Website: http://www.pjsofttech.com | Phone: +919923570901
+              </Typography>
+              <Typography variant="body2" align="center">
+                Email: sales@pjsofttech.com
+              </Typography>
+
+              <Button
+                sx={{ mt: 2 }}
+                variant="contained"
+                color="primary"
+                onClick={downloadReceipt}
+              >
+                Download Receipt
+              </Button>
+            </Box>
+          ) : (
+            <Typography variant="body2" color="red" align="center">
+              Receipt data is not available.
+            </Typography>
+          )}
+        </DialogContent>
+      </Dialog>
     </>
   );
 };

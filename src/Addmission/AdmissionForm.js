@@ -177,15 +177,19 @@ const AdmissionForm = () => {
   };
 
   const calculateBalance = () => {
-    if (
-      formData.paymentMethod === "Partial" ||
-      formData.paymentMethod === "Pending"
-    ) {
+    if (formData.paymentMethod === "Pending") {
+      // If the payment method is "Pending", set paidFees to 0
+      return formData.totalFees; // Balance will be the total fees since nothing is paid
+    }
+  
+    if (formData.paymentMethod === "Partial") {
+      // For partial payments, subtract paid fees from total fees
       return formData.totalFees - formData.paidFees;
     }
-
+  
     return 0; // No balance for other payment methods
   };
+  
 
   const handleBlur = (field) => (event) => {
     setTouched({ ...touched, [field]: true });
@@ -368,16 +372,18 @@ const AdmissionForm = () => {
               </TextField>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
-              <TextField
-                fullWidth
-                id="paidFees"
-                name="paidFees"
-                label="Fees Paying"
-                value={formData.paidFees}
-                onChange={handleInputChange}
-                required
-              />
-            </Grid>
+  <TextField
+    fullWidth
+    id="paidFees"
+    name="paidFees"
+    label="Fees Paying"
+    value={formData.paymentMethod === "Pending" ? 0 : formData.paidFees} // Set paidFees to 0 if paymentMethod is "Pending"
+    onChange={handleInputChange}
+    required
+    disabled={formData.paymentMethod === "Pending"} // Disable input if paymentMethod is "Pending"
+  />
+</Grid>
+
             {formData.paymentMethod === "Pending" ||
             formData.paymentMethod === "Partial" ? (
               <Grid item xs={12} sm={6} md={4}>

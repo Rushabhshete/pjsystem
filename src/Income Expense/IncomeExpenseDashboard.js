@@ -722,7 +722,7 @@ const IncomeExpenseDashboard = () => {
 
       {/* pending income & Exepense */}
 
-      <Grid container justifyContent="center" spacing={2} mt={2}>
+      <Grid container justifyContent="center" spacing={2} mt={1}>
         <Grid item>
           <Button variant="contained" onClick={togglePending}>
             {showPending ? "Hide Pending Amount" : "Show Pending Amount"}
@@ -801,127 +801,113 @@ const IncomeExpenseDashboard = () => {
       )}
 
       {/* pending inc exp */}
+      <Grid container spacing={3} >
+  <Grid item xs={12} sm={6} style={{ display: 'flex', alignItems: 'stretch' }}>
+    <Paper elevation={3} style={{ padding: '20px', marginTop: '20px', flex: 1 }}>
+      <Typography variant="h6" align="center">
+        Overall Income & Expense Comparison
+      </Typography>
+      <Bar data={overallData} options={overallOptions} />
+    </Paper>
+  </Grid>
 
-
-      <Grid container spacing={3} style={{ marginTop: "30px" }}>
-        <Grid item xs={12} sm={6}>
-          <Typography variant="h6" align="center">
-            Overall Income & Expense Comparison
-          </Typography>
-          <Paper elevation={3} sx={{ padding: 2 }}>
-            <Bar data={overallData} options={overallOptions} />
-          </Paper>
-        </Grid>
-
-        <Grid item xs={12} sm={6} className="textField-root">
-          <TextField
-            select
-            label="Year"
-            value={year}
-            onChange={handleYearChange}
-            sx={{ marginTop: "-20px" }}
-          >
-            {years.map((year) => (
-              <MenuItem key={year} value={year}>
-                {year}
-              </MenuItem>
-            ))}
-          </TextField>
-          <Typography variant="h6" align="center" mt={-4}>
-            {year} Income & Expense Comparison
-          </Typography>
-          <Paper elevation={3} sx={{ padding: 2 }}>
-            <Line data={monthlyData} options={monthlyOptions} />
-          </Paper>
-        </Grid>
-      </Grid>
-      <Grid
-        container
-        spacing={3}
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          marginTop: "10px",
-        }}
+  <Grid item xs={12} sm={6} className="textField-root" style={{ display: 'flex', alignItems: 'stretch' }}>
+    <Paper elevation={3} style={{ padding: '20px', marginTop: '20px', flex: 1 }}>
+      <TextField
+        select
+        label="Year"
+        value={year}
+        onChange={handleYearChange}
+        sx={{ marginTop: "10px" }}
       >
-        {" "}
-        <Grid
-          container
-          spacing={2}
-          style={{
-            marginBottom: "20px",
-            textAlign: "center",
-            justifyContent: "center",
-          }}
+        {years.map((year) => (
+          <MenuItem key={year} value={year}>
+            {year}
+          </MenuItem>
+        ))}
+      </TextField>
+      <Typography variant="h6" align="center" mt={-4}>
+        {year} Income & Expense Comparison
+      </Typography>
+      <Line data={monthlyData} options={monthlyOptions} />
+    </Paper>
+  </Grid>
+</Grid>
+
+      
+
+
+     
+      <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
+  <Grid container spacing={3} style={{ alignItems: 'center', justifyContent: 'center' }}>
+    {/* Selection Grid for Year and Month */}
+    <Grid container spacing={2} style={{ marginBottom: '10px', textAlign: 'center', justifyContent: 'center', marginTop:'10px' }}>
+      <Grid item xs={12} sm={6} md={2.4} className="textField-root">
+        <TextField
+          select
+          label="Year"
+          value={year}
+          onChange={handleYearChange}
+          fullWidth
         >
-          <Grid item xs={12} sm={6} md={2.4} className="textField-root">
-            <TextField
-              select
-              label="Year"
-              value={year}
-              onChange={handleYearChange}
-              fullWidth
-            >
-              {years.map((year) => (
-                <MenuItem key={year} value={year}>
-                  {year}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Grid>
-          <Grid item xs={12} sm={6} md={2.4} className="textField-root">
-            <TextField
-              select
-              label="Month"
-              value={month}
-              onChange={handleMonthChange}
-              fullWidth
-            >
-              {months.map((month, index) => (
-                <MenuItem key={month} value={index + 1}>
-                  {month}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Grid>
-        </Grid>
-        <Grid container spacing={3} style={{ marginTop: "10px" }}>
-        <Grid item xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom align="center">
-            Income Categories ({months[month - 1]} {year})
-          </Typography>
-          <Paper
-            elevation={3}
-            sx={{
-              padding: 2,
-              height: 500,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Pie data={incomePieData} />
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom align="center">
-            Expense Categories ({months[month - 1]} {year})
-          </Typography>
-          <Paper
-            elevation={3}
-            sx={{
-              padding: 2,
-              height: 500,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Pie data={expensePieData} />
-          </Paper>
-        </Grid>
+          {years.map((year) => (
+            <MenuItem key={year} value={year}>
+              {year}
+            </MenuItem>
+          ))}
+        </TextField>
       </Grid>
+      <Grid item xs={12} sm={6} md={2.4} className="textField-root">
+        <TextField
+          select
+          label="Month"
+          value={month}
+          onChange={handleMonthChange}
+          fullWidth
+        >
+          {months.map((month, index) => (
+            <MenuItem key={month} value={index + 1}>
+              {month}
+            </MenuItem>
+          ))}
+        </TextField>
       </Grid>
+    </Grid>
+
+    {/* Pie Charts Grid */}
+    <Grid container spacing={3} style={{ marginTop: '10px', justifyContent: 'center' }}>
+      <Grid item xs={12} sm={6}>
+        <Typography variant="h6" gutterBottom align="center">
+          Income Categories ({months[month - 1]} {year})
+        </Typography>
+        <div style={{
+          padding: '16px',
+          height: 500,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+          <Pie data={incomePieData} />
+        </div>
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <Typography variant="h6" gutterBottom align="center">
+          Expense Categories ({months[month - 1]} {year})
+        </Typography>
+        <div style={{
+          padding: '16px',
+          height: 500,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+          <Pie data={expensePieData} />
+        </div>
+      </Grid>
+    </Grid>
+  </Grid>
+</Paper>
+
     </div>
   );
 };

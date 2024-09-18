@@ -133,7 +133,7 @@ const [subadminToDelete, setSubadminToDelete] = useState(null);
   const fetchAllSubAdmins = async () => {
     setFetchingData(true);
     try {
-      const response = await axios.get(`http://localhost:8081/getSubAdminsByInstitutecode?institutecode=${getInstituteCode()}`);
+      const response = await axios.get(`http://localhost:8081/getSubAdminsByInstitutecode?institutecode=${institutecode()}`);
       setAllSubAdmins(response.data);
     } catch (err) {
       setError('Failed to fetch data.');
@@ -147,10 +147,10 @@ const [subadminToDelete, setSubadminToDelete] = useState(null);
     fetchAllSubAdmins();
   }, []);
 
-  const getInstituteCode = () => {
-    // Replace with actual logic to get institute code
-    return 'Rush@gmail.com';
-  };
+  // const getInstituteCode = () => {
+  //   // Replace with actual logic to get institute code
+  //   return 'Rush@gmail.com';
+  // };
   const PopTypography = styled(Typography)`
   @keyframes pop {
     0% {

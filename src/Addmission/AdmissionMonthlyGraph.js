@@ -99,7 +99,6 @@ const MonthlyGraph = () => {
       <Typography variant="h6" align="center">
         Monthly Admissions
       </Typography>
-      <Paper elevation={3}>
         <Chart
           width={"100%"}
           height={"400px"}
@@ -126,7 +125,6 @@ const MonthlyGraph = () => {
           }}
           legendToggle
         />
-      </Paper>
     </div>
   );
 };

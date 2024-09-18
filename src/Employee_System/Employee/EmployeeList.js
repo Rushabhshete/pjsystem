@@ -1559,15 +1559,6 @@ const fetchDepartments = async () => {
       setFilteredUsers(filtered);
     }
   };
-  // const fetchUserById = async (id) => {
-  //   try {
-  //     const response = await Userservice.getUserById(id);
-  //     setSelectedUser(response.data);
-  //     setShowUpdateModal(true);
-  //   } catch (error) {
-  //     console.error('Error fetching user by ID:', error);
-  //   }
-  // };
   const fetchUserById = async (id) => {
     try {
       const response = await Userservice.getUserById(id);
@@ -1878,19 +1869,9 @@ const fetchDepartments = async () => {
     <div className="container1">
       <div className="headertable1">
         <Paper component={Box} p={2} sx={{ display: 'flex', alignItems: 'center' }}>
-          <Grid container spacing={2} sx={{ marginBottom: '5px' }}>
-          <Grid item xs={2}>
-        <FormControl fullwidth>
-            <TextField
-            label="Search"
-              id="search-input"
-              value={searchTerm}
-              onChange={handleSearch}
-              placeholder="Search"
-            />
-          </FormControl>
-          </Grid>
-  <Grid item xs={3}>
+          <Grid container spacing={2} sx={{ marginBottom: '5px' }} className='textField-root'>
+        
+  <Grid item  xs={6} md={1.8}>
     <FormControl fullWidth>
       <TextField
       select
@@ -1910,7 +1891,7 @@ const fetchDepartments = async () => {
     </FormControl>
   </Grid>
   
-  <Grid item xs={3}>
+  <Grid item  xs={6} md={1.8}>
     <FormControl fullWidth>
       <TextField
       select
@@ -1930,7 +1911,7 @@ const fetchDepartments = async () => {
     </FormControl>
   </Grid>
 
-  <Grid item xs={3}>
+  <Grid item  xs={6} md={1.8}>
     <FormControl fullWidth>
       <TextField
       select
@@ -1948,7 +1929,17 @@ const fetchDepartments = async () => {
         ))}
       </TextField>
     </FormControl>
-  </Grid>
+  </Grid>  <Grid item xs={6} md={1.8}>
+        <FormControl fullwidth>
+            <TextField
+            label="Search"
+              id="search-input"
+              value={searchTerm}
+              onChange={handleSearch}
+              placeholder="Search"
+            />
+          </FormControl>
+          </Grid>
   <Button variant="contained" onClick={handleDownloadCsv} sx={{ ml: 2, mt:2}}>
             Download CSV
           </Button>
@@ -1965,7 +1956,7 @@ const fetchDepartments = async () => {
       rowsPerPageOptions={[10, 20, 50]}
       labelRowsPerPage="Entries per Page"
     />
-    <div style={{maxWidth:'1200px',overflowX:'auto' }}>
+    <div >
       <TableContainer>
       <Table>
         <TableHead sx={{backgroundColor:'#f2f2f2'}}>

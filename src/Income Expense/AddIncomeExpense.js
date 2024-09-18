@@ -648,12 +648,14 @@ const AddIncomeExpense = () => {
             <TextField
               label="Amount Paying"
               name="payingAmount"
-              value={formData.payingAmount}
+              value={formData.paymentMethod==="Pending"?0 :formData.payingAmount}
               onChange={handleChange}
               fullWidth
               required
               InputLabelProps={{ className: "required-asterisk" }}
               variant="outlined"
+    disabled={formData.paymentMethod === "Pending"} // Disable input if paymentMethod is "Pending"
+
             />
           </Grid>
           <Grid item xs={12} sm={3}>
