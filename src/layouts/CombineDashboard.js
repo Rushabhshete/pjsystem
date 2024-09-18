@@ -25,6 +25,7 @@ import ComparisonGraph from "../Addmission/AdmissionComparisonGraph"
 import { styled } from "@mui/system";
 import IncomeCombineDash from "./IncomeCombineDash";
 import YearlyGraph from '../Enquiry/YearlyGraph'
+import EmployeeDashboard from "../Employee_System/Employee/EmployeeDashboard"
 
 export default function CombineDashboard() {
   //admission
@@ -528,6 +529,7 @@ export default function CombineDashboard() {
         </Grid>
         {/* Admission Dashboard end */}
       </Grid>
+      <EmployeeDashboard />
     </div>
   );
 };
