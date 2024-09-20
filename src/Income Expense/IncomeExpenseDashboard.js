@@ -1,6 +1,12 @@
-
 import React, { useState, useEffect } from "react";
-import { Typography, Grid, Paper, TextField, MenuItem, Button } from "@mui/material";
+import {
+  Typography,
+  Grid,
+  Paper,
+  TextField,
+  MenuItem,
+  Button,
+} from "@mui/material";
 import {
   Chart as ChartJS,
   Title,
@@ -141,13 +147,17 @@ const IncomeExpenseDashboard = () => {
     fetchMonthlyExpense();
   }, [year]);
   // Fetch pie chart data
-  
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const [incomeResponse, expenseResponse] = await Promise.all([
-          fetch(`http://localhost:8087/dashboard/totalIncomeByCategory?year=${year}&month=${month}&institutecode=${getInstituteCode()}`),
-          fetch(`http://localhost:8087/dashboard/totalExpenseByCategory?year=${year}&month=${month}&institutecode=${getInstituteCode()}`)
+          fetch(
+            `http://localhost:8087/dashboard/totalIncomeByCategory?year=${year}&month=${month}&institutecode=${getInstituteCode()}`
+          ),
+          fetch(
+            `http://localhost:8087/dashboard/totalExpenseByCategory?year=${year}&month=${month}&institutecode=${getInstituteCode()}`
+          ),
         ]);
         const incomeData = await incomeResponse.json();
         const expenseData = await expenseResponse.json();
@@ -173,7 +183,7 @@ const IncomeExpenseDashboard = () => {
     };
     fetchCategories();
   }, [year, month]);
-  
+
   // Determine text for savings/loss card
   const savingsText = savingsData >= 0 ? "Saving" : "Loss";
   const todaytext =
@@ -320,25 +330,62 @@ const IncomeExpenseDashboard = () => {
     if (showPending) {
       const fetchPendingData = async () => {
         try {
-          const [pendingIncomeResponse, pendingExpenseResponse] = await Promise.all([
-            fetch(`http://localhost:8087/dashboard/income/pending?timeframe=today&institutecode=${getInstituteCode()}`),
-            fetch(`http://localhost:8087/dashboard/expense/pending?timeframe=today&institutecode=${getInstituteCode()}`)
-          ]);
-          
+          const [pendingIncomeResponse, pendingExpenseResponse] =
+            await Promise.all([
+              fetch(
+                `http://localhost:8087/dashboard/income/pending?timeframe=today&institutecode=${getInstituteCode()}`
+              ),
+              fetch(
+                `http://localhost:8087/dashboard/expense/pending?timeframe=today&institutecode=${getInstituteCode()}`
+              ),
+            ]);
+
           const incomeStats = {
             today: await pendingIncomeResponse.json(),
-            last7Days: await (await fetch(`http://localhost:8087/dashboard/income/pending?timeframe=last7days&institutecode=${getInstituteCode()}`)).json(),
-            last30Days: await (await fetch(`http://localhost:8087/dashboard/income/pending?timeframe=last30days&institutecode=${getInstituteCode()}`)).json(),
-            last365Days: await (await fetch(`http://localhost:8087/dashboard/income/pending?timeframe=last365days&institutecode=${getInstituteCode()}`)).json(),
-            total: await (await fetch(`http://localhost:8087/dashboard/income/pending?timeframe=total&institutecode=${getInstituteCode()}`)).json(),
+            last7Days: await (
+              await fetch(
+                `http://localhost:8087/dashboard/income/pending?timeframe=last7days&institutecode=${getInstituteCode()}`
+              )
+            ).json(),
+            last30Days: await (
+              await fetch(
+                `http://localhost:8087/dashboard/income/pending?timeframe=last30days&institutecode=${getInstituteCode()}`
+              )
+            ).json(),
+            last365Days: await (
+              await fetch(
+                `http://localhost:8087/dashboard/income/pending?timeframe=last365days&institutecode=${getInstituteCode()}`
+              )
+            ).json(),
+            total: await (
+              await fetch(
+                `http://localhost:8087/dashboard/income/pending?timeframe=total&institutecode=${getInstituteCode()}`
+              )
+            ).json(),
           };
 
           const expenseStats = {
             today: await pendingExpenseResponse.json(),
-            last7Days: await (await fetch(`http://localhost:8087/dashboard/expense/pending?timeframe=last7days&institutecode=${getInstituteCode()}`)).json(),
-            last30Days: await (await fetch(`http://localhost:8087/dashboard/expense/pending?timeframe=last30days&institutecode=${getInstituteCode()}`)).json(),
-            last365Days: await (await fetch(`http://localhost:8087/dashboard/expense/pending?timeframe=last365days&institutecode=${getInstituteCode()}`)).json(),
-            total: await (await fetch(`http://localhost:8087/dashboard/expense/pending?timeframe=total&institutecode=${getInstituteCode()}`)).json(),
+            last7Days: await (
+              await fetch(
+                `http://localhost:8087/dashboard/expense/pending?timeframe=last7days&institutecode=${getInstituteCode()}`
+              )
+            ).json(),
+            last30Days: await (
+              await fetch(
+                `http://localhost:8087/dashboard/expense/pending?timeframe=last30days&institutecode=${getInstituteCode()}`
+              )
+            ).json(),
+            last365Days: await (
+              await fetch(
+                `http://localhost:8087/dashboard/expense/pending?timeframe=last365days&institutecode=${getInstituteCode()}`
+              )
+            ).json(),
+            total: await (
+              await fetch(
+                `http://localhost:8087/dashboard/expense/pending?timeframe=total&institutecode=${getInstituteCode()}`
+              )
+            ).json(),
           };
 
           setPendingIncomeStats(incomeStats);
@@ -353,7 +400,7 @@ const IncomeExpenseDashboard = () => {
   }, [showPending]);
 
   const togglePending = () => {
-    setShowPending(prev => !prev);
+    setShowPending((prev) => !prev);
   };
 
   const incomePieData = {
@@ -731,187 +778,221 @@ const IncomeExpenseDashboard = () => {
       </Grid>
 
       {showPending && (
-        
         <Grid container spacing={2} style={{ marginTop: "10px" }}>
-          
           {/* Today's Pending Income */}
-          <InfoCard 
-          sx={{}}
-            title="Today's Pending INC" 
-            value={formattedCountUp(pendingIncomeStats.today?.total || 0)} 
-            color="#F9E79F" 
+          <InfoCard
+            sx={{}}
+            title="Today's Pending INC"
+            value={formattedCountUp(pendingIncomeStats.today?.total || 0)}
+            color="#F9E79F"
           />
           {/* Last 7 Days Pending Income */}
-          <InfoCard 
-            title="7 Days Pending INC" 
-            value={formattedCountUp(pendingIncomeStats.last7Days?.total || 0)} 
-            color="#FF6F61" 
+          <InfoCard
+            title="7 Days Pending INC"
+            value={formattedCountUp(pendingIncomeStats.last7Days?.total || 0)}
+            color="#FF6F61"
           />
           {/* Last 30 Days Pending Income */}
-          <InfoCard 
-            title="30 Days Pending INC" 
-            value={formattedCountUp(pendingIncomeStats.last30Days?.total || 0)} 
-            color="#3498DB" 
+          <InfoCard
+            title="30 Days Pending INC"
+            value={formattedCountUp(pendingIncomeStats.last30Days?.total || 0)}
+            color="#3498DB"
           />
           {/* Last 365 Days Pending Income */}
-          <InfoCard 
-            title={<span style={{ fontSize: '15px' }}>365 Days Pending INC</span>} 
-            value={formattedCountUp(pendingIncomeStats.last365Days?.total || 0)} 
-            color="#9ACD32" 
+          <InfoCard
+            title={
+              <span style={{ fontSize: "15px" }}>365 Days Pending INC</span>
+            }
+            value={formattedCountUp(pendingIncomeStats.last365Days?.total || 0)}
+            color="#9ACD32"
           />
           {/* Total Pending Income */}
-          <InfoCard 
-            title="Total Pending INC" 
-            value={formattedCountUp(pendingIncomeStats.total?.total || 0)} 
-            color="#F4C431" 
+          <InfoCard
+            title="Total Pending INC"
+            value={formattedCountUp(pendingIncomeStats.total?.total || 0)}
+            color="#F4C431"
           />
 
           {/* Today's Pending Expense */}
-          <InfoCard 
-            title="Today's Pending EXP" 
-            value={formattedCountUp(pendingExpenseStats.today?.total || 0)} 
-            color="#F9E79F" 
+          <InfoCard
+            title="Today's Pending EXP"
+            value={formattedCountUp(pendingExpenseStats.today?.total || 0)}
+            color="#F9E79F"
           />
           {/* Last 7 Days Pending Expense */}
-          <InfoCard 
-            title="7 Days Pending EXP" 
-            value={formattedCountUp(pendingExpenseStats.last7Days?.total || 0)} 
-            color="#FF6F61" 
+          <InfoCard
+            title="7 Days Pending EXP"
+            value={formattedCountUp(pendingExpenseStats.last7Days?.total || 0)}
+            color="#FF6F61"
           />
           {/* Last 30 Days Pending Expense */}
-          <InfoCard 
-            title="30 Days Pending EXP" 
-            value={formattedCountUp(pendingExpenseStats.last30Days?.total || 0)} 
-            color="#3498DB" 
+          <InfoCard
+            title="30 Days Pending EXP"
+            value={formattedCountUp(pendingExpenseStats.last30Days?.total || 0)}
+            color="#3498DB"
           />
           {/* Last 365 Days Pending Expense */}
-          <InfoCard 
-    title={<span style={{ fontSize: '15px' }}>365 Days Pending EXP</span>} 
-    value={formattedCountUp(pendingExpenseStats.last365Days?.total || 0)} 
-    color="#9ACD32" 
-/>
+          <InfoCard
+            title={
+              <span style={{ fontSize: "15px" }}>365 Days Pending EXP</span>
+            }
+            value={formattedCountUp(
+              pendingExpenseStats.last365Days?.total || 0
+            )}
+            color="#9ACD32"
+          />
 
           {/* Total Pending Expense */}
-          <InfoCard 
-            title="Total Pending EXP" 
-            value={formattedCountUp(pendingExpenseStats.total?.total || 0)} 
-            color="#F4C431" 
+          <InfoCard
+            title="Total Pending EXP"
+            value={formattedCountUp(pendingExpenseStats.total?.total || 0)}
+            color="#F4C431"
           />
         </Grid>
       )}
 
       {/* pending inc exp */}
-      <Grid container spacing={3} >
-  <Grid item xs={12} sm={6} style={{ display: 'flex', alignItems: 'stretch' }}>
-    <Paper elevation={3} style={{ padding: '20px', marginTop: '20px', flex: 1 }}>
-      <Typography variant="h6" align="center">
-        Overall Income & Expense Comparison
-      </Typography>
-      <Bar data={overallData} options={overallOptions} />
-    </Paper>
-  </Grid>
-
-  <Grid item xs={12} sm={6} className="textField-root" style={{ display: 'flex', alignItems: 'stretch' }}>
-    <Paper elevation={3} style={{ padding: '20px', marginTop: '20px', flex: 1 }}>
-      <TextField
-        select
-        label="Year"
-        value={year}
-        onChange={handleYearChange}
-        sx={{ marginTop: "10px" }}
-      >
-        {years.map((year) => (
-          <MenuItem key={year} value={year}>
-            {year}
-          </MenuItem>
-        ))}
-      </TextField>
-      <Typography variant="h6" align="center" mt={-4}>
-        {year} Income & Expense Comparison
-      </Typography>
-      <Line data={monthlyData} options={monthlyOptions} />
-    </Paper>
-  </Grid>
-</Grid>
-
-      
-
-
-     
-      <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
-  <Grid container spacing={3} style={{ alignItems: 'center', justifyContent: 'center' }}>
-    {/* Selection Grid for Year and Month */}
-    <Grid container spacing={2} style={{ marginBottom: '10px', textAlign: 'center', justifyContent: 'center', marginTop:'10px' }}>
-      <Grid item xs={12} sm={6} md={2.4} className="textField-root">
-        <TextField
-          select
-          label="Year"
-          value={year}
-          onChange={handleYearChange}
-          fullWidth
+      <Grid container spacing={3}>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          style={{ display: "flex", alignItems: "stretch" }}
         >
-          {years.map((year) => (
-            <MenuItem key={year} value={year}>
-              {year}
-            </MenuItem>
-          ))}
-        </TextField>
-      </Grid>
-      <Grid item xs={12} sm={6} md={2.4} className="textField-root">
-        <TextField
-          select
-          label="Month"
-          value={month}
-          onChange={handleMonthChange}
-          fullWidth
+          <Paper
+            elevation={3}
+            style={{ padding: "20px", marginTop: "20px", flex: 1 }}
+          >
+            <Typography variant="h6" align="center">
+              Overall Income & Expense Comparison
+            </Typography>
+            <Bar data={overallData} options={overallOptions} />
+          </Paper>
+        </Grid>
+
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          className="textField-root"
+          style={{ display: "flex", alignItems: "stretch" }}
         >
-          {months.map((month, index) => (
-            <MenuItem key={month} value={index + 1}>
-              {month}
-            </MenuItem>
-          ))}
-        </TextField>
+          <Paper
+           
+          >
+            <TextField
+              select
+              label="Year"
+              value={year}
+              onChange={handleYearChange}
+              sx={{ marginTop: "10px" }}
+            >
+              {years.map((year) => (
+                <MenuItem key={year} value={year}>
+                  {year}
+                </MenuItem>
+              ))}
+            </TextField>
+            <Typography variant="h6" align="center" mt={-4}>
+              {year} Income & Expense Comparison
+            </Typography>
+            <Line data={monthlyData} options={monthlyOptions} />
+          </Paper>
+        </Grid>
       </Grid>
-    </Grid>
 
-    {/* Pie Charts Grid */}
-    <Grid container spacing={3} style={{ marginTop: '10px', justifyContent: 'center' }}>
-      <Grid item xs={12} sm={6}>
-        <Typography variant="h6" gutterBottom align="center">
-          Income Categories ({months[month - 1]} {year})
-        </Typography>
-        <div style={{
-          padding: '16px',
-          height: 500,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-          <Pie data={incomePieData} />
-        </div>
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <Typography variant="h6" gutterBottom align="center">
-          Expense Categories ({months[month - 1]} {year})
-        </Typography>
-        <div style={{
-          padding: '16px',
-          height: 500,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-          <Pie data={expensePieData} />
-        </div>
-      </Grid>
-    </Grid>
-  </Grid>
-</Paper>
+      <Paper elevation={3} style={{ padding: "20px", marginTop: "20px" }}>
+        <Grid
+          container
+          spacing={3}
+          style={{ alignItems: "center", justifyContent: "center" }}
+        >
+          {/* Selection Grid for Year and Month */}
+          <Grid
+            container
+            spacing={2}
+            style={{
+              marginBottom: "10px",
+              textAlign: "center",
+              justifyContent: "center",
+              marginTop: "10px",
+            }}
+          >
+            <Grid item xs={12} sm={6} md={2.4} className="textField-root">
+              <TextField
+                select
+                label="Year"
+                value={year}
+                onChange={handleYearChange}
+                fullWidth
+              >
+                {years.map((year) => (
+                  <MenuItem key={year} value={year}>
+                    {year}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+            <Grid item xs={12} sm={6} md={2.4} className="textField-root">
+              <TextField
+                select
+                label="Month"
+                value={month}
+                onChange={handleMonthChange}
+                fullWidth
+              >
+                {months.map((month, index) => (
+                  <MenuItem key={month} value={index + 1}>
+                    {month}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+          </Grid>
 
+          {/* Pie Charts Grid */}
+          <Grid
+            container
+            spacing={3}
+            style={{ marginTop: "10px", justifyContent: "center" }}
+          >
+            <Grid item xs={12} sm={6}>
+              <Typography variant="h6" gutterBottom align="center">
+                Income Categories ({months[month - 1]} {year})
+              </Typography>
+              <div
+                style={{
+                  padding: "16px",
+                  height: 500,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Pie data={incomePieData} />
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Typography variant="h6" gutterBottom align="center">
+                Expense Categories ({months[month - 1]} {year})
+              </Typography>
+              <div
+                style={{
+                  padding: "16px",
+                  height: 500,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Pie data={expensePieData} />
+              </div>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Paper>
     </div>
   );
 };
 
 export default IncomeExpenseDashboard;
-
-
