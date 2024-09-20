@@ -56,6 +56,7 @@ import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import NoteAltIcon from '@mui/icons-material/NoteAlt';
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 import MapsUgcIcon from '@mui/icons-material/MapsUgc';
+import PriceCheckIcon from '@mui/icons-material/PriceCheck';
 
 const drawerWidth = 240;
 const collapsedWidth = 60;
@@ -427,6 +428,12 @@ const Sidebar = () => {
       name: "Help Desk",
       icon: <HelpIcon color="success" />,
       route: "/layout/helpDesk",
+      subOptions: [],
+    },
+    {
+      name: "Billing Section",
+      icon: <PriceCheckIcon color="success" />,
+      route: "/layout/bill",
       subOptions: [],
     },
     {
