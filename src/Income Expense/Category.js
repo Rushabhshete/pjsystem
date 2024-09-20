@@ -1042,9 +1042,30 @@ const Category = () => {
                     <EmailIcon color="warning" />
                   </IconButton>
 
-                  <IconButton>
-                    <WhatsAppIcon color="success" />
+                  <IconButton
+                    size="small"
+                    color="success"
+                    onClick={() => {
+                      let message = "";
+                      if (row.paymentMethod === "Pending") {
+                        message = "Your payment is pending."; // Message for pending payments
+                      } else if (row.paymentMethod === "Partial") {
+                        message = "Pay your remaining payment ASAP."; // Message for partial payments
+                      } else {
+                        message = "Hello!"; // Default message if no specific condition is met
+                      }
+
+                      // Encode the message and open WhatsApp
+                      const encodedMessage = encodeURIComponent(message);
+                      window.open(
+                        `https://wa.me/91${row.phoneNumber}?text=${encodedMessage}`,
+                        "_blank"
+                      );
+                    }}
+                  >
+                    <WhatsAppIcon />
                   </IconButton>
+
                   <IconButton onClick={() => handlePrint(row)} color="inherit">
                     <PrintIcon />
                   </IconButton>

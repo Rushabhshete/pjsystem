@@ -32,10 +32,12 @@ const EmpReport = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState("all");
   const [employeeType, setEmployeeType] = useState("all");
+  const [employeecategory, setEmployeeCategory] = useState("all");
   const [dutyType, setDutyType] = useState("all");
   const [shift, setShift] = useState("all");
   const [department, setDepartment] = useState("all");
   const [departmentOptions, setDepartmentOptions] = useState(["all"]);
+  const [employeecategoryOptions, setEmployeeCategoryOptions] =useState(["all"]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
@@ -45,11 +47,13 @@ const EmpReport = () => {
 
   const fetchAllEmployees = useCallback(async () => {
     try {
-      const response = await axios.get(`http://13.233.43.240:8082/getAllemp?institutecode=${institutecode}`);
+      const response = await axios.get(`http://localhost:8082/getAllemp?institutecode=${institutecode}`);
       if (response.status === 200 && response.data && Array.isArray(response.data)) {
         setUser(response.data);
         const uniqueDepartments = ["all", ...new Set(response.data.map(emp => emp.department))];
         setDepartmentOptions(uniqueDepartments);
+        const uniqueCategory = ["all", ...new Set(response.data.map(emp => emp.employeecategory))];
+        setEmployeeCategoryOptions(uniqueCategory);
       } else {
         console.error("Unexpected response format:", response);
         setUser([]);
@@ -62,7 +66,7 @@ const EmpReport = () => {
 
   const fetchFilteredUser = useCallback(async () => {
     try {
-      let url = `http://13.233.43.240:8082/getAllemp?institutecode=${institutecode}`;
+      let url = `http://localhost:8082/getAllemp?institutecode=${institutecode}`;
       if (filter === "7") {
         url = `http://13.233.43.240:8082/employees/last7days?institutecode=${institutecode}`;
       } else if (filter === "30") {
@@ -83,6 +87,9 @@ const EmpReport = () => {
         if (shift !== "all") {
           filteredData = filteredData.filter((user) => user.shift === shift);
         }
+        if (employeecategory !== "all") {
+          filteredData = filteredData.filter((user) => user.employeecategory === employeecategory);
+        }
         if (department !== "all") {
           filteredData = filteredData.filter((user) => user.department === department);
         }
@@ -95,7 +102,7 @@ const EmpReport = () => {
       console.error("There was an error fetching the employees!", error);
       setUser([]);
     }
-  }, [filter, employeeType, dutyType, shift, department, institutecode]);
+  }, [filter, employeeType, employeecategory, dutyType, shift, department, institutecode]);
 
   const fetchByDateRange = useCallback(async () => {
     if (startDate && endDate) {
@@ -124,7 +131,7 @@ const EmpReport = () => {
     } else {
       fetchFilteredUser();
     }
-  }, [filter, employeeType, dutyType, shift, department, fetchFilteredUser, fetchByDateRange, institutecode]);
+  }, [filter, employeeType, employeecategory, dutyType, shift, department, fetchFilteredUser, fetchByDateRange, institutecode]);
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
@@ -164,6 +171,7 @@ const EmpReport = () => {
         user.department,
         user.workDetail,
         user.employeeType,
+        user.employeecategory,
         user.dutyType,
         user.shift,
       ]),
@@ -187,6 +195,7 @@ const EmpReport = () => {
     "Parent No": user.parentNo,
     City: user.city,
     Department: user.department,
+    Category: user.employeecategory,
     Designation: user.workDetail,
     "Employee Type": user.employeeType,
     "Duty Type": user.dutyType,
@@ -241,34 +250,38 @@ const EmpReport = () => {
             <Grid container spacing={2} style={{ marginBottom: "16px",marginTop:"10px" }} className="textField-root">
              
               <Grid item xs={12} sm={2}>
-                <Select
+                <TextField
                   value={filter}
                   onChange={(e) => setFilter(e.target.value)}
                   fullWidth
                   variant="outlined"
                   size="small"
+                  select
+                  label="Select"
                 >
                   <MenuItem value="all">All</MenuItem>
                   <MenuItem value="7">Last 7 Days</MenuItem>
                   <MenuItem value="30">Last 30 Days</MenuItem>
                   <MenuItem value="365">Last 365 Days</MenuItem>
                   <MenuItem value="byDateRange">Custom Date</MenuItem>
-                </Select>
+                </TextField>
               </Grid>
               <Grid item xs={12} sm={2}>
-                <Select
+                <TextField
                   value={employeeType}
                   onChange={(e) => setEmployeeType(e.target.value)}
                   fullWidth
                   variant="outlined"
                   size="small"
+                  select
+                  label="Employee Type"
                 >
                   {employeeTypeOptions.map((type) => (
                      <MenuItem key={type} value={type}>
                      {type === "all" ? "All Employee Types" : type}
                     </MenuItem>
                   ))}
-                </Select>
+                </TextField>
               </Grid>
               <Grid item xs={12} sm={2}>
                 <Select
@@ -286,34 +299,55 @@ const EmpReport = () => {
                 </Select>
               </Grid>
               <Grid item xs={12} sm={2}>
-                <Select
+                <TextField
                   value={shift}
                   onChange={(e) => setShift(e.target.value)}
                   fullWidth
                   variant="outlined"
                   size="small"
+                  select
+                  label="Shift"
                 >
                   {shiftOptions.map((type) => (
                    <MenuItem key={type} value={type}>
                    {type === "all" ? "All Shift " : type}
                 </MenuItem>
                   ))}
-                </Select>
+                </TextField>
               </Grid>
               <Grid item xs={12} sm={2}>
-                <Select
+                <TextField
                   value={department}
                   onChange={(e) => setDepartment(e.target.value)}
                   fullWidth
                   variant="outlined"
                   size="small"
+                  select
+                  label="Department"
                 >
                   {departmentOptions.map((type) => (
                      <MenuItem key={type} value={type}>
                      {type === "all" ? "All Departments " : type}
                   </MenuItem>
                   ))}
-                </Select>
+                </TextField>
+              </Grid>
+              <Grid item xs={12} sm={2}>
+                <TextField
+                  value={employeecategory}
+                  onChange={(e) => setEmployeeCategory(e.target.value)}
+                  fullWidth
+                  variant="outlined"
+                  size="small"
+                  select 
+                  label="Category"
+                >
+                  {employeecategoryOptions.map((type) => (
+                     <MenuItem key={type} value={type}>
+                     {type === "all" ? "All Categories " : type}
+                  </MenuItem>
+                  ))}
+                </TextField>
               </Grid>
               {filter === "byDateRange" && (
                 <>
@@ -384,10 +418,12 @@ const EmpReport = () => {
                   <TableRow>
                     <TableCell><Typography variant="subtitle2" fontWeight="bold">ID</Typography></TableCell>
                     <TableCell><Typography variant="subtitle2" fontWeight="bold">Full Name</Typography></TableCell>
+                    <TableCell><Typography variant="subtitle2" fontWeight="bold">Email</Typography></TableCell>
                     <TableCell><Typography variant="subtitle2" fontWeight="bold">Mobile No</Typography></TableCell>
                     <TableCell><Typography variant="subtitle2" fontWeight="bold">Parent No</Typography></TableCell>
                     <TableCell><Typography variant="subtitle2" fontWeight="bold">City</Typography></TableCell>
                     <TableCell><Typography variant="subtitle2" fontWeight="bold">Department</Typography></TableCell>
+                    <TableCell><Typography variant="subtitle2" fontWeight="bold">Category</Typography></TableCell>
                     <TableCell><Typography variant="subtitle2" fontWeight="bold">Designation</Typography></TableCell>
                     <TableCell><Typography variant="subtitle2" fontWeight="bold">Employee Type</Typography></TableCell>
                     <TableCell><Typography variant="subtitle2" fontWeight="bold">Duty Type</Typography></TableCell>
@@ -399,10 +435,12 @@ const EmpReport = () => {
                     <TableRow key={user.empID}>
                       <TableCell>{user.empID}</TableCell>
                       <TableCell>{user.fullName}</TableCell>
+                      <TableCell>{user.email}</TableCell>
                       <TableCell>{user.mobileNo}</TableCell>
                       <TableCell>{user.parentNo}</TableCell>
                       <TableCell>{user.city}</TableCell>
                       <TableCell>{user.department}</TableCell>
+                      <TableCell>{user.employeecategory}</TableCell>
                       <TableCell>{user.workDetail}</TableCell>
                       <TableCell>{user.employeeType}</TableCell>
                       <TableCell>{user.dutyType}</TableCell>

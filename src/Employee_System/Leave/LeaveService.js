@@ -15,7 +15,7 @@ export const createLeaveRequest = (leaveRequest) => {
 
 export const getAllLeaveRequests = () => {
   const institutecode = getInstituteCode();
-  return axios.get(`${API_BASE_URL}/allRequest?institutecode=${institutecode}`);
+  return axios.get(`${API_BASE_URL}/getNonDeletedLeaves?institutecode=${institutecode}`);
 };
 
 export const getLeaveRequestById = (id) => {
@@ -32,7 +32,7 @@ export const getLeaveRequestsByReasonDescriptionAndEmployeeId = (reasonDescripti
 };
 
 export const deleteLeaveRequest = (id) => {
-  return axios.delete(`${API_BASE_URL}/deleteLeaveRequest/delete/${id}`);
+  return axios.delete(`${API_BASE_URL}/softDeleteLeaveById/${id}`);
 };
 
 export const updateLeaveRequestStatus = (id, leaveRequest) => {

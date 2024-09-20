@@ -11,7 +11,7 @@ class UserService {
 
   getUser() {
     const institutecode = this.getInstituteCode();
-    return axios.get(`${USER_API_URL}/getAllemp?institutecode=${institutecode}`);
+    return axios.get(`${USER_API_URL}/getNonDeleted?institutecode=${institutecode}`);
   }
 
   getUserById(empId) {
@@ -50,8 +50,7 @@ class UserService {
 
   deleteUser(empId) {
     console.log(`Deleting user with ID: ${empId}`);
-    const institutecode = this.getInstituteCode();
-    return axios.delete(`${USER_API_URL}/empDeleteById/${empId}?institutecode=${institutecode}`);
+    return axios.delete(`${USER_API_URL}/softDeleteById/${empId}`);
   }
 }
 

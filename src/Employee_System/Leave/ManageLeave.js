@@ -72,13 +72,19 @@ const ManageLeave = () => {
   };
 
   const handleDeleteRequest = (id) => {
-    deleteLeaveRequest(id)
-      .then(() => {
-        setLeaveRequests(leaveRequests.filter(request => request.id !== id));
-      })
-      .catch(error => console.error('Error deleting leave request:', error));
+    // Display a confirmation dialog
+    const confirmDelete = window.confirm("Are you sure you want to delete this leave data?");
+  
+    if (confirmDelete) {
+      // If the user confirms, proceed with the deletion
+      deleteLeaveRequest(id)
+        .then(() => {
+          setLeaveRequests(leaveRequests.filter(request => request.id !== id));
+        })
+        .catch(error => console.error('Error deleting leave request:', error));
+    }
   };
-
+  
   return (
     <div style={{ padding: '20px', }}>
       <Typography
@@ -155,13 +161,13 @@ const ManageLeave = () => {
                         </IconButton>
 
                         {/* Delete Button */}
-                        {/* <IconButton
+                        <IconButton
                           aria-label="delete"
-                          color="warning"
+                          color="error"
                           onClick={() => handleDeleteRequest(request.id)}
                         >
                           <DeleteIcon />
-                        </IconButton> */}
+                        </IconButton>
 
                     </TableCell>
                   </TableRow>

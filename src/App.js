@@ -45,6 +45,7 @@ import ManageNotification from "./layouts/ManageNotification";
 import CombineDashboard from "./layouts/CombineDashboard";
 import FloatingHelpDeskButton from "./layouts/FloatingHelpDeskButton";
 import HelpDesk from "./layouts/HelpDesk";
+//import bill from "./layouts/bill";
 import AddSubAdmin from "./layouts/AddSubAdmin";
 import Settings from "./layouts/Settings";
 import EmployeeDashboard from "./Employee_System/Employee/EmployeeDashboard";
@@ -67,6 +68,7 @@ import AddMemo from "./Employee_System/Memo/AddMemo";
 import ManageEmpMemo from "./Employee_System/Memo/ManageEmpMemo";
 import AddNotice from "./Employee_System/Memo/AddNotice";
 import Login1 from "./layouts/Login1";
+import Bill from "./layouts/bill";
 function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem("isAuthenticated") === "true"
@@ -161,6 +163,7 @@ function AppContent() {
 
           <Route path="manageLeave" element={<ManageLeave />} />
           <Route path="helpDesk" element={<HelpDesk />} />
+          <Route path="bill" element={<Bill />} />
           <Route path="subadmin" element={<AddSubAdmin />} />
           <Route path="Settings" element={<Settings />} />
 

@@ -19,7 +19,7 @@ const EmployeeDashboard = () => {
     useEffect(() => {
         const fetchInitialData = async () => {
             try {
-                const response = await fetch(`http://13.233.43.240:8082/getAllemp?institutecode=${institutecode}`);
+                const response = await fetch(`http://localhost:8082/getAllemp?institutecode=${institutecode}`);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -60,15 +60,15 @@ const EmployeeDashboard = () => {
 
     useEffect(() => {
         const apiUrls = {
-            'All': `http://13.233.43.240:8082/getAllemp?institutecode=${institutecode}`,
-            '7Days': `http://13.233.43.240:8082/employees/last7days?institutecode=${institutecode}`,
-            '30Days': `http://13.233.43.240:8082/employees/lastMonth1?institutecode=${institutecode}`,
-            '365Days': `http://13.233.43.240:8082/employees/lastYear?institutecode=${institutecode}`,
+            'All': `http://localhost:8082/getAllemp?institutecode=${institutecode}`,
+            '7Days': `http://localhost:8082/employees/last7days?institutecode=${institutecode}`,
+            '30Days': `http://localhost:8082/employees/lastMonth1?institutecode=${institutecode}`,
+            '365Days': `http://localhost:8082/employees/lastYear?institutecode=${institutecode}`,
         };
 
         const fetchCustomDateRangeData = async (startDate, endDate) => {
             try {
-                const response = await fetch(`http://13.233.43.240:8082/getAllemp?institutecode=${institutecode}`);
+                const response = await fetch(`http://localhost:8082/getAllemp?institutecode=${institutecode}`);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
