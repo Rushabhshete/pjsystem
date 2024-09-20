@@ -85,19 +85,25 @@ const Header = () => {
       try {
         // Replace with your actual API endpoint
         const response = await axios.get(
-          `http://localhost:8081/getnotificationByInstitutecode?institutecode=${institutecode}`
+          `http://localhost:8081/getTodaysNotification?institutecode=${institutecode}`
         );
-        setNotifications(response.data);
-        setNotificationCount(response.data.length);
+        if(response.data.length > 0) {
+          setNotifications(response.data);
+          setNotificationCount(response.data.length);
+        } else {
+          setNotifications([{ message: "No Notifications for today" }]);  // Set a default notification message
+          setNotificationCount(1); // Indicate that there's 1 notification (the default message)
+        }
         setLoadingNotifications(false);
       } catch (error) {
         console.error("Error fetching notifications:", error);
         setLoadingNotifications(false);
       }
     };
-
+  
     fetchNotifications();
-  }, []);
+  }, [institutecode]);
+  
 
   useEffect(() => {
     if (notificationCount > 0 && !hasSeenNotifications) {
@@ -238,7 +244,7 @@ const Header = () => {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-            <Menu
+            {/* <Menu
               id="menu-notifications"
               anchorEl={notificationsAnchorEl}
               anchorOrigin={{
@@ -262,7 +268,32 @@ const Header = () => {
               ) : (
                 <MenuItem >New Updates Are Comming Soon </MenuItem>
               )}
-            </Menu>
+            </Menu> */}
+            <Menu
+  id="menu-notifications"
+  anchorEl={notificationsAnchorEl}
+  anchorOrigin={{
+    vertical: "top",
+    horizontal: "right",
+  }}
+  keepMounted
+  transformOrigin={{
+    vertical: "top",
+    horizontal: "right",
+  }}
+  open={Boolean(notificationsAnchorEl)}
+  onClose={handleNotificationsClose}
+>
+  {loadingNotifications ? (
+    <MenuItem>Loading notifications...</MenuItem>
+  ) : notifications.length > 0 ? (
+    notifications.map((notification, index) => (
+      <MenuItem key={index}>{notification.message}</MenuItem>
+    ))
+  ) : (
+    <MenuItem>No Notifications for today</MenuItem>
+  )}
+</Menu>
             <IconButton
               size="large"
               aria-label="account of current user"
