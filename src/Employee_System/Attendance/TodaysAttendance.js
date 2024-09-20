@@ -307,7 +307,7 @@ const TodaysAttendance = () => {
   const fetchTodaysAttendanceFromAPI = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8082/today?institutecode=${institutecode}`
+        `http://13.233.43.240:8082/today?institutecode=${institutecode}`
       );
       setTodaysAttendance(response.data);
     } catch (error) {
