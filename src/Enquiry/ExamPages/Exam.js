@@ -269,7 +269,7 @@ const Exam = () => {
                 <TableRow>
                   <TableCell><strong>Id</strong></TableCell>
                   <TableCell><strong>Exam Name</strong></TableCell>
-                  <TableCell><strong>Action Required</strong></TableCell>
+                  <TableCell><strong>Actions</strong></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

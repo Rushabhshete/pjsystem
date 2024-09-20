@@ -260,7 +260,7 @@ const Conduct = () => {
                     <strong>Conduct Name</strong>
                   </TableCell>
                   <TableCell>
-                    <strong>Action Required</strong>
+                    <strong>Actions</strong>
                   </TableCell>
                 </TableRow>
               </TableHead>

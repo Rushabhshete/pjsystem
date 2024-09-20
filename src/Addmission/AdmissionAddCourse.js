@@ -309,7 +309,7 @@ const AddCourse = () => {
               <TableRow>
                 <StyledTableHeader>ID</StyledTableHeader>
                 <StyledTableHeader>Course Name</StyledTableHeader>
-                <StyledTableHeader>Action Required</StyledTableHeader>
+                <StyledTableHeader>Actions</StyledTableHeader>
               </TableRow>
             </TableHead>
             <TableBody>
