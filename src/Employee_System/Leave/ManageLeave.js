@@ -1,10 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
 import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  Paper, Button, Select, MenuItem, FormControl, Grid, useTheme, useMediaQuery, Typography
+  Paper, Select, MenuItem, FormControl, Grid, TextField, Typography, IconButton
 } from '@mui/material';
-import { IconButton } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -16,8 +14,9 @@ import {
 const ManageLeave = () => {
   const [leaveRequests, setLeaveRequests] = useState([]);
   const [filter, setFilter] = useState('all');
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const [searchTerm, setSearchTerm] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
 
   useEffect(() => {
     fetchLeaveRequests();
@@ -43,7 +42,6 @@ const ManageLeave = () => {
 
     fetchFunction()
       .then(response => {
-        console.log('Fetched data:', response.data); // Debug log
         setLeaveRequests(response.data);
       })
       .catch(error => {
@@ -72,11 +70,9 @@ const ManageLeave = () => {
   };
 
   const handleDeleteRequest = (id) => {
-    // Display a confirmation dialog
     const confirmDelete = window.confirm("Are you sure you want to delete this leave data?");
   
     if (confirmDelete) {
-      // If the user confirms, proceed with the deletion
       deleteLeaveRequest(id)
         .then(() => {
           setLeaveRequests(leaveRequests.filter(request => request.id !== id));
@@ -84,100 +80,157 @@ const ManageLeave = () => {
         .catch(error => console.error('Error deleting leave request:', error));
     }
   };
+
+  // Filtered leave requests based on the search term, category, and status
+  const filteredLeaveRequests = leaveRequests.filter(request => 
+    request.fullName.toLowerCase().includes(searchTerm.toLowerCase()) &&
+    (categoryFilter === '' || request.categoryName === categoryFilter) &&
+    (statusFilter === '' || request.status === statusFilter)
+  );
+
+  // Get unique category names for the category filter
+  const uniqueCategories = Array.from(new Set(leaveRequests.map(request => request.categoryName)));
   
+  // Get unique status names for the status filter
+  const uniqueStatuses = Array.from(new Set(leaveRequests.map(request => request.status)));
+
   return (
-    <div style={{ padding: '20px', }}>
-      <Typography
-        variant="h5"
-        gutterBottom
-        sx={{
-          fontWeight: "bold",
-          color: "#fff",
-          textAlign: "center",
-          backgroundColor: "#24A0ED",
-          borderRadius: "150px",
-          padding: "10px",
-          marginBottom: "20px",
-        }}
-      >
-        Manage Leave
-      </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
+    <>
+    <Typography
+    variant="h5"
+    gutterBottom
+    sx={{
+      fontWeight: "bold",
+      color: "#fff",
+      textAlign: "center",
+      backgroundColor: "#24A0ED",
+      borderRadius: "150px",
+      padding: "10px",
+      marginBottom: "20px",
+    }}
+  >
+    Manage Leave
+  </Typography>
+    <div style={{ padding: '20px' }}>
+      <Grid container spacing={2} alignItems="center" sx={{ marginBottom: 2 }}>
+        <Grid item xs={3}>
           <FormControl fullWidth>
-            <Select
+            <TextField
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
+              select 
+              label="Select"
             >
               <MenuItem value="all">All</MenuItem>
               <MenuItem value="last7Days">Last 7 Days</MenuItem>
               <MenuItem value="last30Days">Last 30 Days</MenuItem>
               <MenuItem value="last365Days">Last Year</MenuItem>
-            </Select>
+            </TextField>
           </FormControl>
         </Grid>
-        <Grid item xs={12}>
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead sx={{backgroundColor:'#f2f2f2'}}>
-                <TableRow>
-                  <TableCell sx={{fontWeight:'bold'}}>Name</TableCell>
-                  <TableCell sx={{fontWeight:'bold'}}>Employee ID</TableCell>
-                  <TableCell sx={{fontWeight:'bold'}}>Category Name</TableCell>
-                  <TableCell sx={{fontWeight:'bold'}}>From Date</TableCell>
-                  <TableCell sx={{fontWeight:'bold'}}>To Date</TableCell>
-                  <TableCell sx={{fontWeight:'bold'}}>Reason</TableCell>
-                  <TableCell sx={{fontWeight:'bold'}}>Status</TableCell>
-                  <TableCell sx={{fontWeight:'bold'}}>Actions</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {leaveRequests.map(request => (
-                  <TableRow key={request.id}>
-                    <TableCell>{request.fullName}</TableCell>
-                    <TableCell>{request.empID}</TableCell>
-                    <TableCell>{request.categoryName}</TableCell>
-                    <TableCell>{request.fromDate}</TableCell>
-                    <TableCell>{request.toDate}</TableCell>
-                    <TableCell>{request.reasondescription}</TableCell>
-                    <TableCell>{request.status}</TableCell>
-                    <TableCell>
-                                          {/* Approve Button */}
-                        <IconButton
-                          aria-label="approve"
-                          color="primary"
-                          onClick={() => handleUpdateStatus(request.id, 'Approved')}
-                        >
-                          <CheckCircleOutlineIcon />
-                        </IconButton>
-
-                        {/* Reject Button */}
-                        <IconButton
-                          aria-label="reject"
-                          color="error"
-                          onClick={() => handleRejectStatus(request.id)}
-                        >
-                          <HighlightOffIcon />
-                        </IconButton>
-
-                        {/* Delete Button */}
-                        <IconButton
-                          aria-label="delete"
-                          color="error"
-                          onClick={() => handleDeleteRequest(request.id)}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+        <Grid item xs={3}>
+          <FormControl fullWidth>
+            <TextField
+              value={categoryFilter}
+              onChange={(e) => setCategoryFilter(e.target.value)}
+              displayEmpty
+              select 
+              label="Category"
+            >
+              <MenuItem value="">All Categories</MenuItem>
+              {uniqueCategories.map((category, index) => (
+                <MenuItem key={index} value={category}>{category}</MenuItem>
+              ))}
+            </TextField>
+          </FormControl>
+        </Grid>
+        <Grid item xs={3}>
+          <FormControl fullWidth>
+            <TextField
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              displayEmpty
+              select
+              label="Status"
+            >
+              <MenuItem value="">All Statuses</MenuItem>
+              {uniqueStatuses.map((status, index) => (
+                <MenuItem key={index} value={status}>{status}</MenuItem>
+              ))}
+            </TextField>
+          </FormControl>
+        </Grid>
+        <Grid item xs={3}>
+          <TextField
+            fullWidth
+            label="Search by Full Name"
+            variant="outlined"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </Grid>
       </Grid>
+      <Grid item xs={12}>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead sx={{ backgroundColor: '#f2f2f2' }}>
+              <TableRow>
+                <TableCell sx={{ fontWeight: 'bold' }}>Employee ID</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}>Name</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}>Category</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}>From Date</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}>To Date</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}>Reason</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}>Status</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}>Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {filteredLeaveRequests.map(request => (
+                <TableRow key={request.id}>
+                  <TableCell>{request.empID}</TableCell>
+                  <TableCell>{request.fullName}</TableCell>
+                  <TableCell>{request.categoryName}</TableCell>
+                  <TableCell>{request.fromDate}</TableCell>
+                  <TableCell>{request.toDate}</TableCell>
+                  <TableCell>{request.reasondescription}</TableCell>
+                  <TableCell>{request.status}</TableCell>
+                  <TableCell>
+                    {/* Approve Button */}
+                    <IconButton
+                      aria-label="approve"
+                      color="primary"
+                      onClick={() => handleUpdateStatus(request.id, 'Approved')}
+                    >
+                      <CheckCircleOutlineIcon />
+                    </IconButton>
+
+                    {/* Reject Button */}
+                    <IconButton
+                      aria-label="reject"
+                      color="error"
+                      onClick={() => handleRejectStatus(request.id)}
+                    >
+                      <HighlightOffIcon />
+                    </IconButton>
+
+                    {/* Delete Button */}
+                    <IconButton
+                      aria-label="delete"
+                      color="error"
+                      onClick={() => handleDeleteRequest(request.id)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Grid>
     </div>
+    </>
   );
 };
 
