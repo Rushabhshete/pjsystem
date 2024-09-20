@@ -174,6 +174,7 @@ const Category = () => {
         "Invoice No.",
         "User",
         "Date",
+        "phone No.",
         "Amount",
         "GST(%)",
         "Total(+GST)",
@@ -194,6 +195,7 @@ const Category = () => {
       row.invoiceNo,
       row.user,
       row.date,
+      row.phoneNumber,
       row.amount,
       row.gst,
       row.total,
@@ -936,6 +938,9 @@ const Category = () => {
               Date
             </StyledTableCell>
             <StyledTableCell style={{ fontWeight: "bold" }}>
+              Phone No.
+            </StyledTableCell>
+            <StyledTableCell style={{ fontWeight: "bold" }}>
               Amount
             </StyledTableCell>
             <StyledTableCell
@@ -1000,7 +1005,9 @@ const Category = () => {
                   {" "}
                   {row.date}
                 </StyledTableCell>
-
+                <StyledTableCell style={{ whiteSpace: "nowrap" }}>
+                  {row.phoneNumber}
+                </StyledTableCell>
                 <StyledTableCell> ₹{row.amount}</StyledTableCell>
                 <StyledTableCell>₹{row.total - row.amount}</StyledTableCell>
                 <StyledTableCell>₹{row.total}</StyledTableCell>
