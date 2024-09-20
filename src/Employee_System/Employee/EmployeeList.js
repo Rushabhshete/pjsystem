@@ -73,7 +73,7 @@
 //   }, [institutecode]);
 //   const loadCategory = async () => {
 //     try {
-//       const result = await axios.get(`http://13.233.43.240:8082/categories/all?institutecode=${institutecode}`);
+//       const result = await axios.get(`http://localhost:8082/categories/all?institutecode=${institutecode}`);
 //       setCategory(result.data);
 //     } catch (error) {
 //       console.error('Error fetching in Category of Employee', error);
@@ -132,7 +132,7 @@
 
 // const fetchDepartments = async () => {
 //   try {
-//     const response = await axios.get(`http://13.233.43.240:8082/departments/allDepartment?institutecode=${institutecode}`);
+//     const response = await axios.get(`http://localhost:8082/departments/allDepartment?institutecode=${institutecode}`);
 //     setDepartments(response.data);
 //   } catch (error) {
 //     console.error('Error fetching departments:', error);
@@ -1474,7 +1474,7 @@ useEffect(() => {
   }, [institutecode]);
   const loadCategory = async () => {
     try {
-      const result = await axios.get(`http://13.233.43.240:8082/categories/all?institutecode=${institutecode}`);
+      const result = await axios.get(`http://localhost:8082/categories/all?institutecode=${institutecode}`);
       setCategory(result.data);
     } catch (error) {
       console.error('Error fetching in Category of Employee', error);
@@ -1522,7 +1522,7 @@ useEffect(() => {
 }, [institutecode]);
 const fetchDepartments = async () => {
   try {
-    const response = await axios.get(`http://13.233.43.240:8082/departments/allDepartment?institutecode=${institutecode}`);
+    const response = await axios.get(`http://localhost:8082/departments/allDepartment?institutecode=${institutecode}`);
     setDepartments(response.data);
   } catch (error) {
     console.error('Error fetching departments:', error);
@@ -1608,7 +1608,7 @@ const fetchDepartments = async () => {
     const confirmation = window.confirm('Are You Sure You Want To Terminate This Employee?');
     if (confirmation) {
     try {
-      const response = await axios.put(`http://13.233.43.240:8082/updateEmployeeStatus/${empID}`, {
+      const response = await axios.put(`http://localhost:8082/updateEmployeeStatus/${empID}`, {
         status: 'Terminated' // Or whatever status you want to set
       });
       if (response.status === 200) {

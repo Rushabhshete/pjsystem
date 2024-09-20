@@ -34,7 +34,7 @@
 //       try {
 //         const institutecode = localStorage.getItem("institutecode"); // Get institute code from local storage
 //         const res = await axios.get(
-//           `http://13.233.43.240:8085/count/monthly?institutecode=${institutecode}&year=${selectedYear}`
+//           `http://localhost:8085/count/monthly?institutecode=${institutecode}&year=${selectedYear}`
 //         );
 
 //         const data = res.data;
@@ -158,7 +158,7 @@ const MonthlyGraph = () => {
       try {
         const institutecode = localStorage.getItem("institutecode"); // Get institute code from local storage
         const res = await axios.get(
-          `http://13.233.43.240:8085/count/monthly?institutecode=${institutecode}&year=${selectedYear}`
+          `http://localhost:8085/count/monthly?institutecode=${institutecode}&year=${selectedYear}`
         );
 
         const data = res.data;

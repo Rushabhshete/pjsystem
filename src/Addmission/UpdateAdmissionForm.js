@@ -26,7 +26,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
     const fetchSources = async () => {
       try {
         const response = await axios.get(
-          `http://13.233.43.240:8085/api/sourceBy/getAll?institutecode=${institutecode}`
+          `http://localhost:8085/api/sourceBy/getAll?institutecode=${institutecode}`
         );
         setSources(response.data);
       } catch (error) {
@@ -37,7 +37,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
     const fetchCourses = async () => {
       try {
         const response = await axios.get(
-          `http://13.233.43.240:8085/getAllCourse?institutecode=${institutecode}`
+          `http://localhost:8085/getAllCourse?institutecode=${institutecode}`
         );
         setCourses(response.data);
       } catch (error) {
@@ -48,7 +48,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
     const fetchGuides = async () => {
       try {
         const response = await axios.get(
-          `http://13.233.43.240:8085/api/conductBy/getAllConductBy?institutecode=${institutecode}`
+          `http://localhost:8085/api/conductBy/getAllConductBy?institutecode=${institutecode}`
         );
         setGuides(response.data);
       } catch (error) {
@@ -96,7 +96,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
     event.preventDefault();
     try {
       await axios.put(
-        `http://13.233.43.240:8085/updateAdmission/${formData.id}`,
+        `http://localhost:8085/updateAdmission/${formData.id}`,
         formData
       );
       toast.success("Admission updated successfully!");

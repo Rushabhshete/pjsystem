@@ -48,7 +48,7 @@ const HelpDeskForm = ({ open, onClose }) => {
 
     try {
       const response = await axios.post(
-        `http://13.233.43.240:8081/createTicket?institutecode=${institutecode()}`,
+        `http://localhost:8081/createTicket?institutecode=${institutecode()}`,
         formDataToSend,
         {
           headers: {

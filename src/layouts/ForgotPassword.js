@@ -63,7 +63,7 @@ function ForgotPassword() {
     try {
       // Send OTP request
       await axios.post(
-        `http://13.233.43.240:8081/forgotPassword?email=${encodeURIComponent(
+        `http://localhost:8081/forgotPassword?email=${encodeURIComponent(
           email
         )}`
       );
@@ -86,7 +86,7 @@ function ForgotPassword() {
       // Retrieve the email from localStorage
       const storedEmail = localStorage.getItem("email");
       const response = await axios.post(
-        `http://13.233.43.240:8081/verifyOTP?email=${encodeURIComponent(
+        `http://localhost:8081/verifyOTP?email=${encodeURIComponent(
           storedEmail
         )}&otp=${encodeURIComponent(otp)}`
       );
@@ -114,7 +114,7 @@ function ForgotPassword() {
       // Retrieve the email from localStorage
       const storedEmail = localStorage.getItem("email");
       // Create the URL with query parameters
-      const url = `http://13.233.43.240:8081/reset-password/Admin?email=${encodeURIComponent(
+      const url = `http://localhost:8081/reset-password/Admin?email=${encodeURIComponent(
         storedEmail
       )}&password=${encodeURIComponent(
         newPassword

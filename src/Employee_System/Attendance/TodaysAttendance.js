@@ -251,6 +251,7 @@ import {
   CardContent,
 } from '@mui/material';
 import { styled } from '@mui/system';
+import axios from 'axios';
 
 const Container = styled(Box)(({ theme }) => ({
   padding: theme.spacing(3),
@@ -300,16 +301,16 @@ const TodaysAttendance = () => {
     }
   };
 
-  const fetchTodaysAttendanceFromAPI = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8082/today?institutecode=${institutecode}`
-      );
-      setTodaysAttendance(response.data);
-    } catch (error) {
-      console.error('Error fetching today\'s attendance:', error);
-    }
-  };
+  // const fetchTodaysAttendanceFromAPI = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `http://localhost:8082/today?institutecode=${institutecode}`
+  //     );
+  //     setTodaysAttendance(response.data);
+  //   } catch (error) {
+  //     console.error('Error fetching today\'s attendance:', error);
+  //   }
+  // };
 
   const mergeAttendanceData = () => {
     const mergedData = employees.map(employee => {

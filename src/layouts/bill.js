@@ -107,7 +107,7 @@ export default function Bill() {
       }
 
       try {
-        const response = await fetch(`http://13.233.43.240:8081/findInstitutesby/Institutecode?institutecode=${institutecode}`);
+        const response = await fetch(`http://localhost:8081/findInstitutesby/Institutecode?institutecode=${institutecode}`);
         
         if (!response.ok) {
           throw new Error('Network response was not ok');

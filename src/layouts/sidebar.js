@@ -72,7 +72,7 @@ const Sidebar = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://13.233.43.240:8081/getSystemValueByInstitutecode?institutecode=${institutecode()}`
+          `http://localhost:8081/getSystemValueByInstitutecode?institutecode=${institutecode()}`
         );
         const data = await response.json();
         setSystemValues(data);
@@ -681,7 +681,7 @@ export default Sidebar;
 //   useEffect(() => {
 //     const fetchData = async () => {
 //       try {
-//         const response = await fetch("http://13.233.43.240:8081/getSystemValueByInstitutecode?institutecode=Rush@gmail.com");
+//         const response = await fetch("http://localhost:8081/getSystemValueByInstitutecode?institutecode=Rush@gmail.com");
 //         const data = await response.json();
 //         setSystemValues(data);
 //       } catch (error) {
