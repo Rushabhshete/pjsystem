@@ -251,7 +251,6 @@ import {
   CardContent,
 } from '@mui/material';
 import { styled } from '@mui/system';
-import axios from 'axios';
 
 const Container = styled(Box)(({ theme }) => ({
   padding: theme.spacing(3),
@@ -265,12 +264,9 @@ const TodaysAttendance = () => {
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
   const [filteredAttendance, setFilteredAttendance] = useState([]);
-  const [attendanceSource, setAttendanceSource] = useState('All');
-  const [institutecode, setInstituteCode] = useState(localStorage.getItem('institutecode') || '');
-
-  // Options for the dropdowns
+  
+  // Options for the dropdown, initialized with all possible statuses
   const statusOptions = ['All', 'Present', 'Absent', 'Late'];
-  const attendanceSourceOptions = ['All', 'Today'];
 
   useEffect(() => {
     fetchInitialData();
@@ -279,7 +275,7 @@ const TodaysAttendance = () => {
 
   useEffect(() => {
     filterAttendance();
-  }, [search, statusFilter, attendanceSource, employees, todaysAttendance]);
+  }, [search, statusFilter, employees, todaysAttendance]);
 
   const fetchInitialData = async () => {
     try {
@@ -307,7 +303,7 @@ const TodaysAttendance = () => {
   const fetchTodaysAttendanceFromAPI = async () => {
     try {
       const response = await axios.get(
-        `http://13.233.43.240:8082/today?institutecode=${institutecode}`
+        `http://localhost:8082/today?institutecode=${institutecode}`
       );
       setTodaysAttendance(response.data);
     } catch (error) {
@@ -342,21 +338,9 @@ const TodaysAttendance = () => {
     setFilteredAttendance(mergedData);
   };
 
-  // Handle the change of attendance source (All or Today)
-  const handleAttendanceSourceChange = (event) => {
-    const value = event.target.value;
-    setAttendanceSource(value);
-    
-    if (value === 'Today') {
-      fetchTodaysAttendanceFromAPI(); // Fetch today's attendance data
-    } else {
-      fetchInitialData(); // Fetch all attendance data
-    }
-  };
-
   return (
-    <Container>
-      <Typography
+    <>
+          <Typography
         variant="h5"
         gutterBottom
         sx={{
@@ -366,14 +350,14 @@ const TodaysAttendance = () => {
           backgroundColor: "#24A0ED",
           borderRadius: "150px",
           padding: "10px",
-          marginBottom: "20px",
         }}
       >
         Attendance Dashboard
       </Typography>
+    <Container>
       <Grid container spacing={2} sx={{ marginBottom: 3 }}>
         <Grid item xs={12} md={4}>
-          <Card sx={{ backgroundColor: '#3498DB' }}>
+          <Card sx={{ backgroundColor: '#3498DB', borderRadius:"10px" }}>
             <CardContent>
               <Typography variant="h6" component="div">
                 Total Employees
@@ -385,7 +369,7 @@ const TodaysAttendance = () => {
           </Card>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Card sx={{ backgroundColor: '#FF6F61' }}>
+          <Card sx={{ backgroundColor: '#9ACD32' }}>
             <CardContent>
               <Typography variant="h6" component="div">
                 Present Employees
@@ -397,7 +381,7 @@ const TodaysAttendance = () => {
           </Card>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Card sx={{ backgroundColor: '#9ACD32' }}>
+          <Card sx={{ backgroundColor: '#FF6F61' }}>
             <CardContent>
               <Typography variant="h6" component="div">
                 Absent Employees
@@ -428,22 +412,6 @@ const TodaysAttendance = () => {
               {statusOptions.map((status) => (
                 <MenuItem key={status} value={status}>
                   {status}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={4}>
-          <FormControl fullWidth variant="outlined">
-            <InputLabel>Attendance Source</InputLabel>
-            <Select
-              value={attendanceSource}
-              onChange={handleAttendanceSourceChange}
-              label="Attendance Source"
-            >
-              {attendanceSourceOptions.map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option}
                 </MenuItem>
               ))}
             </Select>
@@ -492,7 +460,9 @@ const TodaysAttendance = () => {
         </Table>
       </TableContainer>
     </Container>
+    </>
   );
 };
 
 export default TodaysAttendance;
+
