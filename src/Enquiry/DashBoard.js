@@ -61,7 +61,7 @@ export default function DashBoard() {
     fetchData(year);
   }, [year]);
 
-  const peryears = [2021, 2022, 2023, 2024];
+  const peryears = [2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029];
 
   const fetchData = async (selectedYear) => {
     try {

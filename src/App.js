@@ -66,6 +66,7 @@ import TodaysAttendance from "./Employee_System/Attendance/TodaysAttendance";
 import AddMemo from "./Employee_System/Memo/AddMemo";
 import ManageEmpMemo from "./Employee_System/Memo/ManageEmpMemo";
 import AddNotice from "./Employee_System/Memo/AddNotice";
+import Login1 from "./layouts/Login1";
 function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem("isAuthenticated") === "true"
@@ -93,6 +94,7 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<Login onLogin={handleLogin} />} />
         <Route path="/create-account" element={<CreateAccount />} />
+        <Route path="/loginPage" element={<Login1/>}/>
         <Route path="/forgot-password" element={<ForgotPassword />} />
         {/* <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}> */}
 

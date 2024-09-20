@@ -155,8 +155,8 @@ const Dashboard = () => {
           </Grid>
         ))}
       </Grid>
-      <Grid item xs={12} style={{ marginBottom: '16px', display: 'flex', justifyContent: 'center' }}>
-          <Paper style={{ padding: '16px', boxShadow: '0px 2px 5px rgba(0,0,0,0.2)', width: '100%' }}>
+      <Grid item xs={12} style={{ marginBottom: '16px', display: 'flex', justifyContent: 'center' }} mt={2}>
+          <Paper style={{ padding: '15px', boxShadow: '0px 2px 5px rgba(0,0,0,0.2)', width: '100%' }}>
             <YearlyGraph />
           </Paper>
         </Grid>
@@ -172,12 +172,12 @@ const Dashboard = () => {
           </Paper>
         </Grid>
         <Grid item xs={12} md={6} style={{ marginBottom: '16px', display: 'flex', justifyContent: 'center' }}>
-          <Paper style={{ padding: '16px', boxShadow: '0px 2px 5px rgba(0,0,0,0.2)', width: '100%' }}>
+          <Paper style={{ padding: '15px', boxShadow: '0px 2px 5px rgba(0,0,0,0.2)', width: '100%' }}>
             <SourceGraph />
           </Paper>
         </Grid>
         <Grid item xs={12} md={6} style={{ marginBottom: '16px', display: 'flex', justifyContent: 'center' }}>
-          <Paper style={{ padding: '16px', boxShadow: '0px 2px 5px rgba(0,0,0,0.2)', width: '100%' }}>
+          <Paper style={{ padding: '15px', boxShadow: '0px 2px 5px rgba(0,0,0,0.2)', width: '100%' }}>
             <CourseGraph />
           </Paper>
         </Grid>

@@ -878,7 +878,8 @@ const IncomeExpenseDashboard = () => {
           style={{ display: "flex", alignItems: "stretch" }}
         >
           <Paper
-           
+              elevation={3}
+              style={{ padding: "20px", marginTop: "20px", flex: 1 }}
           >
             <TextField
               select

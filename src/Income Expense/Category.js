@@ -569,8 +569,6 @@ const Category = () => {
         transform: scale(1);
       }
     }
-
- 
   `;
 
   const totalAmount = filteredData.reduce((acc, item) => acc + item.total, 0);
@@ -675,21 +673,21 @@ const Category = () => {
 
     // Save the PDF
     doc.save(`${row.user} ${row.type} Receipt.pdf`);
-};
-
+  };
 
   return (
     <div>
       <ToastContainer
-      autoClose={1000} // Toast will close automatically after 5 seconds
-      position="top-right" // Position of the toast
-      hideProgressBar={false} // Show or hide the progress bar
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover/>
+        autoClose={1000} // Toast will close automatically after 5 seconds
+        position="top-right" // Position of the toast
+        hideProgressBar={false} // Show or hide the progress bar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Grid container spacing={2} className="textField-root">
         <Grid item xs={12}>
           <PopTypography
@@ -928,9 +926,7 @@ const Category = () => {
             {/* <StyledTableCell style={{ fontWeight: "bold" }}>
               Type
             </StyledTableCell> */}
-            <StyledTableCell style={{ fontWeight: "bold" }}>
-              ID
-            </StyledTableCell>
+            <StyledTableCell style={{ fontWeight: "bold" }}>ID</StyledTableCell>
             <StyledTableCell style={{ fontWeight: "bold" }}>
               User
             </StyledTableCell>
@@ -977,8 +973,10 @@ const Category = () => {
             >
               Paid Using
             </StyledTableCell>
-            <StyledTableCell style={{ fontWeight: "bold", whiteSpace: "nowrap" }}>
-            Invoice No
+            <StyledTableCell
+              style={{ fontWeight: "bold", whiteSpace: "nowrap" }}
+            >
+              Invoice No
             </StyledTableCell>
             <StyledTableCell style={{ fontWeight: "bold" }}>
               Status
@@ -1012,9 +1010,11 @@ const Category = () => {
                 <StyledTableCell>₹{row.total - row.amount}</StyledTableCell>
                 <StyledTableCell>₹{row.total}</StyledTableCell>
                 <StyledTableCell>₹{row.payingAmount}</StyledTableCell>
-                <StyledTableCell>₹{row.pendingAmount}</StyledTableCell>
+                <StyledTableCell>
+                  {row.pendingAmount === 0 ? "NA" : `₹${row.pendingAmount}`}
+                </StyledTableCell>
                 <StyledTableCell style={{ whiteSpace: "nowrap" }}>
-                  {row.duedate}
+                  {row.duedate ? row.duedate : "NA"}
                 </StyledTableCell>
 
                 <StyledTableCell>{row.billType}</StyledTableCell>
