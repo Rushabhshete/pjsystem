@@ -1,5 +1,3 @@
- //src/services/attendanceService.js
-
  import axios from 'axios';
 
  const API_URL = 'http://localhost:8082'; // Ensure this URL matches your backend's URL
@@ -160,7 +158,7 @@
  // Fetch all employees
  export const getAllEmployees = async () => {
    try {
-     const response = await axios.get(`${API_URL}/getAllemp`, {
+     const response = await axios.get(`${API_URL}/getNonDeleted`, {
        params: { institutecode: getInstituteCode() }
      });
      return response.data;
