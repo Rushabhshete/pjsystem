@@ -17,7 +17,7 @@ const CourseByGraph = () => {
         }
 
         const res = await axios.get(
-          `http://localhost:8085/getNumberOfAdmissionsByCoursesAndInstitutecode?institutecode=${institutecode}`
+          `http://13.233.43.240:8085/getNumberOfAdmissionsByCoursesAndInstitutecode?institutecode=${institutecode}`
         );
         const data = res.data;
         console.log(data); // Debugging: Log API response

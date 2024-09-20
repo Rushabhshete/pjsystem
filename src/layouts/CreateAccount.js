@@ -212,7 +212,7 @@ const CreateAccount = () => {
   const handlePayment = () => {
     const { finalAmount } = calculateAmount();
     const options = {
-      key: "rzp_live_x3jjvYlvth6Ke",
+      key: "rzp_live_x3jjvYlvtgh6Ke",
       key_secret: "FAQE2PwPBrTkB0xC2pzPM3I", // Replace with your Razorpay key
       // key: "rzp_test_vv1FCZvuDRF6lQ",
       // key_secret: "P4JAUwn4VdE6xDLJ6p2Zy8RQ", // Replace with your Razorpay key
@@ -294,7 +294,7 @@ const CreateAccount = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8081/saveinstitude",
+        "http://13.233.43.240:8081/saveinstitude",
         dataToSubmit
       );
       setIsSaveSuccessful(true);
@@ -317,7 +317,7 @@ const CreateAccount = () => {
 
       try {
         const response = await axios.post(
-          `http://localhost:8081/uploadimage/${email}`,
+          `http://13.233.43.240:8081/uploadimage/${email}`,
           formDataImage,
           {
             headers: {
@@ -352,7 +352,7 @@ const CreateAccount = () => {
   const handleGetInstituteCode = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8081/findInstitutesby/email?emailaddress=${formData.emailaddress}`
+        `http://13.233.43.240:8081/findInstitutesby/email?emailaddress=${formData.emailaddress}`
       );
 
       if (response.data && response.data.institutecode) {

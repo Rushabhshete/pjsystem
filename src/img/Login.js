@@ -14,7 +14,7 @@
 //   const handleSubmit = async (event) => {
 //     event.preventDefault();
 //     try {
-//       const response = await axios.post('http://localhost:8081/login', {
+//       const response = await axios.post('http://13.233.43.240:8081/login', {
 //         email,
 //         password,
 //         confirmPassword: password, // Assuming the confirmPassword is same as password for login
@@ -192,7 +192,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8081/login", {
+      const response = await axios.post("http://13.233.43.240:8081/login", {
         email,
         password,
       });

@@ -2,7 +2,7 @@
 
  import axios from 'axios';
 
- const API_URL = 'http://localhost:8082'; // Ensure this URL matches your backend's URL
+ const API_URL = 'http://13.233.43.240:8082'; // Ensure this URL matches your backend's URL
  
  const getInstituteCode = () => {
    return localStorage.getItem('institutecode');

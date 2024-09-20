@@ -41,7 +41,7 @@ export default function AddNotice() {
 
   const fetchNotices = async () => {
     try {
-      const response = await axios.get(`http://localhost:8082/notices/all?institutecode=${institutecode}`);
+      const response = await axios.get(`http://13.233.43.240:8082/notices/all?institutecode=${institutecode}`);
       setNotices(response.data);
     } catch (error) {
       console.error("Error fetching notices:", error);
@@ -76,7 +76,7 @@ export default function AddNotice() {
     const newNotice = { noticeName, noticeDescription, createdAt, institutecode };
 
     try {
-      await axios.post(`http://localhost:8082/notices/addnotice?institutecode=${institutecode}`, newNotice);
+      await axios.post(`http://13.233.43.240:8082/notices/addnotice?institutecode=${institutecode}`, newNotice);
       toast.success("Notice sent successfully!");
       fetchNotices(); // Refresh the notice list
       setNoticeName('');
@@ -90,7 +90,7 @@ export default function AddNotice() {
   const handleDeleteNotice = async () => {
     if (noticeToDelete) {
       try {
-        await axios.delete(`http://localhost:8082/notices/deleteNotice/${noticeToDelete}`);
+        await axios.delete(`http://13.233.43.240:8082/notices/deleteNotice/${noticeToDelete}`);
         toast.success("Notice deleted successfully!");
         fetchNotices(); // Refresh the notice list
         setOpenConfirmDialog(false);
@@ -114,7 +114,7 @@ export default function AddNotice() {
     const updatedNotice = { id: selectedNotice.nid, noticeName, noticeDescription, createdAt, institutecode };
 
     try {
-      await axios.put(`http://localhost:8082/notices/updateNotice/${selectedNotice.nid}`, updatedNotice);
+      await axios.put(`http://13.233.43.240:8082/notices/updateNotice/${selectedNotice.nid}`, updatedNotice);
       toast.success("Notice updated successfully!");
       fetchNotices(); // Refresh the notice list
       setOpenEditDialog(false);

@@ -173,11 +173,11 @@ function AppContent() {
           {/* <Route path="account" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Account /></ProtectedRoute>} /> */}
         </Route>
         {/* </Route> */}
-        <Route path="/systems/" element={<Navigate to="/layout" />} />
+        {/* <Route path="/systems/" element={<Navigate to="/layout" />} /> */}
 
         {/* <Route path="/" element={<Navigate to="/layout" />} /> */}
         {/* Catch-all route to redirect all other paths to login */}
-        <Route path="*" element={<Navigate to="/systems/" />} />
+        {/* <Route path="*" element={<Navigate to="/systems/" />} /> */}
       </Routes>
       {showHelpDeskButton && <FloatingHelpDeskButton />}
     </>

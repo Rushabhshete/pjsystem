@@ -267,9 +267,9 @@ export default function IncomeCombineDash() {
       <Grid item xs={12}>
         <Box
           sx={{
-            width: "100%",
-            height: "100%",
-            margin: "auto",
+           width: "100%",
+           height: "100%",
+           margin: "auto",
             padding: 4,
             border: "1px solid lightgray",
             borderRadius: 2,
