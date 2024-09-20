@@ -121,7 +121,7 @@ export default function MonthlyGraph() {
     const [perData, setPerData] = useState([]);
 
     // Hardcoded years (can be fetched dynamically)
-    const peryears = [2021, 2022, 2023, 2024];
+    const peryears = [2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029];
 
     const handlePerYearChange = (event) => {
       setPerYear(event.target.value);

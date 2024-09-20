@@ -144,7 +144,7 @@ const ForgotPasswordLink = styled(Link)`
   color: #fff;
 `;
 
-function Login({ onLogin }) {
+function Login1({ onLogin }) {
   const [institutecode, setInstitutecode] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -233,148 +233,7 @@ function Login({ onLogin }) {
     <BackgroundContainer>
       
      <ContentWrapper>
-  <GridContainer container spacing={1} alignItems="center" marginTop={7}>
-    {[
-      { icon: <SettingsIcon />, link: "/create-account", label: "Create Account", external: true },
-      { icon: <HomeIcon />, link: "http://pjsofttech.in", label: "Admin", external: true },
-      { icon: <PersonIcon />, link: "http://pjsofttech.in/employee", label: "Employee", external: true },
-      { icon: <SchoolIcon />, link: "http://pjsofttech.in/student", label: "Student", external: true },
-      { icon: <SupervisorAccountIcon />, link: "/loginPage", label: "Principal", external: true },
-      { icon: <SupervisorAccountIcon />,link: "/loginPage", label: "HOD", external: true },
-      { icon: <PersonOutlineIcon />,link: "/loginPage", label: "Teacher", external: true },
-      { icon: <HowToRegIcon />,link: "/loginPage", label: "Parent", external: true },
-      { icon: <QuestionAnswerIcon />,link: "/loginPage", label: "Librarian", external: true },
-      { icon: <BarChartIcon />, link: "/loginPage", label: "Sales", external: true },
-      { icon: <MenuBookIcon />,link: "/loginPage", label: "Accountant", external: true },
-      { icon: <WorkIcon />,link: "/loginPage", label: "Driver", external: true },
-    ].map(({ icon, link, label, external }, index) => (
-      <Grid item lg={3} md={4} sm={6} xs={12} key={index} marginBottom={8}>
-        {external ? (
-          <a href={link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
-            <Paper
-              elevation={6}
-              sx={{
-                p: 6,
-                width: "100px",
-                height: "100px",
-                borderRadius: "50%",
-                textAlign: "center",
-                marginLeft: '50px',
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#f7f7f7",
-                transition: "transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease",
-                "&:hover": {
-                  transform: "scale(1.05)",
-                  boxShadow: "0 8px 25px rgba(0, 0, 0, 0.3)",
-                  backgroundImage: "linear-gradient(88.8deg, rgb(239, 171, 245) 13.4%, rgb(196, 181, 249) 76.3%)",
-                },
-              }}
-            >
-              <div
-                style={{
-                 // marginBottom: "5px",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  width: "100px",
-                  height: "100vh",
-                }}
-              >
-                {React.cloneElement(icon, {
-                  sx: {
-                    fontSize: "30px",
-                    color: "#1976d2",
-                    fontFamily: "Roboto, sans-serif",
-                    transition: "color 0.3s ease",
-                    "&:hover": {
-                      color: "purple",
-                    },
-                  },
-                })}
-              </div>
-              <Typography
-                variant="h6"
-                sx={{
-                  mt: 1,
-                  fontSize: "14px",
-                  fontWeight: "bold",
-                  color: "black",
-                  textAlign: "center",
-                  fontFamily: "Roboto, sans-serif",
-                }}
-              >
-                {label}
-              </Typography>
-            </Paper>
-          </a>
-        ) : (
-          <Link to={link} style={{ textDecoration: 'none' }}>
-            <Paper
-              elevation={6}
-              sx={{
-                p: 6,
-                width: "120px",
-                height: "120px",
-                borderRadius: "50%",
-                textAlign: "center",
-                marginLeft: '50px',
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#f7f7f7",
-                transition: "transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease",
-                "&:hover": {
-                  transform: "scale(1.05)",
-                  boxShadow: "0 8px 25px rgba(0, 0, 0, 0.3)",
-                  backgroundImage: "linear-gradient(88.8deg, rgb(239, 171, 245) 13.4%, rgb(196, 181, 249) 76.3%)",
-                },
-              }}
-            >
-              <div
-                style={{
-                  marginBottom: "10px",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  width: "100px",
-                  height: "100vh",
-                }}
-              >
-                {React.cloneElement(icon, {
-                  sx: {
-                    fontSize: "30px",
-                    color: "#1976d2",
-                    fontFamily: "Roboto, sans-serif",
-                    transition: "color 0.3s ease",
-                    "&:hover": {
-                      color: "purple",
-                    },
-                  },
-                })}
-              </div>
-              <Typography
-                variant="h6"
-                sx={{
-                  mt: 1,
-                  fontSize: "14px",
-                  fontWeight: "bold",
-                  color: "black",
-                  textAlign: "center",
-                  fontFamily: "Roboto, sans-serif",
-                }}
-              >
-                {label}
-              </Typography>
-            </Paper>
-          </Link>
-        )}
-      </Grid>
-    ))}
-  </GridContainer>
+  
 
 
         <LoginContainer>
@@ -451,4 +310,4 @@ function Login({ onLogin }) {
   );
 }
 
-export default Login;
+export default Login1;

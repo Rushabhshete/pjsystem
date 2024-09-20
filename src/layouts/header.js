@@ -159,6 +159,7 @@ const Header = () => {
 
   const handleNotificationsClose = () => {
     setNotificationsAnchorEl(null);
+    setNotificationCount(0); // Reset notification count to 0 when closing the notifications menu
   };
 
   const handleSnackbarClose = () => {
@@ -269,7 +270,7 @@ const Header = () => {
                 <MenuItem >New Updates Are Comming Soon </MenuItem>
               )}
             </Menu> */}
-            <Menu
+           <Menu
   id="menu-notifications"
   anchorEl={notificationsAnchorEl}
   anchorOrigin={{

@@ -34,7 +34,8 @@ const YearlyGraph = () => {
   const [revenueData, setRevenueData] = useState([]);
   const [revenueLoading, setRevenueLoading] = useState(true);
 
-  const years = Array.from({ length: 5 }, (_, i) => currentYear - i);
+ // Generate years for dropdown (5 past and 5 future)
+ const years = Array.from({ length: 11 }, (_, i) => currentYear - 5 + i);
   const months = Array.from({ length: 12 }, (_, i) => i + 1);
 
   // Fetch Admissions Data
