@@ -248,7 +248,7 @@ export default function IncomeCombineDash() {
   <Box
     sx={{
       flexGrow: 1,
-      height: "1px",
+      height: "3px",
       backgroundColor: "#0D47A1",
     }}
   />
@@ -259,7 +259,7 @@ export default function IncomeCombineDash() {
   <Box
     sx={{
       flexGrow: 1,
-      height: "1px",
+      height: "3px",
       backgroundColor: "#0D47A1",
     }}
   />

@@ -24,8 +24,8 @@ import { Chart } from "react-google-charts";
 import ComparisonGraph from "../Addmission/AdmissionComparisonGraph"
 import { styled } from "@mui/system";
 import IncomeCombineDash from "./IncomeCombineDash";
-import YearlyGraph from '../Enquiry/YearlyGraph'
-import EmployeeDashboard from "../Employee_System/Employee/EmployeeDashboard"
+import YearlyGraph from '../Enquiry/YearlyGraph';
+import EmpDash from "../layouts/EmpDash";
 
 export default function CombineDashboard() {
   //admission
@@ -350,7 +350,7 @@ export default function CombineDashboard() {
     <Box
       sx={{
         flexGrow: 1,
-        height: "1px",
+        height: "3px",
         backgroundColor: "#0D47A1",
       }}
     />
@@ -360,7 +360,7 @@ export default function CombineDashboard() {
     <Box
       sx={{
         flexGrow: 1,
-        height: "1px",
+        height: "3px",
         backgroundColor: "#0D47A1",
       }}
     />
@@ -444,7 +444,7 @@ export default function CombineDashboard() {
     <Box
       sx={{
         flexGrow: 1,
-        height: "1px",
+        height: "3px",
         backgroundColor: "#0D47A1",
       }}
     />
@@ -454,7 +454,7 @@ export default function CombineDashboard() {
     <Box
       sx={{
         flexGrow: 1,
-        height: "1px",
+        height: "3px",
         backgroundColor: "#0D47A1",
       }}
     />
@@ -529,7 +529,7 @@ export default function CombineDashboard() {
         </Grid>
         {/* Admission Dashboard end */}
       </Grid>
-      <EmployeeDashboard />
+      <EmpDash />
     </div>
   );
 };

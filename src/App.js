@@ -69,6 +69,7 @@ import ManageEmpMemo from "./Employee_System/Memo/ManageEmpMemo";
 import AddNotice from "./Employee_System/Memo/AddNotice";
 import Login1 from "./layouts/Login1";
 import Bill from "./layouts/bill";
+import EmpDash from "./layouts/EmpDash";
 function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem("isAuthenticated") === "true"
@@ -149,6 +150,8 @@ function AppContent() {
           <Route path="AddEmpcategory" element={<AddEmpcategory />} />
           <Route path="AddDepartment" element={<AddDepartment/>}/>
           <Route path="ManageHoliday" element={<ManageHoliday/>}/>
+
+          <Route path="EmpDash" element={<EmpDash />} />
 
           <Route path="SalaryDashboard" element={<SalaryDashboard />} />
           <Route path="AddSalary/:empID" element={<AddSalary />} />
