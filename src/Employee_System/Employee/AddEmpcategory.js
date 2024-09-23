@@ -645,9 +645,6 @@ function Category() {
     localStorage.getItem("institutecode") || ""
   );
 
-  useEffect(() => {
-    fetchDepartments();
-  }, [institutecode]);
 
   const fetchData = async () => {
     setLoading(true);
@@ -723,21 +720,9 @@ function Category() {
     setShowInfoModal(true);
   };
 
-  const fetchDepartments = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8082/departments/allDepartment?institutecode=${institutecode}`
-      );
-      setDepartments(response.data);
-    } catch (error) {
-      console.error("Error fetching departments:", error);
-      // Handle error fetching departments (e.g., show error message)
-    }
-  };
 
   const [formData, setFormData] = useState({
     categoryName: "",
-    department: "",
     bonusPercentage: "",
     hraPercentage: "",
     taPercentage: "",
@@ -820,25 +805,7 @@ function Category() {
                 variant="outlined"
               />
             </Grid>
-            <Grid item xs={12} sm={4}>
-              <FormControl fullWidth>
-                <TextField
-                  required
-                  name="department"
-                  value={formData.department}
-                  onChange={handleChange}
-                  InputLabelProps={{ className: "required-asterisk" }}
-                  label="Department"
-                  select
-                >
-                  {departments.map((option) => (
-                    <MenuItem key={option.id} value={option.department}>
-                      {option.department}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </FormControl>
-            </Grid>
+           
             <Grid item xs={12} sm={4}>
               <TextField
                 required
@@ -951,10 +918,10 @@ function Category() {
               <TextField
                 required
                 fullWidth
-                label="ESF Percentage"
-                name="esfPercentage"
+                label="ESIC Percentage"
+                name="esicPercentage"
                 type="number"
-                value={formData.esfPercentage}
+                value={formData.esicPercentage}
                 onChange={handleChange}
                 InputLabelProps={{ className: "required-asterisk" }}
                 InputProps={{
@@ -1044,11 +1011,6 @@ function Category() {
                 </TableCell>
                 <TableCell>
                   <Typography variant="subtitle2" fontWeight="bold">
-                    Department
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="subtitle2" fontWeight="bold">
                     HRA Percentage
                   </Typography>
                 </TableCell>
@@ -1079,7 +1041,7 @@ function Category() {
                 </TableCell>
                 <TableCell>
                   <Typography variant="subtitle2" fontWeight="bold">
-                    ESF Percentage
+                    ESIC Percentage
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -1108,18 +1070,17 @@ function Category() {
               {categories.map((category) => (
                 <TableRow key={category.id}>
                   <TableCell>{category.id}</TableCell>
-                  <TableCell>{category.categoryName}</TableCell>
-                  <TableCell>{category.department}</TableCell>
-                  <TableCell>{category.hraPercentage}</TableCell>
-                  <TableCell>{category.taPercentage}</TableCell>
-                  <TableCell>{category.incentivePercentage}</TableCell>
-                  <TableCell>{category.spiPercentage}</TableCell>
-                  <TableCell>{category.medicalAllowancePercentage}</TableCell>
-                  <TableCell>{category.pfPercentage}</TableCell>
-                  <TableCell>{category.esfPercentage}</TableCell>
-                  <TableCell>{category.professionalTaxPercentage}</TableCell>
-                  <TableCell>{category.incomeTaxPercentage}</TableCell>
-                  <TableCell>{category.totalPaidLeave}</TableCell>
+                  <TableCell>{ category. categoryName}</TableCell>
+                  <TableCell>{100 * category. hraPercentage}%</TableCell>
+                  <TableCell>{100 * category. taPercentage}%</TableCell>
+                  <TableCell>{100 * category. incentivePercentage}%</TableCell>
+                  <TableCell>{100 * category. spiPercentage}%</TableCell>
+                  <TableCell>{100 * category. medicalAllowancePercentage}%</TableCell>
+                  <TableCell>{100 * category. pfPercentage}%</TableCell>
+                  <TableCell>{100 * category. esicPercentage}%</TableCell>
+                  <TableCell>{100 * category. professionalTaxPercentage}%</TableCell>
+                  <TableCell>{100 * category. incomeTaxPercentage}%</TableCell>
+                  <TableCell>{ category. totalPaidLeave}</TableCell>
                   <TableCell sx={{ whiteSpace: "nowrap" }}>
                     <IconButton
                       onClick={() => handleInfo(category)}
@@ -1184,23 +1145,6 @@ function Category() {
                 </Grid>
                 <Grid item xs={12} sm={4}>
                   <TextField
-                    select
-                    name="department"
-                    label="Department"
-                    fullWidth
-                    value={selectedCategory?.department || ""}
-                    onChange={handleInputChange}
-                  >
-                    <MenuItem value="">Select Department</MenuItem>
-                    {departments.map((option) => (
-                      <MenuItem key={option.id} value={option.department}>
-                        {option.department}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                  <TextField
                     type="number"
                     label="HRA Percentage"
                     name="hraPercentage"
@@ -1262,9 +1206,9 @@ function Category() {
                 <Grid item xs={12} sm={4}>
                   <TextField
                     type="number"
-                    name="esfPercentage"
-                    label="ESF Percentage"
-                    value={selectedCategory?.esfPercentage || ""}
+                    name="esicPercentage"
+                    label="ESIC Percentage"
+                    value={selectedCategory?.esicPercentage || ""}
                     onChange={handleInputChange}
                     required
                   />
