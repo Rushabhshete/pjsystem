@@ -96,7 +96,7 @@ const AddIncomeExpense = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const inputRef = useRef(null);
   const [submittedData, setSubmittedData] = useState({});
-
+  const [employeeDetails, setEmployeeDetails] = useState(null);
   const getInstituteCode = () => localStorage.getItem("institutecode");
 
   useEffect(() => {
@@ -149,6 +149,8 @@ const AddIncomeExpense = () => {
     }
   }, [formData.amount, formData.gst, showGst]);
 
+
+
   useEffect(() => {
     if (formData.total && formData.payingAmount) {
       const totalAmount = parseFloat(formData.total);
@@ -160,6 +162,26 @@ const AddIncomeExpense = () => {
       }));
     }
   }, [formData.total, formData.payingAmount]);
+
+  useEffect(() => {
+    const fetchEmployeeDetails = async () => {
+      try {
+        if (!getInstituteCode()) {
+          console.error("No institutecode found in localStorage");
+          return;
+        }
+
+        const response = await axios.get(
+          `http://localhost:8081/findInstitutesby/Institutecode?institutecode=${getInstituteCode()}`
+        );
+        setEmployeeDetails(response.data);
+      } catch (error) {
+        console.error("Error fetching employee details:", error);
+      }
+    };
+
+    fetchEmployeeDetails();
+  }, [getInstituteCode()]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -341,7 +363,22 @@ const AddIncomeExpense = () => {
     const doc = new jsPDF();
 
     // Set up title
-    const title = `${submittedData.user} ${submittedData.type} Receipt`;
+    // const title = `${submittedData.user} ${submittedData.type} Receipt`;
+    const maxWidth = 60; // Adjust as needed for your layout
+
+    const instituteName = employeeDetails.institutename || "Guest";
+    const receiptTitle = `${submittedData.user} ${submittedData.type} Receipt`;
+    
+    // Function to center align a string
+    const centerAlign = (text) => {
+        const padding = Math.max(0, Math.floor((maxWidth - text.length) / 2));
+        return text;
+    };
+    
+    const title = `${centerAlign(instituteName)}\n\n${centerAlign(receiptTitle)}\n`;
+    
+
+    
     const pageWidth = doc.internal.pageSize.getWidth();
     const titleWidth = doc.getTextWidth(title);
     const titleX = (pageWidth - titleWidth) / 2;
@@ -352,7 +389,7 @@ const AddIncomeExpense = () => {
     // Invoice number on top-left corner
     const invoiceNo = `Invoice No: ${submittedData.invoiceNo}`;
 
-    doc.setFontSize(18);
+    doc.setFontSize(16);
     doc.text(title, titleX, 15);
 
     // Generated date on the top right
@@ -693,14 +730,12 @@ const AddIncomeExpense = () => {
           {formData.paymentMethod === "Partial" || 
           formData.paymentMethod === "Complete" ? (
             <>
-            
-
           <Grid item xs={12} sm={3}>
             <FormControl fullWidth variant="outlined">
               <TextField
                 label="Bill Type"
                 name="billType"
-                value={formData.billType==="Pending"? "Pending" :formData.payingAmount}
+                value={formData.billType==="Pending"? 0 :formData.billType}
                 required
                 onChange={handleChange}
                 select
@@ -722,7 +757,7 @@ const AddIncomeExpense = () => {
               <TextField
                 label="Paid Using"
                 name="paidBy"
-                value={formData.paidBy==="Pending"?"Pending" :formData.payingAmount}
+                value={formData.paidBy==="Pending"?"Pending" :formData.paidBy}
                 required
                 onChange={handleChange}
                 select
@@ -743,7 +778,7 @@ const AddIncomeExpense = () => {
               <TextField
                 label="Transaction ID"
                 name="transactionId"
-                value={formData.transactionId === "Pending" ? "Pending" : formData.payingAmount}
+                value={formData.transactionId === "Pending" ? "Pending" : formData.transactionId}
 
                 onChange={handleChange}
                 fullWidth
