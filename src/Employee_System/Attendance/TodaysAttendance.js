@@ -253,6 +253,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { styled } from '@mui/system';
+import axios from 'axios';
 
 const Container = styled(Box)(({ theme }) => ({
   padding: theme.spacing(3),
@@ -352,6 +353,17 @@ const TodaysAttendance = () => {
       console.error("Error fetching employee counts:", error);
     }
   };
+
+  // const fetchTodaysAttendanceFromAPI = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `http://localhost:8082/today?institutecode=${institutecode}`
+  //     );
+  //     setTodaysAttendance(response.data);
+  //   } catch (error) {
+  //     console.error('Error fetching today\'s attendance:', error);
+  //   }
+  // };
 
   const mergeAttendanceData = () => {
     const mergedData = employees.map(employee => {

@@ -362,8 +362,8 @@ const Category = () => {
     ) {
       const url =
         category === "Income"
-          ? `http://localhost:8087/incomes/getAllIncomesByinstitutecode?institutecode=${getInstituteCode()}`
-          : `http://localhost:8087/expenses/getAllExpensesByinstitutecode?institutecode=${getInstituteCode()}`;
+          ? `http://13.233.43.240:8087/incomes/getAllIncomesByinstitutecode?institutecode=${getInstituteCode()}`
+          : `http://13.233.43.240:8087/expenses/getAllExpensesByinstitutecode?institutecode=${getInstituteCode()}`;
 
       try {
         const response = await axios.get(url);
@@ -401,8 +401,8 @@ const Category = () => {
         default:
           const url =
             category === "Income"
-              ? `http://localhost:8087/incomes/getAllIncomesByinstitutecode?institutecode=${getInstituteCode()}`
-              : `http://localhost:8087/expenses/getAllExpensesByinstitutecode?institutecode=${getInstituteCode()}`;
+              ? `http://13.233.43.240:8087/incomes/getAllIncomesByinstitutecode?institutecode=${getInstituteCode()}`
+              : `http://13.233.43.240:8087/expenses/getAllExpensesByinstitutecode?institutecode=${getInstituteCode()}`;
 
           try {
             const response = await axios.get(url);

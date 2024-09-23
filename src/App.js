@@ -74,7 +74,7 @@ function AppContent() {
     localStorage.getItem("isAuthenticated") === "true"
   );
   const location = useLocation();
-  const showHelpDeskButton = location.pathname !== "/" && location.pathname !== "/create-account";
+  const showHelpDeskButton = location.pathname !== "/" && location.pathname !== "/create-account" && location.pathname !== "/systems";
 
 
 

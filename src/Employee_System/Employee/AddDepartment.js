@@ -463,7 +463,7 @@ const Department = () => {
             <TableRow>
               <TableCell sx={{ fontWeight: 'bold' }}>Id</TableCell>
               <TableCell sx={{ fontWeight: 'bold' }}>Department Name</TableCell>
-              <TableCell sx={{ fontWeight: 'bold' }}>Action Required</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

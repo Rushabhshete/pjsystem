@@ -228,7 +228,7 @@ const AddGuide = () => {
                 <TableCell style={{ fontWeight: "bold" }}>ID</TableCell>
                 <TableCell style={{ fontWeight: "bold" }}>Guide Name</TableCell>
                 <TableCell style={{ fontWeight: "bold" }}>
-                  Action Required
+                  Actions
                 </TableCell>
               </TableRow>
             </TableHead>
