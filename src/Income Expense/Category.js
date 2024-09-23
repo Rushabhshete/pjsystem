@@ -402,7 +402,7 @@ const Category = () => {
           const url =
             category === "Income"
               ? `http://13.233.43.240:8087/incomes/getAllIncomesByinstitutecode?institutecode=${getInstituteCode()}`
-              : `http://13.233.43.240:8087/expenses/getAllExpensesByinstitutecode?institutecode=${getInstituteCode()}`;
+              : `http://13.233.43.240:8087/expenses/getAllExpensesByInstitutecode?institutecode=${getInstituteCode()}`;
 
           try {
             const response = await axios.get(url);

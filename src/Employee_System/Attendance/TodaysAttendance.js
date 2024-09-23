@@ -253,7 +253,6 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { styled } from '@mui/system';
-import axios from 'axios';
 
 const Container = styled(Box)(({ theme }) => ({
   padding: theme.spacing(3),
