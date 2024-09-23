@@ -1552,7 +1552,7 @@ useEffect(() => {
     if (rowToDelete) {
       try {
         await axios.delete(
-          `http://localhost:8082/salaries/deletesalary/${rowToDelete}`
+          `http://localhost:8082/salaries/softDeleteSalaryById/${rowToDelete}`
         );
         setSalaries(salaries.filter((salary) => salary.id !== rowToDelete));
         toast.success("Row deleted successfully");

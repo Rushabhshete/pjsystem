@@ -397,35 +397,44 @@ const AdmissionForm = () => {
                 />
               </Grid>
             ) : null}
-            <Grid item xs={12} sm={6} md={4}>
-              <TextField
-                fullWidth
-                id="paymentMode"
-                name="paymentMode"
-                label="Payment Mode"
-                value={formData.paymentMode}
-                onChange={handleInputChange}
-                select
-                required
-              >
-                <MenuItem value="Cheque">Cheque</MenuItem>
-                <MenuItem value="UPI">UPI</MenuItem>
-                <MenuItem value="Cash">Cash</MenuItem>
-                <MenuItem value="Bank Transfer">Bank Transfer</MenuItem>
-              </TextField>
-            </Grid>
-            {formData.paymentMode !== "Cash" ? (
-              <Grid item xs={12} sm={6} md={4}>
-                <TextField
-                  fullWidth
-                  id="transactionid"
-                  name="transactionid"
-                  label="Transaction ID"
-                  value={formData.transactionid}
-                  onChange={handleInputChange}
-                />
-              </Grid>
-            ) : null}
+            {formData.paymentMethod === "Partial" || formData.paymentMethod === "Complete" ? (
+  <>
+    <Grid item xs={12} sm={6} md={4}>
+      <TextField
+        fullWidth
+        id="paymentMode"
+        name="paymentMode"
+        label="Payment Mode"
+        value={formData.paymentMode}
+        onChange={handleInputChange}
+        disabled={formData.paymentMethod === "Pending"} 
+        select
+        required
+      >
+        <MenuItem value="Cheque">Cheque</MenuItem>
+        <MenuItem value="UPI">UPI</MenuItem>
+        <MenuItem value="Cash">Cash</MenuItem>
+        <MenuItem value="Bank Transfer">Bank Transfer</MenuItem>
+      </TextField>
+    </Grid>
+    {formData.paymentMode !== "Cash" ? (
+      <Grid item xs={12} sm={6} md={4}>
+        <TextField
+          fullWidth
+          id="transactionid"
+          name="transactionid"
+          label="Transaction ID"
+          value={formData.paymentMethod === "Pending" ? "Pending" : formData.transactionid}
+          onChange={handleInputChange}
+          disabled={formData.paymentMethod === "Pending"} 
+        />
+      </Grid>
+    ) : null}
+  </>
+) : null}
+
+
+
             <Grid item xs={12} sm={6} md={4}>
               <TextField
                 fullWidth
@@ -495,6 +504,7 @@ const AdmissionForm = () => {
                 />
               </Grid>
             ) : null}
+
             <Grid item xs={12} sm={6} md={4}>
               <TextField
                 fullWidth

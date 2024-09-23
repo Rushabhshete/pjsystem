@@ -655,7 +655,6 @@ const AddIncomeExpense = () => {
               InputLabelProps={{ className: "required-asterisk" }}
               variant="outlined"
     disabled={formData.paymentMethod === "Pending"} // Disable input if paymentMethod is "Pending"
-
             />
           </Grid>
           <Grid item xs={12} sm={3}>
@@ -691,16 +690,24 @@ const AddIncomeExpense = () => {
             </>
           ) : null}
 
+          {formData.paymentMethod === "Partial" || 
+          formData.paymentMethod === "Complete" ? (
+            <>
+            
+
           <Grid item xs={12} sm={3}>
             <FormControl fullWidth variant="outlined">
               <TextField
                 label="Bill Type"
                 name="billType"
-                value={formData.billType}
+                value={formData.billType==="Pending"? "Pending" :formData.payingAmount}
                 required
                 onChange={handleChange}
                 select
                 InputLabelProps={{ className: "required-asterisk" }}
+                
+              variant="outlined"
+    disabled={formData.paymentMethod === "Pending"} // Disable input if paymentMethod is "Pending"
               >
                 {billTypeOptions.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
@@ -715,11 +722,13 @@ const AddIncomeExpense = () => {
               <TextField
                 label="Paid Using"
                 name="paidBy"
-                value={formData.paidBy}
+                value={formData.paidBy==="Pending"?"Pending" :formData.payingAmount}
                 required
                 onChange={handleChange}
                 select
                 InputLabelProps={{ className: "required-asterisk" }}
+                variant="outlined"
+      disabled={formData.paymentMethod === "Pending"} // Disable input if paymentMethod is "Pending"
               >
                 {paidByOptions.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
@@ -734,13 +743,17 @@ const AddIncomeExpense = () => {
               <TextField
                 label="Transaction ID"
                 name="transactionId"
-                value={formData.transactionId}
+                value={formData.transactionId === "Pending" ? "Pending" : formData.payingAmount}
+
                 onChange={handleChange}
                 fullWidth
                 variant="outlined"
+                InputLabelProps={{ className: "required-asterisk" }}
+      disabled={formData.paymentMethod === "Pending"} // Disable input if paymentMethod is "Pending"
               />
             </Grid>
-          )}
+          )}</>
+          ) : null}
 
           <Grid item xs={12} sm={12}>
             <FormControl fullWidth variant="outlined">
