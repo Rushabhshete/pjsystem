@@ -59,14 +59,14 @@ const Header = () => {
   useEffect(() => {
     const fetchEmployeeDetails = async () => {
       try {
-        if (!email) {
-          console.error("No email found in localStorage");
+        if (!institutecode) {
+          console.error("No institutecode found in localStorage");
           setLoading(false);
           return;
         }
 
         const response = await axios.get(
-          `http://localhost:8081/findInstitutesby/email?emailaddress=${email}`
+          `http://localhost:8081/findInstitutesby/Institutecode?institutecode=${institutecode}`
         );
         setEmployeeDetails(response.data);
         setLoading(false);
@@ -77,7 +77,7 @@ const Header = () => {
     };
 
     fetchEmployeeDetails();
-  }, [email]);
+  }, [institutecode]);
 
   useEffect(() => {
     const fetchNotifications = async () => {

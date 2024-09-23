@@ -85,11 +85,32 @@ const Category = () => {
   const [currentData, setCurrentData] = useState(null);
   const [paymentMethod, setSelectedPaymentMethod] = useState("");
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [employeeDetails, setEmployeeDetails] = useState(null);
   const [categoryIdToDelete, setCategoryIdToDelete] = useState(null);
   const handleUpdatedData = (updatedData) => {
     setData(updatedData);
   };
   const getInstituteCode = () => localStorage.getItem("institutecode");
+
+  useEffect(() => {
+    const fetchEmployeeDetails = async () => {
+      try {
+        if (!getInstituteCode()) {
+          console.error("No institutecode found in localStorage");
+          return;
+        }
+
+        const response = await axios.get(
+          `http://localhost:8081/findInstitutesby/Institutecode?institutecode=${getInstituteCode()}`
+        );
+        setEmployeeDetails(response.data);
+      } catch (error) {
+        console.error("Error fetching employee details:", error);
+      }
+    };
+
+    fetchEmployeeDetails();
+  }, [getInstituteCode()]);
 
   const exportToCSV = () => {
     const headers = [
@@ -150,7 +171,7 @@ const Category = () => {
 
     // Heading
     doc.setFontSize(16);
-    const heading = "Pjsofttech Pvt. Ltd.";
+    const heading = `${employeeDetails.institutename || "Guest"}`;
     const headingWidth = doc.getTextWidth(heading);
     doc.text(heading, (pageWidth - headingWidth) / 2, 5);
 
@@ -362,8 +383,8 @@ const Category = () => {
     ) {
       const url =
         category === "Income"
-          ? `http://13.233.43.240:8087/incomes/getAllIncomesByinstitutecode?institutecode=${getInstituteCode()}`
-          : `http://13.233.43.240:8087/expenses/getAllExpensesByinstitutecode?institutecode=${getInstituteCode()}`;
+          ? `http://localhost:8087/incomes/getAllIncomesByinstitutecode?institutecode=${getInstituteCode()}`
+          : `http://localhost:8087/expenses/getAllExpensesByinstitutecode?institutecode=${getInstituteCode()}`;
 
       try {
         const response = await axios.get(url);
@@ -401,8 +422,8 @@ const Category = () => {
         default:
           const url =
             category === "Income"
-              ? `http://13.233.43.240:8087/incomes/getAllIncomesByinstitutecode?institutecode=${getInstituteCode()}`
-              : `http://13.233.43.240:8087/expenses/getAllExpensesByInstitutecode?institutecode=${getInstituteCode()}`;
+              ? `http://localhost:8087/incomes/getAllIncomesByinstitutecode?institutecode=${getInstituteCode()}`
+              : `http://localhost:8087/expenses/getAllExpensesByInstitutecode?institutecode=${getInstituteCode()}`;
 
           try {
             const response = await axios.get(url);
@@ -608,7 +629,7 @@ const Category = () => {
 
     // Heading
     doc.setFontSize(16);
-    const heading = "Pjsofttech Pvt. Ltd.";
+    const heading = `${employeeDetails.institutename || "Guest"}`;
     const headingWidth = doc.getTextWidth(heading);
     doc.text(heading, (pageWidth - headingWidth) / 2, 20); // Adjust y-position to account for invoice number
 
