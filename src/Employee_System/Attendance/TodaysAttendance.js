@@ -224,6 +224,7 @@
 // export default TodaysAttendance;
 
 
+
 import React, { useState, useEffect } from 'react';
 import { 
   getAllEmployees, 
@@ -250,6 +251,7 @@ import {
   Card,
   CardContent,
 } from '@mui/material';
+import axios from 'axios';
 import { styled } from '@mui/system';
 
 const Container = styled(Box)(({ theme }) => ({
@@ -263,10 +265,15 @@ const TodaysAttendance = () => {
   const [absentCount, setAbsentCount] = useState(0);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
+  const [timeFilter, setTimeFilter] = useState('All'); // New state for filter options
   const [filteredAttendance, setFilteredAttendance] = useState([]);
+  const [startDate, setStartDate] = useState(''); // State for start date
+  const [endDate, setEndDate] = useState('');     // State for end date
   
   // Options for the dropdown, initialized with all possible statuses
   const statusOptions = ['All', 'Present', 'Absent', 'Late'];
+  const filterOptions = ['All', 'Today','Yesterday', 'Custom Date'];
+
 
   useEffect(() => {
     fetchInitialData();
@@ -276,6 +283,19 @@ const TodaysAttendance = () => {
   useEffect(() => {
     filterAttendance();
   }, [search, statusFilter, employees, todaysAttendance]);
+
+  // Trigger API call when timeFilter changes
+  useEffect(() => {
+    if (timeFilter !== 'Custom Date') {
+      handleFilterChange(timeFilter);
+    }
+  }, [timeFilter]);
+
+  useEffect(() => {
+    if (timeFilter === 'Custom Date' && startDate && endDate) {
+      handleFilterChange('Custom Date');
+    }
+  }, [startDate, endDate]);
 
   const fetchInitialData = async () => {
     try {
@@ -288,6 +308,39 @@ const TodaysAttendance = () => {
       console.error("Error fetching initial data:", error);
     }
   };
+
+    // Fetch data based on the filter (All or Today)
+    const handleFilterChange = async (filter) => {
+      try {
+        let response;
+        const instituteCode = localStorage.getItem('institutecode');
+  
+        if (filter === 'All') {
+          response = await axios.get(
+            `http://localhost:8082/getNonDeleted?institutecode=${instituteCode}`
+          );
+        } else if (filter === 'Today') {
+          response = await axios.get(
+            `http://localhost:8082/today?institutecode=${instituteCode}`
+          );
+        } else if (filter === 'Yesterday') {
+          response = await axios.get(
+            `http://localhost:8082/getAttendenceByyesterday?institutecode=${instituteCode}`
+          );
+        } else if (filter === 'Custom Date' && startDate && endDate) {
+          response = await axios.get(
+            `http://localhost:8082/getAttendenceBYycustomDate?institutecode=${instituteCode}&startDate=${startDate}&endDate=${endDate}`
+          );
+        }
+
+  
+        if (response && response.data) {
+          setEmployees(response.data);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
   const fetchEmployeeCounts = async () => {
     try {
@@ -392,8 +445,8 @@ const TodaysAttendance = () => {
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
           <FormControl fullWidth variant="outlined">
-            <InputLabel>Status</InputLabel>
-            <Select
+            <TextField
+            select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
               label="Status"
@@ -403,9 +456,52 @@ const TodaysAttendance = () => {
                   {status}
                 </MenuItem>
               ))}
-            </Select>
+            </TextField>
           </FormControl>
         </Grid>
+           {/* Dropdown for filtering */}
+           <Grid item xs={12} sm={6} md={4}>
+            <FormControl fullWidth variant="outlined">
+              <TextField
+              select
+                value={timeFilter} // Use new state here
+                onChange={(e) => setTimeFilter(e.target.value)} // Update state
+                label="Filter by"
+              >
+                {filterOptions.map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </FormControl>
+          </Grid>
+          {timeFilter === 'Custom Date' && (
+            <>
+              <Grid item xs={12} sm={6} md={4}>
+                <TextField
+                  fullWidth
+                  type='date'
+                  label="Start Date"
+                  variant="outlined"
+                  value={startDate}
+                  InputLabelProps={{ shrink: true }}
+                  onChange={(e) => setStartDate(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} md={4}>
+                <TextField
+                  fullWidth
+                  type='date'
+                  label="End Date"
+                  variant="outlined"
+                  value={endDate}
+                  InputLabelProps={{ shrink: true }}
+                  onChange={(e) => setEndDate(e.target.value)}
+                />
+              </Grid>
+            </>
+          )}
       </Grid>
 
       <TableContainer component={Paper}>
@@ -428,7 +524,7 @@ const TodaysAttendance = () => {
               filteredAttendance.map(employee => (
                 <TableRow key={employee.empID}>
                   <TableCell>{employee.empID}</TableCell>
-                  <TableCell>{employee.fullName}</TableCell>
+                  <TableCell>{employee.fullName || employee.name}</TableCell>
                   <TableCell>{employee.shift}</TableCell>
                   <TableCell>{employee.loginTime || 'N/A'}</TableCell>
                   <TableCell>{employee.breakIn || 'N/A'}</TableCell>
@@ -454,4 +550,3 @@ const TodaysAttendance = () => {
 };
 
 export default TodaysAttendance;
-

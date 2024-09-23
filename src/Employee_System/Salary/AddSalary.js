@@ -72,7 +72,7 @@ export default function AddSalary() {
 
     try {
       // Add salary for the employee using axios POST request
-      await axios.post(`http://13.233.43.240:8082/salaries/add`, {
+      await axios.post(`http://localhost:8082/salaries/add`, {
         empID: empID,
         basicSalary: parseInt(salary), // Convert salary to integer if needed
         paymentDate: paymentDate,
@@ -103,7 +103,7 @@ export default function AddSalary() {
       }
 
       try {
-        const response = await axios.get(`http://13.233.43.240:8082/empById/${empID}`);
+        const response = await axios.get(`http://localhost:8082/empById/${empID}`);
         const fetchedEmployee = response.data;
         setEmployee({
           fullName: fetchedEmployee.fullName,

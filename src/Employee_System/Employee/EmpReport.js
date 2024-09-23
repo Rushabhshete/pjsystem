@@ -47,7 +47,7 @@ const EmpReport = () => {
 
   const fetchAllEmployees = useCallback(async () => {
     try {
-      const response = await axios.get(`http://localhost:8082/getAllemp?institutecode=${institutecode}`);
+      const response = await axios.get(`http://localhost:8082/getNonDeleted?institutecode=${institutecode}`);
       if (response.status === 200 && response.data && Array.isArray(response.data)) {
         setUser(response.data);
         const uniqueDepartments = ["all", ...new Set(response.data.map(emp => emp.department))];
@@ -66,13 +66,13 @@ const EmpReport = () => {
 
   const fetchFilteredUser = useCallback(async () => {
     try {
-      let url = `http://localhost:8082/getAllemp?institutecode=${institutecode}`;
+      let url = `http://localhost:8082/getNonDeleted?institutecode=${institutecode}`;
       if (filter === "7") {
-        url = `http://13.233.43.240:8082/employees/last7days?institutecode=${institutecode}`;
+        url = `http://localhost:8082/employees/last7days?institutecode=${institutecode}`;
       } else if (filter === "30") {
-        url = `http://13.233.43.240:8082/employees/lastMonth?institutecode=${institutecode}`;
+        url = `http://localhost:8082/employees/lastMonth?institutecode=${institutecode}`;
       } else if (filter === "365") {
-        url = `http://13.233.43.240:8082/employees/lastYear?institutecode=${institutecode}`;
+        url = `http://localhost:8082/employees/lastYear?institutecode=${institutecode}`;
       }
 
       const response = await axios.get(url);
@@ -107,7 +107,7 @@ const EmpReport = () => {
   const fetchByDateRange = useCallback(async () => {
     if (startDate && endDate) {
       try {
-        const response = await axios.get(`http://13.233.43.240:8082/byDateRange?startDate=${startDate}&endDate=${endDate}&institutecode=${institutecode}`);
+        const response = await axios.get(`http://localhost:8082/byDateRange?startDate=${startDate}&endDate=${endDate}&institutecode=${institutecode}`);
         if (response.status === 200 && response.data && Array.isArray(response.data)) {
           setUser(response.data);
         } else {

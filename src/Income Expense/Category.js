@@ -306,7 +306,7 @@ const Category = () => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
-          `http://13.233.43.240:8087/categories/getAllCategoriesByInstitutecode?institutecode=${getInstituteCode()}`
+          `http://localhost:8087/categories/getAllCategoriesByInstitutecode?institutecode=${getInstituteCode()}`
         );
         setCategories(response.data);
       } catch (error) {
@@ -320,7 +320,7 @@ const Category = () => {
   const fetchIncomeData = async (timeframe, startDate, endDate) => {
     try {
       const response = await axios.get(
-        `http://13.233.43.240:8087/income/${
+        `http://localhost:8087/income/${
           timeframe === "customdaterange"
             ? `customdaterange?institutecode=${getInstituteCode()}&startDate=${startDate}&endDate=${endDate}`
             : `getIncomeBy?institutecode=${getInstituteCode()}&timeframe=${timeframe}`
@@ -336,7 +336,7 @@ const Category = () => {
   const fetchExpenseData = async (timeframe, startDate, endDate) => {
     try {
       const response = await axios.get(
-        `http://13.233.43.240:8087/expense/${
+        `http://localhost:8087/expense/${
           timeframe === "customdaterange"
             ? `customdaterange?institutecode=${getInstituteCode()}&startDate=${startDate}&endDate=${endDate}`
             : `getByTimeframe?institutecode=${getInstituteCode()}&timeframe=${timeframe}`
@@ -362,8 +362,8 @@ const Category = () => {
     ) {
       const url =
         category === "Income"
-          ? `http://13.233.43.240:8087/incomes/getAllIncomesByinstitutecode?institutecode=${getInstituteCode()}`
-          : `http://13.233.43.240:8087/expenses/getAllExpensesByinstitutecode?institutecode=${getInstituteCode()}`;
+          ? `http://localhost:8087/incomes/getAllIncomesByinstitutecode?institutecode=${getInstituteCode()}`
+          : `http://localhost:8087/expenses/getAllExpensesByinstitutecode?institutecode=${getInstituteCode()}`;
 
       try {
         const response = await axios.get(url);
@@ -401,8 +401,8 @@ const Category = () => {
         default:
           const url =
             category === "Income"
-              ? `http://13.233.43.240:8087/incomes/getAllIncomesByinstitutecode?institutecode=${getInstituteCode()}`
-              : `http://13.233.43.240:8087/expenses/getAllExpensesByinstitutecode?institutecode=${getInstituteCode()}`;
+              ? `http://localhost:8087/incomes/getAllIncomesByinstitutecode?institutecode=${getInstituteCode()}`
+              : `http://localhost:8087/expenses/getAllExpensesByinstitutecode?institutecode=${getInstituteCode()}`;
 
           try {
             const response = await axios.get(url);
@@ -533,8 +533,8 @@ const Category = () => {
   const handleDelete = async (id) => {
     const url =
       category === "Income"
-        ? `http://13.233.43.240:8087/incomes/deleteIncome/${categoryIdToDelete}`
-        : `http://13.233.43.240:8087/expenses/deleteExpense/${categoryIdToDelete}`;
+        ? `http://localhost:8087/incomes/deleteIncome/${categoryIdToDelete}`
+        : `http://localhost:8087/expenses/deleteExpense/${categoryIdToDelete}`;
     try {
       await axios.delete(url);
       fetchData();

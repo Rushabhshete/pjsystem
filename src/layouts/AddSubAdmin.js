@@ -58,7 +58,7 @@ const [subadminToDelete, setSubadminToDelete] = useState(null);
   const handleDeleteConfirm = async () => {
     setLoading(true);
     try {
-      await axios.delete(`http://13.233.43.240:8081/deleteSubAdmin/${subadminToDelete}`);
+      await axios.delete(`http://localhost:8081/deleteSubAdmin/${subadminToDelete}`);
       setDeleteDialogOpen(false);
       fetchAllSubAdmins();
     } catch (err) {
@@ -81,7 +81,7 @@ const [subadminToDelete, setSubadminToDelete] = useState(null);
 
     try {
       // Replace with your API endpoint for form submission
-      await axios.post(`http://13.233.43.240:8081/saveSubAdmin?institutecode=${institutecode()}`, formData);
+      await axios.post(`http://localhost:8081/saveSubAdmin?institutecode=${institutecode()}`, formData);
       setFormData({
         subadminname: '',
         emailaddress: '',
@@ -120,7 +120,7 @@ const [subadminToDelete, setSubadminToDelete] = useState(null);
     }
   
     try {
-      await axios.put(`http://13.233.43.240:8081/updateSubAdmin/${currentSubadmin.id}`, formData);
+      await axios.put(`http://localhost:8081/updateSubAdmin/${currentSubadmin.id}`, formData);
       setEditDialogOpen(false);
       fetchAllSubAdmins();
     } catch (err) {
@@ -133,7 +133,7 @@ const [subadminToDelete, setSubadminToDelete] = useState(null);
   const fetchAllSubAdmins = async () => {
     setFetchingData(true);
     try {
-      const response = await axios.get(`http://13.233.43.240:8081/getSubAdminsByInstitutecode?institutecode=${institutecode()}`);
+      const response = await axios.get(`http://localhost:8081/getSubAdminsByInstitutecode?institutecode=${institutecode()}`);
       setAllSubAdmins(response.data);
     } catch (err) {
       setError('Failed to fetch data.');

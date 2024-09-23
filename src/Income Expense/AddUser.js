@@ -74,7 +74,7 @@
 //     const fetchUsers = async () => {
 //       try {
 //         const response = await fetch(
-//           `http://13.233.43.240:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
+//           `http://localhost:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
 //         );
 //         const result = await response.json();
 //         setUsers(result);
@@ -127,7 +127,7 @@
 //     } else {
 //       try {
 //         const response = await fetch(
-//           `http://13.233.43.240:8087/users/save?institutecode=${getInstituteCode()}`,
+//           `http://localhost:8087/users/save?institutecode=${getInstituteCode()}`,
 //           {
 //             method: "POST",
 //             headers: {
@@ -145,7 +145,7 @@
 
 //           // Refresh Users list after adding new user
 //           const updatedResponse = await fetch(
-//             `http://13.233.43.240:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
+//             `http://localhost:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
 //           );
 //           const updatedUser = await updatedResponse.json();
 //           setUsers(updatedUser);
@@ -167,7 +167,7 @@
 
 //   const handleEditClickOpen = async (id) => {
 //     try {
-//       const response = await fetch(`http://13.233.43.240:8087/users/getById/${id}`);
+//       const response = await fetch(`http://localhost:8087/users/getById/${id}`);
 //       const result = await response.json();
 //       setEditUser(result);
 //       setEditOpen(true);
@@ -194,7 +194,7 @@
 //     } else {
 //       try {
 //         const response = await fetch(
-//           `http://13.233.43.240:8087/users/update/${editUser.id}`,
+//           `http://localhost:8087/users/update/${editUser.id}`,
 //           {
 //             method: "PUT",
 //             headers: {
@@ -209,7 +209,7 @@
 //         );
 //         if (response.ok) {
 //           const updatedResponse = await fetch(
-//             `http://13.233.43.240:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
+//             `http://localhost:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
 //           );
 //           const updatedUser = await updatedResponse.json();
 //           setUsers(updatedUser);
@@ -228,7 +228,7 @@
 //   const handleDelete = async () => {
 //     try {
 //       const response = await fetch(
-//         `http://13.233.43.240:8087/users/delete/${userIdToDelete}`,
+//         `http://localhost:8087/users/delete/${userIdToDelete}`,
 //         {
 //           method: "DELETE",
 //         }
@@ -236,7 +236,7 @@
 //       if (response.ok) {
 //         // Refresh Users list after deleting user
 //         const updatedResponse = await fetch(
-//           `http://13.233.43.240:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
+//           `http://localhost:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
 //         );
 //         const updatedUser = await updatedResponse.json();
 //         setUsers(updatedUser);
@@ -548,7 +548,7 @@ const AddUser = () => {
     const fetchUsers = async () => {
       try {
         const response = await fetch(
-          `http://13.233.43.240:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
+          `http://localhost:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
         );
         const result = await response.json();
         setUsers(result);
@@ -599,7 +599,7 @@ const AddUser = () => {
     } else {
       try {
         const response = await fetch(
-          `http://13.233.43.240:8087/users/save?institutecode=${getInstituteCode()}`,
+          `http://localhost:8087/users/save?institutecode=${getInstituteCode()}`,
           {
             method: "POST",
             headers: {
@@ -616,7 +616,7 @@ const AddUser = () => {
           toast.success("User added successfully");
 
           const updatedResponse = await fetch(
-            `http://13.233.43.240:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
+            `http://localhost:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
           );
           const updatedUser = await updatedResponse.json();
           setUsers(updatedUser);
@@ -638,7 +638,7 @@ const AddUser = () => {
 
   const handleEditClickOpen = async (id) => {
     try {
-      const response = await fetch(`http://13.233.43.240:8087/users/getById/${id}`);
+      const response = await fetch(`http://localhost:8087/users/getById/${id}`);
       const result = await response.json();
       setEditUser(result);
       setEditOpen(true);
@@ -669,7 +669,7 @@ const AddUser = () => {
     } else {
       try {
         const response = await fetch(
-          `http://13.233.43.240:8087/users/update/${editUser.id}`,
+          `http://localhost:8087/users/update/${editUser.id}`,
           {
             method: "PUT",
             headers: {
@@ -684,7 +684,7 @@ const AddUser = () => {
         );
         if (response.ok) {
           const updatedResponse = await fetch(
-            `http://13.233.43.240:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
+            `http://localhost:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
           );
           const updatedUser = await updatedResponse.json();
           setUsers(updatedUser);
@@ -703,14 +703,14 @@ const AddUser = () => {
   const handleDelete = async () => {
     try {
       const response = await fetch(
-        `http://13.233.43.240:8087/users/delete/${userIdToDelete}`,
+        `http://localhost:8087/users/delete/${userIdToDelete}`,
         {
           method: "DELETE",
         }
       );
       if (response.ok) {
         const updatedResponse = await fetch(
-          `http://13.233.43.240:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
+          `http://localhost:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
         );
         const updatedUser = await updatedResponse.json();
         setUsers(updatedUser);

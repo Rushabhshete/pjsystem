@@ -45,7 +45,7 @@ const YearlyGraph = () => {
       try {
         const institutecode = localStorage.getItem("institutecode");
         const res = await axios.get(
-          `http://13.233.43.240:8085/admissioncountofperdaybymonth?institutecode=${institutecode}&month=${selectedMonth}&year=${selectedYear}`
+          `http://localhost:8085/admissioncountofperdaybymonth?institutecode=${institutecode}&month=${selectedMonth}&year=${selectedYear}`
         );
         const data = res.data || {}; // Default to empty object
 
@@ -75,7 +75,7 @@ const YearlyGraph = () => {
       try {
         const institutecode = localStorage.getItem("institutecode") || null;
         const res = await axios.get(
-          `http://13.233.43.240:8085/getRevenueBySpecificDates?institutecode=${institutecode}&year=${selectedYear}&month=${selectedMonth}`
+          `http://localhost:8085/getRevenueBySpecificDates?institutecode=${institutecode}&year=${selectedYear}&month=${selectedMonth}`
         );
         const data = res.data || {}; // Default to empty object
 

@@ -153,7 +153,7 @@ function Login1({ onLogin }) {
 
   const loginUser = async (institutecode, email, password) => {
     return axios.post(
-      `http://13.233.43.240:8081/institutelogin?institutecode=${institutecode}&emailaddress=${email}&password=${password}`
+      `http://localhost:8081/institutelogin?institutecode=${institutecode}&emailaddress=${email}&password=${password}`
     );
   };
 
