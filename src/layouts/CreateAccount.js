@@ -212,10 +212,10 @@ const CreateAccount = () => {
   const handlePayment = () => {
     const { finalAmount } = calculateAmount();
     const options = {
-      key: "rzp_live_x3jjvYlvtgh6Ke",
-      key_secret: "FAQE2PwPBrTkB0xC2pzPM3I", // Replace with your Razorpay key
-      // key: "rzp_test_vv1FCZvuDRF6lQ",
-      // key_secret: "P4JAUwn4VdE6xDLJ6p2Zy8RQ", // Replace with your Razorpay key
+      // key: "rzp_live_x3jjvYlvtgh6Ke",
+      // key_secret: "FAQE2PwPBrTkB0xC2pzPM3I", // Replace with your Razorpay key
+      key: "rzp_test_vv1FCZvuDRF6lQ",
+      key_secret: "P4JAUwn4VdE6xDLJ6p2Zy8RQ", // Replace with your Razorpay key
       amount: finalAmount, // Amount in paisa (10000 paisa = INR 100)
       currency: "INR",
       name: "PJSOFTTECH PTV. LTD",
@@ -398,7 +398,7 @@ const CreateAccount = () => {
   const featureList = {
     0: {
       crm: true,
-      employeeManagement: false,
+      employeeManagement: true,
       subAdmin: false,
       multipleBranches: false,
       unlimitedEntries: false,
@@ -572,10 +572,10 @@ const CreateAccount = () => {
                             {index === 0
                               ? 1
                               : index === 1
-                              ? 199
-                              : index === 2
                               ? 299
-                              : 499}
+                              : index === 2
+                              ? 399
+                              : 599}
                           </Typography>
                           <Typography variant="body2" sx={{ color: "#1E88E5" }}>
                             /Per Month
@@ -594,10 +594,10 @@ const CreateAccount = () => {
                           {index === 0
                             ? 99
                             : index === 1
-                            ? 299
-                            : index === 2
                             ? 399
-                            : 699}
+                            : index === 2
+                            ? 499
+                            : 799}
                         </Typography>
 
                         <div style={{ textAlign: "left", fontSize: "14px" }}>

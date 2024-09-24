@@ -175,7 +175,7 @@ const EmpDash = () => {
     };
 
     return (
-        <div maxWidth="lg">
+        <div>
         <Box
     sx={{
       display: "flex",
