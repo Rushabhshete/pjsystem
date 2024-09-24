@@ -39,7 +39,9 @@ export default function CombineDashboard() {
   const [chartData, setChartData] = useState([["Year", "Admissions"]]);
   const [loading, setLoading] = useState(true);
   const [selectedYear, setSelectedYear] = useState(currentYear);
-
+  const institutecode = localStorage.getItem("institutecode") || "";
+  const [systemValues, setSystemValues] = useState(null);
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -104,9 +106,6 @@ export default function CombineDashboard() {
   const [totalApplications, setTotalApplications] = useState(0);
   const [selectedApi, setSelectedApi] = useState("All");
   const [numberFromApi, setNumberFromApi] = useState(0);
-  const [institutecode, setInstituteCode] = useState(
-    localStorage.getItem("institutecode") || ""
-  );
 
   const defaultYearlyData = [
     ["Year", "Admissions"],
@@ -319,6 +318,41 @@ export default function CombineDashboard() {
 
 
 `;
+
+
+useEffect(() => {
+  const fetchSystemValues = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8081/getSystemValueByInstitutecode?institutecode=${institutecode}`
+      );
+      setSystemValues(response.data);
+    } catch (error) {
+      console.error("Error fetching system values", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  fetchSystemValues();
+}, [institutecode]);
+
+if (loading) {
+  return <div>Loading...</div>;
+}
+
+if (!systemValues) {
+  return <div>Error fetching system values</div>;
+}
+
+const {
+  feesmanagementsystem,
+  enquirymanagementsystem,
+  employeemanagementsystem,
+  studentmanagementsystem,
+  incomeandexpense,
+  admissionmanagementsystem,
+} = systemValues;
+
   return (
     <div >
        <PopTypography
@@ -336,9 +370,11 @@ export default function CombineDashboard() {
       >
         Main Dashboard
       </PopTypography>
-      <IncomeCombineDash />
+      {incomeandexpense && <IncomeCombineDash />}
+      {employeemanagementsystem && <EmpDash />}
       <Grid container spacing={2} justifyContent="center">
-        {/* Enquiry Dashboard */}
+              {/* Enquiry Dashboard */}
+      {enquirymanagementsystem && (
         <Grid item xs={12} md={6}>
   <Box
     sx={{
@@ -354,6 +390,7 @@ export default function CombineDashboard() {
         backgroundColor: "#0D47A1",
       }}
     />
+  
     <Typography variant="h6" sx={{ margin: "0 10px" }}>
       <b>Enquiry</b>
     </Typography>
@@ -428,11 +465,15 @@ export default function CombineDashboard() {
             </Grid>
 
          <YearlyGraph />
+         
 </Box>
+
         </Grid>
-        {/* Enquiry Dashboard end */}
+    
+  )}
 
         {/* Admission Dashboard */}
+        {admissionmanagementsystem && (
         <Grid item xs={12} md={6}>
   <Box
     sx={{
@@ -527,9 +568,10 @@ export default function CombineDashboard() {
             </Box>
           </Box>
         </Grid>
-        {/* Admission Dashboard end */}
+  )}
       </Grid>
-      <EmpDash />
+              
+
     </div>
   );
 };

@@ -403,7 +403,7 @@ const CreateAccount = () => {
   const featureList = {
     0: {
       crm: true,
-      employeeManagement: false,
+      employeeManagement: true,
       subAdmin: false,
       multipleBranches: false,
       unlimitedEntries: false,
@@ -577,10 +577,10 @@ const CreateAccount = () => {
                             {index === 0
                               ? 1
                               : index === 1
-                              ? 199
-                              : index === 2
                               ? 299
-                              : 499}
+                              : index === 2
+                              ? 399
+                              : 599}
                           </Typography>
                           <Typography variant="body2" sx={{ color: "#1E88E5" }}>
                             /Per Month
@@ -599,10 +599,10 @@ const CreateAccount = () => {
                           {index === 0
                             ? 99
                             : index === 1
-                            ? 299
-                            : index === 2
                             ? 399
-                            : 699}
+                            : index === 2
+                            ? 499
+                            : 799}
                         </Typography>
 
                         <div style={{ textAlign: "left", fontSize: "14px" }}>

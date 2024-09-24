@@ -70,6 +70,12 @@ import AddNotice from "./Employee_System/Memo/AddNotice";
 import Login1 from "./layouts/Login1";
 import Bill from "./layouts/bill";
 import EmpDash from "./layouts/EmpDash";
+import StudentDashboard from "./Student/StudentDashboard";
+import StudentForm from "./Student/StudentForm";
+import StudentLists from "./Student/StudentLists"
+import StudentReport from "./Student/StudentReport";
+import StudentRequest from "./Student/StudentRequest";
+import AddField from "./Student/AddField";
 function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem("isAuthenticated") === "true"
@@ -174,6 +180,14 @@ function AppContent() {
           <Route path="addmemo" element={<AddMemo/>}/>
           <Route path="manageEmpmemo" element={<ManageEmpMemo/>}/>
           <Route path="addnotice" element={<AddNotice/>}/>
+
+           {/* Student */}
+           <Route path="StudentDashboard" element={<StudentDashboard />} />
+          <Route path="StudentForm" element={<StudentForm />} />
+          <Route path="StudentLists" element={<StudentLists />} />
+          <Route path="StudentReport" element={<StudentReport />} />
+          <Route path="StudentRequest" element={<StudentRequest />} />
+          <Route path="AddField" element={<AddField/>}/>
 
 
           {/* <Route path="account" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Account /></ProtectedRoute>} /> */}
