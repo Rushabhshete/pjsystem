@@ -103,10 +103,10 @@ const Sidebar = () => {
       icon: <DashboardIcon color="primary" />,
       route: "/layout/combineDash",
       subOptions: [],
-      show:
-        systemValues?.incomeandexpense &&
-        systemValues?.enquirymanagementsystem &&
-        systemValues?.admissionmanagementsystem,
+      // show:
+      //   systemValues?.incomeandexpense &&
+      //   systemValues?.enquirymanagementsystem &&
+      //   systemValues?.admissionmanagementsystem,
     },
 
     {

@@ -85,13 +85,13 @@ const Category = () => {
   const [currentData, setCurrentData] = useState(null);
   const [paymentMethod, setSelectedPaymentMethod] = useState("");
   const [confirmOpen, setConfirmOpen] = useState(false);
-  const [employeeDetails, setEmployeeDetails] = useState(null);
+
   const [categoryIdToDelete, setCategoryIdToDelete] = useState(null);
   const handleUpdatedData = (updatedData) => {
     setData(updatedData);
   };
   const getInstituteCode = () => localStorage.getItem("institutecode");
-
+  const [employeeDetails, setEmployeeDetails] = useState(null);
   useEffect(() => {
     const fetchEmployeeDetails = async () => {
       try {

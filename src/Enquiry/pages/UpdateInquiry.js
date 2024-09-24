@@ -84,6 +84,7 @@ export default function UpdateEnquiry() {
   } = Enquiry;
   const [openSnackbar, setOpenSnackbar] = useState(false); // Snackbar state
   const [snackbarMessage, setSnackbarMessage] = useState(""); // Snackbar message
+  const [employeeDetails, setEmployeeDetails] = useState(null);
   const onInputChange = (e) => {
     setEnquiry({ ...Enquiry, [e.target.name]: e.target.value });
   };
@@ -183,13 +184,33 @@ export default function UpdateEnquiry() {
     setOpenDeleteDialog(false);
   };
 
+  useEffect(() => {
+    const fetchEmployeeDetails = async () => {
+      try {
+        if (!institutecode) {
+          console.error("No institutecode found in localStorage");
+          return;
+        }
+
+        const response = await axios.get(
+          `http://localhost:8081/findInstitutesby/Institutecode?institutecode=${institutecode}`
+        );
+        setEmployeeDetails(response.data);
+      } catch (error) {
+        console.error("Error fetching employee details:", error);
+      }
+    };
+
+    fetchEmployeeDetails();
+  }, [institutecode]);
+
   const generatePDF = () => {
     const doc = new jsPDF();
 
     // Title
     doc.setFontSize(18);
     doc.setFont("helvetica", "bold");
-    doc.text("Enquiry Details", 10, 10);
+    doc.text(employeeDetails.institutename, 10, 10);
 
     // Line break
     doc.line(10, 12, 200, 12); // Add a line under the title

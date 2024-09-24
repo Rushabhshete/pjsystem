@@ -1393,6 +1393,7 @@ const [selectedDesignation, setSelectedDesignation] = useState('');
 const [uniqueDepartments, setUniqueDepartments] = useState([]);
 const [uniqueCategories, setUniqueCategories] = useState([]);
 const [uniqueDesignations, setUniqueDesignations] = useState([]);
+const [employeeDetails, setEmployeeDetails] = useState(null);
 
 useEffect(() => {
   const fetchUsersAndFilters = async () => {
@@ -1529,6 +1530,26 @@ const fetchDepartments = async () => {
     // Handle error fetching departments (e.g., show error message)
   }
 };
+
+useEffect(() => {
+  const fetchEmployeeDetails = async () => {
+    try {
+      if (!institutecode) {
+        console.error("No institutecode found in localStorage");
+        return;
+      }
+
+      const response = await axios.get(
+        `http://localhost:8081/findInstitutesby/Institutecode?institutecode=${institutecode}`
+      );
+      setEmployeeDetails(response.data);
+    } catch (error) {
+      console.error("Error fetching employee details:", error);
+    }
+  };
+
+  fetchEmployeeDetails();
+}, [institutecode]);
 
   const fetchUsers = async () => {
     try {
@@ -1675,6 +1696,7 @@ const fetchDepartments = async () => {
   };    
   const handleDownloadPDF = () => {
     const doc = new jsPDF();
+    const instituteName = employeeDetails.institutename
   
     // Define user information
     const userInfo = [
@@ -1724,9 +1746,9 @@ const fetchDepartments = async () => {
     // Set properties for PDF document
     const margin = { top: 15, left: 15, right: 15 };
     const startY = 5 // Initial y position for autotable
+    doc.setFontSize(14);
+    doc.text(instituteName, margin.left, startY);
     // Add header
-    doc.setFontSize(18);
-    doc.text('User Information', margin.left, startY);
     doc.setFontSize(12);
     // Generate table using autotable
     doc.autoTable({
