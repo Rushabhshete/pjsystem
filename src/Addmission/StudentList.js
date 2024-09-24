@@ -111,6 +111,28 @@ const StudentList = () => {
     fetchData();
   }, [institutecode]);
 
+  const [employeeDetails, setEmployeeDetails] = useState(null);
+  useEffect(() => {
+    const fetchEmployeeDetails = async () => {
+      try {
+        if (!institutecode) {
+          console.error("No institutecode found in localStorage");
+          return;
+        }
+
+        const response = await axios.get(
+          `http://localhost:8081/findInstitutesby/Institutecode?institutecode=${institutecode}`
+        );
+        setEmployeeDetails(response.data);
+      } catch (error) {
+        console.error("Error fetching employee details:", error);
+      }
+    };
+
+    fetchEmployeeDetails();
+  }, [institutecode]);
+
+
   useEffect(() => {
     const fetchAdmissions = async () => {
       try {
@@ -231,83 +253,88 @@ const StudentList = () => {
 
   const handleDownload = () => {
     const doc = new jsPDF({
-      orientation: "landscape",
-      unit: "mm",
-      format: "a4",
+        orientation: "landscape",
+        unit: "mm",
+        format: "a4",
     });
-  
+
+    // Add title
+    const title = employeeDetails.institutename; // Your title here
+    doc.setFontSize(18);
+    doc.text(title, 10, 10); // Position the title at (x: 10, y: 10)
+
     const columns = [ 
-      { title: "ID", dataKey: "id" },
-      { title: "Name", dataKey: "name" },
-      { title: "Mobile 1", dataKey: "mobile1" },
-      { title: "Email", dataKey: "email" },
-      { title: "Course", dataKey: "courses" },
-      { title: "Duration", dataKey: "duration" },
-      { title: "Joining Date", dataKey: "joiningDate" },
-      { title: "Due Date", dataKey: "expiryDate" },
-      { title: "Total Fees", dataKey: "totalFees" },
-      { title: "Paid Fees", dataKey: "paidFees" },
-      { title: "Pending Fees", dataKey: "pendingFees" },
-      { title: "Payment Mode", dataKey: "paymentMode" },
-      { title: "Guide Name", dataKey: "guideName" },
-      { title: "Source By", dataKey: "sourceBy" },
-      { title: "Medium", dataKey: "medium" },
-     
+        { title: "ID", dataKey: "id" },
+        { title: "Name", dataKey: "name" },
+        { title: "Mobile 1", dataKey: "mobile1" },
+        { title: "Email", dataKey: "email" },
+        { title: "Course", dataKey: "courses" },
+        { title: "Duration", dataKey: "duration" },
+        { title: "Joining Date", dataKey: "joiningDate" },
+        { title: "Due Date", dataKey: "expiryDate" },
+        { title: "Total Fees", dataKey: "totalFees" },
+        { title: "Paid Fees", dataKey: "paidFees" },
+        { title: "Pending Fees", dataKey: "pendingFees" },
+        { title: "Payment Mode", dataKey: "paymentMode" },
+        { title: "Guide Name", dataKey: "guideName" },
+        { title: "Source By", dataKey: "sourceBy" },
+        { title: "Medium", dataKey: "medium" },
     ];
-  
+
     const rows = filteredAdmissions.map((admission) => ({
-      id: admission.id,
-      name: admission.name,
-      mobile1: admission.mobile1,
-      email: admission.email,
-      courses: admission.courses,
-      duration: admission.duration,
-      joiningDate: new Date(admission.date).toLocaleDateString(),
-      expiryDate: new Date(admission.dueDate).toLocaleDateString(),
-      totalFees: admission.totalFees,
-      paidFees: admission.paidFees,
-      pendingFees: admission.pendingFees,
-      paymentMode: admission.paymentMode,
-      guideName: admission.guideName,
-      sourceBy: admission.sourceBy,
-      medium: admission.medium,
-     
+        id: admission.id,
+        name: admission.name,
+        mobile1: admission.mobile1,
+        email: admission.email,
+        courses: admission.courses,
+        duration: admission.duration,
+        joiningDate: new Date(admission.date).toLocaleDateString(),
+        expiryDate: new Date(admission.dueDate).toLocaleDateString(),
+        totalFees: admission.totalFees,
+        paidFees: admission.paidFees,
+        pendingFees: admission.pendingFees,
+        paymentMode: admission.paymentMode,
+        guideName: admission.guideName,
+        sourceBy: admission.sourceBy,
+        medium: admission.medium,
     }));
-  
+
+    // Set the starting Y position for the table below the title
+    const startY = 20; // Adjust this value as needed
+
     doc.autoTable({
-      columns,
-      body: rows,
-      startY: 5,
-      columnStyles: {
-        id: { cellWidth: 10 },  // Reduced width for smaller columns
-        name: { cellWidth: 30 },
-        mobile1: { cellWidth: 20 },
-        email: { cellWidth: 50 },
-        courses: { cellWidth: 15 },
-        duration: { cellWidth: 15 },
-        joiningDate: { cellWidth: 17 },
-        expiryDate: { cellWidth: 17 },
-        totalFees: { cellWidth: 12 },
-        paidFees: { cellWidth: 12 },
-        pendingFees: { cellWidth: 12 },
-        paymentMode: { cellWidth: 15 },
-        guideName: { cellWidth: 20 },
-        sourceBy: { cellWidth: 20 },
-        medium: { cellWidth: 15 },
-      
-      },
-      styles: {
-        //cellPadding: 2,
-        overflow: 'linebreak', // Enable text wrapping
-        fontSize: 7, // Reduce font size if necessary
-      },
-      headStyles: {
-        fillColor: [22, 160, 133],
-      },
+        columns,
+        body: rows,
+        startY, // Use the defined startY position
+        columnStyles: {
+            id: { cellWidth: 10 }, 
+            name: { cellWidth: 30 },
+            mobile1: { cellWidth: 20 },
+            email: { cellWidth: 50 },
+            courses: { cellWidth: 15 },
+            duration: { cellWidth: 15 },
+            joiningDate: { cellWidth: 17 },
+            expiryDate: { cellWidth: 17 },
+            totalFees: { cellWidth: 12 },
+            paidFees: { cellWidth: 12 },
+            pendingFees: { cellWidth: 12 },
+            paymentMode: { cellWidth: 15 },
+            guideName: { cellWidth: 20 },
+            sourceBy: { cellWidth: 20 },
+            medium: { cellWidth: 15 },
+        },
+        styles: {
+            overflow: 'linebreak',
+            fontSize: 7,
+        },
+        headStyles: {
+            fillColor: [22, 160, 133],
+        },
     });
-  
+
     doc.save("admissions.pdf");
-  };
+};
+
   
 
   const handleDownloadCSV = () => {

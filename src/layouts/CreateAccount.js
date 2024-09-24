@@ -23,7 +23,7 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableRow,
+  TableRow,TableHead, DialogActions
 } from "@mui/material";
 import html2pdf from 'html2pdf.js'; // Importing html2pdf.js
 //import logo from '../img/logo.jpg'; 
@@ -35,6 +35,11 @@ import CloseIcon from "@mui/icons-material/Close";
 import indianStatesAndDistricts from "./indianStatesAndDistricts";
 import PolicyPopup from "./PolicyPopup ";
 import { useNavigate } from "react-router-dom";
+import phonepe from "../../src/img/phonepe.png"
+import gpay from "../../src/img/gpay.png";
+import paytm from "../../src/img/paytm.jpg";
+import upilite from "../../src/img/upilite.png";
+
 const CreateAccount = () => {
   const [formData, setFormData] = useState({
     emailaddress: "",
@@ -212,10 +217,10 @@ const CreateAccount = () => {
   const handlePayment = () => {
     const { finalAmount } = calculateAmount();
     const options = {
-      key: "rzp_live_x3jjvYlvtgh6Ke",
-      key_secret: "FAQE2PwPBrTkB0xC2pzPM3I", // Replace with your Razorpay key
-      // key: "rzp_test_vv1FCZvuDRF6lQ",
-      // key_secret: "P4JAUwn4VdE6xDLJ6p2Zy8RQ", // Replace with your Razorpay key
+      // key: "rzp_live_x3jjvYlvtgh6Ke",
+      // key_secret: "FAQE2PwPBrTkB0xC2pzPM3I", // Replace with your Razorpay key
+      key: "rzp_test_vv1FCZvuDRF6lQ",
+      key_secret: "P4JAUwn4VdE6xDLJ6p2Zy8RQ", // Replace with your Razorpay key
       amount: finalAmount, // Amount in paisa (10000 paisa = INR 100)
       currency: "INR",
       name: "PJSOFTTECH PTV. LTD",
@@ -1452,7 +1457,7 @@ const CreateAccount = () => {
         maxWidth="md"
         fullWidth
       >
-        <DialogContent sx={{ p: 2 }}>
+        {/* <DialogContent sx={{ p: 2 }}>
           {formData ? (
             <Box id="receipt">
               <DialogTitle
@@ -1626,7 +1631,335 @@ const CreateAccount = () => {
               Receipt data is not available.
             </Typography>
           )}
+        </DialogContent> */}
+        <DialogContent sx={{ p: 2 }}>
+          {formData ? (
+            <Box id="receipt">
+              {/* Header Section */}
+              <Box
+                sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
+              >
+                <Typography variant="h6" align="left">
+                  <Typography
+                    variant="h6"
+                    align="left"
+                    sx={{ fontSize: "30px", color: "purple" }}
+                  >
+                    <strong>{formData.institutename}</strong>
+                  </Typography>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      mb: 0.5, // Reduced margin-bottom for less space between the two addresses
+                    }}
+                  >
+                    <Box>
+                      <Typography variant="body2">
+                        {formData.address}
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Box
+                    sx={{
+                      mt: 0, // Reduced margin-top to bring the addresses closer
+                    }}
+                  >
+                    <Typography variant="body2">
+                      <strong>Mobile : </strong>
+                      {formData.phonenumber}
+                    </Typography>
+                  </Box>
+
+                  <Box
+                    sx={{
+                      mt: 0, // Reduced margin-top to bring the addresses closer
+                    }}
+                  >
+                    <Typography variant="body2">
+                      <strong>Email : </strong>
+                      {formData.emailaddress}
+                    </Typography>
+                  </Box>
+                </Typography>
+              </Box>
+              <Typography
+                variant="body2"
+                align="center"
+                sx={{
+                  borderTop: "8px solid purple", // Thick top border
+                  padding: "10px", // Padding for spacing
+                  display: "flex", // To align the content in a row with space between
+                  justifyContent: "space-between", // Evenly space the items
+                  gap: "20px", // Gap between the data elements for spacing
+                  backgroundColor: "#f3e5f5", // Light purple background
+                }}
+              >
+                <Typography component="span">
+                  <Typography component="span" sx={{ fontWeight: "bold" }}>
+                    Invoice No:
+                  </Typography>{" "}
+                  {formData.invoiceNo}
+                </Typography>
+                <Typography component="span">
+                  <Typography component="span" sx={{ fontWeight: "bold" }}>
+                    Invoice Date:
+                  </Typography>{" "}
+                  {formData.createdAt}
+                </Typography>
+                <Typography component="span">
+                  <Typography component="span" sx={{ fontWeight: "bold" }}>
+                    Due Date:
+                  </Typography>{" "}
+                  {formData.subscriptendDate}
+                </Typography>
+              </Typography>
+
+              <Box mt={1}>
+                <strong>Bill To:</strong>
+                <br />
+                <strong>PJSofttech pvt, ltd.,</strong>
+              </Box>
+
+              {/* Items Table */}
+
+              <Table sx={{ marginTop: "10px" }}>
+  <TableHead>
+    <TableRow
+      sx={{
+        borderTop: "3px solid purple", // Thick top border
+        borderBottom: "3px solid purple",
+      }}
+    >
+      <TableCell>
+        <strong>PLAN</strong>
+      </TableCell>
+      <TableCell>
+        <strong>Validity</strong>
+      </TableCell>
+      <TableCell>
+        <strong>Plan Value</strong>
+      </TableCell>
+      <TableCell>
+        <strong>AMOUNT</strong>
+      </TableCell>
+    </TableRow>
+  </TableHead>
+  <TableBody>
+    <TableRow>
+      <TableCell>{plans[selectedCard]} plan</TableCell>
+      <TableCell>{subscriptionYear} Year</TableCell>
+      <TableCell>₹ {amountPerMonth}/Month</TableCell>
+      <TableCell>₹ {yearlyAmount}</TableCell>
+    </TableRow><br/><br/>
+
+    {/* Subtotal Row */}
+    {/* <TableRow
+      sx={{
+        borderTop: "3px solid purple", // Thick top border
+        borderBottom: "3px solid purple",
+      }}
+    >
+      <TableCell colSpan={3} sx={{ textAlign: "left" }}>
+        <strong>Subtotal:</strong>
+      </TableCell>
+      <TableCell>
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <strong>{formData.amount}</strong>
+        </Box>
+      </TableCell>
+    </TableRow> */}
+
+    {/* GST Percentage and Amount Row */}
+    <TableRow sx={{
+        borderTop: "3px solid purple", // Thick top border
+        borderBottom: "3px solid purple",
+      }} >
+      <TableCell colSpan={3} sx={{ textAlign: "left" }}>
+        <strong>GST (18%):</strong>
+      </TableCell>
+      <TableCell>
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <strong>
+            ₹ {gstAmount} {/* Calculated GST */}
+          </strong>
+        </Box>
+      </TableCell>
+    </TableRow>
+
+    {/* Total After GST Row */}
+    <TableRow
+      sx={{
+        borderTop: "3px solid purple", // Thick top border
+        borderBottom: "3px solid purple",
+      }}
+    >
+      <TableCell colSpan={3} sx={{ textAlign: "left" }}>
+        <strong>Total Amount (including GST):</strong>
+      </TableCell>
+      <TableCell>
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <strong>
+            ₹ {amount}
+            {/* Subtotal + GST */}
+          </strong>
+        </Box>
+      </TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+
+              {/* Parent Box to Hold Both Sections */}
+              <Box
+                sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}
+              >
+                {/* Left Box for Bank Details */}
+                <Box>
+                  {/* Payment Details  */}
+
+                  <Box mt={3}>
+                    <Typography fontWeight={"bold"}>PAYMENT PARTIES</Typography>
+
+                    {/* Box for Image and Text */}
+                    <Box
+                      sx={{
+                        display: "flex", // Align image and text horizontally
+                        justifyContent: "space-between", // Maintain space between items
+                        alignItems: "center", // Vertically align items
+                        mb: 0.2,
+                        gap: 3, // Add more space between image and text, increase the value for more space
+                      }}
+                    >
+                      {/* UIP ID and Name */}
+                      <Box>
+                        {/* Row of payment images */}
+                        <Box
+                          sx={{
+                            display: "flex", // Align images horizontally
+                            gap: 1, // Space between the images
+                            mt: 1, // Add margin-top for some space between text and images
+                          }}
+                        >
+                          {/* PhonePe Image */}
+                          <Box
+                            component="img"
+                            src={phonepe}
+                            alt="PhonePe"
+                            sx={{
+                              width: 50, // Adjust the size as per your need
+                              height: 30,
+                            }}
+                          />
+
+                          {/* GPay Image */}
+                          <Box
+                            component="img"
+                            src={gpay}
+                            alt="GPay"
+                            sx={{
+                              width: 50, // Adjust the size as per your need
+                              height: 30,
+                            }}
+                          />
+
+                          {/* Paytm Image */}
+                          <Box
+                            component="img"
+                            src={paytm}
+                            alt="Paytm"
+                            sx={{
+                              width: 50, // Adjust the size as per your need
+                              height: 30,
+                            }}
+                          />
+
+                          {/* UPI Lite Image */}
+                          <Box
+                            component="img"
+                            src={upilite}
+                            alt="UPI Lite"
+                            sx={{
+                              width: 50, // Adjust the size as per your need
+                              height: 30,
+                            }}
+                          />
+                        </Box>
+                      </Box>
+                    </Box>
+                  </Box>
+                  <Box mt={2}>
+                    {/* Terms & Conditions Heading */}
+                    <Typography fontWeight={"bold"}>
+                      TERMS AND CONDITIONS
+                    </Typography>
+
+                    {/* First Term */}
+                    <Typography variant="body2">
+                      1. Payment must be made within 30 days of the invoice
+                      date.
+                    </Typography>
+
+                    {/* Second Term */}
+                    <Typography variant="body2" sx={{ mt: 0.5 }}>
+                      2. 25% Complete Work
+                    </Typography>
+                  </Box>
+                </Box>
+
+                {/* Right Box for Amount in Words */}
+                <Box sx={{ mt: 3.5, mb: -1 , marginLeft:"20px"}}>
+                  {" "}
+                  {/* Reducing space from the top and bottom */}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      borderBottom: "1px solid gray", // Add bottom border
+                      mb: -1, // Reduce space from the bottom
+                      gap:2,
+                    }}
+                  >
+                    {/* Total Amount Label */}
+                    <Typography variant="body2" fontWeight="bold">
+                      Total Amount: ₹   {amount}
+                    </Typography>
+
+                    {/* Total Amount Value */}
+                    <Typography variant="body2" fontWeight="bold">
+                      {formData.amount}
+                    </Typography>
+                  </Box>
+                  <Typography variant="body2" sx={{ mt:2 }}>
+                    {" "}
+                    {/* Making text bold and adjusting space */}
+                    <strong>
+                      Total Amount (in words): <br />
+                    </strong>
+                    {convertNumberToWords(amount)} Only
+                  </Typography>
+                </Box>
+              </Box>
+              <Divider sx={{ my: 2 }} mt={5}/>
+                <Typography variant="body2" align="center" sx={{ mb: 1 }}>
+                  203, 2nd floor, Mangalmurti Complex, behind ABIL Tower
+                  hirabaugh chowk, Tilak Road
+                  <br />
+                </Typography>
+                <Typography variant="body2" align="center" sx={{ mb: 1 }}>
+                  Website: http://www.pjsofttech.com | Phone: +919923570901
+                </Typography>
+                <Typography variant="body2" align="center">
+                  Email: sales@pjsofttech.com
+                </Typography>
+            </Box>
+          ) : null}
         </DialogContent>
+        <DialogActions>
+          <Button variant="contained" color="primary" onClick={downloadReceipt}>
+            Download PDF
+          </Button>
+          <Button onClick={() => setOpenReceipt(false)}>Close</Button>
+        </DialogActions>
       </Dialog>
     </>
   );
