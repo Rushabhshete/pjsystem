@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { CircularProgress, Grid, MenuItem, Select, Typography, FormControl, InputLabel } from "@mui/material";
+import { CircularProgress, Grid, MenuItem, Select, Typography, FormControl, InputLabel, Paper } from "@mui/material";
 import { Chart } from "react-google-charts";
 
-const CourseByGraph = () => {
-  const [chartData, setChartData] = useState([["Course Name", "Count"]]);
+const RevenueByCourse = () => {
+  const [chartData, setChartData] = useState([["Course", "Revenue"]]);
   const [loading, setLoading] = useState(true);
   const [month, setMonth] = useState(new Date().getMonth() + 1); // Default to current month
   const [year, setYear] = useState(new Date().getFullYear()); // Default to current year
@@ -31,7 +31,7 @@ const CourseByGraph = () => {
   ];
 
   useEffect(() => {
-    const fetchCourseData = async () => {
+    const fetchRevenueData = async () => {
       if (!institutecode) {
         console.error("No institute code found in local storage");
         return;
@@ -40,28 +40,26 @@ const CourseByGraph = () => {
       setLoading(true);
       try {
         const res = await axios.get(
-          `http://localhost:8085/getAdmissionsCountByCourseAndDate?institutecode=${institutecode}&month=${month}&year=${year}`
+          `http://localhost:8085/admissionRevenueByCourseMonthAndYear?institutecode=${institutecode}&month=${month}&year=${year}`
         );
         const data = res.data;
         console.log(data); // Debugging: Log API response
 
-        const formattedData = Object.entries(data).map(
-          ([courseName, count]) => [courseName, count]
-        );
+        const formattedData = data.map(({ course, totalRevenue }) => [course, totalRevenue]);
 
         if (formattedData.length === 0) {
           console.log("No data to display in the chart");
         }
 
-        setChartData([["Course Name", "Count"], ...formattedData]);
+        setChartData([["Course", "Revenue"], ...formattedData]);
       } catch (error) {
-        console.error("Error fetching course data:", error);
+        console.error("Error fetching revenue data:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchCourseData();
+    fetchRevenueData();
   }, [institutecode, month, year]); // Fetch data when month or year changes
 
   if (loading) {
@@ -69,13 +67,15 @@ const CourseByGraph = () => {
   }
 
   return (
-    <div>
-      <Typography variant="h6" align="center">Admissions by Course</Typography>
+    <Paper elevation={3} style={{ padding: "20px", marginTop: "20px" }}>
+      <Typography variant="h6" align="center" gutterBottom>
+        Revenue By Course
+      </Typography>
 
       {/* Dropdowns for Month and Year */}
       <Grid container spacing={2} justifyContent="center" style={{ marginBottom: "20px" }}>
-        <Grid item>
-          <FormControl>
+        <Grid item xs={12} md={6} lg={4}>
+          <FormControl fullWidth>
             <InputLabel>Month</InputLabel>
             <Select
               value={month}
@@ -91,8 +91,8 @@ const CourseByGraph = () => {
           </FormControl>
         </Grid>
 
-        <Grid item>
-          <FormControl>
+        <Grid item xs={12} md={6} lg={4}>
+          <FormControl fullWidth>
             <InputLabel>Year</InputLabel>
             <Select
               value={year}
@@ -109,22 +109,31 @@ const CourseByGraph = () => {
         </Grid>
       </Grid>
 
-      {/* Chart */}
-      <Grid>
-        <Chart
-          width={"100%"}
-          height={"400px"}
-          chartType="PieChart"
-          loader={<div>Loading Chart...</div>}
-          data={chartData}
-          options={{
-          //  title: "Admissions by Course",
-            is3D: true,
-          }}
-        />
+      {/* Bar Chart */}
+      <Grid container>
+        <Grid item xs={12}>
+          <Chart
+            width={"100%"}
+            height={"400px"}
+            chartType="Bar"
+            loader={<div>Loading Chart...</div>}
+            data={chartData}
+            options={{
+              chart: {
+               // title: "Admission Revenue by Course",
+              },
+              hAxis: {
+                title: "Revenue",
+              },
+              vAxis: {
+                title: "Course",
+              },
+            }}
+          />
+        </Grid>
       </Grid>
-    </div>
+    </Paper>
   );
 };
 
-export default CourseByGraph;
+export default RevenueByCourse;
