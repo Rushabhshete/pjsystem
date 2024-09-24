@@ -76,6 +76,7 @@ import StudentLists from "./Student/StudentLists"
 import StudentReport from "./Student/StudentReport";
 import StudentRequest from "./Student/StudentRequest";
 import AddField from "./Student/AddField";
+import AttenDash from "./layouts/AttenDash";
 function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem("isAuthenticated") === "true"
@@ -158,6 +159,7 @@ function AppContent() {
           <Route path="ManageHoliday" element={<ManageHoliday/>}/>
 
           <Route path="EmpDash" element={<EmpDash />} />
+          <Route path="AttenDash" element={<AttenDash />}/>
 
           <Route path="SalaryDashboard" element={<SalaryDashboard />} />
           <Route path="AddSalary/:empID" element={<AddSalary />} />
