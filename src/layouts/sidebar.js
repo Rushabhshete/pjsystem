@@ -356,24 +356,31 @@ const Sidebar = () => {
       icon: <EmojiPeopleRoundedIcon sx={{ color: "brown" }} />,
       show: systemValues?.studentmanagementsystem,
       subOptions: [
-        { name: "Dashboard", icon: <DashboardIcon /> },
-        { name: "Student Form", icon: <WorkspacesIcon /> },
+        { name: "Dashboard",
+          route: "/layout/StudentDashboard",
+          icon: <DashboardIcon /> 
+        },
+        { name: "Student Form", 
+          route:"/layout/StudentForm",
+          icon: <WorkspacesIcon /> },
         {
           name: "Student List",
-          // route: "/memo/delete",
+          route: "/layout/StudentLists",
           icon: <FormatListBulletedIcon />,
         },
         {
           name: "Student Report",
-          // route: "/memo/delete",
+          route: "/layout/StudentReport",
           icon: <AssessmentIcon />,
         },
         {
           name: "Student Request",
-          // route: "/memo/delete",
+          route: "/layout/StudentRequest",
           icon: <DoneOutlineIcon />,
         },
-        { name: "Add Fields", icon: <CategoryIcon /> },
+        { name: "Add Fields",
+          route:"/layout/ADDField",
+          icon: <CategoryIcon /> },
       ],
     },
     {
