@@ -249,7 +249,7 @@ export default function AddMemo() {
           <TextField
             autoFocus
             margin="dense"
-            label="Memo Name"
+            label="Memo Subject"
             type="text"
             fullWidth
             variant="outlined"

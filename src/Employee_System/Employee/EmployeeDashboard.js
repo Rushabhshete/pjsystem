@@ -1,8 +1,7 @@
-
-
 import React, { useState, useEffect } from 'react';
-import { Container, Typography, Grid, Paper, MenuItem, FormControl, TextField, Card, CardContent } from '@mui/material';
+import { Container, Typography, Grid, Paper, MenuItem, FormControl, TextField, Card, CardContent, Box} from '@mui/material';
 import { Chart } from 'react-google-charts';
+import AttenDash from '../../layouts/AttenDash';
 
 const EmployeeDashboard = () => {
     const [employeeCount, setEmployeeCount] = useState(0);
@@ -288,6 +287,7 @@ const EmployeeDashboard = () => {
                     </Paper>
                 </Grid>
             </Grid>
+  <AttenDash />
         </div>
     );
 };
