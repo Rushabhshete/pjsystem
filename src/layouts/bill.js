@@ -1,344 +1,4 @@
-// import React, { useEffect, useState } from 'react';
-// import { Table, TableBody,
-//     TableCell, TableContainer, TableHead,
-//     TableRow, Paper, Typography , Button,Dialog, DialogActions, DialogContent, DialogTitle
-//     ,Container, Divider, Box,
-// MenuItem, FormControl, InputLabel, Select } from '@mui/material';
-// import html2pdf from "html2pdf.js"; // Importing html2pdf.js
-// import logo from "../../src/Income Expense/logo.jpg";
-// import qr from "../../src/img/qr.webp";
 
-// export default function Bill() {
-
-//     const a = [
-//         "",
-//         "One",
-//         "Two",
-//         "Three",
-//         "Four",
-//         "Five",
-//         "Six",
-//         "Seven",
-//         "Eight",
-//         "Nine",
-//       ];
-//       const b = [
-//         "",
-//         "Ten",
-//         "Twenty",
-//         "Thirty",
-//         "Forty",
-//         "Fifty",
-//         "Sixty",
-//         "Seventy",
-//         "Eighty",
-//         "Ninety",
-//       ];
-//       const c = ["", "Hundred", "Thousand", "Lakh", "Crore"];
-//   const [instituteData, setInstituteData] = useState(null);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState(null);
-//   const [selectedInstitute, setSelectedInstitute] = useState(null);
-//   const [openReceipt, setOpenReceipt] = useState(false);
-
-//   const downloadReceipt = () => {
-//     const receiptElement = document.getElementById("receipt"); // Reference to receipt element
-//     const opt = {
-//       margin: 0.5,
-//       filename: "receipt.pdf",
-//       image: { type: "jpeg", quality: 0.98 },
-//       html2canvas: { scale: 2 },
-//       jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-//     };
-
-//     html2pdf().from(receiptElement).set(opt).save();
-//   };
-
-//    // Function to convert numbers to words
-//    function convertNumberToWords(num) {
-//     const numberToWords = (n) => {
-//       if (n === 0) return "Zero";
-//       if (n < 10) return a[n];
-//       if (n < 100)
-//         return b[Math.floor(n / 10)] + (n % 10 !== 0 ? " " + a[n % 10] : "");
-//       if (n < 1000)
-//         return (
-//           a[Math.floor(n / 100)] +
-//           " Hundred" +
-//           (n % 100 !== 0 ? " " + numberToWords(n % 100) : "")
-//         );
-//       if (n < 100000) {
-//         const thousands = Math.floor(n / 1000);
-//         const rest = n % 1000;
-//         return (
-//           numberToWords(thousands) +
-//           " Thousand" +
-//           (rest !== 0 ? " " + numberToWords(rest) : "")
-//         );
-//       }
-//       if (n < 10000000) {
-//         const lakhs = Math.floor(n / 100000);
-//         const rest = n % 100000;
-//         return (
-//           numberToWords(lakhs) +
-//           " Lakh" +
-//           (rest !== 0 ? " " + numberToWords(rest) : "")
-//         );
-//       }
-//       // Extend this function for larger numbers as needed (e.g., Crores)
-
-//       return n; // Fallback in case of any issues
-//     };
-
-//     return numberToWords(num);
-//   }
-
-//   useEffect(() => {
-//     const fetchInstituteData = async () => {
-//       const institutecode = localStorage.getItem('institutecode');
-//       if (!institutecode) {
-//         setError('Institute code not found in local storage');
-//         setLoading(false);
-//         return;
-//       }
-
-//       try {
-//         const response = await fetch(`http://localhost:8081/findInstitutesby/Institutecode?institutecode=${institutecode}`);
-
-//         if (!response.ok) {
-//           throw new Error('Network response was not ok');
-//         }
-
-//         const data = await response.json();
-//         setInstituteData(data);
-//       } catch (err) {
-//         setError(err.message);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchInstituteData();
-//   }, []);
-
-//   if (loading) return <Typography>Loading...</Typography>;
-//   if (error) return <Typography color="error">{error}</Typography>;
-
-//   const handleGenerate = (instituteData) => {
-//     setSelectedInstitute(instituteData);
-//     setOpenReceipt(true);
-//   };
-
-//   // Render table
-//   return (
-//     <Container>
-//          <Typography
-//         variant="h5"
-//         gutterBottom
-//         sx={{
-//           fontWeight: "bold",
-//           color: "#fff",
-//           textAlign: "center",
-//           backgroundColor: "#24A0ED",
-//           borderRadius: "150px",
-//           padding: "10px",
-//           marginBottom: "20px",
-//         }}
-//       >
-//         Billing Section
-//       </Typography>
-
-//         <TableContainer width="100%">
-//       <Table>
-//       <TableHead
-//           style={{
-//             backgroundColor: "#f2f2f2",
-//             justifyContent: "center",
-//           }}
-//         >
-//           <TableRow>
-//             <TableCell sx={{fontWeight:'bold'}}>Subscription Start at</TableCell>
-//             <TableCell sx={{fontWeight:'bold'}}>Subscription End at</TableCell>
-//             <TableCell sx={{fontWeight:'bold'}}>Institute Code</TableCell>
-//             <TableCell sx={{fontWeight:'bold'}}>Institute Name</TableCell>
-//             <TableCell sx={{fontWeight:'bold'}}>Owner Name</TableCell>
-//             <TableCell sx={{fontWeight:'bold'}}>Institute Mobile No.</TableCell>
-//             <TableCell sx={{fontWeight:'bold'}}>Plan</TableCell>
-//             <TableCell sx={{fontWeight:'bold'}}>GST No.</TableCell>
-//             <TableCell sx={{fontWeight:'bold'}}>Amount</TableCell>
-//             <TableCell sx={{fontWeight:'bold'}}>Transaction Id.</TableCell>
-//             <TableCell sx={{fontWeight:'bold'}}>Invoice No.</TableCell>
-//             <TableCell sx={{fontWeight:'bold'}}>Status</TableCell>
-//             <TableCell sx={{fontWeight:'bold'}}>Bill</TableCell>
-//           </TableRow>
-//         </TableHead>
-//         <TableBody>
-//           {instituteData && (
-//             <TableRow key={instituteData.id}>
-//               <TableCell>{instituteData.subscriptstartDate}</TableCell>
-//               <TableCell>{instituteData.subscriptendDate}</TableCell>
-//               <TableCell>{instituteData.institutecode}</TableCell>
-//               <TableCell>{instituteData.institutename}</TableCell>
-//               <TableCell>{instituteData.ownerName}</TableCell>
-//               <TableCell>{instituteData.mobilenumber}</TableCell>
-//               <TableCell>{instituteData.plan}</TableCell>
-//               <TableCell>{instituteData.gstNo}</TableCell>
-//               <TableCell>{instituteData.amount}</TableCell>
-//               <TableCell>{instituteData.transactionId}</TableCell>
-//               <TableCell>{instituteData.invoiceNo}</TableCell>
-//               <TableCell
-//                     align="center"
-//                     sx={{ color: "green", fontWeight: "bold" }}
-//                   >
-//                     Paid
-//                   </TableCell>
-//                   <TableCell align="center">
-//                     <Button
-//                       variant="contained"
-//                       color="primary"
-//                       onClick={() => handleGenerate(instituteData)}
-//                     >
-//                       Generate
-//                     </Button>
-//                   </TableCell>
-//             </TableRow>
-//           )}
-//         </TableBody>
-//       </Table>
-//     </TableContainer>
-
-//     <Dialog open={openReceipt} onClose={() => setOpenReceipt(false)} maxWidth="md" fullWidth>
-//   <DialogContent sx={{ p: 2 }}>
-//     {selectedInstitute ? (
-//       <Box id="receipt">
-//         {/* Header Section */}
-//         <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-//           <Typography variant="h6" align="left">
-//             <strong>ARTI Electrical And AC Service</strong>
-//           </Typography>
-//           <Typography variant="body2" align="right">
-//             Invoice No: {selectedInstitute.invoiceNo}
-//             <br />
-//             Invoice Date: {selectedInstitute.invoiceDate}
-//             <br />
-//             Due Date: {selectedInstitute.dueDate}
-//           </Typography>
-//         </Box>
-//         <Divider sx={{ my: 1 }} />
-
-//         {/* Bill To Section */}
-//         <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-//           <Box>
-//             <Typography variant="body2">
-//               <strong>Bill To:</strong>
-//               <br />
-//               {selectedInstitute.instituteName}
-//               <br />
-//               {selectedInstitute.address}
-//             </Typography>
-//           </Box>
-//         </Box>
-
-//         <Divider sx={{ my: 1 }} />
-
-//         {/* Items Table */}
-//         <Typography variant="body1" align="center" sx={{ mb: 1 }}>
-//           Items
-//         </Typography>
-//         <Table>
-//           <TableHead>
-//             <TableRow>
-//               <TableCell><strong>ITEMS</strong></TableCell>
-//               <TableCell><strong>QTY</strong></TableCell>
-//               <TableCell><strong>RATE</strong></TableCell>
-//               <TableCell><strong>AMOUNT</strong></TableCell>
-//             </TableRow>
-//           </TableHead>
-//           <TableBody>
-//             {selectedInstitute.selectedInstitute.map((item, index) => (
-//               <TableRow key={index}>
-//                 <TableCell>{selectedInstitute.name}</TableCell>
-//                 <TableCell>{selectedInstitute.plan}</TableCell>
-//                 <TableCell>{selectedInstitute.rate}</TableCell>
-//                 <TableCell>{selectedInstitute.amount}</TableCell>
-//               </TableRow>
-//             ))}
-//           </TableBody>
-//         </Table>
-
-//         <Divider sx={{ my: 1 }} />
-
-//         {/* Subtotal Section */}
-//         <Box display="flex" justifyContent="space-between" mb={1}>
-//           <Typography variant="body1"><strong>Subtotal:</strong></Typography>
-//           <Typography variant="body1">{selectedInstitute.subtotal} Rs</Typography>
-//         </Box>
-//         <Box display="flex" justifyContent="space-between" mb={1}>
-//           <Typography variant="body1"><strong>Total Amount:</strong></Typography>
-//           <Typography variant="body1">{selectedInstitute.totalAmount} Rs</Typography>
-//         </Box>
-//         <Typography variant="body2" align="center" sx={{ mb: 2 }}>
-//           <strong>Total Amount in Words:</strong> {convertNumberToWords(selectedInstitute.totalAmount)} Only
-//         </Typography>
-
-//         <Divider sx={{ my: 1 }} />
-
-//         {/* Bank Details */}
-//         <Typography variant="body1" sx={{ mb: 1 }}>
-//           <strong>Bank Details:</strong>
-//         </Typography>
-//         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-//           <Box>
-//             <Typography variant="body2">Name: Rahul Dasharath Thorat</Typography>
-//             <Typography variant="body2">IFSC Code: IPOS0000001</Typography>
-//             <Typography variant="body2">Account No: 034210230401</Typography>
-//             <Typography variant="body2">Bank: India Post Payments Bank</Typography>
-//           </Box>
-//           <Box>
-//             <img src={qr} alt="QR Code" style={{ width: "100px" }} />
-//             <Typography variant="body2">UPI ID: sarikalondhe68@okicici</Typography>
-//           </Box>
-//         </Box>
-
-//         <Divider sx={{ my: 1 }} />
-
-//         {/* Terms and Conditions */}
-//         <Typography variant="body1" sx={{ mb: 1 }}>
-//           <strong>Terms and Conditions:</strong>
-//         </Typography>
-//         <Typography variant="body2">1. 1.75% advanced agents po order</Typography>
-//         <Typography variant="body2">2. 25% complete work</Typography>
-
-//         <Divider sx={{ my: 1 }} />
-
-//         {/* Footer Section */}
-//         <Box sx={{ textAlign: 'center', mt: 3 }}>
-//           <Typography variant="body2">
-//             203, 2nd floor, Mangalmurti Complex, behind ABIL Tower, Hirabaugh Chowk, Tilak Road
-//             <br />
-//             Website: http://www.pjsofttech.com | Phone: +919923570901
-//             <br />
-//             Email: sales@pjsofttech.com
-//           </Typography>
-//         </Box>
-//       </Box>
-//     ) : (
-//       <Typography variant="body2" color="error" align="center">
-//         Receipt data is not available.
-//       </Typography>
-//     )}
-//   </DialogContent>
-
-//   <DialogActions>
-//     <Button variant="contained" color="primary" onClick={downloadReceipt}>Download Receipt</Button>
-//     <Button onClick={() => setOpenReceipt(false)} color="primary">Close</Button>
-//   </DialogActions>
-// </Dialog>
-
-//   {/* bill section ends  */}
-//     </Container>
-//   );
-// }
 
 import React, { useEffect, useState } from "react";
 import {
@@ -398,16 +58,33 @@ export default function Bill() {
   const [selectedInstitute, setSelectedInstitute] = useState(null);
   const [openReceipt, setOpenReceipt] = useState(false);
 
+  // const downloadReceipt = () => {
+  //   const receiptElement = document.getElementById("receipt");
+  //   const opt = {
+  //     margin: 0.5,
+  //     filename: "receipt.pdf",
+  //     image: { type: "jpeg", quality: 0.98 },
+  //     html2canvas: { scale: 2 },
+  //     jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+  //   };
+  //   html2pdf().from(receiptElement).set(opt).save();
+  // };
+
   const downloadReceipt = () => {
     const receiptElement = document.getElementById("receipt");
-    const opt = {
-      margin: 0.5,
+    
+    // Ensure that images are fully loaded before creating the PDF
+    html2pdf().from(receiptElement).set({
+      margin: 0.2,
       filename: "receipt.pdf",
       image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2 },
+      html2canvas: {
+        scale: 2,
+        logging: true, // Set this to true to get logs about image loading
+        useCORS: true, // Enables cross-origin loading for images
+      },
       jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-    };
-    html2pdf().from(receiptElement).set(opt).save();
+    }).save();
   };
 
   function convertNumberToWords(num) {
@@ -612,6 +289,17 @@ export default function Bill() {
                     </Typography>
                   </Box>
                 </Typography>
+
+                 {/* Right side content (Institute Image) */}
+                 {selectedInstitute.instituteimage && (
+                  <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                    <img
+                      src={selectedInstitute.instituteimage}
+                      alt="Institute Logo"
+                      style={{ maxWidth: "100px", maxHeight: "100px", borderRadius:'50%'}} // Adjust size as needed
+                    />
+                  </Box>
+                )}
               </Box>
               <Typography
                 variant="body2"
