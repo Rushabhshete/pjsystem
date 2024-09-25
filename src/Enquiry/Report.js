@@ -207,24 +207,19 @@ export default function Report() {
   };
 
   const handleDownloadPDF = () => {
+    console.log('Download PDF clicked!');
     const doc = new jsPDF("landscape");
     doc.text("Inquiries Report", 10, 10);
-
+  
     const tableColumn = [
-      "ID",
-      "Date of Enquiry",
-      "Name",
-      "Phone",
-      "Email",
-      "Exam",
-      "Source",
-      "Conducted By",
-      "Status",
-      "Remark",
+      "ID", "Date of Enquiry", "Name", "Phone", "Email", "Exam", "Source", "Conducted By", "Status", "Remark"
     ];
     const tableRows = [];
-
-    filterInquiries().forEach((inquiry) => {
+  
+    const inquiries = filterInquiries();
+    console.log(inquiries); // Check if valid data is returned
+  
+    inquiries.forEach((inquiry) => {
       const inquiryData = [
         inquiry.id,
         inquiry.enquiryDate,
@@ -239,7 +234,7 @@ export default function Report() {
       ];
       tableRows.push(inquiryData);
     });
-
+  
     doc.autoTable({
       head: [tableColumn],
       body: tableRows,
@@ -248,7 +243,7 @@ export default function Report() {
       headStyles: { fillColor: [22, 160, 133] },
       styles: { fontSize: 8 },
     });
-
+  
     doc.save("report.pdf");
   };
 
@@ -487,33 +482,34 @@ export default function Report() {
               ))}
             </TextField>
           </Grid>
+          <Grid item xs={6} md={1.8}>
+    <Button
+      variant="contained"
+      color="primary"
+      onClick={handleDownloadPDF}
+    >
+      Download PDF
+    </Button>
+  </Grid>
+  <Grid item xs={6} md={1.8}>
+    <Button
+      variant="contained"
+      color="primary"
+      onClick={handleDownloadCSV}
+    >
+      Download CSV
+    </Button>
+  </Grid>
         </Grid>
 
         <Grid container spacing={2} justifyContent="flex-start" mt={1}>
-          <Grid item>
-            <Typography variant="h6" gutterBottom>
-              Total Inquiries: {inquiryCount}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleDownloadPDF}
-            >
-              Download PDF
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleDownloadCSV}
-            >
-              Download CSV
-            </Button>
-          </Grid>
-        </Grid>
+  <Grid item>
+    <Typography variant="h6" gutterBottom>
+      Total Inquiries: {inquiryCount}
+    </Typography>
+  </Grid>
+ 
+</Grid>
 
         <Box mt={-5}>
         <TablePagination

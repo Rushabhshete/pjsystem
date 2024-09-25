@@ -330,74 +330,45 @@ const IncomeExpenseDashboard = () => {
     if (showPending) {
       const fetchPendingData = async () => {
         try {
-          const [pendingIncomeResponse, pendingExpenseResponse] =
-            await Promise.all([
-              fetch(
-                `http://localhost:8087/dashboard/income/pending?timeframe=today&institutecode=${getInstituteCode()}`
-              ),
-              fetch(
-                `http://localhost:8087/dashboard/expense/pending?timeframe=today&institutecode=${getInstituteCode()}`
-              ),
-            ]);
-
+          const [pendingIncomeResponse, pendingExpenseResponse] = await Promise.all([
+            fetch(`http://localhost:8087/dashboard/income/pending?institutecode=Rush@gmail.com`),
+            fetch(`http://localhost:8087/dashboard/expense/pending?institutecode=Rush@gmail.com`),
+          ]);
+  
+          const [incomeData, expenseData] = await Promise.all([
+            pendingIncomeResponse.json(),
+            pendingExpenseResponse.json(),
+          ]);
+  
+          // Assuming the structure of the response matches the one you provided
           const incomeStats = {
-            today: await pendingIncomeResponse.json(),
-            last7Days: await (
-              await fetch(
-                `http://localhost:8087/dashboard/income/pending?timeframe=last7days&institutecode=${getInstituteCode()}`
-              )
-            ).json(),
-            last30Days: await (
-              await fetch(
-                `http://localhost:8087/dashboard/income/pending?timeframe=last30days&institutecode=${getInstituteCode()}`
-              )
-            ).json(),
-            last365Days: await (
-              await fetch(
-                `http://localhost:8087/dashboard/income/pending?timeframe=last365days&institutecode=${getInstituteCode()}`
-              )
-            ).json(),
-            total: await (
-              await fetch(
-                `http://localhost:8087/dashboard/income/pending?timeframe=total&institutecode=${getInstituteCode()}`
-              )
-            ).json(),
+            today: incomeData.today,
+            last7Days: incomeData.last7Days,
+            last30Days: incomeData.last30Days,
+            last365Days: incomeData.last365Days,
+            total: incomeData.total,
           };
-
+  
           const expenseStats = {
-            today: await pendingExpenseResponse.json(),
-            last7Days: await (
-              await fetch(
-                `http://localhost:8087/dashboard/expense/pending?timeframe=last7days&institutecode=${getInstituteCode()}`
-              )
-            ).json(),
-            last30Days: await (
-              await fetch(
-                `http://localhost:8087/dashboard/expense/pending?timeframe=last30days&institutecode=${getInstituteCode()}`
-              )
-            ).json(),
-            last365Days: await (
-              await fetch(
-                `http://localhost:8087/dashboard/expense/pending?timeframe=last365days&institutecode=${getInstituteCode()}`
-              )
-            ).json(),
-            total: await (
-              await fetch(
-                `http://localhost:8087/dashboard/expense/pending?timeframe=total&institutecode=${getInstituteCode()}`
-              )
-            ).json(),
+            today: expenseData.today,
+            last7Days: expenseData.last7Days,
+            last30Days: expenseData.last30Days,
+            last365Days: expenseData.last365Days,
+            total: expenseData.total,
           };
-
+  
+          // Update your state with the fetched data
           setPendingIncomeStats(incomeStats);
           setPendingExpenseStats(expenseStats);
         } catch (error) {
           console.error("Error fetching pending data:", error);
         }
       };
-
+  
       fetchPendingData();
     }
   }, [showPending]);
+  
 
   const togglePending = () => {
     setShowPending((prev) => !prev);
@@ -783,19 +754,19 @@ const IncomeExpenseDashboard = () => {
           <InfoCard
             sx={{}}
             title="Today's Pending INC"
-            value={formattedCountUp(pendingIncomeStats.today?.total || 0)}
+            value={formattedCountUp(pendingIncomeStats.today || 0)}
             color="#F9E79F"
           />
           {/* Last 7 Days Pending Income */}
           <InfoCard
             title="7 Days Pending INC"
-            value={formattedCountUp(pendingIncomeStats.last7Days?.total || 0)}
+            value={formattedCountUp(pendingIncomeStats.last7Days || 0)}
             color="#FF6F61"
           />
           {/* Last 30 Days Pending Income */}
           <InfoCard
             title="30 Days Pending INC"
-            value={formattedCountUp(pendingIncomeStats.last30Days?.total || 0)}
+            value={formattedCountUp(pendingIncomeStats.last30Days || 0)}
             color="#3498DB"
           />
           {/* Last 365 Days Pending Income */}
@@ -803,32 +774,32 @@ const IncomeExpenseDashboard = () => {
             title={
               <span style={{ fontSize: "15px" }}>365 Days Pending INC</span>
             }
-            value={formattedCountUp(pendingIncomeStats.last365Days?.total || 0)}
+            value={formattedCountUp(pendingIncomeStats.last365Days || 0)}
             color="#9ACD32"
           />
           {/* Total Pending Income */}
           <InfoCard
             title="Total Pending INC"
-            value={formattedCountUp(pendingIncomeStats.total?.total || 0)}
+            value={formattedCountUp(pendingIncomeStats.total || 0)}
             color="#F4C431"
           />
 
           {/* Today's Pending Expense */}
           <InfoCard
             title="Today's Pending EXP"
-            value={formattedCountUp(pendingExpenseStats.today?.total || 0)}
+            value={formattedCountUp(pendingExpenseStats.today || 0)}
             color="#F9E79F"
           />
           {/* Last 7 Days Pending Expense */}
           <InfoCard
             title="7 Days Pending EXP"
-            value={formattedCountUp(pendingExpenseStats.last7Days?.total || 0)}
+            value={formattedCountUp(pendingExpenseStats.last7Days || 0)}
             color="#FF6F61"
           />
           {/* Last 30 Days Pending Expense */}
           <InfoCard
             title="30 Days Pending EXP"
-            value={formattedCountUp(pendingExpenseStats.last30Days?.total || 0)}
+            value={formattedCountUp(pendingExpenseStats.last30Days || 0)}
             color="#3498DB"
           />
           {/* Last 365 Days Pending Expense */}
@@ -837,7 +808,7 @@ const IncomeExpenseDashboard = () => {
               <span style={{ fontSize: "15px" }}>365 Days Pending EXP</span>
             }
             value={formattedCountUp(
-              pendingExpenseStats.last365Days?.total || 0
+              pendingExpenseStats.last365Days || 0
             )}
             color="#9ACD32"
           />
@@ -845,7 +816,7 @@ const IncomeExpenseDashboard = () => {
           {/* Total Pending Expense */}
           <InfoCard
             title="Total Pending EXP"
-            value={formattedCountUp(pendingExpenseStats.total?.total || 0)}
+            value={formattedCountUp(pendingExpenseStats.total || 0)}
             color="#F4C431"
           />
         </Grid>
