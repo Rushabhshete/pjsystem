@@ -77,6 +77,14 @@ import StudentReport from "./Student/StudentReport";
 import StudentRequest from "./Student/StudentRequest";
 import AddField from "./Student/AddField";
 import AttenDash from "./layouts/AttenDash";
+import FeesDashboard from "./Student/Fees/FeesDashboard";
+import FeeInvoice from "./Student/Fees/FeeInvoice";
+import InvoiceList from "./Student/Fees/InvoiceList";
+import AddFee from "./Student/Fees/AddFee";
+import FeeTable from "./Student/Fees/FeeTable";
+import AddMedium from "./Student/Fees/AddMedium";
+import FeeReport from "./Student/Fees/FeeReport";
+
 function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem("isAuthenticated") === "true"
@@ -190,6 +198,16 @@ function AppContent() {
           <Route path="StudentReport" element={<StudentReport />} />
           <Route path="StudentRequest" element={<StudentRequest />} />
           <Route path="AddField" element={<AddField/>}/>
+
+          {/*Fees */}
+
+          <Route path="FeesDashboard" element={<FeesDashboard />} />
+          <Route path="FeeInvoice" element={<FeeInvoice />} />
+          <Route path="InvoiceList" element={<InvoiceList />}/>
+          <Route path="AddFee" element={<AddFee />}/>
+          <Route path="FeeTable" element={<FeeTable />}/>
+          <Route path="AddMedium" element={<AddMedium />}/>
+          <Route path="FeeReport" element={<FeeReport />}/>
 
 
           {/* <Route path="account" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Account /></ProtectedRoute>} /> */}

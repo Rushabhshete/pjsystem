@@ -90,9 +90,6 @@ const ManageLeave = () => {
 
   // Get unique category names for the category filter
   const uniqueCategories = Array.from(new Set(leaveRequests.map(request => request.categoryName)));
-  
-  // Get unique status names for the status filter
-  const uniqueStatuses = Array.from(new Set(leaveRequests.map(request => request.status)));
 
   return (
     <>
@@ -153,10 +150,10 @@ const ManageLeave = () => {
               select
               label="Status"
             >
-              <MenuItem value="">All Statuses</MenuItem>
-              {uniqueStatuses.map((status, index) => (
-                <MenuItem key={index} value={status}>{status}</MenuItem>
-              ))}
+               <MenuItem value="">All Statuses</MenuItem>
+               <MenuItem value="Approved">Approved</MenuItem>
+               <MenuItem value="Rejected">Rejected</MenuItem>
+              <MenuItem value="Pending">Pending</MenuItem>
             </TextField>
           </FormControl>
         </Grid>

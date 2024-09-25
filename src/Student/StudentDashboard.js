@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
 import {
-  Container,
   Typography,
   Grid,
   Paper,
@@ -143,7 +142,7 @@ const Home = () => {
 
   return (
     <div>
-      {/* <Typography
+      <Typography
         variant="h4"
         component="h1"
         gutterBottom
@@ -151,7 +150,7 @@ const Home = () => {
         sx={{ marginY: 3 }}
       >
         Dashboard
-      </Typography> */}
+      </Typography>
       <Grid container spacing={3}>
         <Grid item xs={16} sm={6} md={3}>
           <Paper
