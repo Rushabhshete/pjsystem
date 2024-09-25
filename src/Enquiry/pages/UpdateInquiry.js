@@ -109,7 +109,7 @@ export default function UpdateEnquiry() {
     } catch (error) {
       console.error("Error fetching sources:", error);
     }
-  };
+  };   
 
   const loadConducts = async () => {
     try {
@@ -203,57 +203,6 @@ export default function UpdateEnquiry() {
 
     fetchEmployeeDetails();
   }, [institutecode]);
-
-  const generatePDF = () => {
-    const doc = new jsPDF();
-
-    // Title
-    doc.setFontSize(18);
-    doc.setFont("helvetica", "bold");
-    doc.text(employeeDetails.institutename, 10, 10);
-
-    // Line break
-    doc.line(10, 12, 200, 12); // Add a line under the title
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "normal");
-
-    // Content
-    const content = [
-      { label: "Name:", value: name },
-      { label: "Phone No.:", value: mobile },
-      { label: "Email:", value: email },
-      { label: "Exam:", value: exam },
-      { label: "Source By:", value: source_by },
-      { label: "Conducted By:", value: conduct_by },
-      { label: "Status:", value: status1 },
-      ...(status1 === "Call Back"
-        ? [
-            { label: "Call Back Date:", value: callBackDate },
-            { label: "Call Back Time:", value: callBackTime },
-          ]
-        : []),
-      { label: "Enquiry Date:", value: enquiryDate },
-      { label: "Remark:", value: remark },
-    ];
-
-    // Add content to PDF
-    let yPosition = 20; // Starting Y position for content
-    content.forEach((item) => {
-      doc.setFont("helvetica", "bold");
-      doc.text(item.label, 10, yPosition);
-      doc.setFont("helvetica", "normal");
-      doc.text(item.value || "N/A", 60, yPosition); // Set a default value if empty
-      yPosition += 10; // Increase Y position for next line
-    });
-
-    // Save the PDF
-    doc.save("Enquiry_Details.pdf");
-  };
-
-  const handleDownload = (e) => {
-    e.preventDefault();
-    generatePDF(); // Call PDF generation
-  };
 
   const handleSnackbarClose = () => {
     setOpenSnackbar(false); // Close the Snackbar
@@ -568,15 +517,6 @@ export default function UpdateEnquiry() {
                 sx={{ mt: 2, mr: 2 }}
               >
                 Save
-              </Button>
-              <Button
-                onClick={handleDownload} // Download button
-                variant="contained"
-                color="success"
-                startIcon={<DownloadIcon />}
-                sx={{ mt: 2 }}
-              >
-                Download PDF
               </Button>
             </Box>
           </Box>

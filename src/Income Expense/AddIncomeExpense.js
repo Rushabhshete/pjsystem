@@ -360,8 +360,6 @@ const AddIncomeExpense = () => {
   const handlePrint = () => {
     const doc = new jsPDF();
 
-    // Set up title
-    // const title = `${submittedData.user} ${submittedData.type} Receipt`;
     const maxWidth = 60; // Adjust as needed for your layout
 
     const instituteName = employeeDetails.institutename || "Guest";
@@ -373,13 +371,34 @@ const AddIncomeExpense = () => {
       return text;
     };
 
-    const title = `${centerAlign(instituteName)}\n\n${centerAlign(
-      receiptTitle
-    )}\n`;
-
+    // Get the page width for positioning
     const pageWidth = doc.internal.pageSize.getWidth();
-    const titleWidth = doc.getTextWidth(title);
-    const titleX = (pageWidth - titleWidth) / 2;
+
+    // Prepare titles
+    const titleLine = `${centerAlign(instituteName)}   ${centerAlign(receiptTitle)}`;
+
+    // Load the image (ensure it's base64 encoded)
+const instituteImage = employeeDetails.instituteimage; // Make sure this is in base64 format
+if (instituteImage) {
+    const imageX = pageWidth - 35; // X-coordinate for the image
+    const imageY = 10; // Y-coordinate for the image
+    const imageWidth = 30; // Width of the image
+    const imageHeight = 30; // Height of the image (should be the same as width for a circle)
+
+    // Draw a circle behind the image
+    const radius = imageWidth / 2; // Radius of the circle (half of the width)
+    const centerX = imageX + radius; // Center X for the circle
+    const centerY = imageY + radius; // Center Y for the circle
+
+    // Draw the circular border
+    doc.setLineWidth(1);
+    doc.setDrawColor(0, 0, 0); // Set border color (black)
+    doc.circle(centerX, centerY, radius, 'S'); // Draw the circle border
+
+    // Add the image on top of the circle
+    doc.addImage(instituteImage, 'JPEG', imageX, imageY, imageWidth, imageHeight); // Place the image
+}
+
 
     // Generated date
     const generatedDate = `Generated On: ${new Date().toLocaleDateString()}`;
@@ -388,18 +407,18 @@ const AddIncomeExpense = () => {
     const invoiceNo = `Invoice No: ${submittedData.invoiceNo}`;
 
     doc.setFontSize(16);
-    doc.text(title, titleX, 15);
+    doc.text(titleLine, 15, 20); // Adjust positioning as needed
 
     // Generated date on the top right
     doc.setFontSize(12);
     doc.text(
       generatedDate,
       pageWidth - doc.getTextWidth(generatedDate) - 15,
-      25
+      35
     );
 
     // Invoice number on the top left
-    doc.text(invoiceNo, 15, 25);
+    doc.text(invoiceNo, 15, 35);
 
     // Prepare table data with labels and one key-value pair per row
     const tableData = [];
@@ -450,7 +469,7 @@ const AddIncomeExpense = () => {
     doc.autoTable({
       body: tableData,
       theme: "grid",
-      startY: 15 + marginTop, // Start below the title
+      startY: 45 + marginTop, // Start below the title
       columnStyles: {
         0: { fontStyle: "bold" }, // Make the first column (Field) bold
       },
@@ -474,7 +493,8 @@ const AddIncomeExpense = () => {
     ); // Draw line for signature
 
     doc.save(`${submittedData.user}_data.pdf`);
-  };
+};
+
 
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
