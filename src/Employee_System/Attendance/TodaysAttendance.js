@@ -315,7 +315,7 @@ const TodaysAttendance = () => {
   
         if (filter === 'All') {
           response = await axios.get(
-            `http://localhost:8082/getNonDeleted?institutecode=${instituteCode}`
+            `http://localhost:8082/joinedEmployeesList?institutecode=${instituteCode}`
           );
         } else if (filter === 'Today') {
           response = await axios.get(
