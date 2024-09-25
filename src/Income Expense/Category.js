@@ -563,7 +563,7 @@ const Category = () => {
       const url =
         category === "Income"
           ? `http://localhost:8087/incomes/getAllIncomesByinstitutecode?institutecode=${getInstituteCode()}`
-          : `http://localhost:8087/expenses/getAllExpensesByinstitutecode?institutecode=${getInstituteCode()}`;
+          : `http://localhost:8087/expenses/getAllExpensesByInstitutecode?institutecode=${getInstituteCode()}`;
 
       try {
         const response = await axios.get(url);
