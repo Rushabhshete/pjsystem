@@ -16,8 +16,9 @@ import {
   DialogTitle,
   DialogContent,
   Dialog,
-  DialogActions,
+  DialogActions,Divider
 } from "@mui/material";
+import html2pdf from "html2pdf.js"; // Importing html2pdf.js
 import numberToWords from "number-to-words";
 import axios from "axios";
 import { styled } from "@mui/system";
@@ -85,6 +86,10 @@ const Category = () => {
   const [currentData, setCurrentData] = useState(null);
   const [paymentMethod, setSelectedPaymentMethod] = useState("");
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(false);
+  const [openReceipt, setOpenReceipt] = useState(false);
+
+  
 
   const [categoryIdToDelete, setCategoryIdToDelete] = useState(null);
   const handleUpdatedData = (updatedData) => {
@@ -164,38 +169,206 @@ const Category = () => {
     document.body.removeChild(link);
   };
 
+  // const exportToPDF = () => {
+  //   // Specify the landscape orientation
+  //   const doc = new jsPDF("landscape");
+  //   const pageWidth = doc.internal.pageSize.getWidth();
+
+  //   // Heading
+  //   doc.setFontSize(16);
+  //   const heading = `${employeeDetails.institutename || "Guest"}`;
+  //   const headingWidth = doc.getTextWidth(heading);
+  //   doc.text(heading, (pageWidth - headingWidth) / 2, 5);
+
+  //   // Date on the top right
+  //   const date = new Date().toLocaleDateString();
+  //   doc.setFontSize(10);
+  //   const dateText = `Date Generated on: ${date}`;
+  //   const dateTextWidth = doc.getTextWidth(dateText);
+  //   doc.text(dateText, pageWidth - dateTextWidth - 10, 5); // Adjust the `- 10` for right margin
+
+  //   // Subheading
+  //   doc.setFontSize(12);
+  //   const subheading = `${category} Report`;
+  //   const subheadingWidth = doc.getTextWidth(subheading);
+  //   doc.text(subheading, (pageWidth - subheadingWidth) / 2, 20);
+
+  //   // Define table headers and rows
+  //   const headers = [
+  //     [
+  //       //  "Type",
+  //       "Invoice No.",
+  //       "User",
+  //       "Date",
+  //       "phone No.",
+  //       "Amount",
+  //       "GST(%)",
+  //       "Total(+GST)",
+  //       "Paid",
+  //       "Pending",
+  //       "Due Date",
+  //       "Bill Type",
+  //       "Category Type",
+  //       "Paid Using",
+  //       "Particular",
+  //       "Transaction ID",
+  //       "Status",
+  //     ],
+  //   ];
+
+  //   const rows = filteredData.map((row) => [
+  //     //row.type,
+  //     row.invoiceNo,
+  //     row.user,
+  //     row.date,
+  //     row.phoneNumber,
+  //     row.amount,
+  //     row.gst,
+  //     row.total,
+  //     row.payingAmount,
+  //     row.pendingAmount,
+  //     row.duedate,
+  //     row.billType,
+  //     row.category,
+  //     row.paidBy,
+  //     row.particular,
+  //     row.transactionId,
+  //     row.paymentMethod,
+  //   ]);
+
+  //   // Add the table to the PDF
+  //   doc.autoTable({
+  //     head: headers,
+  //     body: rows,
+  //     startY: 30, // Top margin
+  //     theme: "grid", // Grid theme
+  //     margin: { top: 10 }, // Margin setting
+  //     styles: { fontSize: 8 }, // Font size setting
+  //     columnStyles: {
+  //       0: { cellWidth: "auto" },
+  //       1: { cellWidth: "auto" },
+  //       2: { cellWidth: "auto" },
+  //       3: { cellWidth: "auto" },
+  //       4: { cellWidth: "auto" },
+  //       5: { cellWidth: "auto" },
+  //       6: { cellWidth: "auto" },
+  //       7: { cellWidth: "auto" },
+  //       8: { cellWidth: "auto" },
+  //       9: { cellWidth: "auto" },
+  //       10: { cellWidth: "auto" },
+  //     },
+  //     didParseCell: function (data) {
+  //       // Check if the current column is the "Status" column
+  //       if (data.column.index === 13) {
+  //         const status = data.cell.raw.toLowerCase();
+  //         if (status === "pending" || status === "partial") {
+  //           data.cell.styles.fillColor = [255, 223, 186]; // Light orange color for "Pending" or "Partial"
+  //         } else if (status === "complete") {
+  //           data.cell.styles.fillColor = [144, 238, 144]; // Light green color for all other statuses
+  //         }
+  //       }
+  //     },
+  //   });
+
+  //   // Calculate total values
+  //   const totalAmount = filteredData.reduce((sum, row) => sum + row.amount, 0);
+  //   const total = filteredData.reduce((sum, row) => sum + row.total, 0);
+  //   const totalPaid = filteredData.reduce(
+  //     (sum, row) => sum + row.payingAmount,
+  //     0
+  //   );
+  //   const totalPending = filteredData.reduce(
+  //     (sum, row) => sum + row.pendingAmount,
+  //     0
+  //   );
+
+  //   // Convert total value to words
+  //   const totalInWords = toTitleCase(numberToWords.toWords(total));
+
+  //   // Additional fields and values
+  //   const additionalFields = [
+  //     { label: "Total Amount", value: `${totalAmount.toFixed(2)}` },
+  //     { label: "Total (+GST)", value: `${total.toFixed(2)}` },
+  //     { label: "Total (+GST) in Words", value: `${totalInWords} Rupees Only` },
+  //     { label: "Total Paid", value: `${totalPaid.toFixed(2)}` },
+  //     { label: "Total Pending", value: `${totalPending.toFixed(2)}` },
+  //   ];
+
+  //   // Prepare the summary table data
+  //   const summaryHeaders = [["Summary", ""]];
+  //   const summaryRows = additionalFields.map((field) => [
+  //     field.label,
+  //     field.value,
+  //   ]);
+
+  //   // Add the summary table to the PDF
+  //   doc.autoTable({
+  //     head: summaryHeaders,
+  //     body: summaryRows,
+  //     startY: doc.lastAutoTable.finalY + 10, // Position below the previous table
+  //     theme: "grid",
+  //     margin: { top: 10 },
+  //     styles: { fontSize: 10 },
+  //   });
+  //   const signatureY = doc.lastAutoTable.finalY + 40; // Position below the summary table
+  //   const signatureX = pageWidth - 60; // Position on the right side
+
+  //   doc.setFontSize(12);
+  //   doc.text("Authorized Signature", signatureX, signatureY);
+  //   doc.setLineWidth(0.5);
+  //   doc.line(signatureX, signatureY + 2, signatureX + 50, signatureY + 2); // Draw a line for the signature
+  //   doc.save(`Complete_${category}_List.pdf`);
+  // };
+
   const exportToPDF = () => {
     // Specify the landscape orientation
     const doc = new jsPDF("landscape");
     const pageWidth = doc.internal.pageSize.getWidth();
+    
+   
 
-    // Heading
-    doc.setFontSize(16);
-    const heading = `${employeeDetails.institutename || "Guest"}`;
-    const headingWidth = doc.getTextWidth(heading);
-    doc.text(heading, (pageWidth - headingWidth) / 2, 5);
+    // Define the image parameters (assuming it's a base64 string or URL)
+    const image = employeeDetails.instituteimage; // this should be the actual image URL or base64 string
+    const imageWidth = 20; // Set the desired width of the image
+    const imageHeight = 20; // Set the desired height of the image
+
+     // Heading
+     doc.setFontSize(16);
+     const heading = `${employeeDetails.institutename || "Guest"}`;
+     const headingWidth = doc.getTextWidth(heading);
+     doc.text(heading, (pageWidth - headingWidth) / 2, 10);
 
     // Date on the top right
     const date = new Date().toLocaleDateString();
     doc.setFontSize(10);
-    const dateText = `Date Generated on: ${date}`;
+    const dateText = `Generated Date: ${date}`;
     const dateTextWidth = doc.getTextWidth(dateText);
-    doc.text(dateText, pageWidth - dateTextWidth - 10, 5); // Adjust the `- 10` for right margin
+
+    // Common Y-coordinate for the horizontal line
+    const commonY = 25;
+
+    // Add the institute image on the top right side
+    doc.addImage(image, 'JPEG', pageWidth - imageWidth - 10, commonY - (imageHeight / 2.4), imageWidth, imageHeight); // Center the image vertically
+
+    
+
+    // Display the date generated on the top right
+    doc.text(dateText, (pageWidth - dateTextWidth) / 1, 10);
+    // doc.text(dateText, pageWidth - dateTextWidth - 10, commonY); // Adjust the `- 10` for right margin
 
     // Subheading
     doc.setFontSize(12);
     const subheading = `${category} Report`;
     const subheadingWidth = doc.getTextWidth(subheading);
-    doc.text(subheading, (pageWidth - subheadingWidth) / 2, 20);
+    doc.text(subheading, (pageWidth - subheadingWidth) / 2, 30); // Move subheading down for spacing
 
     // Define table headers and rows
     const headers = [
       [
-        //  "Type",
         "Invoice No.",
         "User",
         "Date",
-        "phone No.",
+        "Phone No.",
         "Amount",
         "GST(%)",
         "Total(+GST)",
@@ -212,7 +385,6 @@ const Category = () => {
     ];
 
     const rows = filteredData.map((row) => [
-      //row.type,
       row.invoiceNo,
       row.user,
       row.date,
@@ -235,10 +407,10 @@ const Category = () => {
     doc.autoTable({
       head: headers,
       body: rows,
-      startY: 30, // Top margin
-      theme: "grid", // Grid theme
-      margin: { top: 10 }, // Margin setting
-      styles: { fontSize: 8 }, // Font size setting
+      startY: 45, // Adjust startY to place below the subheading
+      theme: "grid",
+      margin: { top: 20 },
+      styles: { fontSize: 8 },
       columnStyles: {
         0: { cellWidth: "auto" },
         1: { cellWidth: "auto" },
@@ -264,6 +436,8 @@ const Category = () => {
         }
       },
     });
+
+    // The rest of your PDF generation code remains unchanged
 
     // Calculate total values
     const totalAmount = filteredData.reduce((sum, row) => sum + row.amount, 0);
@@ -305,6 +479,8 @@ const Category = () => {
       margin: { top: 10 },
       styles: { fontSize: 10 },
     });
+
+    // Signature section
     const signatureY = doc.lastAutoTable.finalY + 40; // Position below the summary table
     const signatureX = pageWidth - 60; // Position on the right side
 
@@ -312,8 +488,11 @@ const Category = () => {
     doc.text("Authorized Signature", signatureX, signatureY);
     doc.setLineWidth(0.5);
     doc.line(signatureX, signatureY + 2, signatureX + 50, signatureY + 2); // Draw a line for the signature
+
+    // Save the PDF
     doc.save(`Complete_${category}_List.pdf`);
-  };
+};
+
 
   // Function to convert string to title case
   const toTitleCase = (str) => {
@@ -606,95 +785,31 @@ const Category = () => {
     0
   );
   const formatValue = (value) => Math.abs(value).toLocaleString();
-  const handlePrint = (row) => {
-    const doc = new jsPDF("portrait", "mm", "a4");
 
-    // Page width
-    const pageWidth = doc.internal.pageSize.getWidth();
-
-    // Function to convert string to title case
-    const toTitleCase = (str) => {
-      return str
-        .split(" ")
-        .map(
-          (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-        )
-        .join(" ");
-    };
-
-    // Add Invoice Number
-    doc.setFontSize(10);
-    const invoiceNo = `Invoice No: ${row.invoiceNo}`;
-    doc.text(invoiceNo, 10, 10); // Position the invoice number at the top left corner
-
-    // Heading
-    doc.setFontSize(16);
-    const heading = `${employeeDetails.institutename || "Guest"}`;
-    const headingWidth = doc.getTextWidth(heading);
-    doc.text(heading, (pageWidth - headingWidth) / 2, 20); // Adjust y-position to account for invoice number
-
-    // Date on the top right
-    const date = new Date().toLocaleDateString();
-    doc.setFontSize(10);
-    const dateText = `Date Generated on: ${date}`;
-    const dateTextWidth = doc.getTextWidth(dateText);
-    doc.text(dateText, pageWidth - dateTextWidth - 10, 10); // Adjust the `- 10` for right margin
-
-    doc.setFontSize(12);
-    const subheading = `${row.user} ${row.type} Receipt`;
-    const subheadingWidth = doc.getTextWidth(subheading);
-    doc.text(subheading, (pageWidth - subheadingWidth) / 2, 30); // Adjust y-position to account for heading
-
-    // Convert total value to words
-    const totalInWords = toTitleCase(numberToWords.toWords(row.total));
-
-    // Define table columns and data
-    const columns = [
-      { header: " ", dataKey: "field" },
-      { header: " ", dataKey: "value" },
-    ];
-
-    const data = [
-      { field: "Type", value: row.type },
-      { field: "User", value: row.user },
-      { field: "Bill Type", value: row.billType },
-      { field: "Category Type", value: row.category },
-      { field: "Amount", value: row.amount },
-      { field: "GST(%)", value: `${row.gst}%` },
-      { field: "Total(+GST)", value: row.total },
-      { field: "Total Amount in Words", value: `${totalInWords} Rupees Only` },
-      { field: "Paid", value: row.payingAmount },
-      { field: "Pending", value: row.pendingAmount },
-      { field: "Paid Using", value: row.paidBy },
-      { field: "Transaction ID", value: row.transactionId || "-" },
-      { field: "Due Date", value: row.duedate || "N/A" },
-      { field: "Particular", value: row.particular || "-" },
-    ];
-
-    // Add the table to the PDF
-    doc.autoTable({
-      columns: columns,
-      body: data,
-      startY: 40, // Start position for the table, adjust to fit content
-      theme: "grid", // Add grid lines
-      margin: { top: 20 }, // Margin from the top
-      styles: {
-        cellPadding: 5,
-        fontSize: 10,
-      },
-    });
-
-    const signatureY = doc.lastAutoTable.finalY + 40; // Position below the summary table
-    const signatureX = pageWidth - 60; // Position on the right side
-
-    doc.setFontSize(12);
-    doc.text("Authorized Signature", signatureX, signatureY);
-    doc.setLineWidth(0.5);
-    doc.line(signatureX, signatureY + 2, signatureX + 50, signatureY + 2); // Draw a line for the signature
-
-    // Save the PDF
-    doc.save(`${row.user} ${row.type} Receipt.pdf`);
+  const handleGenerate = (instituteData) => {
+    setSelectedRow(instituteData);
+    setOpenReceipt(true);
   };
+
+
+  const downloadReceipt = () => {
+    const receiptElement = document.getElementById("receipt");
+    
+    // Ensure that images are fully loaded before creating the PDF
+    html2pdf().from(receiptElement).set({
+      margin: 0.2,
+      filename: "receipt.pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: {
+        scale: 2,
+        logging: true, // Set this to true to get logs about image loading
+        useCORS: true, // Enables cross-origin loading for images
+      },
+      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+    }).save();
+  };
+  
+
 
   return (
     <div>
@@ -1087,7 +1202,10 @@ const Category = () => {
                     <WhatsAppIcon />
                   </IconButton>
 
-                  <IconButton onClick={() => handlePrint(row)} color="inherit">
+                  <IconButton
+                    onClick={() => handleGenerate(row)}
+                    color="inherit"
+                  >
                     <PrintIcon />
                   </IconButton>
                 </StyledTableCell>
@@ -1103,6 +1221,303 @@ const Category = () => {
           handleUpdatedData={handleUpdatedData}
         />
       )}
+
+      
+
+      <Dialog
+        open={openReceipt}
+        onClose={() => setOpenReceipt(false)}
+        maxWidth="md"
+        fullWidth
+      >
+        <DialogContent sx={{ p: 1 }}>
+          {selectedRow ? (
+            <Box id="receipt" sx={{ p: 3 }}>
+              {/* Heading */}
+
+              <Box
+                sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
+              >
+                {/* Left side content (Institute Name, Address, Phone) */}
+                <Box>
+                  <Typography variant="h6" align="left">
+                    <Typography
+                      variant="h6"
+                      align="left"
+                      sx={{ fontSize: "30px", color: "purple" }}
+                    >
+                      {employeeDetails.institutename || "Guest"}
+                    </Typography>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        mb: 0.5, // Reduced margin-bottom for less space between the two addresses
+                      }}
+                    >
+                      <Typography variant="body2">
+                        {employeeDetails.address}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        mt: 0, // Reduced margin-top to bring the addresses closer
+                      }}
+                    >
+                      <Typography variant="body2">
+                        <strong>Mobile : </strong>
+                        {employeeDetails.phonenumber}
+                      </Typography>
+                    </Box>
+                  </Typography>
+                </Box>
+
+                {/* Right side content (Institute Image) */}
+                {employeeDetails.instituteimage && (
+                  <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                    <img
+                      src={employeeDetails.instituteimage}
+                      alt="Institute Logo"
+                      style={{ maxWidth: "100px", maxHeight: "100px", borderRadius:'50%'}} // Adjust size as needed
+                    />
+                  </Box>
+                )}
+              </Box>
+
+              {/* Invoice Number and Date */}
+
+              <Typography
+                variant="body2"
+                align="center"
+                sx={{
+                  borderTop: "8px solid purple", // Thick top border
+                  padding: "10px", // Padding for spacing
+                  display: "flex", // To align the content in a row with space between
+                  justifyContent: "space-between", // Evenly space the items
+                  gap: "20px", // Gap between the data elements for spacing
+                  backgroundColor: "#f3e5f5", // Light purple background
+                }}
+              >
+                <Typography component="span">
+                  <Typography component="span" sx={{ fontWeight: "bold" }}>
+                    Invoice No: {selectedRow.invoiceNo}
+                  </Typography>
+                </Typography>
+
+                <Typography component="span">
+                  <Typography component="span" sx={{ fontWeight: "bold" }}>
+                    {selectedRow.user} {selectedRow.type} Receipt
+                  </Typography>
+                </Typography>
+
+                <Typography component="span">
+                  <Typography component="span" sx={{ fontWeight: "bold" }}>
+                    Invoice Date: {new Date().toLocaleDateString()}
+                  </Typography>
+                </Typography>
+              </Typography>
+
+              {/* Table with Data */}
+              <Table
+                size="small"
+                sx={{
+                  marginTop: "10px",
+                  textAlign: "center",
+                  justifyContent: "space-evenly",
+                }}
+              >
+                <TableBody
+                  sx={{
+                    borderTop: "3px solid purple", // Thick top border
+                    borderBottom: "3px solid purple",
+                  }}
+                >
+                  <TableRow>
+                    <TableCell sx={{  fontWeight: "bold" }}>
+                      Name:
+                    </TableCell>
+                    <TableCell sx={{  }}>
+                      {selectedRow.user}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell sx={{  fontWeight: "bold" }}>
+                      Phone No:
+                    </TableCell>
+                    <TableCell sx={{  }}>
+                      {selectedRow.phoneNumber}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell sx={{  fontWeight: "bold" }}>
+                      Type:
+                    </TableCell>
+                    <TableCell sx={{  }}>
+                      {selectedRow.type}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell sx={{  fontWeight: "bold" }}>
+                      Category Type:
+                    </TableCell>
+                    <TableCell sx={{  }}>
+                      {selectedRow.category}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell sx={{   fontWeight: "bold" }}>
+                      Particular:
+                    </TableCell>
+                    <TableCell sx={{  }}>
+                      {selectedRow.particular || "-"}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell sx={{  fontWeight: "bold" }}>
+                      Bill Type:
+                    </TableCell>
+                    <TableCell sx={{  }}>
+                      {selectedRow.billType}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell sx={{  fontWeight: "bold" }}>
+                      Payment Mode:
+                    </TableCell>
+                    <TableCell sx={{  }}>
+                      {selectedRow.paidBy}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell sx={{  fontWeight: "bold" }}>
+                      Transaction ID:
+                    </TableCell>
+                    <TableCell sx={{  }}>
+                      {selectedRow.transactionId || "-"}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell sx={{   fontWeight: "bold" }}>
+                      Due Date:
+                    </TableCell>
+                    <TableCell sx={{  }}>
+                      {selectedRow.duedate || "N/A"}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell sx={{  fontWeight: "bold" }}>
+                      Amount:
+                    </TableCell>
+                    <TableCell sx={{  }}>
+                      ₹{selectedRow.amount}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell sx={{   fontWeight: "bold" }}>
+                      GST (%):
+                    </TableCell>
+                    <TableCell sx={{  }}>
+                      {selectedRow.gst}% (₹
+                      {(selectedRow.gst / 100) * selectedRow.amount})
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell sx={{  fontWeight: "bold" }}>
+                      Paid:
+                    </TableCell>
+                    <TableCell sx={{  }}>
+                      ₹{selectedRow.payingAmount}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell sx={{   fontWeight: "bold" }}>
+                      Pending:
+                    </TableCell>
+                    <TableCell sx={{  }}>
+                      ₹{selectedRow.pendingAmount}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell sx={{  fontWeight: "bold" }}>
+                      Total Amount (+GST):
+                    </TableCell>
+                    <TableCell sx={{  }}>
+                      ₹{selectedRow.total}
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+
+              {/* Typography aligned similarly to table */}
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  borderBottom: "3px solid purple",
+                  marginTop: "10px",
+                  padding: "10px 0", // Optional: Adds some padding around
+                }}
+              >
+                {/* Left side for label */}
+                <Typography sx={{ textAlign: "center", fontWeight: "bold" }}>
+                  Total Amount In Words:
+                </Typography>
+
+                {/* Right side for the amount in words */}
+                <Typography sx={{ textAlign: "right", fontWeight: "bold" }}>
+                  {numberToWords.toWords(selectedRow.total)} Rupees Only
+                </Typography>
+              </Box>
+
+              {/* Signature */}
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  mr: 2,
+                  fontSize: "1rem",
+                  marginTop:'40px',
+                  marginBottom:'40px'
+                }}
+              >
+                <Typography sx={{fontWeight:'bold'}}>Authorized Signature:</Typography>
+                <Box
+                  sx={{
+                    borderBottom: "1px solid black",
+                    width: "150px",
+                    ml: 2,
+                    mt: 1,
+                  }}
+                ></Box>
+              </Box>
+
+              <Divider sx={{ my: 2, marginTop:'20px' }}/>
+                <Typography variant="body2" align="center" sx={{ mb: 1 }}>
+                  203, 2nd floor, Mangalmurti Complex, behind ABIL Tower
+                  hirabaugh chowk, Tilak Road
+                  <br />
+                </Typography>
+                <Typography variant="body2" align="center" sx={{ mb: 1 }}>
+                  Website: http://www.pjsofttech.com | Phone: +919923570901
+                </Typography>
+                <Typography variant="body2" align="center">
+                  Email: sales@pjsofttech.com
+                </Typography>
+            </Box>
+          ) : null}
+        </DialogContent>
+
+        <DialogActions>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => downloadReceipt(selectedRow)}
+          >
+            Download PDF
+          </Button>
+          <Button onClick={() => setOpenReceipt(false)}>Close</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
