@@ -8,6 +8,7 @@ import YearlyGraph from "./YearlyGraph";
 import SourceGraph from "./Sourcegraph";
 import CourseGraph from "./CourseGraph";
 import { styled } from "@mui/system";
+import RevenueByCourse from "./RevenueByCourse";
 
 
 const Dashboard = () => {
@@ -181,8 +182,9 @@ const Dashboard = () => {
             <CourseGraph />
           </Paper>
         </Grid>
-       
       </Grid>
+      <RevenueByCourse />
+
     </div>
   );
 };

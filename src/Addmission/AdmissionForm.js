@@ -181,15 +181,14 @@ const AdmissionForm = () => {
       // If the payment method is "Pending", set paidFees to 0
       return formData.totalFees; // Balance will be the total fees since nothing is paid
     }
-  
+
     if (formData.paymentMethod === "Partial") {
       // For partial payments, subtract paid fees from total fees
       return formData.totalFees - formData.paidFees;
     }
-  
+
     return 0; // No balance for other payment methods
   };
-  
 
   const handleBlur = (field) => (event) => {
     setTouched({ ...touched, [field]: true });
@@ -377,7 +376,7 @@ const AdmissionForm = () => {
     id="paidFees"
     name="paidFees"
     label="Fees Paying"
-    value={formData.paymentMethod === "Pending" ? 0 : formData.paidFees} // Set paidFees to 0 if paymentMethod is "Pending"
+    value={formData.paidFees || 0}
     onChange={handleInputChange}
     required
     disabled={formData.paymentMethod === "Pending"} // Disable input if paymentMethod is "Pending"
@@ -392,49 +391,51 @@ const AdmissionForm = () => {
                   id="balanceAmount"
                   name="balanceAmount"
                   label="Pending Fees"
-                  value={calculateBalance()}
+                  value={calculateBalance() || 0}
                   InputProps={{ readOnly: true }}
                 />
               </Grid>
             ) : null}
-            {formData.paymentMethod === "Partial" || formData.paymentMethod === "Complete" ? (
-  <>
-    <Grid item xs={12} sm={6} md={4}>
-      <TextField
-        fullWidth
-        id="paymentMode"
-        name="paymentMode"
-        label="Payment Mode"
-        value={formData.paymentMode}
-        onChange={handleInputChange}
-        disabled={formData.paymentMethod === "Pending"} 
-        select
-        required
-      >
-        <MenuItem value="Cheque">Cheque</MenuItem>
-        <MenuItem value="UPI">UPI</MenuItem>
-        <MenuItem value="Cash">Cash</MenuItem>
-        <MenuItem value="Bank Transfer">Bank Transfer</MenuItem>
-      </TextField>
-    </Grid>
-    {formData.paymentMode !== "Cash" ? (
-      <Grid item xs={12} sm={6} md={4}>
-        <TextField
-          fullWidth
-          id="transactionid"
-          name="transactionid"
-          label="Transaction ID"
-          value={formData.paymentMethod === "Pending" ? "Pending" : formData.transactionid}
-          onChange={handleInputChange}
-          disabled={formData.paymentMethod === "Pending"} 
-        />
-      </Grid>
-    ) : null}
-  </>
-) : null}
-
-
-
+            {formData.paymentMethod === "Partial" ||
+            formData.paymentMethod === "Complete" ? (
+              <>
+                <Grid item xs={12} sm={6} md={4}>
+                  <TextField
+                    fullWidth
+                    id="paymentMode"
+                    name="paymentMode"
+                    label="Payment Mode"
+                    value={formData.paymentMode}
+                    onChange={handleInputChange}
+                    disabled={formData.paymentMethod === "Pending"}
+                    select
+                    required
+                  >
+                    <MenuItem value="Cheque">Cheque</MenuItem>
+                    <MenuItem value="UPI">UPI</MenuItem>
+                    <MenuItem value="Cash">Cash</MenuItem>
+                    <MenuItem value="Bank Transfer">Bank Transfer</MenuItem>
+                  </TextField>
+                </Grid>
+                {formData.paymentMode !== "Cash" ? (
+                  <Grid item xs={12} sm={6} md={4}>
+                    <TextField
+                      fullWidth
+                      id="transactionid"
+                      name="transactionid"
+                      label="Transaction ID"
+                      value={
+                        formData.paymentMethod === "Pending"
+                          ? "Pending"
+                          : formData.transactionid
+                      }
+                      onChange={handleInputChange}
+                      disabled={formData.paymentMethod === "Pending"}
+                    />
+                  </Grid>
+                ) : null}
+              </>
+            ) : null}
             <Grid item xs={12} sm={6} md={4}>
               <TextField
                 fullWidth
@@ -504,7 +505,6 @@ const AdmissionForm = () => {
                 />
               </Grid>
             ) : null}
-
             <Grid item xs={12} sm={6} md={4}>
               <TextField
                 fullWidth
