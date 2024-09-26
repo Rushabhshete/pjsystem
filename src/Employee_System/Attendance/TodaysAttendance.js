@@ -527,7 +527,7 @@ const TodaysAttendance = () => {
                 <TableRow key={employee.empID}>
                   <TableCell>{employee.empID}</TableCell>
                   <TableCell>{employee.fullName || employee.name}</TableCell>
-                  <TableCell>{employee.todaysDate}</TableCell>
+                  <TableCell>{employee.todaysDate || 'N/A'}</TableCell>
                   <TableCell>{employee.shift}</TableCell>
                   <TableCell>{employee.loginTime || 'N/A'}</TableCell>
                   <TableCell>{employee.breakIn || 'N/A'}</TableCell>
