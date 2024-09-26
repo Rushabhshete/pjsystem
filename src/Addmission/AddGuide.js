@@ -86,23 +86,23 @@ const AddGuide = () => {
     }
   };
 
-  const handleUpdateGuide = async () => {
-    try {
-      const institutecode = localStorage.getItem("institutecode");
-      if (!institutecode) {
-        throw new Error("No institutecode found in local storage");
-      }
-      await axios.put(
-        `http://localhost:8085/api/conductBy/updateConductBy/${selectedGuideId}?institutecode=${institutecode}`,
-        { guideName: updateGuideName }
-      );
-      toast.success("Guid Updated Successfully");
-      fetchGuides(); // Refresh the guide list
-      handleCloseUpdateDialog(); // Close the dialog
-    } catch (error) {
-      console.error("Error updating guide:", error);
-    }
-  };
+  // const handleUpdateGuide = async () => {
+  //   try {
+  //     const institutecode = localStorage.getItem("institutecode");
+  //     if (!institutecode) {
+  //       throw new Error("No institutecode found in local storage");
+  //     }
+  //     await axios.put(
+  //       `http://localhost:8085/api/conductBy/updateConductBy/${selectedGuideId}?institutecode=${institutecode}`,
+  //       { guideName: updateGuideName }
+  //     );
+  //     toast.success("Guid Updated Successfully");
+  //     fetchGuides(); // Refresh the guide list
+  //     handleCloseUpdateDialog(); // Close the dialog
+  //   } catch (error) {
+  //     console.error("Error updating guide:", error);
+  //   }
+  // };
 
   const handleDeleteGuide = async () => {
     try {
@@ -126,11 +126,11 @@ const AddGuide = () => {
     setGuideName("");
   };
 
-  const handleOpenUpdateDialog = (guide) => {
-    setUpdateGuideName(guide.guideName);
-    setSelectedGuideId(guide.id);
-    setOpenUpdateDialog(true);
-  };
+  // const handleOpenUpdateDialog = (guide) => {
+  //   setUpdateGuideName(guide.guideName);
+  //   setSelectedGuideId(guide.id);
+  //   setOpenUpdateDialog(true);
+  // };
 
   const handleCloseUpdateDialog = () => {
     setOpenUpdateDialog(false);
@@ -238,7 +238,7 @@ const AddGuide = () => {
                   <TableCell>{guide.id}</TableCell>
                   <TableCell>{guide.guideName}</TableCell>
                   <TableCell>
-                    <Button
+                    {/* <Button
                       edge="end"
                       aria-label="edit"
                       onClick={() => handleOpenUpdateDialog(guide)}
@@ -247,7 +247,7 @@ const AddGuide = () => {
                       variant="contained"
                     >
                       Update
-                    </Button>
+                    </Button> */}
                     <Button
                       edge="end"
                       aria-label="delete"
@@ -296,7 +296,7 @@ const AddGuide = () => {
       </Dialog>
 
       {/* Update Guide Dialog */}
-      <Dialog
+      {/* <Dialog
         open={openUpdateDialog}
         onClose={handleCloseUpdateDialog}
         aria-labelledby="update-guide-dialog-title"
@@ -323,7 +323,7 @@ const AddGuide = () => {
             Update
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
 
       {/* Delete Guide Dialog */}
       <Dialog

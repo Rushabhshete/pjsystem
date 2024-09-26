@@ -90,26 +90,26 @@ const AddmissionSource = () => {
     }
   };
 
-  const handleUpdateSource = async () => {
-    try {
-      const institutecode = localStorage.getItem("institutecode");
-      if (!institutecode) {
-        throw new Error("No institutecode found in local storage");
-      }
-      await axios.put(
-        `http://localhost:8085/api/sourceBy/updateSourceBy/${selectedSourceId}`,
-        {
-          sourceBy: updateSourceName,
-          institutecode: institutecode // Include institutecode if required
-        }
-      );
-      toast.success("Source Updated Successfully");
-      fetchSources(); // Refresh the source list
-      handleCloseUpdateDialog(); // Close the dialog
-    } catch (error) {
-      console.error("Error updating source:", error.response || error.message);
-    }
-  };
+  // const handleUpdateSource = async () => {
+  //   try {
+  //     const institutecode = localStorage.getItem("institutecode");
+  //     if (!institutecode) {
+  //       throw new Error("No institutecode found in local storage");
+  //     }
+  //     await axios.put(
+  //       `http://localhost:8085/api/sourceBy/updateSourceBy/${selectedSourceId}`,
+  //       {
+  //         sourceBy: updateSourceName,
+  //         institutecode: institutecode // Include institutecode if required
+  //       }
+  //     );
+  //     toast.success("Source Updated Successfully");
+  //     fetchSources(); // Refresh the source list
+  //     handleCloseUpdateDialog(); // Close the dialog
+  //   } catch (error) {
+  //     console.error("Error updating source:", error.response || error.message);
+  //   }
+  // };
 
   const handleDeleteSource = async () => {
     try {
@@ -133,11 +133,11 @@ const AddmissionSource = () => {
     setSourceName("");
   };
 
-  const handleOpenUpdateDialog = (source) => {
-    setUpdateSourceName(source.sourceBy);
-    setSelectedSourceId(source.id);
-    setOpenUpdateDialog(true);
-  };
+  // const handleOpenUpdateDialog = (source) => {
+  //   setUpdateSourceName(source.sourceBy);
+  //   setSelectedSourceId(source.id);
+  //   setOpenUpdateDialog(true);
+  // };
 
   const handleCloseUpdateDialog = () => {
     setOpenUpdateDialog(false);
@@ -229,7 +229,7 @@ const AddmissionSource = () => {
                 <TableCell>{source.id}</TableCell>
                 <TableCell>{source.sourceBy}</TableCell>
                 <TableCell>
-                  <Button
+                  {/* <Button
                     edge="end"
                     aria-label="edit"
                     onClick={() => handleOpenUpdateDialog(source)}
@@ -238,7 +238,7 @@ const AddmissionSource = () => {
                     variant="contained"
                   >
                     Update
-                  </Button>
+                  </Button> */}
                   <Button
                     edge="end"
                     aria-label="delete"
@@ -290,7 +290,7 @@ const AddmissionSource = () => {
       </Dialog>
 
       {/* Update Source Dialog */}
-      <Dialog
+      {/* <Dialog
         open={openUpdateDialog}
         onClose={handleCloseUpdateDialog}
         aria-labelledby="update-source-dialog-title"
@@ -320,7 +320,7 @@ const AddmissionSource = () => {
             Update
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
 
       {/* Delete Source Confirmation Dialog */}
       <Dialog

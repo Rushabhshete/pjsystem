@@ -348,10 +348,10 @@ const Department = () => {
   const [institutecode, setInstituteCode] = useState(localStorage.getItem('institutecode') || '');
   const [departments, setDepartments] = useState([]);
   const [openAddDialog, setOpenAddDialog] = useState(false);
-  const [openEditDialog, setOpenEditDialog] = useState(false);
+  // const [openEditDialog, setOpenEditDialog] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [currentDepartment, setCurrentDepartment] = useState(null);
-  const [updatedDepartmentName, setUpdatedDepartmentName] = useState('');
+  // const [updatedDepartmentName, setUpdatedDepartmentName] = useState('');
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
@@ -388,16 +388,16 @@ const Department = () => {
     }
   };
 
-  const handleEditSubmit = async () => {
-    try {
-      await axios.put(`http://localhost:8082/departments/updateDepartment/${currentDepartment.id}`, { department: updatedDepartmentName });
-      toast.success('Department updated successfully');
-      setOpenEditDialog(false);
-      fetchDepartments();
-    } catch (error) {
-      toast.error('Failed to update department');
-    }
-  };
+  // const handleEditSubmit = async () => {
+  //   try {
+  //     await axios.put(`http://localhost:8082/departments/updateDepartment/${currentDepartment.id}`, { department: updatedDepartmentName });
+  //     toast.success('Department updated successfully');
+  //     setOpenEditDialog(false);
+  //     fetchDepartments();
+  //   } catch (error) {
+  //     toast.error('Failed to update department');
+  //   }
+  // };
 
   const handleDeleteSubmit = async () => {
     try {
@@ -472,7 +472,7 @@ const Department = () => {
                 <TableCell>{department.id}</TableCell>
                 <TableCell>{department.department}</TableCell>
                 <TableCell>
-                  <Button
+                  {/* <Button
                   size="small"
                    variant="contained"
                    color="primary" onClick={() => {
@@ -482,7 +482,7 @@ const Department = () => {
                   }}
                   sx={{ marginRight: "10px" }}>
                     Update
-                  </Button>
+                  </Button> */}
                   <Button  size="small"
                         variant="contained" color="error" onClick={() => {
                     setCurrentDepartment(department);
@@ -526,7 +526,7 @@ const Department = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Edit Department Dialog */}
+      {/* Edit Department Dialog
       <Dialog open={openEditDialog} onClose={() => setOpenEditDialog(false)}>
       <DialogTitle>Update Department</DialogTitle>
         <DialogContent>
@@ -553,7 +553,7 @@ const Department = () => {
         </DialogActions>
         </DialogContent>
         
-      </Dialog>
+      </Dialog> */}
 
       {/* Delete Department Confirmation Dialog */}
       <Dialog open={openDeleteDialog} onClose={() => setOpenDeleteDialog(false)} maxWidth="sm" fullWidth>

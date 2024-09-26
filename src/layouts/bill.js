@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from "react";
 import {
   Table,
@@ -19,7 +17,7 @@ import {
   Container,
 } from "@mui/material";
 import html2pdf from "html2pdf.js"; // Importing html2pdf.js
-import qr2 from "../../src/img/qr2.jpg";
+import logo from "../../src/img/logo.jpg";
 import phonepe from "../../src/img/phonepe.png";
 import gpay from "../../src/img/gpay.png";
 import paytm from "../../src/img/paytm.jpg";
@@ -72,19 +70,22 @@ export default function Bill() {
 
   const downloadReceipt = () => {
     const receiptElement = document.getElementById("receipt");
-    
+
     // Ensure that images are fully loaded before creating the PDF
-    html2pdf().from(receiptElement).set({
-      margin: 0.2,
-      filename: "receipt.pdf",
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: {
-        scale: 2,
-        logging: true, // Set this to true to get logs about image loading
-        useCORS: true, // Enables cross-origin loading for images
-      },
-      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-    }).save();
+    html2pdf()
+      .from(receiptElement)
+      .set({
+        margin: 0.2,
+        filename: "receipt.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: {
+          scale: 2,
+          logging: true, // Set this to true to get logs about image loading
+          useCORS: true, // Enables cross-origin loading for images
+        },
+        jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+      })
+      .save();
   };
 
   function convertNumberToWords(num) {
@@ -290,13 +291,17 @@ export default function Bill() {
                   </Box>
                 </Typography>
 
-                 {/* Right side content (Institute Image) */}
-                 {selectedInstitute.instituteimage && (
+                {/* Right side content (Institute Image) */}
+                {selectedInstitute.instituteimage && (
                   <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                     <img
                       src={selectedInstitute.instituteimage}
                       alt="Institute Logo"
-                      style={{ maxWidth: "100px", maxHeight: "100px", borderRadius:'50%'}} // Adjust size as needed
+                      style={{
+                        maxWidth: "100px",
+                        maxHeight: "100px",
+                        borderRadius: "50%",
+                      }} // Adjust size as needed
                     />
                   </Box>
                 )}
@@ -307,7 +312,6 @@ export default function Bill() {
                 sx={{
                   borderTop: "8px solid purple", // Thick top border
                   padding: "10px", // Padding for spacing
-                  display: "flex", // To align the content in a row with space between
                   justifyContent: "space-between", // Evenly space the items
                   gap: "20px", // Gap between the data elements for spacing
                   backgroundColor: "#f3e5f5", // Light purple background
@@ -319,25 +323,7 @@ export default function Bill() {
                   </Typography>{" "}
                   {selectedInstitute.invoiceNo}
                 </Typography>
-                <Typography component="span">
-                  <Typography component="span" sx={{ fontWeight: "bold" }}>
-                    Invoice Date:
-                  </Typography>{" "}
-                  {selectedInstitute.createdAt}
-                </Typography>
-                <Typography component="span">
-                  <Typography component="span" sx={{ fontWeight: "bold" }}>
-                    Due Date:
-                  </Typography>{" "}
-                  {selectedInstitute.subscriptendDate}
-                </Typography>
               </Typography>
-
-              <Box mt={1}>
-                <strong>Bill To:</strong>
-                <br />
-                <strong>PJSofttech pvt, ltd.,</strong>
-              </Box>
 
               {/* Items Table */}
 
@@ -353,6 +339,9 @@ export default function Bill() {
                       <strong>PLAN</strong>
                     </TableCell>
                     <TableCell>
+                      <strong>YEAR</strong>
+                    </TableCell>
+                    <TableCell>
                       <strong>START DATE</strong>
                     </TableCell>
                     <TableCell>
@@ -366,6 +355,7 @@ export default function Bill() {
                 <TableBody>
                   <TableRow>
                     <TableCell>{selectedInstitute.plan} PLAN</TableCell>
+                    <TableCell>{selectedInstitute.subscriptionyear}</TableCell>
                     <TableCell>
                       {selectedInstitute.subscriptstartDate}
                     </TableCell>
@@ -376,7 +366,6 @@ export default function Bill() {
                   <br />
                   {/* Add more TableRow components here for additional items */}
 
-
                   {/* Subtotal Row */}
                   <TableRow
                     sx={{
@@ -385,11 +374,15 @@ export default function Bill() {
                     }}
                   >
                     <TableCell colSpan={3} sx={{ textAlign: "left" }}>
-                      <strong>GST %:</strong>
+                      <strong>GST ({selectedInstitute.gstpersent}%):</strong>
                     </TableCell>
                     <TableCell>
-                      <Box sx={{ display: "flex", textAlign: "flex-end" }}>
-                        <strong>{selectedInstitute.gstpersent}% (₹ {(selectedInstitute.gstpersent/100) * selectedInstitute.amount})</strong>
+                      <Box sx={{ display: "flex", textAlign: "right" }}>
+                        <strong>
+                          ₹{" "}
+                          {(selectedInstitute.gstpersent / 100) *
+                            selectedInstitute.amount}
+                        </strong>
                       </Box>
                     </TableCell>
                   </TableRow>
@@ -397,15 +390,14 @@ export default function Bill() {
                   {/* Subtotal Row */}
                   <TableRow
                     sx={{
-                      borderTop: "3px solid purple", // Thick top border
                       borderBottom: "3px solid purple",
                     }}
                   >
                     <TableCell colSpan={3} sx={{ textAlign: "left" }}>
-                      <strong>Total Amount (including gst):</strong>
+                      <strong>Total Amount (Including GST & Taxes):</strong>
                     </TableCell>
                     <TableCell>
-                      <Box sx={{ display: "flex", textAlign: "flex-end" }}>
+                      <Box sx={{ display: "flex", textAlign: "right" }}>
                         <strong>₹ {selectedInstitute.totalAmount}</strong>
                       </Box>
                     </TableCell>
@@ -491,27 +483,10 @@ export default function Bill() {
                       </Box>
                     </Box>
                   </Box>
-                  <Box mt={2}>
-                    {/* Terms & Conditions Heading */}
-                    <Typography fontWeight={"bold"}>
-                      TERMS AND CONDITIONS
-                    </Typography>
-
-                    {/* First Term */}
-                    <Typography variant="body2">
-                      1. Payment must be made within 30 days of the invoice
-                      date.
-                    </Typography>
-
-                    {/* Second Term */}
-                    <Typography variant="body2" sx={{ mt: 0.5 }}>
-                      2. 25% Complete Work
-                    </Typography>
-                  </Box>
                 </Box>
 
                 {/* Right Box for Amount in Words */}
-                <Box sx={{ mt: 3.5, mb: -1 , marginLeft:"20px"}}>
+                <Box sx={{ mt: 3.5, mb: -1, marginLeft: "20px" }}>
                   {" "}
                   {/* Reducing space from the top and bottom */}
                   <Box
@@ -520,7 +495,7 @@ export default function Bill() {
                       justifyContent: "space-between",
                       borderBottom: "1px solid gray", // Add bottom border
                       mb: -1, // Reduce space from the bottom
-                      gap:2,
+                      gap: 2,
                     }}
                   >
                     {/* Total Amount Label */}
@@ -530,10 +505,10 @@ export default function Bill() {
 
                     {/* Total Amount Value */}
                     <Typography variant="body2" fontWeight="bold">
-                    ₹ {selectedInstitute.totalAmount}
+                      ₹ {selectedInstitute.totalAmount}
                     </Typography>
                   </Box>
-                  <Typography variant="body2" sx={{ mt:2 }}>
+                  <Typography variant="body2" sx={{ mt: 2 }}>
                     {" "}
                     {/* Making text bold and adjusting space */}
                     <strong>
@@ -543,18 +518,53 @@ export default function Bill() {
                   </Typography>
                 </Box>
               </Box>
-              <Divider sx={{ my: 2 }} mt={5}/>
-                <Typography variant="body2" align="center" sx={{ mb: 1 }}>
-                  203, 2nd floor, Mangalmurti Complex, behind ABIL Tower
-                  hirabaugh chowk, Tilak Road
-                  <br />
-                </Typography>
-                <Typography variant="body2" align="center" sx={{ mb: 1 }}>
-                  Website: http://www.pjsofttech.com | Phone: +919923570901
-                </Typography>
-                <Typography variant="body2" align="center">
-                  Email: sales@pjsofttech.com
-                </Typography>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center", // Vertically centers the content
+                  mb: 2, // Margin bottom
+                  flexWrap: "wrap", // Allows wrapping on smaller screens
+                  marginLeft: "20px",
+                  marginTop: "60px",
+                }}
+              >
+                {/* Left side: Logo */}
+                <Box sx={{ display: "flex", justifyContent: "center" }}>
+                  <img
+                    src={logo}
+                    alt="Institute Logo"
+                    style={{ maxWidth: "100px", maxHeight: "100px" }} // Adjust size as needed
+                  />
+                </Box>
+
+                {/* Right side: Text content */}
+                <Box sx={{ textAlign: " center" }}>
+                  {" "}
+                  {/* Right-aligns the text */}
+                  <Typography variant="body2" sx={{ mb: 1 }}>
+                    203, 2nd floor, Mangalmurti Complex, behind ABIL Tower
+                    hirabaugh chowk, Tilak Road
+                  </Typography>
+                  <Typography variant="body2" sx={{ mb: 1 }}>
+                    Email:{" "}
+                    <a href="mailto:sales@pjsofttech.com">
+                      sales@pjsofttech.com
+                    </a>
+                    | Phone: +919923570901
+                  </Typography>
+                  <Typography variant="body2">
+                    Website:{" "}
+                    <a
+                      href="http://www.pjsofttech.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      www.pjsofttech.com
+                    </a>{" "}
+                  </Typography>
+                </Box>
+              </Box>
             </Box>
           ) : null}
         </DialogContent>

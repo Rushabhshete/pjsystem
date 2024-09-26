@@ -1350,14 +1350,6 @@ const Category = () => {
                   </TableRow>
                   <TableRow>
                     <TableCell sx={{  fontWeight: "bold" }}>
-                      Type:
-                    </TableCell>
-                    <TableCell sx={{  }}>
-                      {selectedRow.type}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell sx={{  fontWeight: "bold" }}>
                       Category Type:
                     </TableCell>
                     <TableCell sx={{  }}>
@@ -1370,14 +1362,6 @@ const Category = () => {
                     </TableCell>
                     <TableCell sx={{  }}>
                       {selectedRow.particular || "-"}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell sx={{  fontWeight: "bold" }}>
-                      Bill Type:
-                    </TableCell>
-                    <TableCell sx={{  }}>
-                      {selectedRow.billType}
                     </TableCell>
                   </TableRow>
                   <TableRow>
@@ -1468,41 +1452,6 @@ const Category = () => {
                   {numberToWords.toWords(selectedRow.total)} Rupees Only
                 </Typography>
               </Box>
-
-              {/* Signature */}
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  mr: 2,
-                  fontSize: "1rem",
-                  marginTop:'40px',
-                  marginBottom:'40px'
-                }}
-              >
-                <Typography sx={{fontWeight:'bold'}}>Authorized Signature:</Typography>
-                <Box
-                  sx={{
-                    borderBottom: "1px solid black",
-                    width: "150px",
-                    ml: 2,
-                    mt: 1,
-                  }}
-                ></Box>
-              </Box>
-
-              <Divider sx={{ my: 2, marginTop:'20px' }}/>
-                <Typography variant="body2" align="center" sx={{ mb: 1 }}>
-                  203, 2nd floor, Mangalmurti Complex, behind ABIL Tower
-                  hirabaugh chowk, Tilak Road
-                  <br />
-                </Typography>
-                <Typography variant="body2" align="center" sx={{ mb: 1 }}>
-                  Website: http://www.pjsofttech.com | Phone: +919923570901
-                </Typography>
-                <Typography variant="body2" align="center">
-                  Email: sales@pjsofttech.com
-                </Typography>
             </Box>
           ) : null}
         </DialogContent>

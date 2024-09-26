@@ -264,7 +264,7 @@ const Source = () => {
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{source.name}</TableCell>
                     <TableCell>
-                      <Button
+                      {/* <Button
                         variant="contained"
                         color="primary"
                         onClick={() => handleOpenSourceDialog(source, true)}
@@ -272,7 +272,7 @@ const Source = () => {
                         sx={{ marginRight: "10px" }}
                       >
                         Update
-                      </Button>
+                      </Button> */}
                       <Button
                         color="error"
                         onClick={() => handleOpenConfirmDialog(source)}
