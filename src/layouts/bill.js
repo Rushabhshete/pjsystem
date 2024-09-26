@@ -157,7 +157,7 @@ export default function Bill() {
   };
 
   return (
-    <Container>
+    <div>
       <Typography
         variant="h5"
         gutterBottom
@@ -565,6 +565,6 @@ export default function Bill() {
           <Button onClick={() => setOpenReceipt(false)}>Close</Button>
         </DialogActions>
       </Dialog>
-    </Container>
+    </div>
   );
 }
