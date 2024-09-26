@@ -1,8 +1,4 @@
-// // src/services/LeaveServices.js
-
-
 import axios from 'axios';
-
 const API_BASE_URL = 'http://localhost:8082'; // Adjust the base URL as per your backend configuration
 
 const getInstituteCode = () => {
@@ -52,6 +48,18 @@ export const last30DaysLeaves = () => {
 export const last365DaysLeaves = () => {
   const institutecode = getInstituteCode();
   return axios.get(`${API_BASE_URL}/leaveRequests/365days?institutecode=${institutecode}`);
+};
+
+// New API call for fetching leave requests by custom date range
+export const getLeaveRequestsByCustomDate = (startDate, endDate) => {
+  const institutecode = getInstituteCode();
+  return axios.get(`${API_BASE_URL}/leaveRequests/customDate`, {
+    params: {
+      institutecode,
+      startDate,
+      endDate
+    }
+  });
 };
 
 export const rejectLeaveRequest = (id, leaveRequest) => {

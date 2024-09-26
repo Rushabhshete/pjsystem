@@ -158,7 +158,7 @@
  // Fetch all employees
  export const getAllEmployees = async () => {
    try {
-     const response = await axios.get(`${API_URL}/getNonDeleted`, {
+     const response = await axios.get(`${API_URL}/joinedEmployeesList`, {
        params: { institutecode: getInstituteCode() }
      });
      return response.data;

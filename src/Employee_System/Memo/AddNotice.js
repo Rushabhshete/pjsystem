@@ -30,7 +30,7 @@ export default function AddNotice() {
   const [notices, setNotices] = useState([]);
   const [createdAt, setCreatedAt] = useState(new Date().toISOString().split('T')[0]);
   const [selectedNotice, setSelectedNotice] = useState(null);
-  const [institutecode] = useState('IST082');
+  const institutecode = localStorage.getItem("institutecode")
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [noticeToDelete, setNoticeToDelete] = useState(null);
@@ -41,7 +41,7 @@ export default function AddNotice() {
 
   const fetchNotices = async () => {
     try {
-      const response = await axios.get(`http://localhost:8082/notices/all?institutecode=${institutecode}`);
+      const response = await axios.get(`http://localhost:8082/notices/getallByInstitutecode?institutecode=${institutecode}`);
       setNotices(response.data);
     } catch (error) {
       console.error("Error fetching notices:", error);

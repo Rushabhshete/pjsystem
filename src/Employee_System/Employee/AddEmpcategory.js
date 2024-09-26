@@ -464,15 +464,15 @@ function Category() {
                 <TableRow key={category.id}>
                   <TableCell>{category.id}</TableCell>
                   <TableCell>{ category. categoryName}</TableCell>
-                  <TableCell>{100 * category. hraPercentage}%</TableCell>
-                  <TableCell>{100 * category. taPercentage}%</TableCell>
-                  <TableCell>{100 * category. incentivePercentage}%</TableCell>
-                  <TableCell>{100 * category. spiPercentage}%</TableCell>
-                  <TableCell>{100 * category. medicalAllowancePercentage}%</TableCell>
-                  <TableCell>{100 * category. pfPercentage}%</TableCell>
-                  <TableCell>{100 * category. esicPercentage}%</TableCell>
-                  <TableCell>{100 * category. professionalTaxPercentage}%</TableCell>
-                  <TableCell>{100 * category. incomeTaxPercentage}%</TableCell>
+                  <TableCell>{category. hraPercentage}%</TableCell>
+                  <TableCell>{category. taPercentage}%</TableCell>
+                  <TableCell>{category. incentivePercentage}%</TableCell>
+                  <TableCell>{category. spiPercentage}%</TableCell>
+                  <TableCell>{category. medicalAllowancePercentage}%</TableCell>
+                  <TableCell>{category. pfPercentage}%</TableCell>
+                  <TableCell>{category. esicPercentage}%</TableCell>
+                  <TableCell>{category. professionalTaxPercentage}%</TableCell>
+                  <TableCell>{category. incomeTaxPercentage}%</TableCell>
                   <TableCell>{ category. totalPaidLeave}</TableCell>
                   <TableCell sx={{ whiteSpace: "nowrap" }}>
                     <IconButton

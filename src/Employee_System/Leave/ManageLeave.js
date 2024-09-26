@@ -8,7 +8,8 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {
   getAllLeaveRequests, updateLeaveRequestStatus, deleteLeaveRequest,
-  last7DaysLeaves, last30DaysLeaves, last365DaysLeaves, rejectLeaveRequest
+  last7DaysLeaves, last30DaysLeaves, last365DaysLeaves, rejectLeaveRequest,
+  getLeaveRequestsByCustomDate
 } from '../Leave/LeaveService'; // Ensure the correct import path
 
 const ManageLeave = () => {
@@ -17,10 +18,13 @@ const ManageLeave = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [showCustomDateFields, setShowCustomDateFields] = useState(false);
 
   useEffect(() => {
     fetchLeaveRequests();
-  }, [filter]);
+  }, [filter, startDate, endDate]);
 
   const fetchLeaveRequests = () => {
     let fetchFunction;
@@ -34,6 +38,13 @@ const ManageLeave = () => {
         break;
       case 'last365Days':
         fetchFunction = last365DaysLeaves;
+        break;
+      case 'customDate':
+        if (startDate && endDate) {
+          fetchFunction = () => getLeaveRequestsByCustomDate(startDate, endDate);
+        } else {
+          return; // Don't fetch if startDate or endDate is empty
+        }
         break;
       case 'all':
       default:
@@ -81,6 +92,11 @@ const ManageLeave = () => {
     }
   };
 
+  const handleFilterChange = (value) => {
+    setFilter(value);
+    setShowCustomDateFields(value === 'customDate');
+  };
+
   // Filtered leave requests based on the search term, category, and status
   const filteredLeaveRequests = leaveRequests.filter(request => 
     request.fullName.toLowerCase().includes(searchTerm.toLowerCase()) &&
@@ -114,7 +130,7 @@ const ManageLeave = () => {
           <FormControl fullWidth>
             <TextField
               value={filter}
-              onChange={(e) => setFilter(e.target.value)}
+              onChange={(e) => handleFilterChange(e.target.value)}
               select 
               label="Select"
             >
@@ -122,9 +138,36 @@ const ManageLeave = () => {
               <MenuItem value="last7Days">Last 7 Days</MenuItem>
               <MenuItem value="last30Days">Last 30 Days</MenuItem>
               <MenuItem value="last365Days">Last Year</MenuItem>
+              <MenuItem value="customDate">Custom Date</MenuItem>
             </TextField>
           </FormControl>
         </Grid>
+
+        {showCustomDateFields && (
+          <>
+            <Grid item xs={3}>
+              <TextField
+                label="Start Date"
+                type="date"
+                fullWidth
+                InputLabelProps={{ shrink: true }}
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <TextField
+                label="End Date"
+                type="date"
+                fullWidth
+                InputLabelProps={{ shrink: true }}
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+              />
+            </Grid>
+          </>
+        )}
+
         <Grid item xs={3}>
           <FormControl fullWidth>
             <TextField
@@ -141,6 +184,7 @@ const ManageLeave = () => {
             </TextField>
           </FormControl>
         </Grid>
+        
         <Grid item xs={3}>
           <FormControl fullWidth>
             <TextField
@@ -157,6 +201,7 @@ const ManageLeave = () => {
             </TextField>
           </FormControl>
         </Grid>
+        
         <Grid item xs={3}>
           <TextField
             fullWidth
@@ -167,6 +212,7 @@ const ManageLeave = () => {
           />
         </Grid>
       </Grid>
+
       <Grid item xs={12}>
         <TableContainer component={Paper}>
           <Table>
@@ -214,7 +260,7 @@ const ManageLeave = () => {
                     {/* Delete Button */}
                     <IconButton
                       aria-label="delete"
-                      color="error"
+                      color="secondary"
                       onClick={() => handleDeleteRequest(request.id)}
                     >
                       <DeleteIcon />

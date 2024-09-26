@@ -381,6 +381,47 @@ const Sidebar = () => {
         { name: "Add Fields",
           route:"/layout/ADDField",
           icon: <CategoryIcon /> },
+          {
+            name: "Fees System",
+            icon: <Person sx={{ color: "#4682b4" }} />,
+            subSubOptions: [
+              {
+                name: "Dashboard",
+                route: "/layout/FeesDashboard",
+                icon: <DashboardIcon sx={{ color: "blue" }} />,
+              },
+              {
+                name: "Fees Invoice",
+                route: "/layout/FeeInvoice",
+                icon: <PlaylistAddIcon sx={{ color: "#76A7FA" }} />,
+              },
+              {
+                name: "Fees Invoice List",
+                route: "/layout/InvoiceList",
+                icon: <FormatListBulletedIcon sx={{ color: "#76A7FA" }} />,
+              },
+              {
+                name: "Add Fees",
+                route: "/layout/AddFee",
+                icon: <PlaylistAddIcon sx={{ color: "#76A7FA" }} />,
+              },
+              {
+                name: "Fees Table",
+                route: "/layout/FeeTable",
+                icon: <PlaylistAddIcon sx={{ color: "#76A7FA" }} />,
+              },
+              {
+                name: "Report",
+                route: "/layout/FeeReport",
+                icon: <AssessmentIcon sx={{ color: "#76A7FA" }} />,
+              },
+              {
+                name: "Add Medium",
+                route: "/layout/AddMedium",
+                icon: <PlaylistAddIcon sx={{ color: "#76A7FA" }} />,
+              },
+            ],
+          },
       ],
     },
     {
