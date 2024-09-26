@@ -44,40 +44,40 @@ const ConfirmDialog = ({ open, onClose, onConfirm, courseName }) => (
   </Dialog>
 );
 
-const UpdateDialog = ({
-  open,
-  onClose,
-  onUpdate,
-  courseName,
-  setUpdateCourseName,
-}) => (
-  <Dialog open={open} onClose={onClose}>
-    <DialogTitle>Update Course</DialogTitle>
-    <DialogContent>
-      <Grid item className="textField-root">
-        <TextField
-          autoFocus
-          margin="dense"
-          id="course-name"
-          label="Course Name"
-          type="text"
-          fullWidth
-          variant="outlined"
-          value={courseName}
-          onChange={(e) => setUpdateCourseName(e.target.value)}
-        />
-      </Grid>
-    </DialogContent>
-    <DialogActions>
-      <Button onClick={onClose} color="secondary">
-        Cancel
-      </Button>
-      <Button onClick={onUpdate} color="error">
-        Update
-      </Button>
-    </DialogActions>
-  </Dialog>
-);
+// const UpdateDialog = ({
+//   open,
+//   onClose,
+//   onUpdate,
+//   courseName,
+//   setUpdateCourseName,
+// }) => (
+//   <Dialog open={open} onClose={onClose}>
+//     <DialogTitle>Update Course</DialogTitle>
+//     <DialogContent>
+//       <Grid item className="textField-root">
+//         <TextField
+//           autoFocus
+//           margin="dense"
+//           id="course-name"
+//           label="Course Name"
+//           type="text"
+//           fullWidth
+//           variant="outlined"
+//           value={courseName}
+//           onChange={(e) => setUpdateCourseName(e.target.value)}
+//         />
+//       </Grid>
+//     </DialogContent>
+//     <DialogActions>
+//       <Button onClick={onClose} color="secondary">
+//         Cancel
+//       </Button>
+//       <Button onClick={onUpdate} color="error">
+//         Update
+//       </Button>
+//     </DialogActions>
+//   </Dialog>
+// );
 
 const AddCourseDialog = ({
   open,
@@ -125,7 +125,7 @@ const AddCourse = () => {
   const [open, setOpen] = useState(false);
   const [selectedCourseId, setSelectedCourseId] = useState(null);
   const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
-  const [updateCourseName, setUpdateCourseName] = useState("");
+  // const [updateCourseName, setUpdateCourseName] = useState("");
   const [openAddCourseDialog, setOpenAddCourseDialog] = useState(false);
 
   useEffect(() => {
@@ -193,41 +193,41 @@ const AddCourse = () => {
     }
   };
 
-  const handleOpenUpdateDialog = (course) => {
-    setUpdateCourseName(course.cname);
-    setSelectedCourseId(course.id);
-    setOpenUpdateDialog(true);
-  };
+  // const handleOpenUpdateDialog = (course) => {
+  //   setUpdateCourseName(course.cname);
+  //   setSelectedCourseId(course.id);
+  //   setOpenUpdateDialog(true);
+  // };
 
-  const handleCloseUpdateDialog = () => {
-    setOpenUpdateDialog(false);
-    setSelectedCourseId(null);
-    setUpdateCourseName("");
-  };
+  // const handleCloseUpdateDialog = () => {
+  //   setOpenUpdateDialog(false);
+  //   setSelectedCourseId(null);
+  //   setUpdateCourseName("");
+  // };
 
-  const handleUpdate = async () => {
-    try {
-      const institutecode = localStorage.getItem("institutecode");
-      if (!institutecode) {
-        throw new Error("No institutecode found in local storage");
-      }
+  // const handleUpdate = async () => {
+  //   try {
+  //     const institutecode = localStorage.getItem("institutecode");
+  //     if (!institutecode) {
+  //       throw new Error("No institutecode found in local storage");
+  //     }
 
-      // Send institutecode as a query parameter
-      await axios.put(
-        `http://localhost:8085/updateCourse/${selectedCourseId}?institutecode=${institutecode}`,
-        {
-          cname: updateCourseName, // Only send course name in the request body
-        }
+  //     // Send institutecode as a query parameter
+  //     await axios.put(
+  //       `http://localhost:8085/updateCourse/${selectedCourseId}?institutecode=${institutecode}`,
+  //       {
+  //         cname: updateCourseName, // Only send course name in the request body
+  //       }
        
-      );
-      toast.success("Course Updated Successfully");
-      console.log("Course updated successfully");
-      fetchCourses(); // Refresh the course list
-      handleCloseUpdateDialog(); // Close the dialog
-    } catch (error) {
-      console.error("Error updating course:", error.response || error.message);
-    }
-  };
+  //     );
+  //     toast.success("Course Updated Successfully");
+  //     console.log("Course updated successfully");
+  //     fetchCourses(); // Refresh the course list
+  //     handleCloseUpdateDialog(); // Close the dialog
+  //   } catch (error) {
+  //     console.error("Error updating course:", error.response || error.message);
+  //   }
+  // };
 
   const handleOpenAddCourseDialog = () => {
     setOpenAddCourseDialog(true);
@@ -318,14 +318,14 @@ const AddCourse = () => {
                   <TableCell>{course.id}</TableCell>
                   <TableCell>{course.cname}</TableCell>
                   <TableCell>
-                    <Button
+                    {/* <Button
                       variant="contained"
                       color="primary"
                       onClick={() => handleOpenUpdateDialog(course)}
                       sx={{ mr: 1 }}
                     >
                       Update
-                    </Button>
+                    </Button> */}
                     <Button
                       variant="contained"
                       color="error"
@@ -350,13 +350,13 @@ const AddCourse = () => {
         }
       />
 
-      <UpdateDialog
+      {/* <UpdateDialog
         open={openUpdateDialog}
         onClose={handleCloseUpdateDialog}
         onUpdate={handleUpdate}
         courseName={updateCourseName}
         setUpdateCourseName={setUpdateCourseName}
-      />
+      /> */}
 
       <AddCourseDialog
         open={openAddCourseDialog}

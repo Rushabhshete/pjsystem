@@ -70,7 +70,7 @@ const Exam = () => {
   const [filteredExams, setFilteredExams] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [openAddDialog, setOpenAddDialog] = useState(false);
-  const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
+  // const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const [examToDelete, setExamToDelete] = useState(null);
   const [exam, setExam] = useState({ name: "" });
@@ -140,14 +140,14 @@ const Exam = () => {
     setOpenAddDialog(false);
   };
 
-  const handleOpenUpdateDialog = (exam) => {
-    setExam(exam);
-    setOpenUpdateDialog(true);
-  };
+  // const handleOpenUpdateDialog = (exam) => {
+  //   setExam(exam);
+  //   setOpenUpdateDialog(true);
+  // };
 
-  const handleCloseUpdateDialog = () => {
-    setOpenUpdateDialog(false);
-  };
+  // const handleCloseUpdateDialog = () => {
+  //   setOpenUpdateDialog(false);
+  // };
 
   const onAddExamSubmit = async (e) => {
     e.preventDefault();
@@ -172,37 +172,37 @@ const Exam = () => {
     }
   };
 
-  const onUpdateExamSubmit = async (e) => {
-    e.preventDefault();
+  // const onUpdateExamSubmit = async (e) => {
+  //   e.preventDefault();
 
-    if (!exam.name) {
-      setSnackbarMessage("Exam name is required");
-      setSnackbarColor("red");
-      return;
-    }
+  //   if (!exam.name) {
+  //     setSnackbarMessage("Exam name is required");
+  //     setSnackbarColor("red");
+  //     return;
+  //   }
 
-    try {
-      if (!exam.id) { // Ensure that the exam ID is set
-        throw new Error("No exam ID found");
-      }
+  //   try {
+  //     if (!exam.id) { // Ensure that the exam ID is set
+  //       throw new Error("No exam ID found");
+  //     }
 
-      await axios.put(`http://localhost:8086/updateExam/${exam.id}`, exam, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+  //     await axios.put(`http://localhost:8086/updateExam/${exam.id}`, exam, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
 
-      // setSnackbarMessage("Exam updated successfully");
-      toast.success("Exam Updated Successfully");
-      // setSnackbarColor("green");
-      handleCloseUpdateDialog();
-      loadExams();
-    } catch (error) {
-      console.error("Error updating exam:", error);
-      setSnackbarMessage(`Error updating exam: ${error.response?.data?.message || error.message}`);
-      setSnackbarColor("red");
-    }
-  };
+  //     // setSnackbarMessage("Exam updated successfully");
+  //     toast.success("Exam Updated Successfully");
+  //     // setSnackbarColor("green");
+  //     handleCloseUpdateDialog();
+  //     loadExams();
+  //   } catch (error) {
+  //     console.error("Error updating exam:", error);
+  //     setSnackbarMessage(`Error updating exam: ${error.response?.data?.message || error.message}`);
+  //     setSnackbarColor("red");
+  //   }
+  // };
 
   return (
     <div>
@@ -278,7 +278,7 @@ const Exam = () => {
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{exam.name}</TableCell>
                     <TableCell>
-                      <Button
+                      {/* <Button
                         variant="contained"
                         color="primary"
                         onClick={() => handleOpenUpdateDialog(exam)}
@@ -286,7 +286,7 @@ const Exam = () => {
                         sx={{ marginRight: "10px" }}
                       >
                         Update
-                      </Button>
+                      </Button> */}
                       <Button
                         color="error"
                         onClick={() => handleOpenConfirmDialog(exam)}
@@ -335,7 +335,7 @@ const Exam = () => {
         </Dialog>
 
         {/* Update Exam Dialog */}
-        <Dialog open={openUpdateDialog} onClose={handleCloseUpdateDialog}>
+        {/* <Dialog open={openUpdateDialog} onClose={handleCloseUpdateDialog}>
           <DialogTitle>Update Exam</DialogTitle>
           <DialogContent>
             <DialogContentText>
@@ -364,7 +364,7 @@ const Exam = () => {
               </DialogActions>
             </form>
           </DialogContent>
-        </Dialog>
+        </Dialog> */}
 
         {/* Confirm Delete Dialog */}
         <ConfirmDialog

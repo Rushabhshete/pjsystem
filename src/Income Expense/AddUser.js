@@ -533,8 +533,8 @@ const AddUser = () => {
   const [userName, setNewUser] = useState(""); // Changed here
   const [Users, setUsers] = useState([]);
   const [error, setError] = useState("");
-  const [editOpen, setEditOpen] = useState(false);
-  const [editUser, setEditUser] = useState({ id: null, userName: "", phoneNumber: "" }); // Added phone number here
+  // const [editOpen, setEditOpen] = useState(false);
+  // const [editUser, setEditUser] = useState({ id: null, userName: "", phoneNumber: "" }); // Added phone number here
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -636,69 +636,69 @@ const AddUser = () => {
     }
   };
 
-  const handleEditClickOpen = async (id) => {
-    try {
-      const response = await fetch(`http://localhost:8087/users/getById/${id}`);
-      const result = await response.json();
-      setEditUser(result);
-      setEditOpen(true);
-    } catch (error) {
-      console.error("Error fetching user details: ", error);
-    }
-  };
+  // const handleEditClickOpen = async (id) => {
+  //   try {
+  //     const response = await fetch(`http://localhost:8087/users/getById/${id}`);
+  //     const result = await response.json();
+  //     setEditUser(result);
+  //     setEditOpen(true);
+  //   } catch (error) {
+  //     console.error("Error fetching user details: ", error);
+  //   }
+  // };
 
-  const handleEditClose = () => {
-    setEditOpen(false);
-    setEditUser({ id: null, userName: "", phoneNumber: "" }); // Resetting edit data
-    setError("");
-  };
+  // const handleEditClose = () => {
+  //   setEditOpen(false);
+  //   setEditUser({ id: null, userName: "", phoneNumber: "" }); // Resetting edit data
+  //   setError("");
+  // };
 
-  const handleEditChange = (event) => {
-    setEditUser({ ...editUser, userName: event.target.value });
-  };
+  // const handleEditChange = (event) => {
+  //   setEditUser({ ...editUser, userName: event.target.value });
+  // };
 
-  const handlePhoneEditChange = (event) => {
-    setEditUser({ ...editUser, phoneNumber: event.target.value }); // Handling phone number for editing
-  };
+  // const handlePhoneEditChange = (event) => {
+  //   setEditUser({ ...editUser, phoneNumber: event.target.value }); // Handling phone number for editing
+  // };
 
-  const handleUpdate = async () => {
-    if (editUser.userName.trim() === "") {
-      setError("User name cannot be empty");
-    } else if (editUser.phoneNumber.trim() === "") {
-      setError("Phone number cannot be empty");
-    } else {
-      try {
-        const response = await fetch(
-          `http://localhost:8087/users/update/${editUser.id}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              phoneNumber: editUser.phoneNumber.trim(),
-              userName: editUser.userName.trim(),
-              institutecode: getInstituteCode(),
-            }),
-          }
-        );
-        if (response.ok) {
-          const updatedResponse = await fetch(
-            `http://localhost:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
-          );
-          const updatedUser = await updatedResponse.json();
-          setUsers(updatedUser);
-          toast.success("User Updated Successfully");
-          handleEditClose();
-        } else {
-          setError("Failed to update user");
-        }
-      } catch (error) {
-        console.error("Error updating user: ", error);
-        setError("Failed to update user");
-      }
-    }
-  };
+  // const handleUpdate = async () => {
+  //   if (editUser.userName.trim() === "") {
+  //     setError("User name cannot be empty");
+  //   } else if (editUser.phoneNumber.trim() === "") {
+  //     setError("Phone number cannot be empty");
+  //   } else {
+  //     try {
+  //       const response = await fetch(
+  //         `http://localhost:8087/users/update/${editUser.id}`,
+  //         {
+  //           method: "PUT",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify({
+  //             phoneNumber: editUser.phoneNumber.trim(),
+  //             userName: editUser.userName.trim(),
+  //             institutecode: getInstituteCode(),
+  //           }),
+  //         }
+  //       );
+  //       if (response.ok) {
+  //         const updatedResponse = await fetch(
+  //           `http://localhost:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
+  //         );
+  //         const updatedUser = await updatedResponse.json();
+  //         setUsers(updatedUser);
+  //         toast.success("User Updated Successfully");
+  //         handleEditClose();
+  //       } else {
+  //         setError("Failed to update user");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error updating user: ", error);
+  //       setError("Failed to update user");
+  //     }
+  //   }
+  // };
 
   const handleDelete = async () => {
     try {
@@ -834,7 +834,7 @@ const AddUser = () => {
         </DialogActions>
       </Dialog>
 
-      <Dialog open={editOpen} onClose={handleEditClose}>
+      {/* <Dialog open={editOpen} onClose={handleEditClose}>
         <DialogTitle>Edit User</DialogTitle>
         <DialogContent>
           <TextField
@@ -870,7 +870,7 @@ const AddUser = () => {
             Update
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
 
       <Snackbar
         open={snackbarOpen}
@@ -926,14 +926,14 @@ const AddUser = () => {
                 <TableCell sx={{ padding: "4px" }}>{user.id}</TableCell>
                 <TableCell sx={{ padding: "4px" }}>{user.userName}</TableCell>
                 <TableCell sx={{ padding: "4px" }}>
-                  <Button
+                  {/* <Button
                     onClick={() => handleEditClickOpen(user.id)}
                     color="primary"
                     variant="contained"
                     style={{ marginRight: "10px" }}
                   >
                     Update
-                  </Button>
+                  </Button> */}
                   <Button
                     onClick={() => {
                       setUserIdToDelete(user.id);

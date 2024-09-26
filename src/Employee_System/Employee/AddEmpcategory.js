@@ -31,9 +31,9 @@ function Category() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  // const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const [departments, setDepartments] = useState([]);
+  // const [departments, setDepartments] = useState([]);
   const [institutecode, setInstituteCode] = useState(
     localStorage.getItem("institutecode") || ""
   );
@@ -59,33 +59,33 @@ function Category() {
     fetchData();
   }, [institutecode]);
 
-  const handleEdit = (category) => {
-    setSelectedCategory(category);
-    setShowUpdateModal(true);
-  };
+  // const handleEdit = (category) => {
+  //   setSelectedCategory(category);
+  //   setShowUpdateModal(true);
+  // };
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setSelectedCategory({ ...selectedCategory, [name]: value });
-  };
+  // const handleInputChange = (event) => {
+  //   const { name, value } = event.target;
+  //   setSelectedCategory({ ...selectedCategory, [name]: value });
+  // };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.put(
-        `http://localhost:8082/categories/updateCategoryById/${selectedCategory.id}`,
-        selectedCategory
-      );
-      setShowUpdateModal(false);
-      await fetchData();
-      setSelectedCategory(null);
-      // toast.success('Category updated successfully');
-    } catch (error) {
-      console.error("Error updating category:", error);
-      setError("Failed to update category");
-      toast.error("Failed to update category");
-    }
-  };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     await axios.put(
+  //       `http://localhost:8082/categories/updateCategoryById/${selectedCategory.id}`,
+  //       selectedCategory
+  //     );
+  //     setShowUpdateModal(false);
+  //     await fetchData();
+  //     setSelectedCategory(null);
+  //     // toast.success('Category updated successfully');
+  //   } catch (error) {
+  //     console.error("Error updating category:", error);
+  //     setError("Failed to update category");
+  //     toast.error("Failed to update category");
+  //   }
+  // };
 
   const handleDelete = async (id) => {
     const confirmation = window.confirm(
@@ -481,12 +481,12 @@ function Category() {
                     >
                       <Info />
                     </IconButton>
-                    <IconButton
+                    {/* <IconButton
                       onClick={() => handleEdit(category)}
                       sx={{ color: "blue" }}
                     >
                       <Edit />
-                    </IconButton>
+                    </IconButton> */}
                     <IconButton
                       onClick={() => handleDelete(category.id)}
                       sx={{ color: "red" }}
@@ -500,7 +500,7 @@ function Category() {
           </Table>
         </TableContainer>
 
-        {/* Update Modal */}
+        {/* Update Modal
         <Modal
           style={{ marginTop: "100px", marginLeft: "90px" }}
           show={showUpdateModal}
@@ -647,16 +647,16 @@ function Category() {
                       >
                         Close
                       </Button>
-                      <Button type="submit" color="success" variant="contained">
+                      {/* <Button type="submit" color="success" variant="contained">
                         Update
-                      </Button>
-                    </Box>
+                      </Button> */}
+                    {/* </Box>
                   </Grid>
                 </Grid>
               </Grid>{" "}
             </Form>
           </Modal.Body>
-        </Modal>
+        </Modal> */} 
 
         {/* Info Modal */}
         <Modal show={showInfoModal} onHide={() => setShowInfoModal(false)}>
