@@ -310,6 +310,19 @@
      throw error;
    }
  };
+
+ // fetch total employee count
+ export const getTotalEmployeeCount = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/totalemployeeJoined`, {
+      params: { institutecode: getInstituteCode() }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching Total employee count:', error);
+    throw error;
+  }
+};
  
  
  // Fetch attendance records by employee ID and date range

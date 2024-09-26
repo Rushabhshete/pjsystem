@@ -162,67 +162,67 @@ const AddCategory = () => {
     }
   };
 
-  const handleEditClickOpen = async (id) => {
-    try {
-      const response = await fetch(
-        `http://localhost:8087/categories/getById/${id}`
-      );
-      const result = await response.json();
-      setEditCategory(result);
-      setEditOpen(true);
-    } catch (error) {
-      console.error("Error fetching category details: ", error);
-    }
-  };
+  // const handleEditClickOpen = async (id) => {
+  //   try {
+  //     const response = await fetch(
+  //       `http://localhost:8087/categories/getById/${id}`
+  //     );
+  //     const result = await response.json();
+  //     setEditCategory(result);
+  //     setEditOpen(true);
+  //   } catch (error) {
+  //     console.error("Error fetching category details: ", error);
+  //   }
+  // };
 
-  const handleEditClose = () => {
-    setEditOpen(false);
-    setEditCategory({ id: null, categoryName: "" });
-    setError("");
-  };
+  // const handleEditClose = () => {
+  //   setEditOpen(false);
+  //   setEditCategory({ id: null, categoryName: "" });
+  //   setError("");
+  // };
 
-  const handleEditChange = (event) => {
-    setEditCategory({ ...editCategory, categoryName: event.target.value });
-  };
+  // const handleEditChange = (event) => {
+  //   setEditCategory({ ...editCategory, categoryName: event.target.value });
+  // };
 
-  const handleUpdate = async () => {
-    if (editCategory.categoryName.trim() === "") {
-      setError("Category name cannot be empty");
-    } else {
-      try {
-        const response = await fetch(
-          `http://localhost:8087/categories/update/${editCategory.id}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              categoryName: editCategory.categoryName.trim(),
-            }),
-          }
-        );
-        if (response.ok) {
-          const institutecode = getInstituteCode();
-          const updatedResponse = await fetch(
-            `http://localhost:8087/categories/getAllCategoriesByInstitutecode?institutecode=${encodeURIComponent(
-              institutecode
-            )}`
-          );
-          const updatedCategory = await updatedResponse.json();
-          setCategories(updatedCategory);
-          setSnackbarMessage("Category updated successfully");
-          setSnackbarOpen(true);
-          handleEditClose();
-        } else {
-          setError("Failed to update category");
-        }
-      } catch (error) {
-        console.error("Error updating category: ", error);
-        setError("Failed to update category");
-      }
-    }
-  };
+  // const handleUpdate = async () => {
+  //   if (editCategory.categoryName.trim() === "") {
+  //     setError("Category name cannot be empty");
+  //   } else {
+  //     try {
+  //       const response = await fetch(
+  //         `http://localhost:8087/categories/update/${editCategory.id}`,
+  //         {
+  //           method: "PUT",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify({
+  //             categoryName: editCategory.categoryName.trim(),
+  //           }),
+  //         }
+  //       );
+  //       if (response.ok) {
+  //         const institutecode = getInstituteCode();
+  //         const updatedResponse = await fetch(
+  //           `http://localhost:8087/categories/getAllCategoriesByInstitutecode?institutecode=${encodeURIComponent(
+  //             institutecode
+  //           )}`
+  //         );
+  //         const updatedCategory = await updatedResponse.json();
+  //         setCategories(updatedCategory);
+  //         setSnackbarMessage("Category updated successfully");
+  //         setSnackbarOpen(true);
+  //         handleEditClose();
+  //       } else {
+  //         setError("Failed to update category");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error updating category: ", error);
+  //       setError("Failed to update category");
+  //     }
+  //   }
+  // };
 
   const handleDeleteClick = (id) => {
     setCategoryIdToDelete(id);
@@ -352,7 +352,7 @@ const AddCategory = () => {
         </DialogActions>
       </Dialog>
 
-      <Dialog open={editOpen} onClose={handleEditClose}>
+      {/* <Dialog open={editOpen} onClose={handleEditClose}>
         <DialogTitle>Edit Category</DialogTitle>
         <DialogContent>
           <TextField
@@ -377,7 +377,7 @@ const AddCategory = () => {
             Update
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
 
       <AlertDialog
         open={confirmOpen}
@@ -440,14 +440,14 @@ const AddCategory = () => {
                   {category.categoryName}
                 </TableCell>
                 <TableCell style={{ whiteSpace: "nowrap", padding: "4px" }}>
-                  <Button
+                  {/* <Button
                     variant="contained"
                     color="primary"
                     onClick={() => handleEditClickOpen(category.id)}
                     style={{ marginRight: "10px" }}
                   >
                     Update
-                  </Button>
+                  </Button> */}
                   <Button
                     color="error"
                     variant="contained"

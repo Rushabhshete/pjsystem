@@ -230,7 +230,8 @@ import {
   getAllEmployees, 
   getTodaysAttendance, 
   getPresentEmployeeCount, 
-  getAbsentEmployeeCount 
+  getAbsentEmployeeCount,
+  getTotalEmployeeCount
 } from '../Attendance/attendanceService';
 import {
   Box,
@@ -261,6 +262,7 @@ const TodaysAttendance = () => {
   const [todaysAttendance, setTodaysAttendance] = useState([]);
   const [presentCount, setPresentCount] = useState(0);
   const [absentCount, setAbsentCount] = useState(0);
+  const [totalEmployeeCount, setTotalEmployeeCount] = useState(0);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
   const [timeFilter, setTimeFilter] = useState('All'); // New state for filter options
@@ -269,7 +271,6 @@ const TodaysAttendance = () => {
   const [endDate, setEndDate] = useState('');     // State for end date
   
   // Options for the dropdown, initialized with all possible statuses
-  const statusOptions = ['All', 'Present', 'Absent', 'Late'];
   const filterOptions = ['All', 'Today','Yesterday', 'Custom Date'];
 
 
@@ -344,6 +345,8 @@ const TodaysAttendance = () => {
     try {
       const presentCount = await getPresentEmployeeCount();
       const absentCount = await getAbsentEmployeeCount();
+      const totalEmployeeCount = await getTotalEmployeeCount();
+      setTotalEmployeeCount(totalEmployeeCount);
       setPresentCount(presentCount);
       setAbsentCount(absentCount);
     } catch (error) {
@@ -403,7 +406,7 @@ const TodaysAttendance = () => {
                 Total Employees
               </Typography>
               <Typography variant="h4" component="div">
-                {filteredAttendance.length}
+                {totalEmployeeCount}
               </Typography>
             </CardContent>
           </Card>
@@ -444,16 +447,14 @@ const TodaysAttendance = () => {
         <Grid item xs={12} sm={6} md={4}>
           <FormControl fullWidth variant="outlined">
             <TextField
-            select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
               label="Status"
+              select
             >
-              {statusOptions.map((status) => (
-                <MenuItem key={status} value={status}>
-                  {status}
-                </MenuItem>
-              ))}
+              <MenuItem value="All">All</MenuItem>
+              <MenuItem value="Present">Present</MenuItem>
+              <MenuItem value="Absent">Absent</MenuItem>
             </TextField>
           </FormControl>
         </Grid>
@@ -508,8 +509,9 @@ const TodaysAttendance = () => {
         <Table>
           <TableHead sx={{ backgroundColor: '#f2f2f2' }}>
             <TableRow>
-              <TableCell sx={{ fontWeight: 'bold' }}>ID</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }}>EmpID</TableCell>
               <TableCell sx={{ fontWeight: 'bold' }}>Name</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }}>Date</TableCell>
               <TableCell sx={{ fontWeight: 'bold' }}>Shift</TableCell>
               <TableCell sx={{ fontWeight: 'bold' }}>Login</TableCell>
               <TableCell sx={{ fontWeight: 'bold' }}>Break In</TableCell>
@@ -525,6 +527,7 @@ const TodaysAttendance = () => {
                 <TableRow key={employee.empID}>
                   <TableCell>{employee.empID}</TableCell>
                   <TableCell>{employee.fullName || employee.name}</TableCell>
+                  <TableCell>{employee.todaysDate}</TableCell>
                   <TableCell>{employee.shift}</TableCell>
                   <TableCell>{employee.loginTime || 'N/A'}</TableCell>
                   <TableCell>{employee.breakIn || 'N/A'}</TableCell>

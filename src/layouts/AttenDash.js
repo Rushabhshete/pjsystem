@@ -3,7 +3,8 @@ import {
   getAllEmployees, 
   getTodaysAttendance, 
   getPresentEmployeeCount, 
-  getAbsentEmployeeCount 
+  getAbsentEmployeeCount,
+  getTotalEmployeeCount
 } from '../Employee_System/Attendance/attendanceService';
 import axios from 'axios';
 import {
@@ -26,6 +27,7 @@ const AttenDash = () => {
   const [presentCount, setPresentCount] = useState(0);
   const [absentCount, setAbsentCount] = useState(0);
   const [totalEmployees, setTotalEmployees] = useState(0);  // State to store total employee count
+  const [totalEmployeeCount, setTotalEmployeeCount] = useState(0);
   const [institutecode, setInstituteCode] = useState(localStorage.getItem('institutecode') || '');
   const currentDate = new Date();
   const [selectedMonth, setSelectedMonth] = useState(currentDate.getMonth() + 1);
@@ -79,7 +81,6 @@ const AttenDash = () => {
     try {
       const allEmployees = await getAllEmployees();
       setEmployees(allEmployees);
-      setTotalEmployees(allEmployees.length);  // Set total employee count
 
       const attendanceData = await getTodaysAttendance();
       setTodaysAttendance(attendanceData);
@@ -92,6 +93,8 @@ const AttenDash = () => {
     try {
       const presentCount = await getPresentEmployeeCount();
       const absentCount = await getAbsentEmployeeCount();
+      const totalEmployeeCount = await getTotalEmployeeCount();
+      setTotalEmployeeCount(totalEmployeeCount);
       setPresentCount(presentCount);
       setAbsentCount(absentCount);
     } catch (error) {
@@ -138,7 +141,7 @@ const AttenDash = () => {
                       Total Employees
                     </Typography>
                     <Typography variant="h5" component="div">
-                      {totalEmployees}
+                      {totalEmployeeCount}
                     </Typography>
                   </CardContent>
                 </Card>

@@ -23,11 +23,14 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Divider,
 } from "@mui/material";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import SmsIcon from "@mui/icons-material/Sms";
 import EditIcon from "@mui/icons-material/Edit";
+import PrintIcon from "@mui/icons-material/Print";
 import { styled } from "@mui/system";
+import html2pdf from "html2pdf.js"; // Importing html2pdf.js
 
 export default function Report() {
   const navigate = useNavigate();
@@ -55,6 +58,8 @@ export default function Report() {
   const [smsData, setSmsData] = useState({ mobile: "", content: "" });
   const [rowsPerPage, setRowsPerPage] = useState(50);
   const [page, setPage] = useState(0);
+  const [selectedInquiry, setSelectedInquiry] = useState(false);
+  const [openReceipt, setOpenReceipt] = useState(false);
   const getInstituteCode = () => localStorage.getItem("institutecode");
 
   // Load data on component mount
@@ -73,26 +78,27 @@ export default function Report() {
 
   const loadUsers = async (start = "", end = "") => {
     let url = `http://localhost:8086/get/getALLEnquiryByInstitutecode?institutecode=${getInstituteCode()}`;
-  
+
     // Update URL based on date, month and year filters
     if (start && end) {
       url = `http://localhost:8086/enquiryBetweenDates?startDate=${start}&endDate=${end}&institutecode=${getInstituteCode()}`;
     } else if (selectedYear && selectedMonth) {
       url = `http://localhost:8086/enquiryByMonthAndYear?month=${selectedMonth}&year=${selectedYear}&institutecode=${getInstituteCode()}`;
     }
-  
+
     try {
       const result = await axios.get(url);
       setInquiries(result.data);
     } catch (error) {
       // Handle the error
       console.error("Error fetching data:", error);
-  
+
       // Optionally, you can set an error state to display an error message to the user
-      setError("An error occurred while fetching data. Please try again later.");
+      setError(
+        "An error occurred while fetching data. Please try again later."
+      );
     }
   };
-  
 
   const loadExams = async () => {
     try {
@@ -173,6 +179,30 @@ export default function Report() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  const handleGenerate = (instituteData) => {
+    setSelectedInquiry(instituteData);
+    setOpenReceipt(true);
+  };
+  const [employeeDetails, setEmployeeDetails] = useState(null);
+  useEffect(() => {
+    const fetchEmployeeDetails = async () => {
+      try {
+        if (!getInstituteCode()) {
+          console.error("No institutecode found in localStorage");
+          return;
+        }
+
+        const response = await axios.get(
+          `http://localhost:8081/findInstitutesby/Institutecode?institutecode=${getInstituteCode()}`
+        );
+        setEmployeeDetails(response.data);
+      } catch (error) {
+        console.error("Error fetching employee details:", error);
+      }
+    };
+
+    fetchEmployeeDetails();
+  }, [getInstituteCode()]);
   const filterInquiries = () => {
     return inquiries.filter((inquiry) => {
       const matchesExam = selectedExam ? inquiry.exam === selectedExam : true;
@@ -206,19 +236,48 @@ export default function Report() {
     });
   };
 
+  const downloadReceipt = () => {
+    const receiptElement = document.getElementById("receipt");
+
+    // Ensure that images are fully loaded before creating the PDF
+    html2pdf()
+      .from(receiptElement)
+      .set({
+        margin: 0.2,
+        filename: "receipt.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: {
+          scale: 2,
+          logging: true, // Set this to true to get logs about image loading
+          useCORS: true, // Enables cross-origin loading for images
+        },
+        jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+      })
+      .save();
+  };
+
   const handleDownloadPDF = () => {
-    console.log('Download PDF clicked!');
+    console.log("Download PDF clicked!");
     const doc = new jsPDF("landscape");
     doc.text("Inquiries Report", 10, 10);
-  
+
     const tableColumn = [
-      "ID", "Date of Enquiry", "Name", "Phone", "Email", "Exam", "Source", "Conducted By", "Status", "Remark"
+      "ID",
+      "Date of Enquiry",
+      "Name",
+      "Phone",
+      "Email",
+      "Exam",
+      "Source",
+      "Conducted By",
+      "Status",
+      "Remark",
     ];
     const tableRows = [];
-  
+
     const inquiries = filterInquiries();
     console.log(inquiries); // Check if valid data is returned
-  
+
     inquiries.forEach((inquiry) => {
       const inquiryData = [
         inquiry.id,
@@ -234,7 +293,7 @@ export default function Report() {
       ];
       tableRows.push(inquiryData);
     });
-  
+
     doc.autoTable({
       head: [tableColumn],
       body: tableRows,
@@ -243,7 +302,7 @@ export default function Report() {
       headStyles: { fillColor: [22, 160, 133] },
       styles: { fontSize: 8 },
     });
-  
+
     doc.save("report.pdf");
   };
 
@@ -483,44 +542,43 @@ export default function Report() {
             </TextField>
           </Grid>
           <Grid item xs={6} md={1.8}>
-    <Button
-      variant="contained"
-      color="primary"
-      onClick={handleDownloadPDF}
-    >
-      Download PDF
-    </Button>
-  </Grid>
-  <Grid item xs={6} md={1.8}>
-    <Button
-      variant="contained"
-      color="primary"
-      onClick={handleDownloadCSV}
-    >
-      Download CSV
-    </Button>
-  </Grid>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleDownloadPDF}
+            >
+              Download PDF
+            </Button>
+          </Grid>
+          <Grid item xs={6} md={1.8}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleDownloadCSV}
+            >
+              Download CSV
+            </Button>
+          </Grid>
         </Grid>
 
         <Grid container spacing={2} justifyContent="flex-start" mt={1}>
-  <Grid item>
-    <Typography variant="h6" gutterBottom>
-      Total Inquiries: {inquiryCount}
-    </Typography>
-  </Grid>
- 
-</Grid>
+          <Grid item>
+            <Typography variant="h6" gutterBottom>
+              Total Inquiries: {inquiryCount}
+            </Typography>
+          </Grid>
+        </Grid>
 
         <Box mt={-5}>
-        <TablePagination
-        rowsPerPageOptions={[50, 100, 150]}
-        component="div"
-        count={filteredInquiries.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+          <TablePagination
+            rowsPerPageOptions={[50, 100, 150]}
+            component="div"
+            count={filteredInquiries.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
           <TableContainer>
             <Table>
               <TableHead sx={{ backgroundColor: "#f2f2f2", align: "center" }}>
@@ -642,6 +700,12 @@ export default function Report() {
                         >
                           <EditIcon />
                         </IconButton>
+                        <IconButton
+                          onClick={() => handleGenerate(inquiry)}
+                          color="inherit"
+                        >
+                          <PrintIcon />
+                        </IconButton>
                       </Box>
                     </TableCell>
                   </TableRow>
@@ -651,7 +715,7 @@ export default function Report() {
           </TableContainer>
         </Box>
 
-        
+        {/* sms dialog  */}
 
         <Dialog open={smsDialogOpen} onClose={handleCloseSmsDialog}>
           <DialogTitle>Send SMS</DialogTitle>
@@ -673,6 +737,201 @@ export default function Report() {
           <DialogActions>
             <Button onClick={handleCloseSmsDialog}>Cancel</Button>
             <Button onClick={handleSendSms}>Send</Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* print dialog  */}
+
+        <Dialog
+          open={openReceipt}
+          onClose={() => setOpenReceipt(false)}
+          maxWidth="md"
+          fullWidth
+        >
+          <DialogContent sx={{ p: 1 }}>
+            {selectedInquiry ? (
+              <Box id="receipt" sx={{ p: 3 }}>
+                {/* Heading */}
+
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    mb: 1,
+                  }}
+                >
+                  {/* Left side content (Institute Name, Address, Phone) */}
+                  <Box>
+                    <Typography variant="h6" align="left">
+                      <Typography
+                        variant="h6"
+                        align="left"
+                        sx={{ fontSize: "30px", color: "purple" }}
+                      >
+                        {employeeDetails.institutename || "Guest"}
+                      </Typography>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          mb: 0.5, // Reduced margin-bottom for less space between the two addresses
+                        }}
+                      >
+                        <Typography variant="body2">
+                        <strong>Address : </strong>
+                          {employeeDetails.address}
+                        </Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          mt: 0, // Reduced margin-top to bring the addresses closer
+                        }}
+                      >
+                        <Typography variant="body2">
+                          <strong>Mobile : </strong>
+                          {employeeDetails.phonenumber}
+                        </Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          mt: 0, // Reduced margin-top to bring the addresses closer
+                        }}
+                      >
+                        <Typography variant="body2">
+                          <strong>Email : </strong>
+                          {employeeDetails.emailaddress}
+                        </Typography>
+                      </Box>
+                    </Typography>
+                  </Box>
+
+                  {/* Right side content (Institute Image) */}
+                  {employeeDetails.instituteimage && (
+                    <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                      <img
+                        src={employeeDetails.instituteimage}
+                        alt="Institute Logo"
+                        style={{
+                          maxWidth: "100px",
+                          maxHeight: "100px",
+                          borderRadius: "50%",
+                        }} // Adjust size as needed
+                      />
+                    </Box>
+                  )}
+                </Box>
+
+                {/* Invoice Number and Date */}
+
+                <Typography
+                  variant="body2"
+                  align="center"
+                  sx={{
+                    borderTop: "8px solid purple", // Thick top border
+                    padding: "10px", // Padding for spacing
+                    justifyContent: "space-between", // Evenly space the items
+                    gap: "20px", // Gap between the data elements for spacing
+                    backgroundColor: "#f3e5f5", // Light purple background
+                  }}
+                >
+                  
+
+                  <Typography component="span">
+                    <Typography component="span" sx={{ fontWeight: "bold" }}>
+                      {selectedInquiry.name}, Enquiry Receipt
+                    </Typography>
+                  </Typography>
+
+                  
+                </Typography>
+
+                {/* Table with Data */}
+                <Table
+                  size="small"
+                  sx={{
+                    marginTop: "10px",
+                    textAlign: "center",
+                    justifyContent: "space-evenly",
+                  }}
+                >
+                  <TableBody
+                    sx={{
+                      borderTop: "3px solid purple", // Thick top border
+                      borderBottom: "3px solid purple",
+                    }}
+                  >
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>Name:</TableCell>
+                      <TableCell sx={{}}>{selectedInquiry.name}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>
+                        Phone No:
+                      </TableCell>
+                      <TableCell sx={{}}>{selectedInquiry.mobile}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>Email:</TableCell>
+                      <TableCell sx={{}}>{selectedInquiry.email}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>Date of Enquiry:</TableCell>
+                      <TableCell sx={{}}>{selectedInquiry.enquiryDate}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>
+                        Exam / Course:
+                      </TableCell>
+                      <TableCell sx={{}}>
+                        {selectedInquiry.exam || "-"}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>
+                        Source By:
+                      </TableCell>
+                      <TableCell sx={{}}>{selectedInquiry.source_by}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>
+                        Conduct By:
+                      </TableCell>
+                      <TableCell sx={{}}>
+                        {selectedInquiry.conduct_by || "-"}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>Status:</TableCell>
+                      <TableCell>
+                        {selectedInquiry.status1 === "Call Back"
+                          ? `${selectedInquiry.status1 || "N/A"}, Date: ${
+                            selectedInquiry.callBackDate || "N/A" } Time: ${selectedInquiry.callBackTime
+                            }`
+                          : selectedInquiry.status1 || "N/A"}
+                      </TableCell>
+                    </TableRow>
+
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>Remark:</TableCell>
+                      <TableCell sx={{}}>{selectedInquiry.remark}</TableCell>
+                    </TableRow>
+                   
+                  </TableBody>
+                </Table>
+
+              </Box>
+            ) : null}
+          </DialogContent>
+
+          <DialogActions>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => downloadReceipt(selectedInquiry)}
+            >
+              Download PDF
+            </Button>
+            <Button onClick={() => setOpenReceipt(false)}>Close</Button>
           </DialogActions>
         </Dialog>
       </Box>

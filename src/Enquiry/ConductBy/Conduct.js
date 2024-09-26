@@ -271,7 +271,7 @@ const Conduct = () => {
                       <TableCell>{index + 1}</TableCell>
                       <TableCell>{conduct.name}</TableCell>
                       <TableCell>
-                        <Button
+                        {/* <Button
                           variant="contained"
                           color="primary"
                           size="small"
@@ -279,7 +279,7 @@ const Conduct = () => {
                           onClick={() => handleOpenConductDialog(conduct)}
                         >
                           Update
-                        </Button>
+                        </Button> */}
                         <Button
                           color="error"
                           onClick={() => handleOpenDeleteDialog(conduct)}
