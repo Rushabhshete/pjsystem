@@ -33,17 +33,17 @@
  };
  
  // Fetch today's attendance records
- export const getTodaysAttendance = async () => {
-   try {
-     const response = await axios.get(`${API_URL}/today`, {
-       params: { institutecode: getInstituteCode() }
-     });
-     return response.data;
-   } catch (error) {
-     console.error('Error fetching today\'s attendance:', error);
-     throw error;
-   }
- };
+//  export const getTodaysAttendance = async () => {
+//    try {
+//      const response = await axios.get(`${API_URL}/today`, {
+//        params: { institutecode: getInstituteCode() }
+//      });
+//      return response.data;
+//    } catch (error) {
+//      console.error('Error fetching today\'s attendance:', error);
+//      throw error;
+//    }
+//  };
  
  // Fetch last 7 days attendance records by employee ID
  export const getLast7DaysAttendance = async (empID) => {
@@ -324,7 +324,7 @@
   }
 };
  
- 
+
  // Fetch attendance records by employee ID and date range
  export const getAttendanceByDateRange = async (empID, fromDate, toDate) => {
    try {

@@ -266,7 +266,7 @@ const ManageAttendance = () => {
                 <TableCell>{employee.fullName}</TableCell>
                 <TableCell>{employee.mobileNo}</TableCell>
                 <TableCell>{employee.email}</TableCell>
-                <TableCell>{employee.joiningDate}</TableCell>
+                <TableCell>{new Date(employee.joiningDate).toLocaleDateString("en-GB")}</TableCell>
                 <TableCell>
                   <Grid container spacing={1}>
                     <Grid item>

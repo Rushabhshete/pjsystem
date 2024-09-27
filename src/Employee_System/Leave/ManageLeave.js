@@ -90,7 +90,7 @@ const ManageLeave = () => {
         })
         .catch(error => console.error('Error deleting leave request:', error));
     }
-  };
+  };  
 
   const handleFilterChange = (value) => {
     setFilter(value);

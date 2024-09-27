@@ -228,7 +228,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
   getAllEmployees, 
-  getTodaysAttendance, 
+  // getTodaysAttendance, 
   getPresentEmployeeCount, 
   getAbsentEmployeeCount,
   getTotalEmployeeCount
@@ -301,8 +301,8 @@ const TodaysAttendance = () => {
       const allEmployees = await getAllEmployees();
       setEmployees(allEmployees);
 
-      const attendanceData = await getTodaysAttendance();
-      setTodaysAttendance(attendanceData);
+      // const attendanceData = await getTodaysAttendance();
+      // setTodaysAttendance(attendanceData);
     } catch (error) {
       console.error("Error fetching initial data:", error);
     }
