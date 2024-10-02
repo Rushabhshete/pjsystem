@@ -149,7 +149,7 @@ function Login({ onLogin }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { setUser } = useContext(UserContext);
+  //const { setUser } = useContext(UserContext);
 
   const loginUser = async (institutecode, email, password) => {
     return axios.post(
