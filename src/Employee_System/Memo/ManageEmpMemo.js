@@ -12,11 +12,11 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   TextField,
   Snackbar,
-  Typography,Grid,
+  Typography,
+  Grid,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -30,6 +30,7 @@ export default function ManageEmpMemo() {
   const [confirmDeleteId, setConfirmDeleteId] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const instituteCode = localStorage.getItem("institutecode");
@@ -54,8 +55,6 @@ export default function ManageEmpMemo() {
   };
 
   const handleUpdateMemo = () => {
-    // Add your API call logic here to update the memo
-    // Example API call:
     const updatedMemo = { ...selectedMemo };
     fetch(`http://localhost:8082/memos/updatememo/${selectedMemo.mid}`, {
       method: "PUT",
@@ -118,6 +117,12 @@ export default function ManageEmpMemo() {
     setSnackbarOpen(false);
   };
 
+  // Filtering logic
+  const filteredMemos = memos.filter((memo) =>
+    [memo.fullName, memo.email, memo.memoName]
+      .some((field) => field && field.toLowerCase().includes(searchQuery.toLowerCase()))
+  );
+
   return (
     <div>
       <Typography
@@ -135,48 +140,49 @@ export default function ManageEmpMemo() {
       >
         Memo List
       </Typography>
+
+      {/* Search Bar */}
+      <TextField
+        label="Search Memos"
+        variant="outlined"
+        fullWidth
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
+
       <Grid>
-      <Typography
-          variant="h6"
-          gutterBottom
-          sx={{ marginTop: 3, whiteSpace: "nowrap" }}
-        >
-                Total Memos: {memos.length}
-                </Typography>
+        <Typography variant="h6" gutterBottom sx={{ marginTop: 3, whiteSpace: "nowrap" }}>
+          Total Memos: {filteredMemos.length}
+        </Typography>
       </Grid>
+
       <TableContainer>
         <Table size="small" aria-label="exam table" sx={{ width: "100%" }}>
           <TableHead sx={{ backgroundColor: "#f2f2f2" }}>
             <TableRow>
               <TableCell sx={{ fontWeight: "bold" }}>Memo ID</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>Created At</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Institute Code</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>Memo Name</TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>Full Name</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>Description</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>Email</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>Action Required</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {memos.map((memo) => (
+            {filteredMemos.map((memo) => (
               <TableRow key={memo.mid}>
                 <TableCell>{memo.mid}</TableCell>
                 <TableCell>{memo.createdAt}</TableCell>
-                <TableCell>{memo.institutecode}</TableCell>
                 <TableCell>{memo.memoName}</TableCell>
+                <TableCell>{memo.fullName}</TableCell>
                 <TableCell>{memo.memoDescription}</TableCell>
                 <TableCell>{memo.email}</TableCell>
                 <TableCell>
-                  <IconButton
-                    onClick={() => handleOpenEditDialog(memo)}
-                    color="primary"
-                  >
+                  <IconButton onClick={() => handleOpenEditDialog(memo)} color="primary">
                     <EditIcon />
                   </IconButton>
-                  <IconButton
-                    onClick={() => handleOpenDeleteDialog(memo.mid)}
-                    color="error"
-                  >
+                  <IconButton onClick={() => handleOpenDeleteDialog(memo.mid)} color="error">
                     <DeleteIcon />
                   </IconButton>
                 </TableCell>
@@ -225,7 +231,7 @@ export default function ManageEmpMemo() {
           Confirm Deletion
         </DialogTitle>
         <DialogContent>
-          <Typography>Are you sure you want to delete this Exam?</Typography>
+          <Typography>Are you sure you want to delete this Memo?</Typography>
           <Typography color="red" fontWeight={200} variant="body2">
             *On clicking Confirm, this Memo cannot be recovered
           </Typography>

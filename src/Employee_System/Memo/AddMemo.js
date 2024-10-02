@@ -37,6 +37,7 @@ export default function AddMemo() {
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [searchQuery, setSearchQuery] = useState(""); // Add state for search query
 
   useEffect(() => {
     const institutecode = localStorage.getItem("institutecode");
@@ -71,20 +72,34 @@ export default function AddMemo() {
   }, []);
 
   useEffect(() => {
-    // Filter employees based on selected department and category
+    // Filter employees based on selected department, category, and search query
     let filtered = employees;
+
     if (selectedDepartment) {
       filtered = filtered.filter(
         (employee) => employee.department === selectedDepartment
       );
     }
+
     if (selectedCategory) {
       filtered = filtered.filter(
         (employee) => employee.employeecategory === selectedCategory
       );
     }
+
+    if (searchQuery) {
+      filtered = filtered.filter(
+        (employee) =>
+          employee.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          employee.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          employee.workLocation
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase())
+      );
+    }
+
     setFilteredEmployees(filtered);
-  }, [selectedDepartment, selectedCategory, employees]);
+  }, [selectedDepartment, selectedCategory, searchQuery, employees]);
 
   const handleAddMemoClick = (employee) => {
     setSelectedEmployee(employee);
@@ -156,11 +171,7 @@ export default function AddMemo() {
 
       <Grid container spacing={2} alignItems="center" mb={2}>
         <Grid item xs={6} sm={4}>
-          {" "}
-          {/* Adjust for responsiveness */}
           <FormControl fullWidth size="small">
-            {" "}
-            {/* Smaller size for dropdown */}
             <InputLabel>Department</InputLabel>
             <Select
               value={selectedDepartment}
@@ -177,12 +188,9 @@ export default function AddMemo() {
             </Select>
           </FormControl>
         </Grid>
+
         <Grid item xs={6} sm={4}>
-          {" "}
-          {/* Adjust for responsiveness */}
           <FormControl fullWidth size="small">
-            {" "}
-            {/* Smaller size for dropdown */}
             <InputLabel>Category</InputLabel>
             <Select
               value={selectedCategory}
@@ -199,9 +207,19 @@ export default function AddMemo() {
             </Select>
           </FormControl>
         </Grid>
+
+        <Grid item xs={6} sm={4}>
+          <TextField
+            label="Search"
+            variant="outlined"
+            size="small"
+            fullWidth
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)} // Update search query
+          />
+        </Grid>
+
         <Grid item xs={12} sm={4}>
-          {" "}
-          {/* For total entries */}
           <Typography variant="h6">{`Total Employees: ${filteredEmployees.length}`}</Typography>
         </Grid>
       </Grid>
@@ -275,14 +293,15 @@ export default function AddMemo() {
             variant="outlined"
             value={memoDate}
             onChange={(e) => setMemoDate(e.target.value)}
+            InputLabelProps={{ shrink: true }}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={resetForm} color="primary">
+          <Button onClick={resetForm} color="secondary">
             Cancel
           </Button>
           <Button onClick={handleSubmitMemo} color="primary">
-            Submit Memo
+            Add Memo
           </Button>
         </DialogActions>
       </Dialog>

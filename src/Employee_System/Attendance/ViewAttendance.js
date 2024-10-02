@@ -311,6 +311,7 @@ const ViewAttendance = () => {
                 <TableCell sx={{ fontWeight: 'bold' }}>Login Time</TableCell>
                 <TableCell sx={{ fontWeight: 'bold' }}>Break In</TableCell>
                 <TableCell sx={{ fontWeight: 'bold' }}>Break Out</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}>Break Minutes</TableCell>
                 <TableCell sx={{ fontWeight: 'bold' }}>Logout Time</TableCell>
                 <TableCell sx={{ fontWeight: 'bold' }}>Minutes</TableCell>
                 <TableCell sx={{ fontWeight: 'bold' }}>Login IP</TableCell>
@@ -326,11 +327,12 @@ const ViewAttendance = () => {
                   <TableCell>{record.loginTime}</TableCell>
                   <TableCell>{record.breakIn}</TableCell>
                   <TableCell>{record.breakOut}</TableCell>
+                  <TableCell>{record.breakMinutes}</TableCell>
                   <TableCell>{record.logoutTime}</TableCell>
                   <TableCell>{record.minutes}</TableCell>
                   <TableCell>{record.ip}</TableCell>
                   <TableCell>{record.logoutIP}</TableCell>
-                  <TableCell>{record.status}</TableCell>
+                  <TableCell sx={{color: record.status === 'Late' ? 'red' : record.status === 'On time' ? 'green' : 'black', fontWeight: 'bold' }}>{record.status}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

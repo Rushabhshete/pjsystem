@@ -265,17 +265,17 @@ const TodaysAttendance = () => {
   const [totalEmployeeCount, setTotalEmployeeCount] = useState(0);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
-  const [timeFilter, setTimeFilter] = useState('All'); // New state for filter options
+  const [timeFilter, setTimeFilter] = useState('Today'); // New state for filter options
   const [filteredAttendance, setFilteredAttendance] = useState([]);
   const [startDate, setStartDate] = useState(''); // State for start date
   const [endDate, setEndDate] = useState('');     // State for end date
   
   // Options for the dropdown, initialized with all possible statuses
-  const filterOptions = ['All', 'Today','Yesterday', 'Custom Date'];
+  const filterOptions = ['Today','Yesterday', 'Custom Date'];
 
 
   useEffect(() => {
-    fetchInitialData();
+    // fetchInitialData();
     fetchEmployeeCounts();
   }, []);
 
@@ -296,17 +296,17 @@ const TodaysAttendance = () => {
     }
   }, [startDate, endDate]);
 
-  const fetchInitialData = async () => {
-    try {
-      const allEmployees = await getAllEmployees();
-      setEmployees(allEmployees);
+  // const fetchInitialData = async () => {
+  //   try {
+  //     const allEmployees = await getAllEmployees();
+  //     setEmployees(allEmployees);
 
-      // const attendanceData = await getTodaysAttendance();
-      // setTodaysAttendance(attendanceData);
-    } catch (error) {
-      console.error("Error fetching initial data:", error);
-    }
-  };
+  //     // const attendanceData = await getTodaysAttendance();
+  //     // setTodaysAttendance(attendanceData);
+  //   } catch (error) {
+  //     console.error("Error fetching initial data:", error);
+  //   }
+  // };
 
     // Fetch data based on the filter (All or Today)
     const handleFilterChange = async (filter) => {
@@ -314,11 +314,12 @@ const TodaysAttendance = () => {
         let response;
         const instituteCode = localStorage.getItem('institutecode');
   
-        if (filter === 'All') {
-          response = await axios.get(
-            `http://localhost:8082/joinedEmployeesList?institutecode=${instituteCode}`
-          );
-        } else if (filter === 'Today') {
+        // if (filter === 'All') {
+        //   response = await axios.get(
+        //     `http://localhost:8082/joinedEmployeesList?institutecode=${instituteCode}`
+        //   );
+        // } else 
+        if (filter === 'Today') {
           response = await axios.get(
             `http://localhost:8082/today?institutecode=${instituteCode}`
           );
@@ -357,7 +358,7 @@ const TodaysAttendance = () => {
   const mergeAttendanceData = () => {
     const mergedData = employees.map(employee => {
       const attendance = todaysAttendance.find(att => att.empID === employee.empID);
-      return attendance ? { ...employee, ...attendance } : { ...employee, status: 'Absent' };
+      return attendance ? { ...employee, ...attendance } : { ...employee, status:employee.status || 'Absent' };
     });
     return mergedData;
   };
@@ -372,9 +373,11 @@ const TodaysAttendance = () => {
       );
     }
 
-    // Filter by status
-    if (statusFilter !== 'All') {
-      mergedData = mergedData.filter(employee => employee.status === statusFilter);
+     // Filter by status
+     if (statusFilter === 'Present') {
+      mergedData = mergedData.filter(employee => employee.status === 'On time' || employee.status === 'Late');
+    } else if (statusFilter === 'Absent') {
+      mergedData = mergedData.filter(employee => employee.status === 'Absent');
     }
 
     // Update filtered attendance
@@ -516,6 +519,7 @@ const TodaysAttendance = () => {
               <TableCell sx={{ fontWeight: 'bold' }}>Login</TableCell>
               <TableCell sx={{ fontWeight: 'bold' }}>Break In</TableCell>
               <TableCell sx={{ fontWeight: 'bold' }}>Break Out</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }}>Break Minutes</TableCell>
               <TableCell sx={{ fontWeight: 'bold' }}>Logout</TableCell>
               <TableCell sx={{ fontWeight: 'bold' }}>Total Minutes</TableCell>
               <TableCell sx={{ fontWeight: 'bold' }}>Status</TableCell>
@@ -532,9 +536,10 @@ const TodaysAttendance = () => {
                   <TableCell>{employee.loginTime || 'N/A'}</TableCell>
                   <TableCell>{employee.breakIn || 'N/A'}</TableCell>
                   <TableCell>{employee.breakOut || 'N/A'}</TableCell>
+                  <TableCell>{employee.breakMinutes || 'N/A'}</TableCell>
                   <TableCell>{employee.logoutTime || 'N/A'}</TableCell>
                   <TableCell>{employee.minutes || 'N/A'}</TableCell>
-                  <TableCell>{employee.status}</TableCell>
+                  <TableCell sx={{color: employee.status === 'Late' ? 'red' : employee.status === 'On time' ? 'green' : 'black', fontWeight: 'bold' }}>{employee.status}</TableCell>
                 </TableRow>
               ))
             ) : (

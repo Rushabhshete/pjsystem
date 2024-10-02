@@ -531,7 +531,7 @@ const {
                   }}
                 >
                   <Typography variant="h6">Today's Revenue</Typography>
-                  <Typography variant="h4">{data.todayRevenue}</Typography>
+                  <Typography variant="h5">{data.todayRevenue}</Typography>
                 </Box>
               </Grid>
 
@@ -557,7 +557,7 @@ const {
                   }}
                 >
                   <Typography variant="h6">Total Revenue</Typography>
-                  <Typography variant="h4">{data.totalRevenue}</Typography>
+                  <Typography variant="h5">{data.totalRevenue}</Typography>
                 </Box>
               </Grid>
             </Grid>

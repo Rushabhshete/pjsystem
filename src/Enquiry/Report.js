@@ -29,6 +29,7 @@ import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import SmsIcon from "@mui/icons-material/Sms";
 import EditIcon from "@mui/icons-material/Edit";
 import PrintIcon from "@mui/icons-material/Print";
+import InfoIcon from "@mui/icons-material/Info"; // Importing InfoIcon
 import { styled } from "@mui/system";
 import html2pdf from "html2pdf.js"; // Importing html2pdf.js
 
@@ -61,6 +62,10 @@ export default function Report() {
   const [selectedInquiry, setSelectedInquiry] = useState(false);
   const [openReceipt, setOpenReceipt] = useState(false);
   const getInstituteCode = () => localStorage.getItem("institutecode");
+
+    // Additional state for viewing inquiry details
+    const [viewInquiryOpen, setViewInquiryOpen] = useState(false);
+    const [inquiryDetail, setInquiryDetail] = useState(null);
 
   // Load data on component mount
   useEffect(() => {
@@ -159,6 +164,16 @@ export default function Report() {
 
   const handleEndDateChange = (e) => {
     setEndDate(e.target.value);
+  };
+
+  const handleViewInquiry = (inquiry) => {
+    setInquiryDetail(inquiry);
+    setViewInquiryOpen(true);
+  };
+
+  const closeViewInquiry = () => {
+    setViewInquiryOpen(false);
+    setInquiryDetail(null);
   };
 
   // Month and year change handlers
@@ -706,6 +721,10 @@ export default function Report() {
                         >
                           <PrintIcon />
                         </IconButton>
+                        {/* Info Icon for Viewing Inquiry Details */}
+                        <IconButton size="small" color="info" onClick={() => handleViewInquiry(inquiry)}>
+                          <InfoIcon />
+                        </IconButton>
                       </Box>
                     </TableCell>
                   </TableRow>
@@ -934,6 +953,128 @@ export default function Report() {
             <Button onClick={() => setOpenReceipt(false)}>Close</Button>
           </DialogActions>
         </Dialog>
+
+        <Dialog 
+  open={viewInquiryOpen} 
+  onClose={closeViewInquiry} 
+  PaperProps={{ sx: { width: '600px', height: 'auto' } }} // Custom dialog size
+>
+  <DialogTitle>Inquiry Details</DialogTitle>
+  <DialogContent>
+    {inquiryDetail && (
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+        {/* Using `gap` for spacing between fields */}
+        {inquiryDetail.photo ? (
+  <Box sx={{ mt: 3, textAlign: 'center' }}>
+    <strong>Photo:</strong>
+    <img 
+      src={inquiryDetail.photo} 
+      alt="Inquiry" 
+      style={{ maxWidth: '100%', marginTop: '10px', borderRadius: '4px' }} 
+    />
+  </Box>
+) : (
+  <Box sx={{ mt: 3, textAlign: 'center' }}>
+    <strong>Photo:</strong>
+    <Typography variant="body2" sx={{ mt: 2 }}>No photo available.</Typography>
+  </Box>
+)}
+        <Grid container spacing={2}>
+          
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Name:</strong> {inquiryDetail.name}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Mobile:</strong> {inquiryDetail.mobile}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Email:</strong> {inquiryDetail.email}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Exam:</strong> {inquiryDetail.exam}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Source:</strong> {inquiryDetail.source_by}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Conducted By:</strong> {inquiryDetail.conduct_by}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Status:</strong> {inquiryDetail.status1}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>DOB:</strong> {inquiryDetail.dob}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Gender:</strong> {inquiryDetail.gender}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Mother Tongue:</strong> {inquiryDetail.motherTongue}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Address:</strong> {inquiryDetail.address}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Landmark:</strong> {inquiryDetail.landmark}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>State:</strong> {inquiryDetail.state}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>District:</strong> {inquiryDetail.district}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Father's Profession:</strong> {inquiryDetail.fatherProfession}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Education Qualification:</strong> {inquiryDetail.educationQualification}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Annual Income:</strong> {inquiryDetail.annualIncome}
+            </Typography>
+          </Grid>
+        </Grid>
+      </Box>
+    )}
+  </DialogContent>
+  <DialogActions>
+    <Button onClick={closeViewInquiry}>Close</Button>
+  </DialogActions>
+</Dialog>
+
       </Box>
     </div>
   );

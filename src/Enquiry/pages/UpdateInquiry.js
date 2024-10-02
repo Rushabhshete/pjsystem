@@ -27,6 +27,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { toast, ToastContainer } from "react-toastify";
+import { stateOptions } from "./EnquiryDropdown";
 
 const PopTypography = styled(Typography)`
   @keyframes pop {
@@ -81,10 +82,23 @@ export default function UpdateEnquiry() {
     enquiryDate,
     callBackDate,
     callBackTime,
+    dob,
+    gender,
+    motherTongue,
+    address,
+    landmark,
+    state,
+    district,
+    fatherProfession,
+    educationQualification,
+    annualIncome,
+    photo,
   } = Enquiry;
   const [openSnackbar, setOpenSnackbar] = useState(false); // Snackbar state
   const [snackbarMessage, setSnackbarMessage] = useState(""); // Snackbar message
   const [employeeDetails, setEmployeeDetails] = useState(null);
+  const [selectedState, setSelectedState] = useState('');
+  const [districts, setDistricts] = useState([]);
   const onInputChange = (e) => {
     setEnquiry({ ...Enquiry, [e.target.name]: e.target.value });
   };
@@ -98,6 +112,17 @@ export default function UpdateEnquiry() {
     } catch (error) {
       console.error("Error fetching exam options:", error);
     }
+  };
+
+  const handleStateChange = (e) => {
+    const selectedState = e.target.value;
+    setSelectedState(selectedState);
+    setDistricts(stateOptions[selectedState]);
+    setEnquiry({ ...Enquiry, state: selectedState, district: '' });
+  };
+
+  const handleFileChange = (e) => {
+    setEnquiry({ ...Enquiry, photo: e.target.files[0] });
   };
 
   const loadSources = async () => {
@@ -484,6 +509,171 @@ export default function UpdateEnquiry() {
                 }}
               />
             </Grid>
+            <Grid item xs={12} sm={4}>
+            <TextField
+              type="date"
+              name="dob"
+              value={Enquiry.dob}
+              onChange={onInputChange}
+              fullWidth
+              label="DOB"
+              InputLabelProps={{ shrink: true }}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={4}>
+            <FormControl fullWidth>
+              <TextField
+                name="gender"
+                select
+                value={Enquiry.gender}
+                onChange={onInputChange}
+                label="Gender"
+              >
+                <MenuItem value="">
+                  Select
+                </MenuItem>
+                <MenuItem value="Male">Male</MenuItem>
+                <MenuItem value="Female">Female</MenuItem>
+                <MenuItem value="Other">Other</MenuItem>
+              </TextField>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={12} sm={4}>
+            <TextField
+              label="Mother Tongue"
+              name="motherTongue"
+              value={Enquiry.motherTongue}
+              onChange={onInputChange}
+              fullWidth
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={4}>
+            <TextField
+              label="Address"
+              name="address"
+              value={Enquiry.address}
+              onChange={onInputChange}
+              fullWidth
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={4}>
+            <TextField
+              label="Landmark"
+              name="landmark"
+              value={Enquiry.landmark}
+              onChange={onInputChange}
+              fullWidth
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={4}>
+            <FormControl fullWidth>
+              <TextField
+                name="state"
+                select
+                value={selectedState}
+                onChange={handleStateChange}
+                label="State"
+              >
+                <MenuItem value="All">
+                  Select State
+                </MenuItem>
+                {Object.keys(stateOptions).map((state) => (
+                  <MenuItem key={state} value={state}>
+                    {state}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={12} sm={4}>
+            <FormControl fullWidth>
+              <TextField
+                name="district"
+                value={Enquiry.district}
+                onChange={onInputChange}
+                label="District"
+                disabled={!districts.length}
+                select
+              >
+                <MenuItem value="All">
+                  Select District
+                </MenuItem>
+                {districts.map((district) => (
+                  <MenuItem key={district} value={district}>
+                    {district}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={12} sm={4}>
+            <TextField
+              label="Father's Profession"
+              name="fatherProfession"
+              value={Enquiry.fatherProfession}
+              onChange={onInputChange}
+              fullWidth
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={4}>
+            <FormControl fullWidth>
+              <TextField
+                name="educationQualification"
+                value={Enquiry.educationQualification}
+                onChange={onInputChange}
+                label="Education Qualification"
+                select
+              >
+                <MenuItem value="">
+                  Select
+                </MenuItem>
+                <MenuItem value="10th">10th</MenuItem>
+                <MenuItem value="12th">12th</MenuItem>
+                <MenuItem value="Graduate">Graduate</MenuItem>
+                <MenuItem value="Post-Graduate">Post-Graduate</MenuItem>
+              </TextField>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={12} sm={4}>
+            <FormControl fullWidth>
+              <TextField
+                name="annualIncome"
+                value={Enquiry.annualIncome}
+                onChange={onInputChange}
+                label="Annual Income"
+                select
+              >
+                <MenuItem value="">
+                  <em>Select Income</em>
+                </MenuItem>
+                <MenuItem value="0-1L">0 - 1 Lakh</MenuItem>
+                <MenuItem value="1-5L">1 - 5 Lakhs</MenuItem>
+                <MenuItem value="5-10L">5 - 10 Lakhs</MenuItem>
+                <MenuItem value="10L+">10 Lakh+</MenuItem>
+              </TextField>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={12} sm={4}>
+  <TextField
+    type="file"
+    name="photo"
+    accept="image/*"
+    fullWidth
+    onChange={handleFileChange}
+    label="Upload Photo"
+    InputLabelProps={{ shrink: true }}  // This ensures the label stays above the field when a file is chosen
+  />
+</Grid>
           </Grid>
           <Box
             display="flex"
@@ -540,35 +730,6 @@ export default function UpdateEnquiry() {
           <DialogContentText sx={{ mb: 2 }}>
             <strong>Are you sure you want to delete this enquiry?</strong>
           </DialogContentText>
-          <Box sx={{ padding: 2, backgroundColor: "#fafafa", borderRadius: 1 }}>
-            <Typography variant="subtitle1">
-              <strong>Name:</strong> {name}
-            </Typography>
-            <Typography variant="subtitle1">
-              <strong>Phone No.:</strong> {mobile}
-            </Typography>
-            <Typography variant="subtitle1">
-              <strong>Email:</strong> {email}
-            </Typography>
-            <Typography variant="subtitle1">
-              <strong>Exam:</strong> {exam}
-            </Typography>
-            <Typography variant="subtitle1">
-              <strong>Source:</strong> {source_by}
-            </Typography>
-            <Typography variant="subtitle1">
-              <strong>Conducted By:</strong> {conduct_by}
-            </Typography>
-            <Typography variant="subtitle1">
-              <strong>Status:</strong> {status1}
-            </Typography>
-            <Typography variant="subtitle1">
-              <strong>Remark:</strong> {remark}
-            </Typography>
-            <Typography variant="subtitle1">
-              <strong>Enquiry Date:</strong> {enquiryDate}
-            </Typography>
-          </Box>
         </DialogContent>
         <DialogActions sx={{ padding: "16px 24px" }}>
           <Button onClick={handleDeleteDialogClose} color="primary">

@@ -1023,7 +1023,7 @@ const Category = () => {
             gutterBottom
             sx={{ marginRight: 10, whiteSpace: "nowrap", marginLeft: 5 }}
           >
-            Total GST Amount(+GST) : ₹ {formatValue(totalGST)}
+            Total GST Amount : ₹ {formatValue(totalGST)}
           </Typography>
           <Typography
             variant="h6"

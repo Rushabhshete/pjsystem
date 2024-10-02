@@ -331,8 +331,8 @@ const IncomeExpenseDashboard = () => {
       const fetchPendingData = async () => {
         try {
           const [pendingIncomeResponse, pendingExpenseResponse] = await Promise.all([
-            fetch(`http://localhost:8087/dashboard/income/pending?institutecode=Rush@gmail.com`),
-            fetch(`http://localhost:8087/dashboard/expense/pending?institutecode=Rush@gmail.com`),
+            fetch(`http://localhost:8087/dashboard/income/pending?institutecode=${getInstituteCode()}`),
+            fetch(`http://localhost:8087/dashboard/expense/pending?institutecode=${getInstituteCode()}`),
           ]);
   
           const [incomeData, expenseData] = await Promise.all([
@@ -472,7 +472,7 @@ const IncomeExpenseDashboard = () => {
             }}
           >
             <Typography variant="h7">Today's Income</Typography>
-            <Typography variant="h4">
+            <Typography variant="h5">
               ₹{formattedCountUp(incomeData.today || 0)}
             </Typography>
           </Paper>
@@ -489,7 +489,7 @@ const IncomeExpenseDashboard = () => {
             }}
           >
             <Typography variant="h7">7 Day's Income</Typography>
-            <Typography variant="h4">
+            <Typography variant="h5">
               ₹{formattedCountUp(incomeData.last7Days || 0)}
             </Typography>
           </Paper>
@@ -506,7 +506,7 @@ const IncomeExpenseDashboard = () => {
             }}
           >
             <Typography variant="h7">30 Day's Income</Typography>
-            <Typography variant="h4">
+            <Typography variant="h5">
               ₹{formattedCountUp(incomeData.last30Days || 0)}
             </Typography>
           </Paper>
@@ -523,7 +523,7 @@ const IncomeExpenseDashboard = () => {
             }}
           >
             <Typography variant="h7">365 Day's Income</Typography>
-            <Typography variant="h4">
+            <Typography variant="h5">
               ₹{formattedCountUp(incomeData.last365Days || 0)}
             </Typography>
           </Paper>
@@ -540,7 +540,7 @@ const IncomeExpenseDashboard = () => {
             }}
           >
             <Typography variant="h7">Total Income</Typography>
-            <Typography variant="h4">
+            <Typography variant="h5">
               ₹{formattedCountUp(incomeData.total || 0)}
             </Typography>
           </Paper>
@@ -557,7 +557,7 @@ const IncomeExpenseDashboard = () => {
             }}
           >
             <Typography variant="h7">Today's Expense</Typography>
-            <Typography variant="h4">
+            <Typography variant="h5">
               ₹{formattedCountUp(expenseData.today || 0)}
             </Typography>
           </Paper>
@@ -574,7 +574,7 @@ const IncomeExpenseDashboard = () => {
             }}
           >
             <Typography variant="h7">7 Day's Expense</Typography>
-            <Typography variant="h4">
+            <Typography variant="h5">
               ₹{formattedCountUp(expenseData.last7Days || 0)}
             </Typography>
           </Paper>
@@ -591,7 +591,7 @@ const IncomeExpenseDashboard = () => {
             }}
           >
             <Typography variant="h7">30 Day's Expense</Typography>
-            <Typography variant="h4">
+            <Typography variant="h5">
               ₹{formattedCountUp(expenseData.last30Days || 0)}
             </Typography>
           </Paper>
@@ -608,7 +608,7 @@ const IncomeExpenseDashboard = () => {
             }}
           >
             <Typography variant="h7">365 Day's Expense</Typography>
-            <Typography variant="h4">
+            <Typography variant="h5">
               ₹{formattedCountUp(expenseData.last365Days || 0)}
             </Typography>
           </Paper>
@@ -625,7 +625,7 @@ const IncomeExpenseDashboard = () => {
             }}
           >
             <Typography variant="h7">Total Expense</Typography>
-            <Typography variant="h4">
+            <Typography variant="h5">
               ₹{formattedCountUp(expenseData.total || 0)}
             </Typography>
           </Paper>
@@ -643,7 +643,7 @@ const IncomeExpenseDashboard = () => {
           >
             <Typography variant="h7">Today's {todaytext}</Typography>
             <Typography
-              variant="h4"
+              variant="h5"
               className={incomeData.today - expenseData.today >= 0}
             >
               ₹{formattedCountUp(incomeData.today - expenseData.today)}
@@ -663,7 +663,7 @@ const IncomeExpenseDashboard = () => {
           >
             <Typography variant="h7">7 Day's {_7Daystext}</Typography>
             <Typography
-              variant="h4"
+              variant="h5"
               className={incomeData.last7Days - expenseData.last7Days >= 0}
             >
               ₹{formattedCountUp(incomeData.last7Days - expenseData.last7Days)}
@@ -683,7 +683,7 @@ const IncomeExpenseDashboard = () => {
           >
             <Typography variant="h7">30 Day's {_30Daystext}</Typography>
             <Typography
-              variant="h4"
+              variant="h5"
               className={incomeData.last30Days - expenseData.last30Days >= 0}
             >
               ₹
@@ -704,7 +704,7 @@ const IncomeExpenseDashboard = () => {
           >
             <Typography variant="h7">365 Day's {_365Daystext}</Typography>
             <Typography
-              variant="h4"
+              variant="h5"
               className={incomeData.last365Days - expenseData.last365Days >= 0}
             >
               ₹
@@ -727,7 +727,7 @@ const IncomeExpenseDashboard = () => {
           >
             <Typography variant="h7">Total {savingsText}</Typography>
             <Typography
-              variant="h4"
+              variant="h5"
               className={
                 savingsData >= 0 //? "savings-positive" : "savings-negative"
               }
@@ -749,78 +749,71 @@ const IncomeExpenseDashboard = () => {
       </Grid>
 
       {showPending && (
-        <Grid container spacing={2} style={{ marginTop: "10px" }}>
-          {/* Today's Pending Income */}
-          <InfoCard
-            sx={{}}
-            title="Today's Pending INC"
-            value={formattedCountUp(pendingIncomeStats.today || 0)}
-            color="#F9E79F"
-          />
-          {/* Last 7 Days Pending Income */}
-          <InfoCard
-            title="7 Days Pending INC"
-            value={formattedCountUp(pendingIncomeStats.last7Days || 0)}
-            color="#FF6F61"
-          />
-          {/* Last 30 Days Pending Income */}
-          <InfoCard
-            title="30 Days Pending INC"
-            value={formattedCountUp(pendingIncomeStats.last30Days || 0)}
-            color="#3498DB"
-          />
-          {/* Last 365 Days Pending Income */}
-          <InfoCard
-            title={
-              <span style={{ fontSize: "15px" }}>365 Days Pending INC</span>
-            }
-            value={formattedCountUp(pendingIncomeStats.last365Days || 0)}
-            color="#9ACD32"
-          />
-          {/* Total Pending Income */}
-          <InfoCard
-            title="Total Pending INC"
-            value={formattedCountUp(pendingIncomeStats.total || 0)}
-            color="#F4C431"
-          />
+  <Grid container spacing={2} style={{ marginTop: "10px" }}>
+    {/* Today's Pending Income */}
+    <InfoCard
+      sx={{}}
+      title="Today's Pending INC"
+      value={<span style={{ fontSize: "27px" }}>{formattedCountUp(pendingIncomeStats.today || 0)}</span>}
+      color="#F9E79F"
+    />
+    {/* Last 7 Days Pending Income */}
+    <InfoCard
+      title="7 Days Pending INC"
+      value={<span style={{ fontSize: "27px" }}>{formattedCountUp(pendingIncomeStats.last7Days || 0)}</span>}
+      color="#FF6F61"
+    />
+    {/* Last 30 Days Pending Income */}
+    <InfoCard
+      title="30 Days Pending INC"
+      value={<span style={{ fontSize: "27px" }}>{formattedCountUp(pendingIncomeStats.last30Days || 0)}</span>}
+      color="#3498DB"
+    />
+    {/* Last 365 Days Pending Income */}
+    <InfoCard
+      title={<span style={{ fontSize: "15px" }}>365 Days Pending INC</span>}
+      value={<span style={{ fontSize: "27px" }}>{formattedCountUp(pendingIncomeStats.last365Days || 0)}</span>}
+      color="#9ACD32"
+    />
+    {/* Total Pending Income */}
+    <InfoCard
+      title="Total Pending INC"
+      value={<span style={{ fontSize: "27px" }}>{formattedCountUp(pendingIncomeStats.total || 0)}</span>}
+      color="#F4C431"
+    />
 
-          {/* Today's Pending Expense */}
-          <InfoCard
-            title="Today's Pending EXP"
-            value={formattedCountUp(pendingExpenseStats.today || 0)}
-            color="#F9E79F"
-          />
-          {/* Last 7 Days Pending Expense */}
-          <InfoCard
-            title="7 Days Pending EXP"
-            value={formattedCountUp(pendingExpenseStats.last7Days || 0)}
-            color="#FF6F61"
-          />
-          {/* Last 30 Days Pending Expense */}
-          <InfoCard
-            title="30 Days Pending EXP"
-            value={formattedCountUp(pendingExpenseStats.last30Days || 0)}
-            color="#3498DB"
-          />
-          {/* Last 365 Days Pending Expense */}
-          <InfoCard
-            title={
-              <span style={{ fontSize: "15px" }}>365 Days Pending EXP</span>
-            }
-            value={formattedCountUp(
-              pendingExpenseStats.last365Days || 0
-            )}
-            color="#9ACD32"
-          />
-
-          {/* Total Pending Expense */}
-          <InfoCard
-            title="Total Pending EXP"
-            value={formattedCountUp(pendingExpenseStats.total || 0)}
-            color="#F4C431"
-          />
-        </Grid>
-      )}
+    {/* Today's Pending Expense */}
+    <InfoCard
+      title="Today's Pending EXP"
+      value={<span style={{ fontSize: "27px" }}>{formattedCountUp(pendingExpenseStats.today || 0)}</span>}
+      color="#F9E79F"
+    />
+    {/* Last 7 Days Pending Expense */}
+    <InfoCard
+      title="7 Days Pending EXP"
+      value={<span style={{ fontSize: "27px" }}>{formattedCountUp(pendingExpenseStats.last7Days || 0)}</span>}
+      color="#FF6F61"
+    />
+    {/* Last 30 Days Pending Expense */}
+    <InfoCard
+      title="30 Days Pending EXP"
+      value={<span style={{ fontSize: "27px" }}>{formattedCountUp(pendingExpenseStats.last30Days || 0)}</span>}
+      color="#3498DB"
+    />
+    {/* Last 365 Days Pending Expense */}
+    <InfoCard
+      title={<span style={{ fontSize: "15px" }}>365 Days Pending EXP</span>}
+      value={<span style={{ fontSize: "27px" }}>{formattedCountUp(pendingExpenseStats.last365Days || 0)}</span>}
+      color="#9ACD32"
+    />
+    {/* Total Pending Expense */}
+    <InfoCard
+      title="Total Pending EXP"
+      value={<span style={{ fontSize: "27px" }}>{formattedCountUp(pendingExpenseStats.total || 0)}</span>}
+      color="#F4C431"
+    />
+  </Grid>
+)}
 
       {/* pending inc exp */}
       <Grid container spacing={3}>
