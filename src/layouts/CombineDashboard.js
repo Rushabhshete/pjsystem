@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useContext} from "react";
 import {
   Typography,
   Grid,
@@ -29,6 +29,7 @@ import EmpDash from "../layouts/EmpDash";
 
 export default function CombineDashboard() {
   //admission
+  //const { user } = useContext(UserContext); 
   const [data, setData] = useState({
     todayCount: 0,
     totalCount: 0,

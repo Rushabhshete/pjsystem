@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import {
   Container,
   Grid,
@@ -149,6 +149,7 @@ function Login({ onLogin }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  //const { setUser } = useContext(UserContext);
 
   const loginUser = async (institutecode, email, password) => {
     return axios.post(
@@ -164,8 +165,9 @@ function Login({ onLogin }) {
 
       if (response.status === 200) {
         console.log("Login successful!", response.data);
-        localStorage.setItem("institutecode", institutecode);
-        localStorage.setItem("email", email);
+       // setUser({ isAuthenticated: true, institutecode, email });
+         localStorage.setItem("institutecode", institutecode);
+         localStorage.setItem("email", email);
         onLogin();
         navigate("/layout/combineDash");
       } else if (response.status === 401) {
@@ -469,17 +471,17 @@ function Login({ onLogin }) {
                     variant="outlined"
                     fullWidth
                   />
-                </FormGroup>
+                </FormGroup>                                              
                 <FormGroup>
                   <FormControl
                     label="Email address"
-                    type="email"
+                    type="email"                                  
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter email"
                     variant="outlined"
                     fullWidth
-                  />
+                  />                                 
                 </FormGroup>
                 <FormGroup>
                   <FormControl

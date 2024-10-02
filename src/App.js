@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext  } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -8,6 +8,9 @@ import {
 } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { CssBaseline } from "@mui/material";
+
+// Import the UserContext
+import { UserProvider, UserContext } from "./layouts/UserContext";
 
 // Import components
 import ForgotPassword from "./layouts/ForgotPassword";
@@ -72,7 +75,7 @@ import Bill from "./layouts/bill";
 import EmpDash from "./layouts/EmpDash";
 import StudentDashboard from "./Student/StudentDashboard";
 import StudentForm from "./Student/StudentForm";
-import StudentLists from "./Student/StudentLists"
+import StudentLists from "./Student/StudentLists";
 import StudentReport from "./Student/StudentReport";
 import StudentRequest from "./Student/StudentRequest";
 import AddField from "./Student/AddField";
@@ -90,9 +93,12 @@ function AppContent() {
     localStorage.getItem("isAuthenticated") === "true"
   );
   const location = useLocation();
-  const showHelpDeskButton = location.pathname !== "/" && location.pathname !== "/create-account" && location.pathname !== "/systems";
+  const showHelpDeskButton =
+    location.pathname !== "/" &&
+    location.pathname !== "/create-account" &&
+    location.pathname !== "/systems";
 
-
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     const checkAuth = () => {
@@ -112,7 +118,7 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<Login onLogin={handleLogin} />} />
         <Route path="/create-account" element={<CreateAccount />} />
-        <Route path="/loginPage" element={<Login1/>}/>
+        <Route path="/loginPage" element={<Login1 />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         {/* <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}> */}
 
@@ -163,11 +169,11 @@ function AppContent() {
           <Route path="empList" element={<EmployeeList />} />
           <Route path="EmpReport" element={<EmpReport />} />
           <Route path="AddEmpcategory" element={<AddEmpcategory />} />
-          <Route path="AddDepartment" element={<AddDepartment/>}/>
-          <Route path="ManageHoliday" element={<ManageHoliday/>}/>
+          <Route path="AddDepartment" element={<AddDepartment />} />
+          <Route path="ManageHoliday" element={<ManageHoliday />} />
 
           <Route path="EmpDash" element={<EmpDash />} />
-          <Route path="AttenDash" element={<AttenDash />}/>
+          <Route path="AttenDash" element={<AttenDash />} />
 
           <Route path="SalaryDashboard" element={<SalaryDashboard />} />
           <Route path="AddSalary/:empID" element={<AddSalary />} />
@@ -186,29 +192,27 @@ function AppContent() {
           <Route path="subadmin" element={<AddSubAdmin />} />
           <Route path="Settings" element={<Settings />} />
 
+          <Route path="addmemo" element={<AddMemo />} />
+          <Route path="manageEmpmemo" element={<ManageEmpMemo />} />
+          <Route path="addnotice" element={<AddNotice />} />
 
-          <Route path="addmemo" element={<AddMemo/>}/>
-          <Route path="manageEmpmemo" element={<ManageEmpMemo/>}/>
-          <Route path="addnotice" element={<AddNotice/>}/>
-
-           {/* Student */}
-           <Route path="StudentDashboard" element={<StudentDashboard />} />
+          {/* Student */}
+          <Route path="StudentDashboard" element={<StudentDashboard />} />
           <Route path="StudentForm" element={<StudentForm />} />
           <Route path="StudentLists" element={<StudentLists />} />
           <Route path="StudentReport" element={<StudentReport />} />
           <Route path="StudentRequest" element={<StudentRequest />} />
-          <Route path="AddField" element={<AddField/>}/>
+          <Route path="AddField" element={<AddField />} />
 
           {/*Fees */}
 
           <Route path="FeesDashboard" element={<FeesDashboard />} />
           <Route path="FeeInvoice" element={<FeeInvoice />} />
-          <Route path="InvoiceList" element={<InvoiceList />}/>
-          <Route path="AddFee" element={<AddFee />}/>
-          <Route path="FeeTable" element={<FeeTable />}/>
-          <Route path="AddMedium" element={<AddMedium />}/>
-          <Route path="FeeReport" element={<FeeReport />}/>
-
+          <Route path="InvoiceList" element={<InvoiceList />} />
+          <Route path="AddFee" element={<AddFee />} />
+          <Route path="FeeTable" element={<FeeTable />} />
+          <Route path="AddMedium" element={<AddMedium />} />
+          <Route path="FeeReport" element={<FeeReport />} />
 
           {/* <Route path="account" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Account /></ProtectedRoute>} /> */}
         </Route>
@@ -227,8 +231,10 @@ function AppContent() {
 function App() {
   return (
     <Router>
-      <CssBaseline />
-      <AppContent />
+      <UserProvider>
+        <CssBaseline />
+        <AppContent />
+      </UserProvider>
     </Router>
   );
 }
