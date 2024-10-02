@@ -164,11 +164,11 @@ const CreateAccount = () => {
     if (selectedCard === 0) {
       originalAmountPerMonth = 99; // Demo / Free original price
     } else if (selectedCard === 1) {
-      originalAmountPerMonth = 299; // Basic original price
+      originalAmountPerMonth = 499; // Basic original price
     } else if (selectedCard === 2) {
-      originalAmountPerMonth = 399; // Premium original price
+      originalAmountPerMonth = 699; // Premium original price
     } else if (selectedCard === 3) {
-      originalAmountPerMonth = 699; // Business original price
+      originalAmountPerMonth = 999; // Business original price
     }
 
     const subscriptionYearInt = Number(subscriptionYear) || 0;
@@ -412,7 +412,7 @@ const CreateAccount = () => {
     1: {
       crm: true,
       employeeManagement: true,
-      subAdmin: true,
+      subAdmin: false,
       multipleBranches: false,
       unlimitedEntries: false,
       support: true,
@@ -422,7 +422,7 @@ const CreateAccount = () => {
       employeeManagement: true,
       subAdmin: true,
       multipleBranches: true,
-      unlimitedEntries: true,
+      unlimitedEntries: false,
       support: true,
     },
     3: {
@@ -577,10 +577,10 @@ const CreateAccount = () => {
                             {index === 0
                               ? 1
                               : index === 1
-                              ? 299
+                              ? 499
                               : index === 2
-                              ? 399
-                              : 599}
+                              ? 699
+                              : 999}
                           </Typography>
                           <Typography variant="body2" sx={{ color: "#1E88E5" }}>
                             /Per Month
@@ -599,10 +599,10 @@ const CreateAccount = () => {
                           {index === 0
                             ? 99
                             : index === 1
-                            ? 399
+                            ? 699
                             : index === 2
-                            ? 499
-                            : 799}
+                            ? 899
+                            : 1299}
                         </Typography>
 
                         <div style={{ textAlign: "left", fontSize: "14px" }}>
