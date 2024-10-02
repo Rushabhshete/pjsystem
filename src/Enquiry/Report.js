@@ -271,55 +271,101 @@ export default function Report() {
       .save();
   };
 
-  const handleDownloadPDF = () => {
+  const handleDownloadPDF = async () => {
     console.log("Download PDF clicked!");
     const doc = new jsPDF("landscape");
-    doc.text("Inquiries Report", 10, 10);
+    const instituteImage = employeeDetails.instituteimage; // Get the institute image if available
+    const instituteName = employeeDetails.institutename; // Fetch the institute name
 
+    // Check if employeeDetails and image exist
+    if (instituteImage) {
+        const img = new Image();
+        img.src = instituteImage;
+
+        img.onload = () => {
+            // Calculate positions for alignment
+            const imageWidth = 40; // Width of the image
+            const imageHeight = 30; // Height of the image
+            const title = "Enquiries Report"; // Title
+            
+            // Calculate X position for centering
+            const middleX = (doc.internal.pageSize.getWidth() - imageWidth) / 2; // Centered X position for image
+            const imageY = 10; // Initial Y position for the image
+
+            // Adding the image, institute name, and title in vertical alignment
+            doc.addImage(img, "JPEG", middleX, imageY, imageWidth, imageHeight); // Place image
+            doc.text(instituteName, middleX, imageY + imageHeight + 5); // Place institute name below image
+
+            // Calculate the position for the title, centered above the table
+            const titleWidth = doc.getStringUnitWidth(title) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+            const titleY = imageY + imageHeight + 15; // Position for title below institute name
+            const titleX = (doc.internal.pageSize.getWidth() - titleWidth) / 2; // Centered X position for title
+
+            doc.text(title, titleX, titleY); // Place title
+
+            createTable(doc); // Function call to handle the table creation
+            doc.save("report.pdf");
+        };
+    } else {
+        const title = "Enquiries Report";
+        const textWidth = doc.getStringUnitWidth(instituteName) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+
+        // Center if no image present
+        const middleX = (doc.internal.pageSize.getWidth() - textWidth) / 2;
+
+        doc.text(instituteName, middleX, 10);
+        doc.text(title, middleX, 20);
+        createTable(doc); // Create the table if no image
+        doc.save("report.pdf");
+    }
+};
+
+
+const createTable = (doc) => {
     const tableColumn = [
-      "ID",
-      "Date of Enquiry",
-      "Name",
-      "Phone",
-      "Email",
-      "Exam",
-      "Source",
-      "Conducted By",
-      "Status",
-      "Remark",
+        "ID",
+        "Date of Enquiry",
+        "Name",
+        "Phone",
+        "Email",
+        "Exam",
+        "Source",
+        "Conducted By",
+        "Status",
+        "Remark",
     ];
-    const tableRows = [];
 
+    const tableRows = [];
     const inquiries = filterInquiries();
     console.log(inquiries); // Check if valid data is returned
 
     inquiries.forEach((inquiry) => {
-      const inquiryData = [
-        inquiry.id,
-        inquiry.enquiryDate,
-        inquiry.name,
-        inquiry.mobile,
-        inquiry.email,
-        inquiry.exam,
-        inquiry.source_by,
-        inquiry.conduct_by,
-        inquiry.status1,
-        inquiry.remark,
-      ];
-      tableRows.push(inquiryData);
+        const inquiryData = [
+            inquiry.id,
+            inquiry.enquiryDate,
+            inquiry.name,
+            inquiry.mobile,
+            inquiry.email,
+            inquiry.exam,
+            inquiry.source_by,
+            inquiry.conduct_by,
+            inquiry.status1,
+            inquiry.remark,
+        ];
+        tableRows.push(inquiryData);
     });
 
     doc.autoTable({
-      head: [tableColumn],
-      body: tableRows,
-      startY: 20,
-      theme: "striped",
-      headStyles: { fillColor: [22, 160, 133] },
-      styles: { fontSize: 8 },
+        head: [tableColumn],
+        body: tableRows,
+        startY: 60, // Adjust startY to avoid overlap with header
+        theme: "striped",
+        headStyles: { fillColor: [128, 0, 128] }, // Setting headStyles to purple
+        styles: { fontSize: 8 },
     });
+};
 
-    doc.save("report.pdf");
-  };
+
 
   const handleDownloadCSV = () => {
     const csvContent = filterInquiries()

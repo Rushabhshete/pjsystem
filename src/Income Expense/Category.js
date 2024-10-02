@@ -321,46 +321,39 @@ const Category = () => {
   // };
 
   const exportToPDF = () => {
-    // Specify the landscape orientation
     const doc = new jsPDF("landscape");
     const pageWidth = doc.internal.pageSize.getWidth();
-    
-   
+    const pageHeight = doc.internal.pageSize.getHeight();
 
-    // Define the image parameters (assuming it's a base64 string or URL)
-    const image = employeeDetails.instituteimage; // this should be the actual image URL or base64 string
+    const image = employeeDetails.instituteimage; // Actual image URL or base64 string
     const imageWidth = 20; // Set the desired width of the image
     const imageHeight = 20; // Set the desired height of the image
 
-     // Heading
-     doc.setFontSize(16);
-     const heading = `${employeeDetails.institutename || "Guest"}`;
-     const headingWidth = doc.getTextWidth(heading);
-     doc.text(heading, (pageWidth - headingWidth) / 2, 10);
-
-    // Date on the top right
-    const date = new Date().toLocaleDateString();
-    doc.setFontSize(10);
-    const dateText = `Generated Date: ${date}`;
-    const dateTextWidth = doc.getTextWidth(dateText);
-
-    // Common Y-coordinate for the horizontal line
-    const commonY = 25;
-
-    // Add the institute image on the top right side
-    doc.addImage(image, 'JPEG', pageWidth - imageWidth - 10, commonY - (imageHeight / 2.4), imageWidth, imageHeight); // Center the image vertically
-
+    // Heading
+    doc.setFontSize(16);
+    const heading = `${employeeDetails.institutename || "Guest"}`;
+    const headingWidth = doc.getTextWidth(heading);
     
-
-    // Display the date generated on the top right
-    doc.text(dateText, (pageWidth - dateTextWidth) / 1, 10);
-    // doc.text(dateText, pageWidth - dateTextWidth - 10, commonY); // Adjust the `- 10` for right margin
-
     // Subheading
     doc.setFontSize(12);
     const subheading = `${category} Report`;
     const subheadingWidth = doc.getTextWidth(subheading);
-    doc.text(subheading, (pageWidth - subheadingWidth) / 2, 30); // Move subheading down for spacing
+
+    // Reduce top margin and spacing
+    const topMargin = 10; // Smaller top margin
+    const spacing = 5; // Smaller spacing between elements
+
+    // Starting Y-coordinate for vertical positioning
+    const startY = topMargin; // Start from a smaller margin
+
+    // Add institute image
+    doc.addImage(image, 'JPEG', (pageWidth - imageWidth) / 2, startY, imageWidth, imageHeight); // Center the image
+
+    // Center the heading
+    doc.text(heading, (pageWidth - headingWidth) / 2, startY + imageHeight + spacing); // Position below the image
+
+    // Center the subheading
+    doc.text(subheading, (pageWidth - subheadingWidth) / 2, startY + imageHeight + spacing + 16); // Position below the heading
 
     // Define table headers and rows
     const headers = [
@@ -403,14 +396,14 @@ const Category = () => {
       row.paymentMethod,
     ]);
 
-    // Add the table to the PDF
+    // Add the first table to the PDF
     doc.autoTable({
       head: headers,
       body: rows,
-      startY: 45, // Adjust startY to place below the subheading
+      startY: startY + imageHeight + spacing + 16 + 20, // Adjust to position below the title
       theme: "grid",
-      margin: { top: 20 },
-      styles: { fontSize: 8 },
+      styles: { fontSize: 8, fillColor: [255, 255, 255] }, // White text color
+      headStyles: { fillColor: [128, 0, 128], textColor: [255, 255, 255] }, // Purple header background, white text
       columnStyles: {
         0: { cellWidth: "auto" },
         1: { cellWidth: "auto" },
@@ -425,36 +418,25 @@ const Category = () => {
         10: { cellWidth: "auto" },
       },
       didParseCell: function (data) {
-        // Check if the current column is the "Status" column
+        // Apply a different color for the "Status" column
         if (data.column.index === 13) {
           const status = data.cell.raw.toLowerCase();
           if (status === "pending" || status === "partial") {
-            data.cell.styles.fillColor = [255, 223, 186]; // Light orange color for "Pending" or "Partial"
+            data.cell.styles.fillColor = [255, 223, 186]; // Light orange for "Pending" or "Partial"
           } else if (status === "complete") {
-            data.cell.styles.fillColor = [144, 238, 144]; // Light green color for all other statuses
+            data.cell.styles.fillColor = [144, 238, 144]; // Light green for "Complete"
           }
         }
       },
     });
 
-    // The rest of your PDF generation code remains unchanged
-
-    // Calculate total values
+    // Calculate totals and summary as before...
     const totalAmount = filteredData.reduce((sum, row) => sum + row.amount, 0);
     const total = filteredData.reduce((sum, row) => sum + row.total, 0);
-    const totalPaid = filteredData.reduce(
-      (sum, row) => sum + row.payingAmount,
-      0
-    );
-    const totalPending = filteredData.reduce(
-      (sum, row) => sum + row.pendingAmount,
-      0
-    );
-
-    // Convert total value to words
+    const totalPaid = filteredData.reduce((sum, row) => sum + row.payingAmount, 0);
+    const totalPending = filteredData.reduce((sum, row) => sum + row.pendingAmount, 0);
     const totalInWords = toTitleCase(numberToWords.toWords(total));
 
-    // Additional fields and values
     const additionalFields = [
       { label: "Total Amount", value: `${totalAmount.toFixed(2)}` },
       { label: "Total (+GST)", value: `${total.toFixed(2)}` },
@@ -463,26 +445,22 @@ const Category = () => {
       { label: "Total Pending", value: `${totalPending.toFixed(2)}` },
     ];
 
-    // Prepare the summary table data
     const summaryHeaders = [["Summary", ""]];
-    const summaryRows = additionalFields.map((field) => [
-      field.label,
-      field.value,
-    ]);
+    const summaryRows = additionalFields.map((field) => [field.label, field.value]);
 
     // Add the summary table to the PDF
     doc.autoTable({
       head: summaryHeaders,
       body: summaryRows,
-      startY: doc.lastAutoTable.finalY + 10, // Position below the previous table
+      startY: doc.lastAutoTable.finalY + 10,
       theme: "grid",
-      margin: { top: 10 },
       styles: { fontSize: 10 },
+      headStyles: { fillColor: [128, 0, 128], textColor: [255, 255, 255] }, // Purple header background, white text
     });
 
     // Signature section
-    const signatureY = doc.lastAutoTable.finalY + 40; // Position below the summary table
-    const signatureX = pageWidth - 60; // Position on the right side
+    const signatureY = doc.lastAutoTable.finalY + 40;
+    const signatureX = pageWidth - 60;
 
     doc.setFontSize(12);
     doc.text("Authorized Signature", signatureX, signatureY);
@@ -492,6 +470,8 @@ const Category = () => {
     // Save the PDF
     doc.save(`Complete_${category}_List.pdf`);
 };
+
+
 
 
   // Function to convert string to title case

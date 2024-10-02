@@ -45,6 +45,28 @@ const EmpReport = () => {
   const [rowsPerPage, setRowsPerPage] = useState(20);
   const [institutecode, setInstituteCode] = useState(localStorage.getItem('institutecode') || '');
 
+  // const getInstituteCode = () => localStorage.getItem("institutecode");
+  const [employeeDetails, setEmployeeDetails] = useState(null);
+  useEffect(() => {
+    const fetchEmployeeDetails = async () => {
+      try {
+        if (!institutecode) {
+          console.error("No institutecode found in localStorage");
+          return;
+        }
+
+        const response = await axios.get(
+          `http://localhost:8081/findInstitutesby/Institutecode?institutecode=${institutecode}`
+        );
+        setEmployeeDetails(response.data);
+      } catch (error) {
+        console.error("Error fetching employee details:", error);
+      }
+    };
+
+    fetchEmployeeDetails();
+  }, [institutecode]);
+
   const fetchAllEmployees = useCallback(async () => {
     try {
       const response = await axios.get(`http://localhost:8082/getNonDeleted?institutecode=${institutecode}`);
@@ -147,46 +169,93 @@ const EmpReport = () => {
 
   const handleDownloadPDF = () => {
     const doc = new jsPDF({ orientation: "landscape" });
+    const margin = 10; // Set margin for top spacing
+
+    // Add the title "Employee Report"
+    const title = "Employee Report";
+    doc.setFontSize(18);
+    const titleWidth = doc.getTextWidth(title);
+    const centerX = (doc.internal.pageSize.getWidth() - titleWidth) / 2;
+    doc.text(title, centerX, margin + 15, { align: "center" });
+
+    // Add institute image and name
+    const instituteImage = employeeDetails.instituteimage; // Assuming this is a base64 string or URL
+    const instituteName = employeeDetails.institutename;
+
+    let currentY = margin + 30; // Initial Y position after title
+
+    if (instituteImage) {
+        const image = new Image();
+        image.src = instituteImage;
+        image.onload = () => {
+            const imageWidth = 30; // Set desired width
+            const imageHeight = 30; // Set desired height
+
+            // Center the image
+            doc.addImage(image, 'JPEG', (doc.internal.pageSize.getWidth() / 2) - (imageWidth / 2), currentY, imageWidth, imageHeight);
+            currentY += imageHeight + 5; // Update Y position for institute name
+
+            // Add institute name below the image
+            doc.setFontSize(14);
+            const instituteNameWidth = doc.getTextWidth(instituteName);
+            doc.text(instituteName, (doc.internal.pageSize.getWidth() - instituteNameWidth) / 2, currentY, { align: "center" });
+            currentY += 20; // Update Y position for table
+            createTable(doc, currentY);
+        };
+    } else {
+        // If there's no institute image, just add the institute name
+        doc.setFontSize(14);
+        const instituteNameWidth = doc.getTextWidth(instituteName);
+        doc.text(instituteName, (doc.internal.pageSize.getWidth() - instituteNameWidth) / 2, margin + 40, { align: "center" });
+        currentY = margin + 60; // Update Y position for table
+        createTable(doc, currentY);
+    }
+};
+
+const createTable = (doc, startY) => {
     doc.autoTable({
-      head: [
-        [
-          "ID",
-          "Full Name",
-          "Mobile No",
-          "Parent No",
-          "City",
-          "Department",
-          "Designation",
-          "Employee Type",
-          "Duty Type",
-          "Shift",
+        head: [
+            [
+                "ID",
+                "Full Name",
+                "Mobile No",
+                "Parent No",
+                "City",
+                "Department",
+                "Designation",
+                "Employee Type",
+                "Duty Type",
+                "Shift",
+            ],
         ],
-      ],
-      body: filteredUsers.map((user) => [
-        user.empID,
-        user.fullName,
-        user.mobileNo,
-        user.parentNo,
-        user.city,
-        user.department,
-        user.workDetail,
-        user.employeeType,
-        user.employeecategory,
-        user.dutyType,
-        user.shift,
-      ]),
-      styles: {
-        fillColor: [255, 255, 255],
-        textColor: [0, 0, 0],
-        fontStyle: "bold",
-      },
-      headStyles: {
-        fillColor: [211, 211, 211],
-      },
-      startY: 10,
+        body: filteredUsers.map((user) => [
+            user.empID,
+            user.fullName,
+            user.mobileNo,
+            user.parentNo,
+            user.city,
+            user.department,
+            user.workDetail,
+            user.employeeType,
+            user.employeecategory,
+            user.dutyType,
+            user.shift,
+        ]),
+        styles: {
+            fillColor: [255, 255, 255],
+            textColor: [0, 0, 0],
+            fontStyle: "bold",
+        },
+        headStyles: {
+            fillColor: [128, 0, 128], // Purple heading color
+            textColor: [255, 255, 255], // White text color
+        },
+        startY: startY, // Starting Y position for the table
     });
+
     doc.save("employees.pdf");
-  };
+};
+
 
   const csvData = filteredUsers.map((user) => ({
     ID: user.empID,

@@ -420,9 +420,30 @@ const EmployeeList = () => {
       console.error("Error fetching user by ID:", error);
     }
   };
+
+  
   const handleDownloadPDF = () => {
     const doc = new jsPDF();
     const instituteName = employeeDetails.institutename;
+    const imgData = employeeDetails.instituteimage; // Assuming it's a base64 string or URL
+
+    // Set properties for PDF document
+    const margin = { top: 15, left: 15, right: 15 };
+    const startY = 20; // Initial y position for title and image
+
+    // Add institute image
+    if (imgData) {
+        doc.addImage(imgData, 'JPEG', (doc.internal.pageSize.getWidth() - 60) / 2, startY, 60, 30); // Adjust image size and position
+    }
+
+    // Add title
+    const title = "Employee Report";
+    doc.setFontSize(18);
+    doc.text(title, doc.internal.pageSize.getWidth() / 2, startY + 40, { align: 'center' }); // Position the title below the image
+
+    // Add institute name
+    doc.setFontSize(14);
+    doc.text(instituteName, doc.internal.pageSize.getWidth() / 2, startY + 50, { align: 'center' }); // Position the institute name below the title
 
     // Define user information
     const userInfo = [
@@ -460,34 +481,27 @@ const EmployeeList = () => {
       { label: "Salary:", value: selectedUser?.salary },
       { label: "CPF No:", value: selectedUser?.cpfNo },
       { label: "ESIC No:", value: selectedUser?.esicNo },
-      {
-        label: "Basic Qualification:",
-        value: selectedUser?.basicQualification,
-      },
-      {
-        label: "Professional Qualification:",
-        value: selectedUser?.professionalQualification,
-      },
+      { label: "Basic Qualification:", value: selectedUser?.basicQualification },
+      { label: "Professional Qualification:", value: selectedUser?.professionalQualification },
       { label: "Shift:", value: selectedUser?.shift },
       { label: "Shift Start Time:", value: selectedUser?.shiftStartTime },
       { label: "Shift End Time:", value: selectedUser?.shiftEndTime },
       { label: "Status:", value: selectedUser?.status },
     ];
+
     // Convert userInfo to data suitable for autotable
     const tableData = userInfo.map(({ label, value }) => [label, value]);
-    // Set properties for PDF document
-    const margin = { top: 15, left: 15, right: 15 };
-    const startY = 5; // Initial y position for autotable
-    doc.setFontSize(14);
-    doc.text(instituteName, margin.left, startY);
-    // Add header
-    doc.setFontSize(12);
+
     // Generate table using autotable
     doc.autoTable({
-      startY: startY + 10, // Start table slightly below the title
+      startY: startY + 60, // Start table below the institute name
       head: [["Field", "Value"]],
       body: tableData,
-      theme: "striped", // Optional: 'striped', 'grid', 'plain'
+      theme: "striped",
+      headStyles: {
+        fillColor: [128, 0, 128], // Purple header background
+        textColor: [255, 255, 255], // White text color
+      },
       margin: { top: startY + 30, left: margin.left, right: margin.right },
       didDrawPage: function (data) {
         // Add footer with page number
@@ -499,9 +513,12 @@ const EmployeeList = () => {
         );
       },
     });
+
     // Save the PDF
     doc.save("UserInformation.pdf");
-  };
+};
+
+
   const handleDownloadCsv = () => {
     const csvData = filteredUsers.map((user) => ({
       Id: user.empID,

@@ -258,10 +258,26 @@ const StudentList = () => {
         format: "a4",
     });
 
+    // Load the image
+    const imgData = employeeDetails.instituteimage; // Assuming it's a base64 string or URL
+
+    // Calculate the vertical center position
+    const centerX = doc.internal.pageSize.getWidth() / 2;
+    const startY = 20;
+
+    // Add institute image (you may need to adjust the width/height)
+    if (imgData) {
+        doc.addImage(imgData, 'JPEG', centerX - 30, startY, 60, 30); // Adjust the size and position as needed
+    }
+
     // Add title
-    const title = employeeDetails.institutename; // Your title here
+    const title = "Admission Report";
+    const instituteName = employeeDetails.institutename;
+
     doc.setFontSize(18);
-    doc.text(title, 10, 10); // Position the title at (x: 10, y: 10)
+    doc.text(title, centerX, startY + 35, { align: 'center' }); // Position the title below the image
+    doc.setFontSize(14);
+    doc.text(instituteName, centerX, startY + 45, { align: 'center' }); // Position the institute name below the title
 
     const columns = [ 
         { title: "ID", dataKey: "id" },
@@ -300,12 +316,12 @@ const StudentList = () => {
     }));
 
     // Set the starting Y position for the table below the title
-    const startY = 20; // Adjust this value as needed
+    const tableStartY = startY + 55; // Adjust this value as needed to create space for the table
 
     doc.autoTable({
         columns,
         body: rows,
-        startY, // Use the defined startY position
+        startY: tableStartY, // Use the defined table starting position
         columnStyles: {
             id: { cellWidth: 10 }, 
             name: { cellWidth: 30 },
@@ -328,12 +344,14 @@ const StudentList = () => {
             fontSize: 7,
         },
         headStyles: {
-            fillColor: [22, 160, 133],
+            fillColor: [128, 0, 128], // Purple header background
         },
     });
 
     doc.save("admissions.pdf");
 };
+
+
 
   
 

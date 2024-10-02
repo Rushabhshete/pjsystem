@@ -1,10 +1,31 @@
-
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Typography, Grid, Paper, Button } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 import jsPDF from "jspdf";
+import axios from "axios";
 
 const PreviewComponent = ({ formData }) => {
+  const getInstituteCode = () => localStorage.getItem("institutecode");
+  const [employeeDetails, setEmployeeDetails] = useState(null);
+  useEffect(() => {
+    const fetchEmployeeDetails = async () => {
+      try {
+        if (!getInstituteCode()) {
+          console.error("No institutecode found in localStorage");
+          return;
+        }
+
+        const response = await axios.get(
+          `http://localhost:8081/findInstitutesby/Institutecode?institutecode=${getInstituteCode()}`
+        );
+        setEmployeeDetails(response.data);
+      } catch (error) {
+        console.error("Error fetching employee details:", error);
+      }
+    };
+
+    fetchEmployeeDetails();
+  }, [getInstituteCode()]);
   const navigate = useNavigate();
 
   // Filter out fields that should not be displayed
@@ -17,47 +38,77 @@ const PreviewComponent = ({ formData }) => {
   const handleDownloadPdf = () => {
     const pdf = new jsPDF();
 
-    // Add the heading "Employee Form"
+    // Add the title "Employee Report" at the top
+    const title = 'Employee Report';
     pdf.setFontSize(18);
-    pdf.text('Employee Form', pdf.internal.pageSize.getWidth() / 2, 20, { align: 'center' });
+    pdf.text(title, pdf.internal.pageSize.getWidth() / 2, 15, { align: 'center' }); // Adjusted Y position
 
-    // Place employee photo at the top of the first page
-    if (formData.empFile) {
-      const image = new Image();
-      image.src = formData.empFile;
-      image.onload = () => {
-        pdf.addImage(image, 'JPEG', pdf.internal.pageSize.getWidth() / 2 - 25, 30, 50, 50); // Center image horizontally
-        pdf.autoTable({
-          startY: 90, // Start table below the image
-          head: [['Field', 'Value']],
-          body: Object.entries(filteredFormData).map(([key, value]) => [
-            formatFieldName(key),
-            value
-          ]),
-          theme: 'grid',
-          headStyles: { fontSize: 12 },
-          bodyStyles: { fontSize: 10 },
-          styles: { cellPadding: 2 },
-        });
-        pdf.save("preview.pdf");
-      };
+    // Add institute image
+    const instituteImage = employeeDetails.instituteimage; // Assuming this is a base64 string or URL
+    const instituteName = employeeDetails.institutename;
+
+    if (instituteImage) {
+        const image = new Image();
+        image.src = instituteImage;
+        image.onload = () => {
+            // Reduce the size of the image
+            const imageWidth = 30; // Set the desired width
+            const imageHeight = 30; // Set the desired height
+            pdf.addImage(image, 'JPEG', pdf.internal.pageSize.getWidth() / 2 - imageWidth / 2, 25, imageWidth, imageHeight); // Adjusted Y position
+
+            // Add institute name below the image
+            pdf.setFontSize(14);
+            pdf.text(instituteName, pdf.internal.pageSize.getWidth() / 2, 70, { align: 'center' }); // Adjusted Y position
+
+            // Generate table below the institute name
+            pdf.autoTable({
+                startY: 80, // Start table below the institute name
+                head: [['Field', 'Value']],
+                body: Object.entries(filteredFormData).map(([key, value]) => [
+                    formatFieldName(key),
+                    value
+                ]),
+                theme: 'grid',
+                headStyles: {
+                    fillColor: [128, 0, 128], // Purple heading color
+                    textColor: [255, 255, 255], // White text color
+                    fontSize: 12
+                },
+                bodyStyles: { fontSize: 10 },
+                styles: { cellPadding: 2 },
+            });
+
+            pdf.save("preview.pdf");
+        };
     } else {
-      // No employee photo, directly generate table
-      pdf.autoTable({
-        startY: 30, // Start table below the heading
-        head: [['Field', 'Value']],
-        body: Object.entries(filteredFormData).map(([key, value]) => [
-          formatFieldName(key),
-          value
-        ]),
-        theme: 'grid',
-        headStyles: { fontSize: 12 },
-        bodyStyles: { fontSize: 10 },
-        styles: { cellPadding: 2 },
-      });
-      pdf.save("preview.pdf");
+        // If no institute image, add institute name directly
+        pdf.setFontSize(14);
+        pdf.text(instituteName, pdf.internal.pageSize.getWidth() / 2, 40, { align: 'center' }); // Adjusted Y position
+
+        // Generate table directly below the heading
+        pdf.autoTable({
+            startY: 50, // Start table below the institute name
+            head: [['Field', 'Value']],
+            body: Object.entries(filteredFormData).map(([key, value]) => [
+                formatFieldName(key),
+                value
+            ]),
+            theme: 'grid',
+            headStyles: {
+                fillColor: [128, 0, 128], // Purple heading color
+                textColor: [255, 255, 255], // White text color
+                fontSize: 12
+            },
+            bodyStyles: { fontSize: 10 },
+            styles: { cellPadding: 2 },
+        });
+
+        pdf.save("preview.pdf");
     }
-  };
+};
+
+
+
 
   const handleBackClick = () => {
     navigate('/layout/empDashboard');
