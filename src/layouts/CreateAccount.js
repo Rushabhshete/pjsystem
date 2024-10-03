@@ -100,11 +100,11 @@ const CreateAccount = () => {
     if (selectedCard === 0) {
       amountPerMonth = 1; // Demo / Free plan
     } else if (selectedCard === 1) {
-      amountPerMonth = 199; // Basic plan
+      amountPerMonth = 499; // Basic plan
     } else if (selectedCard === 2) {
-      amountPerMonth = 299; // Premium plan
+      amountPerMonth = 699; // Premium plan
     } else if (selectedCard === 3) {
-      amountPerMonth = 499; // Business plan
+      amountPerMonth = 999; // Business plan
     } else {
       return { finalAmount: 0, amountPerMonth: 0, gstAmount: 0 };
     }
