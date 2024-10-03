@@ -142,7 +142,7 @@ const EmployeeDashboard = () => {
     const departmentChartData = [
         ['Department', 'Employee Count', { role: 'style' }],
         ...(departmentData.length ? departmentData.map(([dept, count], index) => {
-            const colors = ['#76A7FA', '#FF5733', '#33FF57', '#3357FF', '#FF33A6', '#FFD700', '#FF6F61', '#8E44AD', '#3498DB', '#2ECC71', '#E74C3C'];
+            const colors = ['#F9E79F', '#FF6F61', '#3498DB', '#9ACD32', '#F4C431'];
             return [dept, count, colors[index % colors.length]];
         }) : [['No Data', 0, 'color: #DDD']])
     ];
@@ -159,7 +159,7 @@ const EmployeeDashboard = () => {
     const categoryChartData = [
         ['Category', 'Employee Count', { role: 'style' }],
         ...(categoryData.length ? categoryData.map(([category, count], index) => {
-            const colors = ['#76A7FA', '#FF5733', '#33FF57', '#3357FF', '#FF33A6', '#FFD700', '#FF6F61', '#8E44AD', '#3498DB', '#2ECC71', '#E74C3C'];
+            const colors = ['#F9E79F', '#FF6F61', '#3498DB', '#9ACD32', '#F4C431'];
             return [category, count, colors[index % colors.length]];
         }) : [['No Data', 0, 'color: #DDD']])
     ];
@@ -193,7 +193,7 @@ const EmployeeDashboard = () => {
             <Grid container spacing={3}>
                 <Grid item xs={12} md={8} container spacing={2}>
                     <Grid item xs={6} md={4}>
-                        <Card style={{ backgroundColor: '#76A7FA', borderRadius:'15px' }}>
+                        <Card style={{ backgroundColor: '#F9E79F', borderRadius:'15px' }}>
                             <CardContent>
                                 <Typography variant="h6">Total Employee</Typography>
                                 <Typography variant="h4">{employeeCount}</Typography>
@@ -201,7 +201,7 @@ const EmployeeDashboard = () => {
                         </Card>
                     </Grid>
                     <Grid item xs={6} md={4}>
-                        <Card style={{ backgroundColor: '#4CAF50', borderRadius:'15px' }}>
+                        <Card style={{ backgroundColor: '#FF6F61', borderRadius:'15px' }}>
                             <CardContent>
                                 <Typography variant="h6">Joined</Typography>
                                 <Typography variant="h4">{joinedCount}</Typography>
@@ -209,7 +209,7 @@ const EmployeeDashboard = () => {
                         </Card>
                     </Grid>
                     <Grid item xs={6} md={4}>
-                        <Card style={{ backgroundColor: '#FF5722', borderRadius:'15px' }}>
+                        <Card style={{ backgroundColor: '#3498DB', borderRadius:'15px' }}>
                             <CardContent>
                                 <Typography variant="h6">Terminated</Typography>
                                 <Typography variant="h4">{terminatedCount}</Typography>

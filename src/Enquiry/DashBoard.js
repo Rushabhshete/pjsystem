@@ -501,7 +501,7 @@ export default function DashBoard() {
               elevation={3}
               style={{
                 padding: "16px",
-                backgroundColor: "#FFCCCB",
+                backgroundColor: "#F9E79F",
                 borderRadius: "10px",
               }}
             >

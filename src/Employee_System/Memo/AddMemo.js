@@ -116,6 +116,7 @@ export default function AddMemo() {
       memoDescription,
       createdAt: memoDate, // Use the selected date in yyyy-mm-dd format
       email: selectedEmployee.email,
+      fullName:selectedEmployee.fullName,
       institutecode,
       isDeleted: false,
     };

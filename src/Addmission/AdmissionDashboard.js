@@ -101,14 +101,14 @@ const Dashboard = () => {
 
   const data = [
     // Count Data
-    { label: "Today's Admission", value: admissionsToday || 0, color: "#FFCCCB" }, // Green
+    { label: "Today's Admission", value: admissionsToday || 0, color: "#F9E79F" }, // Green
     { label: "7 Day's Admissions  ", value: admissions7Days || 0, color: "#FF6F61" }, // Amber
     { label: "30 Day's Admissions", value: admissions30Days || 0, color: "#3498DB" }, // Light Blue
     { label: "365 Day's Admissions", value: admissions365Days || 0, color: "#9ACD32" }, // Pink
     { label: "Total Admissions", value: totalAdmissions || 0, color: "#F4C431" }, // Purple
     
     // Revenue Data
-    { label: "Today's Revenue ", value: ToDaysRevenue || 0, color: "#FFCCCB" }, // Deep Orange
+    { label: "Today's Revenue ", value: ToDaysRevenue || 0, color: "#F9E79F" }, // Deep Orange
     { label: "7 Day's Revenue", value: revenue7Days || 0, color: "#FF6F61" }, // Teal
     { label: "30 Day's Revenue", value: revenue30Days || 0 , color: "#3498DB" }, // Indigo
     { label: "365 Day's Revenue", value: revenue365Days || 0, color: "#9ACD32" }, // Brown

@@ -166,7 +166,7 @@ export default function ManageEmpMemo() {
               <TableCell sx={{ fontWeight: "bold" }}>Full Name</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>Description</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>Email</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Action Required</TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

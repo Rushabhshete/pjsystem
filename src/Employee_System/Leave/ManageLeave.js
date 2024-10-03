@@ -97,12 +97,20 @@ const ManageLeave = () => {
     setShowCustomDateFields(value === 'customDate');
   };
 
-  // Filtered leave requests based on the search term, category, and status
-  const filteredLeaveRequests = leaveRequests.filter(request => 
-    request.fullName.toLowerCase().includes(searchTerm.toLowerCase()) &&
-    (categoryFilter === '' || request.categoryName === categoryFilter) &&
-    (statusFilter === '' || request.status === statusFilter)
-  );
+  // // Filtered leave requests based on the search term, category, and status
+  // const filteredLeaveRequests = leaveRequests.filter(request => 
+  //   request.fullName.toLowerCase().includes(searchTerm.toLowerCase()) &&
+  //   (categoryFilter === '' || request.categoryName === categoryFilter) &&
+  //   (statusFilter === '' || request.status === statusFilter)
+  // );
+
+    // Filtered leave requests based on the search term, category, and status
+const filteredLeaveRequests = leaveRequests.filter(request => 
+  (request.fullName && request.fullName.toLowerCase().includes(searchTerm.toLowerCase())) &&
+  (categoryFilter === '' || request.categoryName === categoryFilter) &&
+  (statusFilter === '' || request.status === statusFilter)
+);
+
 
   // Get unique category names for the category filter
   const uniqueCategories = Array.from(new Set(leaveRequests.map(request => request.categoryName)));
