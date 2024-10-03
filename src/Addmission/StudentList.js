@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import WhatsAppIcon from '@mui/icons-material/WhatsApp'; // Import WhatsApp Icon
 import {
   Table,
   TableBody,
@@ -237,6 +238,11 @@ const StudentList = () => {
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
+  };
+
+  const handleWhatsAppClick = (mobile1) => {
+    const url = `https://wa.me/${mobile1}`; // Format: wa.me/1234567890
+    window.open(url, '_blank'); // Open WhatsApp in new tab
   };
 
   const filteredAdmissions = useMemo(() => {
@@ -752,6 +758,9 @@ const StudentList = () => {
                     color="inherit"
                   >
                     <PrintIcon />
+                  </IconButton>
+                  <IconButton onClick={() => handleWhatsAppClick(admission.mobile1)} color="success">
+                    <WhatsAppIcon />
                   </IconButton>
                 </TableCell>
               </TableRow>
