@@ -805,6 +805,9 @@ const createTable = (doc) => {
           </DialogActions>
         </Dialog>
 
+
+        {/* print receipt  */}
+
         <Dialog
   open={openReceipt}
   onClose={() => setOpenReceipt(false)}
