@@ -157,7 +157,7 @@ const Home = () => {
             elevation={3}
             sx={{
               padding: 2,
-              backgroundColor: "#ffcccb",
+              backgroundColor: "#F9E79F",
               borderRadius: 2,
               boxShadow: 3,
             }}
@@ -171,7 +171,7 @@ const Home = () => {
             elevation={3}
             sx={{
               padding: 2,
-              backgroundColor: "#add8e6",
+              backgroundColor: "#FF6F61",
               borderRadius: 2,
               boxShadow: 3,
             }}
@@ -185,7 +185,7 @@ const Home = () => {
             elevation={3}
             sx={{
               padding: 2,
-              backgroundColor: "#90ee90",
+              backgroundColor: "#3498DB",
               borderRadius: 2,
               boxShadow: 3,
             }}
@@ -199,7 +199,7 @@ const Home = () => {
             elevation={3}
             sx={{
               padding: 2,
-              backgroundColor: "#ffa07a",
+              backgroundColor: "#9ACD32",
               borderRadius: 2,
               boxShadow: 3,
             }}

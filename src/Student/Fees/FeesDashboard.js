@@ -126,18 +126,18 @@ const Home = () => {
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6} md={3}>
-          <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#FFCCCB', borderRadius: '10px', boxShadow: '0 6px 20px rgba(255, 105, 135, .3)' }}>
+          <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#F9E79F', borderRadius: '10px', boxShadow: '0 6px 20px rgba(255, 105, 135, .3)' }}>
             <Typography variant="h6">Total Fees</Typography>
             <Typography variant="h4">{totalApplications}</Typography>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#ADD8E6', borderRadius: '10px', boxShadow: '0 6px 20px rgba(173, 216, 230, .3)' }}>
+          <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#FF6F61', borderRadius: '10px', boxShadow: '0 6px 20px rgba(173, 216, 230, .3)' }}>
             <Typography variant="h6">Number Of Pending Fees: {numberOfPendingFees}</Typography>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#90EE90', borderRadius: '10px', boxShadow: '0 6px 20px rgba(144, 238, 144, .3)' }}>
+          <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#3498DB', borderRadius: '10px', boxShadow: '0 6px 20px rgba(144, 238, 144, .3)' }}>
             <Typography variant="h6">Number Of Complete Fees: {numberOfCompleteFees}</Typography>
           </Paper>
         </Grid>

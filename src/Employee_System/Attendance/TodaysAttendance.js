@@ -403,7 +403,7 @@ const TodaysAttendance = () => {
     <Container>
       <Grid container spacing={2} sx={{ marginBottom: 3 }}>
         <Grid item xs={12} md={4}>
-          <Card sx={{ backgroundColor: '#3498DB', borderRadius:"10px" }}>
+          <Card sx={{ backgroundColor: '#F9E79F', borderRadius:"10px" }}>
             <CardContent>
               <Typography variant="h6" component="div">
                 Total Employees
@@ -415,7 +415,7 @@ const TodaysAttendance = () => {
           </Card>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Card sx={{ backgroundColor: '#9ACD32' }}>
+          <Card sx={{ backgroundColor: '#FF6F61' }}>
             <CardContent>
               <Typography variant="h6" component="div">
                 Present Employees
@@ -427,7 +427,7 @@ const TodaysAttendance = () => {
           </Card>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Card sx={{ backgroundColor: '#FF6F61' }}>
+          <Card sx={{ backgroundColor: '#3498DB' }}>
             <CardContent>
               <Typography variant="h6" component="div">
                 Absent Employees

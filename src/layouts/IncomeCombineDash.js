@@ -689,31 +689,31 @@ export default function IncomeCombineDash() {
           <Grid container spacing={2} justifyContent="center" wrap="nowrap">
             {/* Cards Display */}
             <Grid item xs={12} sm={6} md={2.4}>
-              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#FF6F61', borderRadius: '10px' }}>
+              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#F9E79F', borderRadius: '10px' }}>
                 <Typography variant="h7">Today's Income</Typography>
                 <Typography variant="h5">₹{formattedCountUp(incomeData.today || 0)}</Typography>
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6} md={2.4}>
-              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#3498DB', borderRadius: '10px' }}>
+              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#FF6F61', borderRadius: '10px' }}>
                 <Typography variant="h7">Total Income</Typography>
                 <Typography variant="h5">₹{formattedCountUp(incomeData.total || 0)}</Typography>
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6} md={2.4}>
-              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#9ACD32', borderRadius: '10px' }}>
+              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#3498DB', borderRadius: '10px' }}>
                 <Typography variant="h7">Today's Expense</Typography>
                 <Typography variant="h5">₹{formattedCountUp(expenseData.today || 0)}</Typography>
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6} md={2.4}>
-              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#F4C431', borderRadius: '10px' }}>
+              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#9ACD32', borderRadius: '10px' }}>
                 <Typography variant="h7">Total Expense</Typography>
                 <Typography variant="h5">₹{formattedCountUp(expenseData.total || 0)}</Typography>
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6} md={2.4}>
-              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#E0F2F1 ', borderRadius: '10px' }}>
+              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#F4C431 ', borderRadius: '10px' }}>
                 <Typography variant="h7">Today's {todaytext}</Typography>
                 <Typography variant="h5" className={incomeData.today - expenseData.today >= 0}>
                   ₹{formattedCountUp(incomeData.today - expenseData.today)}
@@ -721,7 +721,7 @@ export default function IncomeCombineDash() {
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6} md={2.4}>
-              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#009688', borderRadius: '10px' }}>
+              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#F9E79F', borderRadius: '10px' }}>
                 <Typography variant="h7">Total {savingsText}</Typography>
                 <Typography variant="h5" className={savingsData >= 0}>
                   ₹{formattedCountUp(savingsData)}
