@@ -207,7 +207,7 @@ const StudentList = () => {
   };
   const fetchAllStudents = useCallback(async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/getAllStudent?institutecode=${institutecode()}`);
+      const response = await axios.get(`http://13.233.43.240:8080/getAllStudent?institutecode=${institutecode()}`);
       if (
         response.status === 200 &&
         response.data &&
@@ -239,28 +239,28 @@ const StudentList = () => {
         let response;
         if (filter === "custom" && startDate && endDate) {
           response = await axios.get(
-            `http://localhost:8080/getStudentsByDateRange?institutecode=${institutecode()}&startDate=${startDate}&endDate=${endDate}`
+            `http://13.233.43.240:8080/getStudentsByDateRange?institutecode=${institutecode()}&startDate=${startDate}&endDate=${endDate}`
           );
         } else {
           switch (filter) {
             case "7":
               response = await axios.get(
-                // `http://localhost:8080/getDataof7Days?institutecode=${institutecode()}`
-                `http://localhost:8080/getStudentsByTimeframe?institutecode=${institutecode()}&timeframe=7days`
+                // `http://13.233.43.240:8080/getDataof7Days?institutecode=${institutecode()}`
+                `http://13.233.43.240:8080/getStudentsByTimeframe?institutecode=${institutecode()}&timeframe=7days`
               );
               break;
             case "30":
               response = await axios.get(
-                `http://localhost:8080/getStudentsByTimeframe?institutecode=${institutecode()}&timeframe=30days`
+                `http://13.233.43.240:8080/getStudentsByTimeframe?institutecode=${institutecode()}&timeframe=30days`
               );
               break;
             case "365":
               response = await axios.get(
-                `http://localhost:8080/getStudentsByTimeframe?institutecode=${institutecode()}&timeframe=365days`
+                `http://13.233.43.240:8080/getStudentsByTimeframe?institutecode=${institutecode()}&timeframe=365days`
               );
               break;
             default:
-              response = await axios.get(`http://localhost:8080/getAllStudent?institutecode=${institutecode()}`);
+              response = await axios.get(`http://13.233.43.240:8080/getAllStudent?institutecode=${institutecode()}`);
               break;
           }
         }
@@ -388,7 +388,7 @@ const StudentList = () => {
         exams,
       };
       await axios.put(
-        `http://localhost:8080/updateStudent/${updatingStudent.id}`,
+        `http://13.233.43.240:8080/updateStudent/${updatingStudent.id}`,
         payload
       );
       fetchAllStudents();
@@ -401,7 +401,7 @@ const StudentList = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8080/deleteMapping/${id}`);
+      await axios.delete(`http://13.233.43.240:8080/deleteMapping/${id}`);
       fetchAllStudents();
       handleCloseDialog();
       toast.success("Student data Deleted");
@@ -454,7 +454,7 @@ const StudentList = () => {
   };
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/all?institutecode=${institutecode()}`)
+      .get(`http://13.233.43.240:8080/all?institutecode=${institutecode()}`)
       .then((response) => {
         setStandards(response.data);
       })
@@ -464,7 +464,7 @@ const StudentList = () => {
   }, []);
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/getall?institutecode=${institutecode()}`)
+      .get(`http://13.233.43.240:8080/getall?institutecode=${institutecode()}`)
       .then((response) => {
         setMedium(response.data);
       })

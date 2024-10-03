@@ -134,7 +134,7 @@ export default function Bill() {
 
       try {
         const response = await fetch(
-          `http://localhost:8081/findInstitutesby/Institutecode?institutecode=${institutecode}`
+          `http://13.233.43.240:8081/findInstitutesby/Institutecode?institutecode=${institutecode}`
         );
         if (!response.ok) throw new Error("Network response was not ok");
         const data = await response.json();

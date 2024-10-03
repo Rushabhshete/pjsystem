@@ -72,7 +72,7 @@
 //     const fetchData = async () => {
 //       try {
 //         const response = await fetch(
-//           `http://localhost:8081/getSystemValueByInstitutecode?institutecode=${institutecode()}`
+//           `http://13.233.43.240:8081/getSystemValueByInstitutecode?institutecode=${institutecode()}`
 //         );
 //         const data = await response.json();
 //         setSystemValues(data);
@@ -763,7 +763,7 @@ const Sidebar = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8081/getSystemValueByInstitutecode?institutecode=${institutecode()}`
+          `http://13.233.43.240:8081/getSystemValueByInstitutecode?institutecode=${institutecode()}`
         );
         const data = await response.json();
         setSystemValues(data);

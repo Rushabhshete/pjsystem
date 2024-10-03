@@ -299,7 +299,7 @@ const CreateAccount = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8081/saveinstitude",
+        "http://13.233.43.240:8081/saveinstitude",
         dataToSubmit
       );
       setIsSaveSuccessful(true);
@@ -322,7 +322,7 @@ const CreateAccount = () => {
 
       try {
         const response = await axios.post(
-          `http://localhost:8081/uploadimage/${email}`,
+          `http://13.233.43.240:8081/uploadimage/${email}`,
           formDataImage,
           {
             headers: {
@@ -357,7 +357,7 @@ const CreateAccount = () => {
   const handleGetInstituteCode = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8081/findInstitutesby/email?emailaddress=${formData.emailaddress}`
+        `http://13.233.43.240:8081/findInstitutesby/email?emailaddress=${formData.emailaddress}`
       );
 
       if (response.data && response.data.institutecode) {

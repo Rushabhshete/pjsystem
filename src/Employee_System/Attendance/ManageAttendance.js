@@ -353,7 +353,7 @@ const ManageAttendance = () => {
   // Function to fetch employees by custom date range
   const fetchEmployeesByDateRange = async () => {
     try {
-      const response = await axios.get(`http://localhost:8082/byDateRange`, {
+      const response = await axios.get(`http://13.233.43.240:8082/byDateRange`, {
         params: {
           startDate,
           endDate,

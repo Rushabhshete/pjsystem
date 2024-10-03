@@ -45,7 +45,7 @@ export default function AddMemo() {
       // Fetch employees
       axios
         .get(
-          `http://localhost:8082/employees/status/Joined?institutecode=${institutecode}`
+          `http://13.233.43.240:8082/employees/status/Joined?institutecode=${institutecode}`
         )
         .then((response) => {
           setEmployees(response.data);
@@ -56,7 +56,7 @@ export default function AddMemo() {
       // Fetch departments
       axios
         .get(
-          `http://localhost:8082/departments/allDepartment?institutecode=${institutecode}`
+          `http://13.233.43.240:8082/departments/allDepartment?institutecode=${institutecode}`
         )
         .then((response) => setDepartments(response.data))
         .catch((error) => console.error("Error fetching departments:", error));
@@ -64,7 +64,7 @@ export default function AddMemo() {
       // Fetch categories
       axios
         .get(
-          `http://localhost:8082/categories/all?institutecode=${institutecode}`
+          `http://13.233.43.240:8082/categories/all?institutecode=${institutecode}`
         )
         .then((response) => setCategories(response.data))
         .catch((error) => console.error("Error fetching categories:", error));
@@ -123,7 +123,7 @@ export default function AddMemo() {
     // Send memo data to backend
     axios
       .post(
-        `http://localhost:8082/memos/addmemo?institutecode=${institutecode}`,
+        `http://13.233.43.240:8082/memos/addmemo?institutecode=${institutecode}`,
         memoData
       )
       .then(() => {

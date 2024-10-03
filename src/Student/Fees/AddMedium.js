@@ -31,7 +31,7 @@ export default function AddMedium() {
   const onSubmitMedium = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:8083/saveMedium?institutecode=${institutecode()}`, medium);
+      await axios.post(`http://13.233.43.240:8083/saveMedium?institutecode=${institutecode()}`, medium);
       window.alert("Medium Added Successfully!");
       fetchMediums();
       setMedium({ mediumName: "" });
@@ -42,7 +42,7 @@ export default function AddMedium() {
 
   const fetchMediums = async () => {
     try {
-      const result = await axios.get(`http://localhost:8083/getAllMediums?institutecode=${institutecode()}`);
+      const result = await axios.get(`http://13.233.43.240:8083/getAllMediums?institutecode=${institutecode()}`);
       setMediums(result.data);
     } catch (error) {
       console.error("There was an error fetching the mediums!", error);
@@ -51,7 +51,7 @@ export default function AddMedium() {
 
   const deleteMedium = async (mediumid) => {
     try {
-      await axios.delete(`http://localhost:8083/deleteMedium/${mediumid}?institutecode=${institutecode()}`);
+      await axios.delete(`http://13.233.43.240:8083/deleteMedium/${mediumid}?institutecode=${institutecode()}`);
       fetchMediums();
     } catch (error) {
       console.error("There was an error deleting the medium!", error);
@@ -68,7 +68,7 @@ export default function AddMedium() {
     try {
       // Ensure the request body is correct
      const response = await fetch(
-        `http://localhost:8083/updateMedium/${editMedium.mediumID}`,
+        `http://13.233.43.240:8083/updateMedium/${editMedium.mediumID}`,
 {
   method:"put",
   headers:{

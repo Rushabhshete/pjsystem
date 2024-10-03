@@ -44,7 +44,7 @@
 //   const onSubmitStandard = async (e) => {
 //     e.preventDefault();
 //     try {
-//       await axios.post(`http://localhost:8080/createstandard?institutecode=${institutecode()}`, standard);
+//       await axios.post(`http://13.233.43.240:8080/createstandard?institutecode=${institutecode()}`, standard);
 //       toast.success("Standard Added Successfully!");
 //       fetchStandards();
 //     } catch (error) {
@@ -55,7 +55,7 @@
 //   const onSubmitMedium = async (e) => {
 //     e.preventDefault();
 //     try {
-//       await axios.post(`http://localhost:8080/save?institutecode=${institutecode()}`, medium);
+//       await axios.post(`http://13.233.43.240:8080/save?institutecode=${institutecode()}`, medium);
 //        toast.success("Medium Added Successfully!");
 //       fetchMediums();
 //     } catch (error) {
@@ -65,7 +65,7 @@
 
 //   const fetchStandards = async () => {
 //     try {
-//       const result = await axios.get(`http://localhost:8080/all?institutecode=${institutecode()}`);
+//       const result = await axios.get(`http://13.233.43.240:8080/all?institutecode=${institutecode()}`);
 //       setStandards(result.data);
 //     } catch (error) {
 //       console.error("There was an error fetching the standards!", error);
@@ -74,7 +74,7 @@
 
 //   const fetchMediums = async () => {
 //     try {
-//       const result = await axios.get(`http://localhost:8080/getall?institutecode=${institutecode()}`);
+//       const result = await axios.get(`http://13.233.43.240:8080/getall?institutecode=${institutecode()}`);
 //       setMediums(result.data);
 //     } catch (error) {
 //       console.error("There was an error fetching the mediums!", error);
@@ -90,12 +90,12 @@
 //     try {
 //       if (deleteItemId) {
 //         await axios.delete(
-//           `http://localhost:8080/deleteStandard/${deleteItemId}`
+//           `http://13.233.43.240:8080/deleteStandard/${deleteItemId}`
 //         ); // Adjust the endpoint as per your API
 //         fetchStandards();
 //       } else {
 //         await axios.delete(
-//           `http://localhost:8080/deleteMediumById/${deleteItemId}`
+//           `http://13.233.43.240:8080/deleteMediumById/${deleteItemId}`
 //         ); // Adjust the endpoint as per your API
 //         fetchMediums();
 //       }
@@ -122,7 +122,7 @@
 //     e.preventDefault();
 //     try {
 //       await axios.put(
-//         `http://localhost:8080/updateStandard/${editStandard.standardid}`,
+//         `http://13.233.43.240:8080/updateStandard/${editStandard.standardid}`,
 //         standard
 //       );
 //        toast.success("Standard Updated Successfully!");
@@ -138,7 +138,7 @@
 //     e.preventDefault();
 //     try {
 //       await axios.put(
-//         `http://localhost:8080/updateMedium/${editMedium.mediumid}`,
+//         `http://13.233.43.240:8080/updateMedium/${editMedium.mediumid}`,
 //         medium
 //       );
 //        toast.success("Medium Updated Successfully!");
@@ -391,7 +391,7 @@ export default function AddExam() {
   const onSubmitStandard = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:8080/createstandard?institutecode=${institutecode()}`, standard);
+      await axios.post(`http://13.233.43.240:8080/createstandard?institutecode=${institutecode()}`, standard);
       toast.success("Standard Added Successfully!");
       fetchStandards();
     } catch (error) {
@@ -402,7 +402,7 @@ export default function AddExam() {
   const onSubmitMedium = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:8080/save?institutecode=${institutecode()}`, medium);
+      await axios.post(`http://13.233.43.240:8080/save?institutecode=${institutecode()}`, medium);
       toast.success("Medium Added Successfully!");
       fetchMediums();
     } catch (error) {
@@ -412,7 +412,7 @@ export default function AddExam() {
 
   const fetchStandards = async () => {
     try {
-      const result = await axios.get(`http://localhost:8080/all?institutecode=${institutecode()}`);
+      const result = await axios.get(`http://13.233.43.240:8080/all?institutecode=${institutecode()}`);
       setStandards(result.data);
     } catch (error) {
       console.error("There was an error fetching the standards!", error);
@@ -421,7 +421,7 @@ export default function AddExam() {
 
   const fetchMediums = async () => {
     try {
-      const result = await axios.get(`http://localhost:8080/getall?institutecode=${institutecode()}`);
+      const result = await axios.get(`http://13.233.43.240:8080/getall?institutecode=${institutecode()}`);
       setMediums(result.data);
     } catch (error) {
       console.error("There was an error fetching the mediums!", error);
@@ -437,10 +437,10 @@ export default function AddExam() {
   const handleDeleteConfirm = async () => {
     try {
       if (isDeletingStandard) {
-        await axios.delete(`http://localhost:8080/deleteStandard/${deleteItemId}`);
+        await axios.delete(`http://13.233.43.240:8080/deleteStandard/${deleteItemId}`);
         fetchStandards();
       } else {
-        await axios.delete(`http://localhost:8080/deleteMediumById/${deleteItemId}`);
+        await axios.delete(`http://13.233.43.240:8080/deleteMediumById/${deleteItemId}`);
         fetchMediums();
       }
       toast.success("Item Deleted Successfully!");
@@ -465,7 +465,7 @@ export default function AddExam() {
   const onSubmitEditStandard = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8080/updateStandard/${editStandard.standardid}`, standard);
+      await axios.put(`http://13.233.43.240:8080/updateStandard/${editStandard.standardid}`, standard);
       toast.success("Standard Updated Successfully!");
       fetchStandards();
       setEditStandard(null);
@@ -478,7 +478,7 @@ export default function AddExam() {
   const onSubmitEditMedium = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8080/updateMedium/${editMedium.mediumid}`, medium);
+      await axios.put(`http://13.233.43.240:8080/updateMedium/${editMedium.mediumid}`, medium);
       toast.success("Medium Updated Successfully!");
       fetchMediums();
       setEditMedium(null);

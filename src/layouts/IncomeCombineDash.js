@@ -37,7 +37,7 @@
 //     try {
 //       console.log("Fetching income data...");
 //       const response = await axios.get(
-//         `http://localhost:8087/dashboard/incomes/totals?institutecode=${institutecode}`
+//         `http://13.233.43.240:8087/dashboard/incomes/totals?institutecode=${institutecode}`
 //       );
 //       console.log("Income data response:", response);
 //       setIncomeData(response.data);
@@ -58,7 +58,7 @@
 //     try {
 //       console.log("Fetching expense data...");
 //       const response = await axios.get(
-//         `http://localhost:8087/dashboard/expenses/totals?institutecode=${institutecode}`
+//         `http://13.233.43.240:8087/dashboard/expenses/totals?institutecode=${institutecode}`
 //       );
 //       console.log("Expense data response:", response);
 //       setExpenseData(response.data);
@@ -70,7 +70,7 @@
 //   const fetchSavingsData = useCallback(async () => {
 //     try {
 //       const response = await axios.get(
-//         `http://localhost:8087/dashboard/savings?institutecode=${institutecode}`
+//         `http://13.233.43.240:8087/dashboard/savings?institutecode=${institutecode}`
 //       );
 //       setSavingsData(response.data);
 //     } catch (error) {
@@ -86,10 +86,10 @@
 //     try {
 //       const [incomeResponse, expenseResponse] = await Promise.all([
 //         axios.get(
-//           `http://localhost:8087/income/total-monthly?year=${year}&institutecode=${institutecode}`
+//           `http://13.233.43.240:8087/income/total-monthly?year=${year}&institutecode=${institutecode}`
 //         ),
 //         axios.get(
-//           `http://localhost:8087/expense/total-monthly?year=${year}&institutecode=${institutecode}`
+//           `http://13.233.43.240:8087/expense/total-monthly?year=${year}&institutecode=${institutecode}`
 //         ),
 //       ]);
 
@@ -465,7 +465,7 @@ export default function IncomeCombineDash() {
   const fetchIncomeData = useCallback(async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8087/dashboard/incomes/totals?institutecode=${institutecode}`
+        `http://13.233.43.240:8087/dashboard/incomes/totals?institutecode=${institutecode}`
       );
       setIncomeData(response.data);
     } catch (error) {
@@ -476,7 +476,7 @@ export default function IncomeCombineDash() {
   const fetchExpenseData = useCallback(async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8087/dashboard/expenses/totals?institutecode=${institutecode}`
+        `http://13.233.43.240:8087/dashboard/expenses/totals?institutecode=${institutecode}`
       );
       setExpenseData(response.data);
     } catch (error) {
@@ -487,7 +487,7 @@ export default function IncomeCombineDash() {
   const fetchSavingsData = useCallback(async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8087/dashboard/savings?institutecode=${institutecode}`
+        `http://13.233.43.240:8087/dashboard/savings?institutecode=${institutecode}`
       );
       setSavingsData(response.data);
     } catch (error) {
@@ -505,10 +505,10 @@ export default function IncomeCombineDash() {
     try {
       const [incomeResponse, expenseResponse] = await Promise.all([
         axios.get(
-          `http://localhost:8087/income/total-monthly?year=${year}&institutecode=${institutecode}`
+          `http://13.233.43.240:8087/income/total-monthly?year=${year}&institutecode=${institutecode}`
         ),
         axios.get(
-          `http://localhost:8087/expense/total-monthly?year=${year}&institutecode=${institutecode}`
+          `http://13.233.43.240:8087/expense/total-monthly?year=${year}&institutecode=${institutecode}`
         ),
       ]);
 
