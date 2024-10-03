@@ -167,50 +167,93 @@ const EmpReport = () => {
       user.workDetail?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleDownloadPDF = () => {
-    const doc = new jsPDF({ orientation: "landscape" });
-    const margin = 10; // Set margin for top spacing
+//   const handleDownloadPDF = () => {
+//     const doc = new jsPDF({ orientation: "landscape" });
+//     const margin = 10; // Set margin for top spacing
 
-    // Add the title "Employee Report"
-    const title = "Employee Report";
-    doc.setFontSize(18);
-    const titleWidth = doc.getTextWidth(title);
-    const centerX = (doc.internal.pageSize.getWidth() - titleWidth) / 2;
-    doc.text(title, centerX, margin + 15, { align: "center" });
+//     // Add the title "Employee Report"
+//     const title = "Employee Report";
+//     doc.setFontSize(18);
+//     const titleWidth = doc.getTextWidth(title);
+//     const centerX = (doc.internal.pageSize.getWidth() - titleWidth) / 2;
+//     doc.text(title, centerX, margin + 15, { align: "center" });
 
-    // Add institute image and name
-    const instituteImage = employeeDetails.instituteimage; // Assuming this is a base64 string or URL
-    const instituteName = employeeDetails.institutename;
+//     // Add institute image and name
+//     const instituteImage = employeeDetails.instituteimage; // Assuming this is a base64 string or URL
+//     const instituteName = employeeDetails.institutename;
 
-    let currentY = margin + 30; // Initial Y position after title
+//     let currentY = margin + 30; // Initial Y position after title
 
-    if (instituteImage) {
-        const image = new Image();
-        image.src = instituteImage;
-        image.onload = () => {
-            const imageWidth = 30; // Set desired width
-            const imageHeight = 30; // Set desired height
+//     if (instituteImage) {
+//         const image = new Image();
+//         image.src = instituteImage;
+//         image.onload = () => {
+//             const imageWidth = 30; // Set desired width
+//             const imageHeight = 30; // Set desired height
 
-            // Center the image
-            doc.addImage(image, 'JPEG', (doc.internal.pageSize.getWidth() / 2) - (imageWidth / 2), currentY, imageWidth, imageHeight);
-            currentY += imageHeight + 5; // Update Y position for institute name
+//             // Center the image
+//             doc.addImage(image, 'JPEG', (doc.internal.pageSize.getWidth() / 2) - (imageWidth / 2), currentY, imageWidth, imageHeight);
+//             currentY += imageHeight + 5; // Update Y position for institute name
 
-            // Add institute name below the image
-            doc.setFontSize(14);
-            const instituteNameWidth = doc.getTextWidth(instituteName);
-            doc.text(instituteName, (doc.internal.pageSize.getWidth() - instituteNameWidth) / 2, currentY, { align: "center" });
-            currentY += 20; // Update Y position for table
-            createTable(doc, currentY);
-        };
-    } else {
-        // If there's no institute image, just add the institute name
-        doc.setFontSize(14);
-        const instituteNameWidth = doc.getTextWidth(instituteName);
-        doc.text(instituteName, (doc.internal.pageSize.getWidth() - instituteNameWidth) / 2, margin + 40, { align: "center" });
-        currentY = margin + 60; // Update Y position for table
-        createTable(doc, currentY);
-    }
+//             // Add institute name below the image
+//             doc.setFontSize(14);
+//             const instituteNameWidth = doc.getTextWidth(instituteName);
+//             doc.text(instituteName, (doc.internal.pageSize.getWidth() - instituteNameWidth) / 2, currentY, { align: "center" });
+//             currentY += 20; // Update Y position for table
+//             createTable(doc, currentY);
+//         };
+//     } else {
+//         // If there's no institute image, just add the institute name
+//         doc.setFontSize(14);
+//         const instituteNameWidth = doc.getTextWidth(instituteName);
+//         doc.text(instituteName, (doc.internal.pageSize.getWidth() - instituteNameWidth) / 2, margin + 40, { align: "center" });
+//         currentY = margin + 60; // Update Y position for table
+//         createTable(doc, currentY);
+//     }
+// };
+
+const handleDownloadPDF = () => {
+  const doc = new jsPDF({ orientation: "landscape" });
+  const margin = 10; // Set margin for top spacing
+
+  // Add the title "Employee Report"
+  const title = "Employee Report";
+  doc.setFontSize(18);
+  // Center title automatically
+  doc.text(title, doc.internal.pageSize.getWidth() / 2, margin + 15, { align: "center" });
+
+  // Add institute image and name
+  const instituteImage = employeeDetails.instituteimage; // Assuming this is a base64 string or URL
+  const instituteName = employeeDetails.institutename;
+
+  let currentY = margin + 30; // Initial Y position after title
+
+  if (instituteImage) {
+      const image = new Image();
+      image.src = instituteImage;
+      image.onload = () => {
+          const imageWidth = 30; // Set desired width
+          const imageHeight = 30; // Set desired height
+
+          // Center the image
+          doc.addImage(image, 'JPEG', (doc.internal.pageSize.getWidth() / 2) - (imageWidth / 2), currentY, imageWidth, imageHeight);
+          currentY += imageHeight + 5; // Update Y position for institute name
+
+          // Add institute name below the image and center it
+          doc.setFontSize(14);
+          doc.text(instituteName, doc.internal.pageSize.getWidth() / 2, currentY, { align: "center" });
+          currentY += 20; // Update Y position for table
+          createTable(doc, currentY);
+      };
+  } else {
+      // If there's no institute image, just add the institute name
+      doc.setFontSize(14);
+      doc.text(instituteName, doc.internal.pageSize.getWidth() / 2, margin + 40, { align: "center" });
+      currentY = margin + 60; // Update Y position for table
+      createTable(doc, currentY);
+  }
 };
+
 
 const createTable = (doc, startY) => {
     doc.autoTable({

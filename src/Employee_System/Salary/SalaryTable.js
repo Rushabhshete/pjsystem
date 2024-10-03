@@ -358,9 +358,10 @@ useEffect(() => {
             const matchesDepartment = selectedDepartment === "" || salary.department === selectedDepartment;
             const matchesCategory = selectedCategory === "" || salary.employeecategory === selectedCategory;
             const matchesStatus = selectedStatus === "" || salary.status === selectedStatus;
+            // const matchesSearchTerm = 
+            //     salary.fullName.toLowerCase().includes(searchTerm.toLowerCase());
             const matchesSearchTerm = 
-                salary.fullName.toLowerCase().includes(searchTerm.toLowerCase());
-
+    (salary.fullName && salary.fullName.toLowerCase().includes(searchTerm.toLowerCase()));
             return matchesDepartment && matchesCategory && matchesStatus && matchesSearchTerm;
         });
 

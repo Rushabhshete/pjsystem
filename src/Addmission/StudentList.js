@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import WhatsAppIcon from '@mui/icons-material/WhatsApp'; // Import WhatsApp Icon
 import {
   Table,
   TableBody,
@@ -29,6 +30,8 @@ import "jspdf-autotable";
 import Papa from "papaparse";
 import UpdateAdmissionForm from "./UpdateAdmissionForm";
 import { Link } from "react-router-dom";
+import PrintIcon from "@mui/icons-material/Print";
+import html2pdf from "html2pdf.js"; // Importing html2pdf.js
 
 const DownloadButton = styled(Button)(({ theme }) => ({
   margin: theme.spacing(1),
@@ -84,6 +87,33 @@ const StudentList = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(50);
   const [selectedAdmission, setSelectedAdmission] = useState(null);
+  const [selectedPrintAdmission, setSelectedPrintAdmission] = useState(false);
+  const [openReceipt, setOpenReceipt] = useState(false);
+  const handleGenerate = (instituteData) => {
+    setSelectedPrintAdmission(instituteData);
+    setOpenReceipt(true);
+  };
+
+  const downloadReceipt = () => {
+    const receiptElement = document.getElementById("receipt");
+
+    // Ensure that images are fully loaded before creating the PDF
+    html2pdf()
+      .from(receiptElement)
+      .set({
+        margin: 0.2,
+        filename: "receipt.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: {
+          scale: 2,
+          logging: true, // Set this to true to get logs about image loading
+          useCORS: true, // Enables cross-origin loading for images
+        },
+        jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+      })
+      .save();
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -131,7 +161,6 @@ const StudentList = () => {
 
     fetchEmployeeDetails();
   }, [institutecode]);
-
 
   useEffect(() => {
     const fetchAdmissions = async () => {
@@ -211,6 +240,11 @@ const StudentList = () => {
     setSearchQuery(event.target.value);
   };
 
+  const handleWhatsAppClick = (mobile1) => {
+    const url = `https://wa.me/${mobile1}`; // Format: wa.me/1234567890
+    window.open(url, '_blank'); // Open WhatsApp in new tab
+  };
+
   const filteredAdmissions = useMemo(() => {
     return admissions.filter((admission) => {
       const matchesSource = selectedSource
@@ -253,9 +287,9 @@ const StudentList = () => {
 
   const handleDownload = () => {
     const doc = new jsPDF({
-        orientation: "landscape",
-        unit: "mm",
-        format: "a4",
+      orientation: "landscape",
+      unit: "mm",
+      format: "a4",
     });
 
     // Load the image
@@ -267,7 +301,7 @@ const StudentList = () => {
 
     // Add institute image (you may need to adjust the width/height)
     if (imgData) {
-        doc.addImage(imgData, 'JPEG', centerX - 30, startY, 60, 30); // Adjust the size and position as needed
+      doc.addImage(imgData, "JPEG", centerX - 30, startY, 60, 30); // Adjust the size and position as needed
     }
 
     // Add title
@@ -275,85 +309,81 @@ const StudentList = () => {
     const instituteName = employeeDetails.institutename;
 
     doc.setFontSize(18);
-    doc.text(title, centerX, startY + 35, { align: 'center' }); // Position the title below the image
+    doc.text(title, centerX, startY + 35, { align: "center" }); // Position the title below the image
     doc.setFontSize(14);
-    doc.text(instituteName, centerX, startY + 45, { align: 'center' }); // Position the institute name below the title
+    doc.text(instituteName, centerX, startY + 45, { align: "center" }); // Position the institute name below the title
 
-    const columns = [ 
-        { title: "ID", dataKey: "id" },
-        { title: "Name", dataKey: "name" },
-        { title: "Mobile 1", dataKey: "mobile1" },
-        { title: "Email", dataKey: "email" },
-        { title: "Course", dataKey: "courses" },
-        { title: "Duration", dataKey: "duration" },
-        { title: "Joining Date", dataKey: "joiningDate" },
-        { title: "Due Date", dataKey: "expiryDate" },
-        { title: "Total Fees", dataKey: "totalFees" },
-        { title: "Paid Fees", dataKey: "paidFees" },
-        { title: "Pending Fees", dataKey: "pendingFees" },
-        { title: "Payment Mode", dataKey: "paymentMode" },
-        { title: "Guide Name", dataKey: "guideName" },
-        { title: "Source By", dataKey: "sourceBy" },
-        { title: "Medium", dataKey: "medium" },
+    const columns = [
+      { title: "ID", dataKey: "id" },
+      { title: "Name", dataKey: "name" },
+      { title: "Mobile 1", dataKey: "mobile1" },
+      { title: "Email", dataKey: "email" },
+      { title: "Course", dataKey: "courses" },
+      { title: "Duration", dataKey: "duration" },
+      { title: "Joining Date", dataKey: "joiningDate" },
+      { title: "Due Date", dataKey: "expiryDate" },
+      { title: "Total Fees", dataKey: "totalFees" },
+      { title: "Paid Fees", dataKey: "paidFees" },
+      { title: "Pending Fees", dataKey: "pendingFees" },
+      { title: "Payment Mode", dataKey: "paymentMode" },
+      { title: "Guide Name", dataKey: "guideName" },
+      { title: "Source By", dataKey: "sourceBy" },
+      { title: "Medium", dataKey: "medium" },
     ];
 
     const rows = filteredAdmissions.map((admission) => ({
-        id: admission.id,
-        name: admission.name,
-        mobile1: admission.mobile1,
-        email: admission.email,
-        courses: admission.courses,
-        duration: admission.duration,
-        joiningDate: new Date(admission.date).toLocaleDateString(),
-        expiryDate: new Date(admission.dueDate).toLocaleDateString(),
-        totalFees: admission.totalFees,
-        paidFees: admission.paidFees,
-        pendingFees: admission.pendingFees,
-        paymentMode: admission.paymentMode,
-        guideName: admission.guideName,
-        sourceBy: admission.sourceBy,
-        medium: admission.medium,
+      id: admission.id,
+      name: admission.name,
+      mobile1: admission.mobile1,
+      email: admission.email,
+      courses: admission.courses,
+      duration: admission.duration,
+      joiningDate: new Date(admission.date).toLocaleDateString(),
+      expiryDate: new Date(admission.dueDate).toLocaleDateString(),
+      totalFees: admission.totalFees,
+      paidFees: admission.paidFees,
+      pendingFees: admission.pendingFees,
+      paymentMode: admission.paymentMode,
+      guideName: admission.guideName,
+      sourceBy: admission.sourceBy,
+      medium: admission.medium,
     }));
 
     // Set the starting Y position for the table below the title
     const tableStartY = startY + 55; // Adjust this value as needed to create space for the table
 
     doc.autoTable({
-        columns,
-        body: rows,
-        startY: tableStartY, // Use the defined table starting position
-        columnStyles: {
-            id: { cellWidth: 10 }, 
-            name: { cellWidth: 30 },
-            mobile1: { cellWidth: 20 },
-            email: { cellWidth: 50 },
-            courses: { cellWidth: 15 },
-            duration: { cellWidth: 15 },
-            joiningDate: { cellWidth: 17 },
-            expiryDate: { cellWidth: 17 },
-            totalFees: { cellWidth: 12 },
-            paidFees: { cellWidth: 12 },
-            pendingFees: { cellWidth: 12 },
-            paymentMode: { cellWidth: 15 },
-            guideName: { cellWidth: 20 },
-            sourceBy: { cellWidth: 20 },
-            medium: { cellWidth: 15 },
-        },
-        styles: {
-            overflow: 'linebreak',
-            fontSize: 7,
-        },
-        headStyles: {
-            fillColor: [128, 0, 128], // Purple header background
-        },
+      columns,
+      body: rows,
+      startY: tableStartY, // Use the defined table starting position
+      columnStyles: {
+        id: { cellWidth: 10 },
+        name: { cellWidth: 30 },
+        mobile1: { cellWidth: 20 },
+        email: { cellWidth: 50 },
+        courses: { cellWidth: 15 },
+        duration: { cellWidth: 15 },
+        joiningDate: { cellWidth: 17 },
+        expiryDate: { cellWidth: 17 },
+        totalFees: { cellWidth: 12 },
+        paidFees: { cellWidth: 12 },
+        pendingFees: { cellWidth: 12 },
+        paymentMode: { cellWidth: 15 },
+        guideName: { cellWidth: 20 },
+        sourceBy: { cellWidth: 20 },
+        medium: { cellWidth: 15 },
+      },
+      styles: {
+        overflow: "linebreak",
+        fontSize: 7,
+      },
+      headStyles: {
+        fillColor: [128, 0, 128], // Purple header background
+      },
     });
 
     doc.save("admissions.pdf");
-};
-
-
-
-  
+  };
 
   const handleDownloadCSV = () => {
     const csvData = Papa.unparse(filteredAdmissions);
@@ -723,17 +753,284 @@ const StudentList = () => {
                   >
                     <DeleteIcon />
                   </IconButton>
+                  <IconButton
+                    onClick={() => handleGenerate(admission)}
+                    color="inherit"
+                  >
+                    <PrintIcon />
+                  </IconButton>
+                  <IconButton onClick={() => handleWhatsAppClick(admission.mobile1)} color="success">
+                    <WhatsAppIcon />
+                  </IconButton>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+
+
+
       <AlertDialog
         open={confirmOpen}
         onClose={() => setConfirmOpen(false)}
         onConfirm={handleDelete}
       />
+
+
+
+      {/* print receipt  */}
+
+      <Dialog
+  open={openReceipt}
+  onClose={() => setOpenReceipt(false)}
+  maxWidth="md"
+  fullWidth
+>
+  <DialogContent sx={{ p: 1 }}>
+    {selectedPrintAdmission ? (
+      <Box id="receipt" sx={{ p: 3 }}>
+        {/* Heading */}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            mb: 1,
+          }}
+        >
+          {/* Left side content (Institute Name, Address, Phone) */}
+          <Box>
+            <Typography variant="h6" align="left">
+              <Typography
+                variant="h6"
+                align="left"
+                sx={{ fontSize: "30px", color: "purple" }}
+              >
+                {employeeDetails.institutename || "Guest"}
+              </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  mb: 0.5,
+                }}
+              >
+                {employeeDetails.address && (
+                  <Typography variant="body2">
+                    <strong>Address: </strong>
+                    {employeeDetails.address}
+                  </Typography>
+                )}
+              </Box>
+              {employeeDetails.phonenumber && (
+                <Box sx={{ mt: 0 }}>
+                  <Typography variant="body2">
+                    <strong>Mobile: </strong>
+                    {employeeDetails.phonenumber}
+                  </Typography>
+                </Box>
+              )}
+              {employeeDetails.emailaddress && (
+                <Box sx={{ mt: 0 }}>
+                  <Typography variant="body2">
+                    <strong>Email: </strong>
+                    {employeeDetails.emailaddress}
+                  </Typography>
+                </Box>
+              )}
+            </Typography>
+          </Box>
+
+          {/* Right side content (Institute Image) */}
+          {employeeDetails.instituteimage && (
+            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+              <img
+                src={employeeDetails.instituteimage}
+                alt="Institute Logo"
+                style={{
+                  maxWidth: "100px",
+                  maxHeight: "100px",
+                  borderRadius: "50%",
+                }}
+              />
+            </Box>
+          )}
+        </Box>
+
+        {/* Invoice Number and Date */}
+        <Typography
+          variant="body2"
+          align="center"
+          sx={{
+            borderTop: "8px solid purple",
+            padding: "10px",
+            justifyContent: "space-between",
+            gap: "20px",
+            backgroundColor: "#f3e5f5",
+          }}
+        >
+          <Typography component="span">
+            <Typography component="span" sx={{ fontWeight: "bold" }}>
+              {selectedPrintAdmission.name}, Admission Receipt
+            </Typography>
+          </Typography>
+        </Typography>
+
+        {/* Table with Data */}
+        <Table
+          size="small"
+          sx={{
+            marginTop: "10px",
+            textAlign: "center",
+            justifyContent: "space-evenly",
+          }}
+        >
+          <TableBody
+            sx={{
+              borderTop: "3px solid purple",
+              borderBottom: "3px solid purple",
+            }}
+          >
+            {selectedPrintAdmission.name && (
+              <TableRow>
+                <TableCell sx={{ fontWeight: "bold" }}>Name:</TableCell>
+                <TableCell>{selectedPrintAdmission.name}</TableCell>
+              </TableRow>
+            )}
+            {selectedPrintAdmission.mobile1 && (
+              <TableRow>
+                <TableCell sx={{ fontWeight: "bold" }}>Mobile No:</TableCell>
+                <TableCell>{selectedPrintAdmission.mobile1}</TableCell>
+              </TableRow>
+            )}
+            {selectedPrintAdmission.email && (
+              <TableRow>
+                <TableCell sx={{ fontWeight: "bold" }}>Email:</TableCell>
+                <TableCell>{selectedPrintAdmission.email}</TableCell>
+              </TableRow>
+            )}
+            {selectedPrintAdmission.courses && (
+              <TableRow>
+                <TableCell sx={{ fontWeight: "bold" }}>Course:</TableCell>
+                <TableCell>{selectedPrintAdmission.courses}</TableCell>
+              </TableRow>
+            )}
+            {selectedPrintAdmission.duration && (
+              <TableRow>
+                <TableCell sx={{ fontWeight: "bold" }}>Duration:</TableCell>
+                <TableCell>{selectedPrintAdmission.duration}</TableCell>
+              </TableRow>
+            )}
+            {selectedPrintAdmission.joiningDate && (
+              <TableRow>
+                <TableCell sx={{ fontWeight: "bold" }}>Joining Date:</TableCell>
+                <TableCell>{selectedPrintAdmission.joiningDate}</TableCell>
+              </TableRow>
+            )}
+            {selectedPrintAdmission.expiryDate && (
+              <TableRow>
+                <TableCell sx={{ fontWeight: "bold" }}>Expiry Date:</TableCell>
+                <TableCell>{selectedPrintAdmission.expiryDate}</TableCell>
+              </TableRow>
+            )}
+            {selectedPrintAdmission.paymentMethod && (
+              <TableRow>
+                <TableCell sx={{ fontWeight: "bold" }}>Status:</TableCell>
+                <TableCell>{selectedPrintAdmission.paymentMethod}</TableCell>
+              </TableRow>
+            )}
+            {/* {selectedPrintAdmission.remark && (
+              <TableRow>
+                <TableCell sx={{ fontWeight: "bold" }}>Remark:</TableCell>
+                <TableCell>{selectedPrintAdmission.remark}</TableCell>
+              </TableRow>
+            )} */}
+            {selectedPrintAdmission.totalFees && (
+              <TableRow>
+                <TableCell sx={{ fontWeight: "bold" }}>Total Fees:</TableCell>
+                <TableCell>{selectedPrintAdmission.totalFees}</TableCell>
+              </TableRow>
+            )}{selectedPrintAdmission.paidFees && (
+              <TableRow>
+                <TableCell sx={{ fontWeight: "bold" }}>Paid Fees:</TableCell>
+                <TableCell>{selectedPrintAdmission.paidFees}</TableCell>
+              </TableRow>
+            )}{selectedPrintAdmission.pendingFees && selectedPrintAdmission.pendingFees !== "0.0" && (
+              <TableRow>
+                <TableCell sx={{ fontWeight: "bold" }}>Pending Fees:</TableCell>
+                <TableCell>{selectedPrintAdmission.pendingFees}</TableCell>
+              </TableRow>
+            )}
+            
+            {selectedPrintAdmission.paymentMode && (
+              <TableRow>
+                <TableCell sx={{ fontWeight: "bold" }}>Payment Mode:</TableCell>
+                <TableCell>{selectedPrintAdmission.paymentMode}</TableCell>
+              </TableRow>
+            )}
+            {selectedPrintAdmission.guideName && (
+              <TableRow>
+                <TableCell sx={{ fontWeight: "bold" }}>Guide Name:</TableCell>
+                <TableCell>{selectedPrintAdmission.guideName}</TableCell>
+              </TableRow>
+            )}
+            {selectedPrintAdmission.sourceBy && (
+              <TableRow>
+                <TableCell sx={{ fontWeight: "bold" }}>Source:</TableCell>
+                <TableCell>{selectedPrintAdmission.sourceBy}</TableCell>
+              </TableRow>
+            )}
+            {selectedPrintAdmission.medium && (
+              <TableRow>
+                <TableCell sx={{ fontWeight: "bold" }}>Medium:</TableCell>
+                <TableCell>{selectedPrintAdmission.medium}</TableCell>
+              </TableRow>
+            )}
+            {selectedPrintAdmission.fatherProfession && (
+              <TableRow>
+                <TableCell sx={{ fontWeight: "bold" }}>Father's Profession:</TableCell>
+                <TableCell>{selectedPrintAdmission.fatherProfession}</TableCell>
+              </TableRow>
+            )}
+            {selectedPrintAdmission.educationQualification && (
+              <TableRow>
+                <TableCell sx={{ fontWeight: "bold" }}>Edu. Qualification:</TableCell>
+                <TableCell>{selectedPrintAdmission.educationQualification}</TableCell>
+              </TableRow>
+            )}
+            {selectedPrintAdmission.annualIncome && (
+              <TableRow>
+                <TableCell sx={{ fontWeight: "bold" }}>Annual Income:</TableCell>
+                <TableCell>{selectedPrintAdmission.annualIncome}</TableCell>
+              </TableRow>
+            )}
+            {selectedPrintAdmission.photo && (
+              <TableRow>
+                <TableCell sx={{ fontWeight: "bold" }}>Photo:</TableCell>
+                <TableCell>{selectedPrintAdmission.photo}</TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </Box>
+    ) : null}
+  </DialogContent>
+
+  <DialogActions>
+    <Button
+      variant="contained"
+      color="primary"
+      onClick={() => downloadReceipt(selectedPrintAdmission)}
+    >
+      Download PDF
+    </Button>
+    <Button onClick={() => setOpenReceipt(false)}>Close</Button>
+  </DialogActions>
+</Dialog>
+
+
+
+
 
       <Dialog open={openUpdateDialog} onClose={handleCloseDialog}>
         <DialogTitle>Update Admission</DialogTitle>
@@ -752,6 +1049,10 @@ const StudentList = () => {
           onUpdate={handleUpdateAdmission}
         />
       )}
+
+
+
+
     </div>
   );
 };

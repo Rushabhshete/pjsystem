@@ -36,7 +36,7 @@ const AdmissionForm = () => {
     feesReceipt: null,
     studentPhoto: null,
     paymentMethod: "",
-    balanceAmount: "pending",
+    pendingFees: "",
   });
   const [courses, setCourses] = useState([]);
   const [source, setSources] = useState([]);
@@ -98,17 +98,17 @@ const AdmissionForm = () => {
   }, [institutecode]);
 
   useEffect(() => {
-    const calculateBalanceAmount = () => {
+    const calculatependingFees = () => {
       const total = parseFloat(formData.totalFees) || 0;
       const paid = parseFloat(formData.paidFees) || 0;
-      const balanceAmount = total - paid;
+      const pendingFees = total - paid;
       setFormData((prevFormData) => ({
         ...prevFormData,
-        balanceAmount: balanceAmount > 0 ? balanceAmount.toString() : "",
+        pendingFees: pendingFees > 0 ? pendingFees.toString() : "",
       }));
     };
 
-    calculateBalanceAmount();
+    calculatependingFees();
   }, [formData.totalFees, formData.paidFees]);
 
   useEffect(() => {
@@ -176,7 +176,8 @@ const AdmissionForm = () => {
     }
   };
 
-  const calculateBalance = () => {
+  const 
+  calculateBalance = () => {
     if (formData.paymentMethod === "Pending") {
       // If the payment method is "Pending", set paidFees to 0
       return formData.totalFees; // Balance will be the total fees since nothing is paid
@@ -371,25 +372,24 @@ const AdmissionForm = () => {
               </TextField>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
-  <TextField
-    fullWidth
-    id="paidFees"
-    name="paidFees"
-    label="Fees Paying"
-    value={formData.paidFees || 0}
-    onChange={handleInputChange}
-    required
-    disabled={formData.paymentMethod === "Pending"} // Disable input if paymentMethod is "Pending"
-  />
-</Grid>
-
+              <TextField
+                fullWidth
+                id="paidFees"
+                name="paidFees"
+                label="Fees Paying"
+                value={formData.paidFees || 0}
+                onChange={handleInputChange}
+                required
+                disabled={formData.paymentMethod === "Pending"} // Disable input if paymentMethod is "Pending"
+              />
+            </Grid>
             {formData.paymentMethod === "Pending" ||
             formData.paymentMethod === "Partial" ? (
               <Grid item xs={12} sm={6} md={4}>
                 <TextField
                   fullWidth
-                  id="balanceAmount"
-                  name="balanceAmount"
+                  id="pendingFees"
+                  name="pendingFees"
                   label="Pending Fees"
                   value={calculateBalance() || 0}
                   InputProps={{ readOnly: true }}

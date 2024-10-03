@@ -415,7 +415,7 @@ const {
               <Grid item xs={12} md={6}>
                 <Box
                   sx={{
-                    backgroundColor: "#F4C431",
+                    backgroundColor: "#F9E79F",
                     padding: 2,
                     borderRadius: "10px",
                     textAlign: "center",
@@ -513,7 +513,7 @@ const {
               <Grid item xs={12} md={6}>
                 <Box
                   sx={{
-                    backgroundColor: "#F4C431",
+                    backgroundColor: "#F9E79F",
                     padding: 2,
                     borderRadius: "10px",
                     textAlign: "center",
