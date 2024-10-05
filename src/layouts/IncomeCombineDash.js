@@ -684,6 +684,7 @@ export default function IncomeCombineDash() {
             border: '1px solid lightgray',
             borderRadius: 2,
             marginTop: '10px',
+            color:"#F2EAE5"
           }}
         >
           <Grid container spacing={2} justifyContent="center" wrap="nowrap">
