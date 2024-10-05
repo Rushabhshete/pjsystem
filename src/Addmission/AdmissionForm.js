@@ -148,9 +148,9 @@ const AdmissionForm = () => {
     }
   };
 
-  const handleFinalSubmit = () => {
-    navigate("/layout/students");
-  };
+  // const handleFinalSubmit = () => {
+  //   navigate("/layout/students");
+  // };
 
   const handleFileUpload = async (fieldName, endpoint) => {
     const file = formData[fieldName];
@@ -597,7 +597,7 @@ const AdmissionForm = () => {
                 spacing={3}
                 style={{ marginTop: "10px" }}
               >
-                <Grid item>
+                {/* <Grid item>
                   <Button
                     variant="contained"
                     onClick={handleFinalSubmit}
@@ -605,7 +605,7 @@ const AdmissionForm = () => {
                   >
                     Submit
                   </Button>
-                </Grid>
+                </Grid> */}
               </Grid>
             )}
           </Grid>

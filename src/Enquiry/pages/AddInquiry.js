@@ -600,13 +600,13 @@ export default function AddEnquiry() {
           >
             Save
           </Button>
-          <Button
+          {/* <Button
             variant="contained"
             color="primary"
             onClick={() => navigate("/layout/report")}
           >
             Submit
-          </Button>
+          </Button> */}
         </Grid>
       </Box>
 
