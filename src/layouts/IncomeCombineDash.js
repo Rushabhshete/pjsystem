@@ -292,8 +292,10 @@ export default function IncomeCombineDash() {
           </Grid>
 
           {/* Chart Section */}
+          
           <Grid container spacing={2} sx={{ marginTop: '20px', justifyContent: 'space-between' }}>
           <Grid item xs={12} sm={6} sx={{ height: '450px' }}>
+            
   <Typography variant="h6" align="center" color="black">
     Overall Income & Expense Comparison
   </Typography>
@@ -335,13 +337,13 @@ export default function IncomeCombineDash() {
                   </MenuItem>
                 ))}
               </TextField>
-              <Paper  elevation={3}
+              <Paper 
             sx={{
               padding: 2,
               backgroundColor: "#FFF7D1",
               borderRadius: 2,
               fontWeight: "bold",
-              boxShadow: 3,}}>
+             }}>
               <Typography variant="h6" align="center" mt={-4}>
                 {year} Income & Expense Comparison
               </Typography>
