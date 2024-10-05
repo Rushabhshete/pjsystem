@@ -89,7 +89,7 @@ const SalaryTable = ({ id, initialStatus }) => {
   const [searchTerm, setSearchTerm] = useState(""); // Step 1: State for search term
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
 
-  const [employeeDetails, setEmployeeDetails] = useState(null);
+  const [employeeDetails, setEmployeeDetails] = useState("");
   useEffect(() => {
     const fetchEmployeeDetails = async () => {
       try {
