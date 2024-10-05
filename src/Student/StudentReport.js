@@ -58,7 +58,7 @@ const StudentReport = () => {
   const [rowsPerPage, setRowsPerPage] = useState(25);
   const institutecode = () => localStorage.getItem("institutecode");
 
-  const API_BASE_URL = "http://localhost:8080";
+  const API_BASE_URL = "http://13.233.43.240:8080";
 
   const fetchStudentsByDateRange = useCallback(async () => {
     try {
@@ -222,7 +222,7 @@ const StudentReport = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/getall?institutecode=${institutecode()}`)
+      .get(`http://13.233.43.240:8080/getall?institutecode=${institutecode()}`)
       .then((response) => {
         setMedium(response.data);
       })

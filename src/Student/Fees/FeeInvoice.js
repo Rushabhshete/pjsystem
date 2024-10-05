@@ -89,7 +89,7 @@ const Newform = () => {
 
   const fetchMediums = async () => {
     try {
-      const response = await axios.get(`http://localhost:8083/getAllMediums?institutecode=${institutecode()}`);
+      const response = await axios.get(`http://13.233.43.240:8083/getAllMediums?institutecode=${institutecode()}`);
       setMediums(response.data); // Assuming response.data is an array of mediums
     } catch (error) {
       console.error('Error fetching mediums:', error);
@@ -100,7 +100,7 @@ const Newform = () => {
 
   const fetchStandardsByMediumAndStandard = async (medium, standard) => {
     try {
-      const response = await axios.get(`http://localhost:8083/standards/bymedium/bystandard?medium=${medium}&standard=${standard}&institutecode=${institutecode()}`);
+      const response = await axios.get(`http://13.233.43.240:8083/standards/bymedium/bystandard?medium=${medium}&standard=${standard}&institutecode=${institutecode()}`);
       return response.data; // Assuming the API returns an array of standards
     } catch (error) {
       console.error('Error fetching standards:', error);
@@ -113,7 +113,7 @@ const Newform = () => {
     const fetchStandards = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8083/getallStandered?institutecode=${institutecode()}`
+          `http://13.233.43.240:8083/getallStandered?institutecode=${institutecode()}`
         );
         setStandards(response.data);
       } catch (error) {
@@ -127,7 +127,7 @@ const Newform = () => {
   const fetchStandardData = async (standard) => {
     try {
       const response = await axios.get(
-        `http://localhost:8083/getstanderedByName/${standard}&institutecode=${institutecode()}`
+        `http://13.233.43.240:8083/getstanderedByName/${standard}&institutecode=${institutecode()}`
       );
       setStandardData(response.data);
     } catch (error) {
@@ -202,7 +202,7 @@ updatedData.discountedAmount = discountedAmount;
     e.preventDefault();
     try {
       const response = await axios.post(
-        `http://localhost:8083/SaveFees?institutecode=${institutecode()}`,
+        `http://13.233.43.240:8083/SaveFees?institutecode=${institutecode()}`,
         formData
       );
       setSnackbarMessage("Form submitted successfully");

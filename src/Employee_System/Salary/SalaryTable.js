@@ -96,7 +96,7 @@ useEffect(() => {
   const fetchDepartments = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8082/departments/allDepartment?institutecode=${institutecode}`
+        `http://13.233.43.240:8082/departments/allDepartment?institutecode=${institutecode}`
       );
       setDepartments(response.data);
     } catch (error) {
@@ -108,7 +108,7 @@ useEffect(() => {
   const fetchEmployeeCategories = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8082/categories/all?institutecode=${institutecode}`
+        `http://13.233.43.240:8082/categories/all?institutecode=${institutecode}`
       );
       setEmployeeCategories(response.data);
     } catch (error) {
@@ -147,7 +147,7 @@ useEffect(() => {
     if (rowToDelete) {
       try {
         await axios.delete(
-          `http://localhost:8082/salaries/softDeleteSalaryById/${rowToDelete}`
+          `http://13.233.43.240:8082/salaries/softDeleteSalaryById/${rowToDelete}`
         );
         setSalaries(salaries.filter((salary) => salary.id !== rowToDelete));
         toast.success("Row deleted successfully");
@@ -345,9 +345,9 @@ useEffect(() => {
     setError(null);
     try {
         // Build URL based on payment date or all data
-        let url = `http://localhost:8082/salaries/all?institutecode=${institutecode}`;
+        let url = `http://13.233.43.240:8082/salaries/all?institutecode=${institutecode}`;
         if (paymentDate) {
-            url = `http://localhost:8082/salaries/paymentdate?paymentDate=${paymentDate}&institutecode=${institutecode}`;
+            url = `http://13.233.43.240:8082/salaries/paymentdate?paymentDate=${paymentDate}&institutecode=${institutecode}`;
         }
 
         const response = await axios.get(url);
@@ -395,7 +395,7 @@ useEffect(() => {
     setError(null);
     try {
       const response = await axios.get(
-        `http://localhost:8082/salaries/byEmployeeIdAndMonthAndYear?empID=${empID}&month=${month}&year=${year}&institutecode=${institutecode}`
+        `http://13.233.43.240:8082/salaries/byEmployeeIdAndMonthAndYear?empID=${empID}&month=${month}&year=${year}&institutecode=${institutecode}`
       );
       setSalaries(response.data);
     } catch (error) {
@@ -414,7 +414,7 @@ useEffect(() => {
     setError(null);
     try {
       const response = await axios.get(
-        `http://localhost:8082/salaries/all?institutecode=${institutecode}`
+        `http://13.233.43.240:8082/salaries/all?institutecode=${institutecode}`
       );
       const filteredSalaries = response.data.filter(
         (salary) => salary.month === month && salary.year === year
@@ -456,7 +456,7 @@ useEffect(() => {
     const updatedTransactionId = transactionIdInputs[id];
     try {
       await axios.put(
-        `http://localhost:8082/salaries/${id}/transaction?transactionID=${updatedTransactionId}`
+        `http://13.233.43.240:8082/salaries/${id}/transaction?transactionID=${updatedTransactionId}`
       );
       fetchData();
       toast.success("Transaction ID updated successfully");
@@ -474,9 +474,9 @@ useEffect(() => {
   //   setLoading(true);
   //   setError(null);
   //   try {
-  //     let url = `http://localhost:8082/salaries/all?institutecode=${institutecode}`;
+  //     let url = `http://13.233.43.240:8082/salaries/all?institutecode=${institutecode}`;
   //     if (paymentDate) {
-  //       url = `http://localhost:8082/salaries/paymentdate?paymentDate=${paymentDate}&institutecode=${institutecode}`;
+  //       url = `http://13.233.43.240:8082/salaries/paymentdate?paymentDate=${paymentDate}&institutecode=${institutecode}`;
   //     }
   //     const response = await axios.get(url);
   //     setSalaries(response.data);
@@ -540,7 +540,7 @@ useEffect(() => {
     try {
       const today = new Date().toISOString().slice(0, 10); // Get today's date in YYYY-MM-DD format
       const response = await axios.put(
-        `http://localhost:8082/salaries/${id}/updatePaymentDate?status=Paid&paymentDate=${today}`
+        `http://13.233.43.240:8082/salaries/${id}/updatePaymentDate?status=Paid&paymentDate=${today}`
       );
 
       if (response.status === 200) {
@@ -573,7 +573,7 @@ useEffect(() => {
 
   //   try {
   //     const response = await axios.get(
-  //       `http://localhost:8082/salaries/all?institutecode=${institutecode}`
+  //       `http://13.233.43.240:8082/salaries/all?institutecode=${institutecode}`
   //     );
   //     const filteredSalaries = response.data.filter(
   //       (salary) => salary.status === status

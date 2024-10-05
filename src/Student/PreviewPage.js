@@ -109,7 +109,7 @@ const PreviewPage = ({ formData }) => {
     const fetchStudentPhoto = async () => {
       try {
         const email = encodeURIComponent(emailAddress);
-        const url = `http://localhost:8080/students/email?email=${email}`;
+        const url = `http://13.233.43.240:8080/students/email?email=${email}`;
 
         const response = await axios.get(url);
         if (response.data && response.data.studentphoto) {
@@ -125,7 +125,7 @@ const PreviewPage = ({ formData }) => {
     const fetchStudentSign = async () => {
       try {
         const email = encodeURIComponent(emailAddress);
-        const url = `http://localhost:8080/students/email?email=${email}`;
+        const url = `http://13.233.43.240:8080/students/email?email=${email}`;
 
         const response = await axios.get(url);
         if (response.data && response.data.studentSign) {

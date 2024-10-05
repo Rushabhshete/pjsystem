@@ -42,13 +42,13 @@ const Home = () => {
 
   const apiUrls = useMemo(
     () => ({
-      ALL: `http://localhost:8080/totalApplication/status/number?institutecode=${institutecode()}`,
-      Today: `http://localhost:8080/status-counts?institutecode=${institutecode()}&period=today`,
-      "7Days": `http://localhost:8080/status-counts?institutecode=${institutecode()}&period=7-days`,
-      "30Days": `http://localhost:8080/status-counts?institutecode=${institutecode()}&period=30-days`,
-      "365Days": `http://localhost:8080/status-counts?institutecode=${institutecode()}&period=365-days`,
+      ALL: `http://13.233.43.240:8080/totalApplication/status/number?institutecode=${institutecode()}`,
+      Today: `http://13.233.43.240:8080/status-counts?institutecode=${institutecode()}&period=today`,
+      "7Days": `http://13.233.43.240:8080/status-counts?institutecode=${institutecode()}&period=7-days`,
+      "30Days": `http://13.233.43.240:8080/status-counts?institutecode=${institutecode()}&period=30-days`,
+      "365Days": `http://13.233.43.240:8080/status-counts?institutecode=${institutecode()}&period=365-days`,
       FromTo: (startDate, endDate) =>
-        `http://localhost:8080/status-counts?institutecode=${institutecode()}&startDate=${startDate}&endDate=${endDate}&period=custom`,
+        `http://13.233.43.240:8080/status-counts?institutecode=${institutecode()}&startDate=${startDate}&endDate=${endDate}&period=custom`,
     }),
     []
   );
@@ -105,7 +105,7 @@ const Home = () => {
     const fetchStandardOptions = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/all?institutecode=${institutecode()}`
+          `http://13.233.43.240:8080/all?institutecode=${institutecode()}`
         );
         setStandardOptions(response.data);
       } catch (error) {
@@ -121,7 +121,7 @@ const Home = () => {
       try {
         const dataPromises = standardOptions.map((standard) =>
           axios.get(
-            `http://localhost:8080/numberOfstandardOptions/${standard.standardname}?institutecode=${institutecode()}`
+            `http://13.233.43.240:8080/numberOfstandardOptions/${standard.standardname}?institutecode=${institutecode()}`
           )
         );
         const responses = await Promise.all(dataPromises);

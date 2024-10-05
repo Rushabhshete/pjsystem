@@ -47,16 +47,16 @@ const UploadDocuments = ({ emailAddress }) => {
 
   const handleUpload = async (type) => {
     const uploadEndpoints = {
-      studentphoto: `http://localhost:8080/saveStudentPhoto/${emailAddress}`,
-      studentSign: `http://localhost:8080/studentSign/${emailAddress}`,
-      aadharcard: `http://localhost:8080/aadharcard/${emailAddress}`,
-      pancard: `http://localhost:8080/savepancardPhoto/${emailAddress}`,
-      castevalidationphoto: `http://localhost:8080/saveCastevalidationPhoto/${emailAddress}`,
-      castecertificate: `http://localhost:8080/savecastecertificatePhoto/${emailAddress}`,
-      leavingcertificate: `http://localhost:8080/saveleavingcertificatePhoto/${emailAddress}`,
-      domicile: `http://localhost:8080/savedomicilecertificatePhoto/${emailAddress}`,
-      birthcertificate: `http://localhost:8080/savebirthcertificatPhoto/${emailAddress}`,
-      disabilitycertificate: `http://localhost:8080/disabilitycertificate/${emailAddress}`,
+      studentphoto: `http://13.233.43.240:8080/saveStudentPhoto/${emailAddress}`,
+      studentSign: `http://13.233.43.240:8080/studentSign/${emailAddress}`,
+      aadharcard: `http://13.233.43.240:8080/aadharcard/${emailAddress}`,
+      pancard: `http://13.233.43.240:8080/savepancardPhoto/${emailAddress}`,
+      castevalidationphoto: `http://13.233.43.240:8080/saveCastevalidationPhoto/${emailAddress}`,
+      castecertificate: `http://13.233.43.240:8080/savecastecertificatePhoto/${emailAddress}`,
+      leavingcertificate: `http://13.233.43.240:8080/saveleavingcertificatePhoto/${emailAddress}`,
+      domicile: `http://13.233.43.240:8080/savedomicilecertificatePhoto/${emailAddress}`,
+      birthcertificate: `http://13.233.43.240:8080/savebirthcertificatPhoto/${emailAddress}`,
+      disabilitycertificate: `http://13.233.43.240:8080/disabilitycertificate/${emailAddress}`,
     };
 
     const file = formData[type];

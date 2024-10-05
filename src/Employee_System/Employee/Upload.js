@@ -76,11 +76,11 @@ const Upload = ({ email, setFormData }) => {
 
   const handleUpload = async (type) => {
     const uploadEndpoints = {
-      idProofFile: `http://localhost:8082/${email}/uploadIdProof`,
-      resumeFile: `http://localhost:8082/${email}/uploadResume`,
-      addressProofFile: `http://localhost:8082/${email}/uploadAddressProof`,
-      empFile: `http://localhost:8082/${email}/uploadImage`,
-      experienceLetterFile: `http://localhost:8082/${email}/uploadExperienceLetter`
+      idProofFile: `http://13.233.43.240:8082/${email}/uploadIdProof`,
+      resumeFile: `http://13.233.43.240:8082/${email}/uploadResume`,
+      addressProofFile: `http://13.233.43.240:8082/${email}/uploadAddressProof`,
+      empFile: `http://13.233.43.240:8082/${email}/uploadImage`,
+      experienceLetterFile: `http://13.233.43.240:8082/${email}/uploadExperienceLetter`
     };
 
     const file = localFormData[type];

@@ -120,13 +120,13 @@ const StudentList = () => {
         const [sourceResponse, courseResponse, guideResponse] =
           await Promise.all([
             axios.get(
-              `http://localhost:8085/api/sourceBy/getAll?institutecode=${institutecode}`
+              `http://13.233.43.240:8085/api/sourceBy/getAll?institutecode=${institutecode}`
             ),
             axios.get(
-              `http://localhost:8085/getAllCourse?institutecode=${institutecode}`
+              `http://13.233.43.240:8085/getAllCourse?institutecode=${institutecode}`
             ),
             axios.get(
-              `http://localhost:8085/api/conductBy/getAllConductBy?institutecode=${institutecode}`
+              `http://13.233.43.240:8085/api/conductBy/getAllConductBy?institutecode=${institutecode}`
             ),
           ]);
 
@@ -151,7 +151,7 @@ const StudentList = () => {
         }
 
         const response = await axios.get(
-          `http://localhost:8081/findInstitutesby/Institutecode?institutecode=${institutecode}`
+          `http://13.233.43.240:8081/findInstitutesby/Institutecode?institutecode=${institutecode}`
         );
         setEmployeeDetails(response.data);
       } catch (error) {
@@ -169,32 +169,32 @@ const StudentList = () => {
         switch (timeRange) {
           case "Today":
             admissionResponse = await axios.get(
-              `http://localhost:8085/getAdmissionsByTodayByInstitutecode?institutecode=${institutecode}`
+              `http://13.233.43.240:8085/getAdmissionsByTodayByInstitutecode?institutecode=${institutecode}`
             );
             break;
           case "7Days":
             admissionResponse = await axios.get(
-              `http://localhost:8085/AdmissionIn7DaysData?institutecode=${institutecode}`
+              `http://13.233.43.240:8085/AdmissionIn7DaysData?institutecode=${institutecode}`
             );
             break;
           case "30Days":
             admissionResponse = await axios.get(
-              `http://localhost:8085/AdmissionIn30DaysData?institutecode=${institutecode}`
+              `http://13.233.43.240:8085/AdmissionIn30DaysData?institutecode=${institutecode}`
             );
             break;
           case "365Days":
             admissionResponse = await axios.get(
-              `http://localhost:8085/AdmissionIn365DaysData?institutecode=${institutecode}`
+              `http://13.233.43.240:8085/AdmissionIn365DaysData?institutecode=${institutecode}`
             );
             break;
           case "Custom":
             admissionResponse = await axios.get(
-              `http://localhost:8085/admissionsBetweenDates?institutecode=${institutecode}&startDate=${startDate}&endDate=${endDate}`
+              `http://13.233.43.240:8085/admissionsBetweenDates?institutecode=${institutecode}&startDate=${startDate}&endDate=${endDate}`
             );
             break;
           default:
             admissionResponse = await axios.get(
-              `http://localhost:8085/admissions?institutecode=${institutecode}`
+              `http://13.233.43.240:8085/admissions?institutecode=${institutecode}`
             );
             break;
         }
@@ -418,7 +418,7 @@ const StudentList = () => {
   const handleDelete = async () => {
     try {
       await axios.delete(
-        `http://localhost:8085/deleteAdmission/${admissionIdToDelete}`
+        `http://13.233.43.240:8085/deleteAdmission/${admissionIdToDelete}`
       );
       setAdmissions((prevAdmissions) =>
         prevAdmissions.filter(

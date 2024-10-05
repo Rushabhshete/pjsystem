@@ -34,7 +34,7 @@ const StandardForm = () => {
 
   const fetchMediums = async () => {
     try {
-      const response = await axios.get(`http://localhost:8083/getAllMediums?institutecode=${institutecode()}`);
+      const response = await axios.get(`http://13.233.43.240:8083/getAllMediums?institutecode=${institutecode()}`);
       setMediums(response.data); // Assuming response.data is an array of mediums
     } catch (error) {
       console.error('Error fetching mediums:', error);
@@ -75,7 +75,7 @@ const StandardForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:8083/saveStandered?institutecode=${institutecode()}`, formData);
+      const response = await axios.post(`http://13.233.43.240:8083/saveStandered?institutecode=${institutecode()}`, formData);
       console.log('Form submitted successfully:', response.data);
       setSnackbarMessage('Form submitted successfully');
       setOpenSnackbar(true);
