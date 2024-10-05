@@ -250,9 +250,9 @@ const EmpDetails = ({ empID }) => {
 `;
 
   return (
-    <Container>
+    <div>
       <Box mt={4}>
-      <PopTypography
+      {/* <PopTypography
       variant="h5"
       gutterBottom
       sx={{
@@ -266,9 +266,9 @@ const EmpDetails = ({ empID }) => {
       }}
     >
       Employee Details 
-      </PopTypography>
+      </PopTypography> */}
       
-      <Grid container spacing={2} alignItems="center" marginTop={2}>
+      <Grid container spacing={2} alignItems="center" marginTop={0}>
     <Grid item xs={12} sm={6} md={3}>
         <TextField
             size="small"
@@ -409,7 +409,7 @@ const EmpDetails = ({ empID }) => {
           )}
         </Box>
       </Modal>
-    </Container>
+    </div>
   );
 };
 
