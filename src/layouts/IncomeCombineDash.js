@@ -246,7 +246,7 @@ export default function IncomeCombineDash() {
         />
       </Box>
       <Grid item xs={12}>
-        <Box
+        <Paper
           sx={{
             width: '100%',
             height: '100%',
@@ -356,7 +356,7 @@ export default function IncomeCombineDash() {
               </div>
             </Grid>
           </Grid>
-        </Box>
+        </Paper>
       </Grid>
     </div>
   );

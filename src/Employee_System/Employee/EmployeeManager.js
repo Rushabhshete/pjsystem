@@ -40,7 +40,7 @@ const subNavBarStyle = {
   boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)", // Slight shadow for navbar
 };
 
-const AdmissionManager = () => {
+const EmployeeManager = () => {
   const [activeComponent, setActiveComponent] = useState("EmployeeDashboard");
 
   const components = {
@@ -135,4 +135,4 @@ const AdmissionManager = () => {
   );
 };
 
-export default AdmissionManager;
+export default EmployeeManager;

@@ -116,36 +116,6 @@ const Sidebar = () => {
          // show: systemValues?.incomeandexpense,
         },
 
-        // {
-        //   name: "Dashboard",
-        //   route: "/layout/dashboard",
-        //   icon: <DashboardIcon sx={{ color: "#4682b4" }} />,
-        // },
-        // {
-        //   name: "Add Inquiry",
-        //   route: "/layout/add",
-        //   icon: <NoteAddIcon sx={{ color: "#4682b4" }} />,
-        // },
-        // {
-        //   name: "Add Exam / Course",
-        //   route: "/layout/exam",
-        //   icon: <NoteAddIcon sx={{ color: "#4682b4" }} />,
-        // },
-        // {
-        //   name: "Add Source",
-        //   route: "/layout/source",
-        //   icon: <NoteAddIcon sx={{ color: "#4682b4" }} />,
-        // },
-        // {
-        //   name: "Add Conduct",
-        //   route: "/layout/conduct",
-        //   icon: <NoteAddIcon sx={{ color: "#4682b4" }} />,
-        // },
-        // {
-        //   name: "Enquiry List",
-        //   route: "/layout/report",
-        //   icon: <AssessmentIcon sx={{ color: "#4682b4" }} />,
-        // },
       ],
     },
     {
@@ -159,36 +129,7 @@ const Sidebar = () => {
           route: "/layout/Admission-manager", // Route for the manager
          // show: systemValues?.incomeandexpense,
         },
-        // {
-        //   name: "Dashboard",
-        //   route: "/layout/admission-dashboard",
-        //   icon: <DashboardIcon sx={{ color: "#4682b4" }} />,
-        // },
-        // {
-        //   name: "Admission Form",
-        //   route: "/layout/admission-form",
-        //   icon: <PeopleIcon sx={{ color: "#4682b4" }} />,
-        // },
-        // {
-        //   name: "Admission List",
-        //   route: "/layout/students",
-        //   icon: <RemoveRedEyeIcon sx={{ color: "#4682b4" }} />,
-        // },
-        // {
-        //   name: "Add Course/Exams",
-        //   route: "/layout/add-course",
-        //   icon: <AddToPhotosIcon sx={{ color: "#4682b4" }} />,
-        // },
-        // {
-        //   name: "Admission Source",
-        //   route: "/layout/admission-source",
-        //   icon: <AodIcon sx={{ color: "#4682b4" }} />,
-        // },
-        // {
-        //   name: "Admission Guide",
-        //   route: "/layout/add-guide",
-        //   icon: <LightbulbIcon sx={{ color: "#4682b4" }} />,
-        // },
+   
       ],
     },
     {
@@ -196,37 +137,14 @@ const Sidebar = () => {
       icon: <CurrencyRupeeRoundedIcon color="primary" />,
       show: systemValues?.incomeandexpense,
       subOptions: [
-        // {
-        //   name: "Dashboard",
-        //   route: "/layout/Income-Expense-dashboard",
-        //   icon: <DashboardIcon sx={{ color: "#4682b4" }} />,
-        // },
+
         {
           name: "Income Expense Manager",
           icon: <CurrencyRupeeRoundedIcon color="primary" />,
           route: "/layout/income-expense-manager", // Route for the manager
           show: systemValues?.incomeandexpense,
         },
-        // {
-        //   name: "Add income-expense",
-        //   route: "/layout/AddIncomeExpense",
-        //   icon: <PlaylistAddIcon sx={{ color: "#4682b4" }} />,
-        // },
-        // {
-        //   name: "Income-Expense List",
-        //   route: "/layout/incomeExpenseList",
-        //   icon: <FormatListBulletedIcon sx={{ color: "#4682b4" }} />,
-        // },
-        // {
-        //   name: "Add Category",
-        //   route: "/layout/AddCategory",
-        //   icon: <CategoryIcon sx={{ color: "#4682b4" }} />,
-        // },
-        // {
-        //   name: "Add User",
-        //   route: "/layout/AddUser",
-        //   icon: <PersonSearchRoundedIcon sx={{ color: "#4682b4" }} />,
-        // },
+   
       ],
     },
     {
@@ -235,100 +153,26 @@ const Sidebar = () => {
       show: systemValues?.employeemanagementsystem,
       subOptions: [
         {
-          name: "Employee",
-          icon: <Person sx={{ color: "#4682b4" }} />,
-          subSubOptions: [
-            {
-              name: "Employee Manager",
-              icon: <CurrencyRupeeRoundedIcon color="primary" />,
-              route: "/layout/Employee-manager", // Route for the manager
-              //show: systemValues?.incomeandexpense,
-            },
-            // {
-            //   name: "Dashboard",
-            //   route: "/layout/empDashboard",
-            //   icon: <DashboardIcon sx={{ color: "#4682b4" }} />,
-            // },
-            // {
-            //   name: "Add Employee",
-            //   route: "/layout/empAdd",
-            //   icon: <PlaylistAddIcon sx={{ color: "#76A7FA" }} />,
-            // },
-            // {
-            //   name: "Employee List",
-            //   route: "/layout/empList",
-            //   icon: <FormatListBulletedIcon sx={{ color: "#76A7FA" }} />,
-            // },
-            // {
-            //   name: "Report",
-            //   route: "/layout/empReport",
-            //   icon: <AssessmentIcon sx={{ color: "#76A7FA" }} />,
-            // },
-            // {
-            //   name: "Add Category",
-            //   route: "/layout/addEmpcategory",
-            //   icon: <PlaylistAddIcon sx={{ color: "#76A7FA" }} />,
-            // },
-            // {
-            //   name: "Add Department",
-            //   route: "/layout/AddDepartment",
-            //   icon: <PlaylistAddIcon sx={{ color: "#76A7FA" }} />,
-            // },
-            // {
-            //   name: "Add Holiday",
-            //   route: "/layout/ManageHoliday",
-            //   icon: <PlaylistAddIcon sx={{ color: "#76A7FA" }} />,
-            // },
-
-          ],
+          name: "Employee Manager",
+          icon: <CurrencyRupeeRoundedIcon color="primary" />,
+          route: "/layout/Employee-manager",
         },
         {
           name: "Attendance",
           icon: <SupervisorAccountRoundedIcon sx={{ color: "#4682b4" }} />,
-          subSubOptions: [
-            {
-              name: "Attendance Dashboard",
-              route: "/layout/TodaysAttendance",
-              icon: <DashboardIcon sx={{ color: "#4682b4" }} />,
-            },
-            {
-              name: "Attendance report",
-              route: "/layout/ManageAttendance",
-              icon: <AssessmentIcon sx={{ color: "#76A7FA" }} />,
-            },
-          ],
+          route: "/layout/Attendance-manager",
         },
         {
           name: "Leave",
-          icon: <TimeToLeaveIcon sx={{ color: "#4682b4" }} />,
-          subSubOptions: [
-            {
-              name: "Manage Leave",
-              route: "/layout/ManageLeave",
-              icon: <CategoryIcon sx={{ color: "#76A7FA" }} />,
-            },
-          ],
+          icon: <CategoryIcon sx={{ color: "#4682b4" }} />,
+          route: "/layout/ManageLeave",
+         
         },
         {
           name: "Salary",
           icon: <AttachMoneyIcon sx={{ color: "#4682b4" }} />,
-          subSubOptions: [
-            {
-              name: "Dashboard",
-              route: "/layout/SalaryDashboard",
-              icon: <DashboardIcon sx={{ color: "#4682b4" }} />,
-            },
-            {
-              name: "Employee Salary",
-              route: "/layout/EmpDetails",
-              icon: <CurrencyRupeeIcon sx={{ color: "#76A7FA" }} />,
-            },
-            {
-              name: "Report",
-              route: "/layout/SalaryTable",
-              icon: <AssessmentIcon sx={{ color: "#76A7FA" }} />,
-            },
-          ],
+          route: "/layout/EmployeeSalaryManager",
+        
         },
         {
           name: "Memo",
