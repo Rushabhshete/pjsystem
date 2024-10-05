@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useEffect, useState, useRef } from "react";
 import {
@@ -82,45 +81,63 @@ const SalaryTable = ({ id, initialStatus }) => {
   const [rowToDelete, setRowToDelete] = useState(null);
   const [showConfirmDeleteDialog, setShowConfirmDeleteDialog] = useState(false);
 
-
   const [departments, setDepartments] = useState([]);
-const [employeeCategories, setEmployeeCategories] = useState([]);
-const [selectedDepartment, setSelectedDepartment] = useState("");
-const [selectedCategory, setSelectedCategory] = useState("");
+  const [employeeCategories, setEmployeeCategories] = useState([]);
+  const [selectedDepartment, setSelectedDepartment] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
-const [searchTerm, setSearchTerm] = useState(''); // Step 1: State for search term
-const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
+  const [searchTerm, setSearchTerm] = useState(""); // Step 1: State for search term
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
 
+  const [employeeDetails, setEmployeeDetails] = useState("");
+  useEffect(() => {
+    const fetchEmployeeDetails = async () => {
+      try {
+        if (!institutecode) {
+          console.error("No institutecode found in localStorage");
+          return;
+        }
 
-useEffect(() => {
-  const fetchDepartments = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8082/departments/allDepartment?institutecode=${institutecode}`
-      );
-      setDepartments(response.data);
-    } catch (error) {
-      console.error("Error fetching departments:", error);
-      toast.error("Failed to fetch departments");
-    }
-  };
+        const response = await axios.get(
+          `http://localhost:8081/findInstitutesby/Institutecode?institutecode=${institutecode}`
+        );
+        setEmployeeDetails(response.data);
+      } catch (error) {
+        console.error("Error fetching employee details:", error);
+      }
+    };
 
-  const fetchEmployeeCategories = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8082/categories/all?institutecode=${institutecode}`
-      );
-      setEmployeeCategories(response.data);
-    } catch (error) {
-      console.error("Error fetching employee categories:", error);
-      toast.error("Failed to fetch employee categories");
-    }
-  };
+    fetchEmployeeDetails();
+  }, [institutecode]);
 
-  fetchDepartments();
-  fetchEmployeeCategories();
-}, [institutecode]);
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8082/departments/allDepartment?institutecode=${institutecode}`
+        );
+        setDepartments(response.data);
+      } catch (error) {
+        console.error("Error fetching departments:", error);
+        toast.error("Failed to fetch departments");
+      }
+    };
 
+    const fetchEmployeeCategories = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8082/categories/all?institutecode=${institutecode}`
+        );
+        setEmployeeCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching employee categories:", error);
+        toast.error("Failed to fetch employee categories");
+      }
+    };
+
+    fetchDepartments();
+    fetchEmployeeCategories();
+  }, [institutecode]);
 
   const handleInfoClick = (salary) => {
     setInfoPopupData(salary);
@@ -294,8 +311,6 @@ useEffect(() => {
       { label: "Medical A", amount: data.medicalAllowance },
     ];
 
-
-
     const deductionsData = [
       { label: "PF", amount: data.pf },
       { label: "ESF", amount: data.esf },
@@ -320,10 +335,6 @@ useEffect(() => {
     }
   }, [selectedMonth, selectedYear, institutecode]);
 
- 
-
-  
-
   React.useEffect(() => {
     if (showPaidMessage) {
       toast.error("Status is still pending. Please wait for it to get paid.");
@@ -332,63 +343,76 @@ useEffect(() => {
 
   useEffect(() => {
     const handler = setTimeout(() => {
-        setDebouncedSearchTerm(searchTerm);
+      setDebouncedSearchTerm(searchTerm);
     }, 1000); // Debounce time, e.g., 300ms
 
     return () => {
-        clearTimeout(handler);
+      clearTimeout(handler);
     };
-}, [searchTerm]);
+  }, [searchTerm]);
 
   const fetchData = async (paymentDate = "") => {
     setLoading(true);
     setError(null);
     try {
-        // Build URL based on payment date or all data
-        let url = `http://localhost:8082/salaries/all?institutecode=${institutecode}`;
-        if (paymentDate) {
-            url = `http://localhost:8082/salaries/paymentdate?paymentDate=${paymentDate}&institutecode=${institutecode}`;
-        }
+      // Build URL based on payment date or all data
+      let url = `http://localhost:8082/salaries/all?institutecode=${institutecode}`;
+      if (paymentDate) {
+        url = `http://localhost:8082/salaries/paymentdate?paymentDate=${paymentDate}&institutecode=${institutecode}`;
+      }
 
-        const response = await axios.get(url);
-        const salariesData = response.data;
+      const response = await axios.get(url);
+      const salariesData = response.data;
 
-        // Filtering logic (could be moved to a separate function for clarity)
-        const filteredSalaries = salariesData.filter((salary) => {
-            const matchesDepartment = selectedDepartment === "" || salary.department === selectedDepartment;
-            const matchesCategory = selectedCategory === "" || salary.employeecategory === selectedCategory;
-            const matchesStatus = selectedStatus === "" || salary.status === selectedStatus;
-            // const matchesSearchTerm = 
-            //     salary.fullName.toLowerCase().includes(searchTerm.toLowerCase());
-            const matchesSearchTerm = 
-    (salary.fullName && salary.fullName.toLowerCase().includes(searchTerm.toLowerCase()));
-            return matchesDepartment && matchesCategory && matchesStatus && matchesSearchTerm;
-        });
+      // Filtering logic (could be moved to a separate function for clarity)
+      const filteredSalaries = salariesData.filter((salary) => {
+        const matchesDepartment =
+          selectedDepartment === "" || salary.department === selectedDepartment;
+        const matchesCategory =
+          selectedCategory === "" ||
+          salary.employeecategory === selectedCategory;
+        const matchesStatus =
+          selectedStatus === "" || salary.status === selectedStatus;
+        // const matchesSearchTerm =
+        //     salary.fullName.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesSearchTerm =
+          salary.fullName &&
+          salary.fullName.toLowerCase().includes(searchTerm.toLowerCase());
+        return (
+          matchesDepartment &&
+          matchesCategory &&
+          matchesStatus &&
+          matchesSearchTerm
+        );
+      });
 
-        // Set filtered salaries to state
-        setSalaries(filteredSalaries);
+      // Set filtered salaries to state
+      setSalaries(filteredSalaries);
     } catch (error) {
-        console.error("Error fetching salaries:", error);
-        setError("Failed to fetch salaries");
+      console.error("Error fetching salaries:", error);
+      setError("Failed to fetch salaries");
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
-};
-
-useEffect(() => {
-    const fetch = async () => {
-        await fetchData();
-    }
-    fetch();
-}, [institutecode, selectedDepartment, selectedCategory, selectedStatus, debouncedSearchTerm]);
-
- // Function to handle the search input change
-  const handleSearchChange = (event) => {
-      setSearchTerm(event.target.value);
   };
 
+  useEffect(() => {
+    const fetch = async () => {
+      await fetchData();
+    };
+    fetch();
+  }, [
+    institutecode,
+    selectedDepartment,
+    selectedCategory,
+    selectedStatus,
+    debouncedSearchTerm,
+  ]);
 
-  
+  // Function to handle the search input change
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
   const fetchSalariesByEmpIdMonthYear = async (empID, month, year) => {
     setLoading(true);
@@ -488,10 +512,6 @@ useEffect(() => {
   //   }
   // };
 
-
-  
-
-
   const monthNames = [
     "January",
     "February",
@@ -521,14 +541,10 @@ useEffect(() => {
         transform: scale(1);
       }
     }
-
   `;
 
   if (loading) return <CircularProgress />;
   if (error) return <Alert severity="error">{error}</Alert>;
-
-  
-
 
   const updateStatus = async (id) => {
     const salaryToUpdate = salaries.find((salary) => salary.id === id);
@@ -610,20 +626,20 @@ useEffect(() => {
       </PopTypography>
 
       <Grid container spacing={2} alignItems="center" mt={2}>
-    <Grid item xs={12} sm={6} md={3}>
-        <TextField
+        <Grid item xs={12} sm={6} md={3}>
+          <TextField
             label="Search by Employee Name"
             variant="outlined"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             fullWidth
             size="small"
-        />
-    </Grid>
-    
-    {/* UI components for filtering */}
-    <Grid item xs={12} sm={6} md={3}>
-        <TextField
+          />
+        </Grid>
+
+        {/* UI components for filtering */}
+        <Grid item xs={12} sm={6} md={3}>
+          <TextField
             select
             label="Select Department"
             value={selectedDepartment}
@@ -631,21 +647,21 @@ useEffect(() => {
             fullWidth
             size="small"
             variant="outlined"
-        >
+          >
             <MenuItem value="">
-                <em>All</em>
+              <em>All</em>
             </MenuItem>
             {departments.map((department) => (
-                <MenuItem key={department.id} value={department.department}>
-                    {department.department}
-                </MenuItem>
+              <MenuItem key={department.id} value={department.department}>
+                {department.department}
+              </MenuItem>
             ))}
-        </TextField>
-    </Grid>
+          </TextField>
+        </Grid>
 
-    {/* Category Dropdown */}
-    <Grid item xs={12} sm={6} md={3}>
-        <TextField
+        {/* Category Dropdown */}
+        <Grid item xs={12} sm={6} md={3}>
+          <TextField
             select
             label="Select Category"
             value={selectedCategory}
@@ -653,21 +669,21 @@ useEffect(() => {
             fullWidth
             size="small"
             variant="outlined"
-        >
+          >
             <MenuItem value="">
-                <em>All</em>
+              <em>All</em>
             </MenuItem>
             {employeeCategories.map((category) => (
-                <MenuItem key={category.id} value={category.categoryName}>
-                    {category.categoryName}
-                </MenuItem>
+              <MenuItem key={category.id} value={category.categoryName}>
+                {category.categoryName}
+              </MenuItem>
             ))}
-        </TextField>
-    </Grid>
+          </TextField>
+        </Grid>
 
-    {/* Status Filter */}
-    <Grid item xs={12} sm={6} md={3}>
-        <TextField
+        {/* Status Filter */}
+        <Grid item xs={12} sm={6} md={3}>
+          <TextField
             select
             label="Select Status"
             value={selectedStatus}
@@ -675,22 +691,22 @@ useEffect(() => {
             fullWidth
             size="small"
             variant="outlined"
-        >
+          >
             <MenuItem value="">
-                <em>All</em>
+              <em>All</em>
             </MenuItem>
             <MenuItem value="Paid">
-                <strong>Paid</strong>
+              <strong>Paid</strong>
             </MenuItem>
             <MenuItem value="Pending">
-                <strong>Pending</strong>
+              <strong>Pending</strong>
             </MenuItem>
-        </TextField>
-    </Grid>
+          </TextField>
+        </Grid>
 
-    {/* Month Selector */}
-    <Grid item xs={12} sm={6} md={3}>
-        <TextField
+        {/* Month Selector */}
+        <Grid item xs={12} sm={6} md={3}>
+          <TextField
             select
             label="Select Month"
             value={selectedMonth}
@@ -698,21 +714,21 @@ useEffect(() => {
             fullWidth
             size="small"
             variant="outlined"
-        >
+          >
             <MenuItem value="">
-                <em>None</em>
+              <em>None</em>
             </MenuItem>
             {Array.from({ length: 12 }, (_, i) => (
-                <MenuItem key={i + 1} value={i + 1}>
-                    {monthNames[i]}
-                </MenuItem>
+              <MenuItem key={i + 1} value={i + 1}>
+                {monthNames[i]}
+              </MenuItem>
             ))}
-        </TextField>
-    </Grid>
+          </TextField>
+        </Grid>
 
-    {/* Year Selector */}
-    <Grid item xs={12} sm={6} md={3}>
-        <TextField
+        {/* Year Selector */}
+        <Grid item xs={12} sm={6} md={3}>
+          <TextField
             select
             label="Select Year"
             value={selectedYear}
@@ -720,31 +736,25 @@ useEffect(() => {
             fullWidth
             size="small"
             variant="outlined"
-        >
+          >
             <MenuItem value="">
-                <em>None</em>
+              <em>None</em>
             </MenuItem>
             {Array.from({ length: 10 }, (_, i) => (
-                <MenuItem key={i + 2020} value={i + 2020}>
-                    {i + 2020}
-                </MenuItem>
+              <MenuItem key={i + 2020} value={i + 2020}>
+                {i + 2020}
+              </MenuItem>
             ))}
-        </TextField>
-    </Grid>
+          </TextField>
+        </Grid>
 
-    {/* Total salaries display */}
-    <Grid item xs={12} sm={6} md={3} container>
-        <Typography
-            variant="h6"
-            align="right"
-            padding={"5px"}
-            fullWidth
-        >
+        {/* Total salaries display */}
+        <Grid item xs={12} sm={6} md={3} container>
+          <Typography variant="h6" align="right" padding={"5px"} fullWidth>
             Total salaries: {salaries.length}
-        </Typography>
-    </Grid>
-</Grid>
-
+          </Typography>
+        </Grid>
+      </Grid>
 
       <Box mt={4} width={"100%"}>
         <TableContainer overFlowX={"auto"}>
@@ -1059,6 +1069,8 @@ useEffect(() => {
         </DialogActions>
       </Dialog>
 
+      {/* salary slip design starts  */}
+
       <Dialog
         open={open}
         onClose={handleClose}
@@ -1076,7 +1088,7 @@ useEffect(() => {
             border={"0.5px solid lightgray"}
             sx={{ fontFamily: "Arial, sans-serif" }}
           >
-            <Grid
+            {/* <Grid
               container
               alignItems="center"
               display={"inline-flex"}
@@ -1114,7 +1126,60 @@ useEffect(() => {
                   Email: contact@pjsofttech.com
                 </Typography>
               </Grid>
-            </Grid>
+            </Grid> */}
+
+            <Box
+              sx={{ display: "flex", justifyContent: "space-between", mt: 1 }}
+            >
+              {/* Left side content (Institute Name, Address, Phone) */}
+              <Box>
+                <Typography variant="h6" align="left">
+                  <Typography
+                    variant="h6"
+                    align="left"
+                    sx={{ fontSize: "30px", color: "purple" }}
+                  >
+                    {employeeDetails.institutename || "Guest"}
+                  </Typography>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      mb: 0.5, // Reduced margin-bottom for less space between the two addresses
+                    }}
+                  >
+                    <Typography variant="body2">
+                      {employeeDetails.address}
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      mt: 0, // Reduced margin-top to bring the addresses closer
+                    }}
+                  >
+                    <Typography variant="body2">
+                      <strong>Mobile : </strong>
+                      {employeeDetails.phonenumber}
+                    </Typography>
+                  </Box>
+                </Typography>
+              </Box>
+
+              {/* Right side content (Institute Image) */}
+              {employeeDetails.instituteimage && (
+                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                  <img
+                    src={employeeDetails.instituteimage}
+                    alt="Institute Logo"
+                    style={{
+                      maxWidth: "100px",
+                      maxHeight: "100px",
+                      borderRadius: "50%",
+                    }} // Adjust size as needed
+                  />
+                </Box>
+              )}
+            </Box>
 
             <Typography
               variant="h6"
@@ -1342,6 +1407,8 @@ useEffect(() => {
           </Button>
         </Box>
       </Dialog>
+
+      {/* salary slip design ends  */}
     </div>
   );
 };

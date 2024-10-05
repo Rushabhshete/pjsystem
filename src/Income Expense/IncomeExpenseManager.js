@@ -5,29 +5,37 @@ import Category from "./Category";
 import AddCategory from "./AddCategory";
 import AddUser from "./AddUser";
 
-
-
-const baseButtonStyle = {
-  backgroundColor: "#FF6969",
-  color:"#333",
-  border: "none",
-  borderRadius: "35px",
+// Styles for each navbar item
+const navItemStyle = {
   padding: "10px 20px",
-  fontSize: "16px",
   cursor: "pointer",
-  transition: "background-color 0.3s ease, transform 0.2s ease",
-  width: "180px",
-  flexGrow: 1,
-  margin: "0 10px",
+  fontSize: "16px",
+  fontWeight: "bold",
+  color: "#333",
   textAlign: "center",
+  flex: 1,
+  transition: "background-color 0.3s ease, color 0.3s ease",
 };
 
-const activeButtonStyle = {
-  ...baseButtonStyle,
-  backgroundColor: "#624E88", 
-  transform: "scale(1.15)", // Slightly larger to indicate it is active
-  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)", // Add shadow for emphasis
-  color:"white",
+// Styles for active item
+const activeNavItemStyle = {
+  ...navItemStyle,
+  backgroundColor: "#624E88",
+  color: "white",
+  borderRadius: "35px",
+  transform: "scale(1.05)", // Slight increase for active state
+  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)", // Subtle shadow for active
+};
+
+// Styles for the subnavbar container
+const subNavBarStyle = {
+  display: "flex",
+  justifyContent: "space-between",
+  marginBottom: "20px",
+  backgroundColor: "#269DD7",
+  padding: "10px",
+  borderRadius: "35px",
+  boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)", // Slight shadow for navbar
 };
 
 const IncomeExpenseManager = () => {
@@ -43,38 +51,50 @@ const IncomeExpenseManager = () => {
 
   return (
     <div>
-      {/* Horizontal buttons for navigation */}
-      <div style={{ display: "flex", justifyContent: "space-around", marginBottom: "20px" }}>
-        <button 
-          style={activeComponent === "IncomeExpenseDashboard" ? activeButtonStyle : baseButtonStyle} 
+      {/* Mini navbar (subnavbar) */}
+      <div style={subNavBarStyle}>
+        <div
+          style={
+            activeComponent === "IncomeExpenseDashboard"
+              ? activeNavItemStyle
+              : navItemStyle
+          }
           onClick={() => setActiveComponent("IncomeExpenseDashboard")}
         >
           Dashboard
-        </button>
-        <button 
-          style={activeComponent === "AddIncomeExpense" ? activeButtonStyle : baseButtonStyle} 
+        </div>
+        <div
+          style={
+            activeComponent === "AddIncomeExpense"
+              ? activeNavItemStyle
+              : navItemStyle
+          }
           onClick={() => setActiveComponent("AddIncomeExpense")}
         >
           Add Income/Expense
-        </button>
-        <button 
-          style={activeComponent === "Category" ? activeButtonStyle : baseButtonStyle} 
+        </div>
+        <div
+          style={
+            activeComponent === "Category" ? activeNavItemStyle : navItemStyle
+          }
           onClick={() => setActiveComponent("Category")}
         >
           Category
-        </button>
-        <button 
-          style={activeComponent === "AddCategory" ? activeButtonStyle : baseButtonStyle} 
+        </div>
+        <div
+          style={
+            activeComponent === "AddCategory" ? activeNavItemStyle : navItemStyle
+          }
           onClick={() => setActiveComponent("AddCategory")}
         >
           Add Category
-        </button>
-        <button 
-          style={activeComponent === "AddUser" ? activeButtonStyle : baseButtonStyle} 
+        </div>
+        <div
+          style={activeComponent === "AddUser" ? activeNavItemStyle : navItemStyle}
           onClick={() => setActiveComponent("AddUser")}
         >
           Add User
-        </button>
+        </div>
       </div>
 
       {/* Render the selected component */}

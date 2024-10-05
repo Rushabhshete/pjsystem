@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { CssBaseline } from "@mui/material";
-
+import './App.css'; // Import the global styles
 // Import the UserContext
 import { UserProvider, UserContext } from "./layouts/UserContext";
 
@@ -89,6 +89,8 @@ import AddMedium from "./Student/Fees/AddMedium";
 import FeeReport from "./Student/Fees/FeeReport";
 import IncomeExpenseManager from "./Income Expense/IncomeExpenseManager";
 import AdmissionManager from "./Addmission/AdmissionManager";
+import EnquiryManager from "./Enquiry/EnquiryManager";
+import EmployeeManager from "./Employee_System/Employee/EmployeeManager";
 
 function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -133,13 +135,16 @@ function AppContent() {
           <Route path="manage-memo" element={<ManageMemo />} />
           <Route path="manage-notifications" element={<ManageNotification />} />
           {/* Enquiry Routes */}
-          <Route path="dashboard" element={<DashBoard />} />
+          {/* <Route path="dashboard" element={<DashBoard />} />
           <Route path="add" element={<AddEnquiry />} />
           <Route path="manage/:id" element={<UpdateEnquiry />} />
           <Route path="report" element={<Report />} />
           <Route path="conduct" element={<Conduct />} />
           <Route path="exam" element={<Exam />} />
-          <Route path="source" element={<Source />} />
+          <Route path="source" element={<Source />} /> */}
+<Route path="Enquiry-manager" element={<EnquiryManager />} />
+
+
 
           {/* Admission Routes */}
           {/* <Route path="admission-dashboard" element={<AddmissionDashboard />} />
@@ -171,13 +176,14 @@ function AppContent() {
 <Route path="income-expense-manager" element={<IncomeExpenseManager />} />
 
           {/* Employee */}
-          <Route path="empDashboard" element={<EmployeeDashboard />} />
+          {/* <Route path="empDashboard" element={<EmployeeDashboard />} />
           <Route path="empAdd" element={<AddEmployee />} />
           <Route path="empList" element={<EmployeeList />} />
           <Route path="EmpReport" element={<EmpReport />} />
           <Route path="AddEmpcategory" element={<AddEmpcategory />} />
           <Route path="AddDepartment" element={<AddDepartment />} />
-          <Route path="ManageHoliday" element={<ManageHoliday />} />
+          <Route path="ManageHoliday" element={<ManageHoliday />} /> */}
+          <Route path="Employee-manager" element={<EmployeeManager />} />
 
           <Route path="EmpDash" element={<EmpDash />} />
           <Route path="AttenDash" element={<AttenDash />} />

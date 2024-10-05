@@ -427,7 +427,7 @@ const createTable = (doc) => {
   return (
     <div sx={{ padding: 2, width: "100%" }}>
       <Box textAlign="center" sx={{ width: "100%" }}>
-        <PopTypography
+        {/* <PopTypography
           variant="h5"
           gutterBottom
           sx={{
@@ -441,7 +441,7 @@ const createTable = (doc) => {
           }}
         >
           Enquiry Report
-        </PopTypography>
+        </PopTypography> */}
 
         <Grid container spacing={2} className="textField-root" mt={2}>
           <Grid item xs={12} md={3}>

@@ -356,7 +356,7 @@ const {
 
   return (
     <div >
-       <PopTypography
+       {/* <PopTypography
         variant="h5"
         gutterBottom
         sx={{
@@ -370,7 +370,7 @@ const {
         }}
       >
         Main Dashboard
-      </PopTypography>
+      </PopTypography> */}
       {incomeandexpense && <IncomeCombineDash />}
       {employeemanagementsystem && <EmpDash />}
       <Grid container spacing={2} justifyContent="center">

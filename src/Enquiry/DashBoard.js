@@ -474,7 +474,7 @@ export default function DashBoard() {
 
   return (
     <div sx={{ padding: 2, width: "100%" }}>
-      <Typography
+      {/* <Typography
         variant="h5"
         gutterBottom
         sx={{
@@ -488,7 +488,7 @@ export default function DashBoard() {
         }}
       >
         Enquiry Dashboard
-      </Typography>
+      </Typography> */}
       <Box mt={1} textAlign="center" sx={{ width: "100%" }}>
         <Grid
           container
