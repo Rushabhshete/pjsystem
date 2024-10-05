@@ -171,7 +171,8 @@ const Header = () => {
       position="fixed"
       sx={{
         zIndex: (theme) => theme.zIndex.drawer + 1,
-        backgroundImage: "radial-gradient(circle, #FAD126, #FF564E)",
+        // backgroundImage: "radial-gradient(circle, #FAD126, #FF564E)",
+        backgroundColor:'#269DD7'
       }}
     >
       <Toolbar>
