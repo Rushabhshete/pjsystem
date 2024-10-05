@@ -33,7 +33,7 @@ const AdmissionForm = () => {
     guideName: "",
     sourceBy: "",
     mobile1: "",
-    feesReceipt: null,
+    // feesReceipt: null,
     studentPhoto: null,
     paymentMethod: "",
     pendingFees: "",
@@ -533,7 +533,7 @@ const AdmissionForm = () => {
               justifyContent="space-evenly"
               display="flex"
             >
-              <Grid item xs={12} sm={6} md={4}>
+              {/* <Grid item xs={12} sm={6} md={4}>
                 <Button
                   variant="outlined"
                   component="label"
@@ -559,12 +559,12 @@ const AdmissionForm = () => {
                 >
                   Upload
                 </Button>
-              </Grid>
+              </Grid> */}
               <Grid item xs={12} sm={6} md={4}>
                 <Button
                   variant="outlined"
                   component="label"
-                  style={{ marginRight: "10px" }}
+                  style={{ marginRight: "10px", marginTop:'20px'}}
                 >
                   Upload Student Photo
                   <input

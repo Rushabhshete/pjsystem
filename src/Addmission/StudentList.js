@@ -694,7 +694,7 @@ const StudentList = () => {
                 Transaction ID
               </TableCell>
               <TableCell style={{ fontWeight: "bold" }}>Status</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Actions</TableCell>
+              <TableCell style={{ fontWeight: "bold", textAlign:'center' }}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -857,24 +857,38 @@ const StudentList = () => {
           )}
         </Box>
 
-        {/* Invoice Number and Date */}
         <Typography
-          variant="body2"
-          align="center"
-          sx={{
-            borderTop: "8px solid purple",
-            padding: "10px",
-            justifyContent: "space-between",
-            gap: "20px",
-            backgroundColor: "#f3e5f5",
-          }}
-        >
-          <Typography component="span">
-            <Typography component="span" sx={{ fontWeight: "bold" }}>
-              {selectedPrintAdmission.name}, Admission Receipt
-            </Typography>
-          </Typography>
-        </Typography>
+  variant="body2"
+  sx={{
+    borderTop: "8px solid purple",
+    padding: "10px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    position: "relative",
+    backgroundColor: "#f3e5f5",
+  }}
+>
+  {/* Invoice Number on the left */}
+  <Typography component="span" sx={{ fontWeight: "bold" }}>
+    Invoice No: {selectedPrintAdmission.id}
+  </Typography>
+
+  {/* Admission Receipt centered */}
+  <Typography
+    component="span"
+    sx={{
+      fontWeight: "bold",
+      position: "absolute",
+      left: "50%",
+      transform: "translateX(-50%)",
+    }}
+  >
+    Admission Receipt
+  </Typography>
+</Typography>
+
+
 
         {/* Table with Data */}
         <Table

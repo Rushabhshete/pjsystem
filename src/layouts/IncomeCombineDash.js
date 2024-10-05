@@ -732,22 +732,33 @@ export default function IncomeCombineDash() {
 
           {/* Chart Section */}
           <Grid container spacing={2} sx={{ marginTop: '20px', justifyContent: 'space-between' }}>
-            <Grid item xs={12} sm={6} sx={{ height: '400px' }}>
-              <Typography variant="h6" align="center">
-                Overall Income & Expense Comparison
-              </Typography>
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={overallData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="category" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Bar dataKey="Income" fill="#90EE90" />
-                  <Bar dataKey="Expense" fill="#FF6F61" />
-                </BarChart>
-              </ResponsiveContainer>
-            </Grid>
+          <Grid item xs={12} sm={6} sx={{ height: '450px' }}>
+  <Typography variant="h6" align="center">
+    Overall Income & Expense Comparison
+  </Typography>
+  <ResponsiveContainer width="100%" height="100%">
+    <BarChart
+      data={overallData}
+      margin={{ top: 20, right: 50, bottom: 5 }} // Increase margins to avoid cut-off
+    >
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="category" style={{ fontSize: '12px' }} />
+      <YAxis 
+        domain={[0, 'auto']} 
+        tickFormatter={(value) => value.toLocaleString()} // Full numbers with commas
+        width={120}  // Increase the width to make space for large numbers
+        padding={{ top: 20, bottom: 20 }} // More padding for better spacing
+        style={{ fontSize: '12px' }} // Reduce font size of the numbers
+      />
+      <Tooltip formatter={(value) => new Intl.NumberFormat('en-US').format(value)} />
+      <Legend />
+      <Bar dataKey="Income" fill="#90EE90" />
+      <Bar dataKey="Expense" fill="#FF6F61" />
+    </BarChart>
+  </ResponsiveContainer>
+</Grid>
+
+
 
             <Grid item xs={12} md={6} className="textField-root">
               <TextField
