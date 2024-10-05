@@ -580,29 +580,6 @@ const SalaryTable = ({ id, initialStatus }) => {
     }
   };
 
-  // const handleStatusChange = async (e) => {
-  //   const status = e.target.value;
-  //   setSelectedStatus(status);
-
-  //   setLoading(true);
-  //   setError(null);
-
-  //   try {
-  //     const response = await axios.get(
-  //       `http://localhost:8082/salaries/all?institutecode=${institutecode}`
-  //     );
-  //     const filteredSalaries = response.data.filter(
-  //       (salary) => salary.status === status
-  //     );
-  //     setSalaries(filteredSalaries);
-  //   } catch (error) {
-  //     console.error(`Error fetching salaries with status ${status}:`, error);
-  //     setError(`Failed to fetch salaries with status ${status}`);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
   if (loading) return <CircularProgress />;
   if (error) return <Alert severity="error">{error}</Alert>;
 
@@ -1088,46 +1065,6 @@ const SalaryTable = ({ id, initialStatus }) => {
             border={"0.5px solid lightgray"}
             sx={{ fontFamily: "Arial, sans-serif" }}
           >
-            {/* <Grid
-              container
-              alignItems="center"
-              display={"inline-flex"}
-              justifyContent="center"
-              padding={"15px"}
-            >
-              <Grid item xs={12} align="left" position={"relative"}>
-                <img
-                  src={logo}
-                  alt="Logo"
-                  className="logo mb-6"
-                  style={{ width: "60px", marginBottom: "20px" }}
-                />
-                <Typography
-                  color="black"
-                  variant="subtitle1"
-                  marginTop={"-20px"}
-                >
-                  <strong>PJSoftTech</strong>
-                </Typography>
-              </Grid>
-              <Grid>
-                <Typography
-                  align="center"
-                  sx={{ marginTop: "-80px", fontSize: "10px", color: "gray" }}
-                >
-                  <Typography color="black" variant="subtitle1">
-                    <strong>PJSoftTech</strong>
-                  </Typography>
-                  203, 2ND FLOOR, Mangalmurti Complex, behind ABIL Tower,
-                  hirabagh chowk, Tilak Road,
-                  <br />
-                  Shrukravar Peth, Pune-411002
-                  <br />
-                  Email: contact@pjsofttech.com
-                </Typography>
-              </Grid>
-            </Grid> */}
-
             <Box
               sx={{ display: "flex", justifyContent: "space-between", mt: 1 }}
             >
@@ -1182,206 +1119,180 @@ const SalaryTable = ({ id, initialStatus }) => {
             </Box>
 
             <Typography
-              variant="h6"
+              variant="body2"
               align="center"
-              mt={2}
-              sx={{ fontWeight: "bold" }}
-            >
-              Salary Slip of Month {selectedMonthName} {selectedSalary.year}
-            </Typography>
-
-            <Table
-              size="small"
-              style={{
-                marginBottom: "20px",
-                border: "1px solid black",
-                borderCollapse: "collapse",
+              sx={{
+                borderTop: "8px solid purple", // Thick top border
+                padding: "10px", // Padding for spacing
+                justifyContent: "space-between", // Evenly space the items
+                gap: "20px", // Gap between the data elements for spacing
+                backgroundColor: "#f3e5f5", // Light purple background
               }}
             >
-              <TableBody>
-                <TableRow>
-                  <TableCell style={{ border: "1px solid black" }}>
-                    <Typography variant="body1" style={{ fontWeight: "bold" }}>
-                      Employee Name
+              <Typography component="span">
+                <Typography component="span" sx={{ fontWeight: "bold" }}>
+                  Salary Slip of Month {selectedMonthName} {selectedSalary.year}
+                </Typography>
+              </Typography>
+            </Typography>
+
+            <Box
+              sx={{
+                borderBottom: "3px solid purple",
+                marginTop: "10px",
+                marginBottom: "20px",
+                padding: "10px",
+              }}
+            >
+              <Grid container spacing={3}>
+                {/* Left Side: Employee Name & Category */}
+                <Grid item xs={12} sm={6}>
+                  <Box>
+                    <Typography variant="body1" sx={{ marginBottom: "5px" }}>
+                      <strong>Employee Name: </strong>
+                      {selectedSalary.fullName}
                     </Typography>
-                  </TableCell>
-                  <TableCell style={{ border: "1px solid black" }}>
-                    {selectedSalary.fullName}
-                  </TableCell>
-                  <TableCell style={{ border: "1px solid black" }}>
-                    <Typography variant="body1" style={{ fontWeight: "bold" }}>
-                      Department
+                    <Typography variant="body1" sx={{ marginBottom: "5px" }}>
+                      <strong>Category: </strong>
+                      {selectedSalary.employeecategory}
                     </Typography>
-                  </TableCell>
-                  <TableCell style={{ border: "1px solid black" }}>
-                    {selectedSalary.department}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell style={{ border: "1px solid black" }}>
-                    <Typography variant="body1" style={{ fontWeight: "bold" }}>
-                      Category
+                  </Box>
+                </Grid>
+
+                {/* Right Side: Working Days & Department */}
+                <Grid item xs={12} sm={6}>
+                  <Box>
+                    <Typography variant="body1" sx={{ marginBottom: "5px" }}>
+                      <strong>Department: </strong>
+                      {selectedSalary.department}
                     </Typography>
-                  </TableCell>
-                  <TableCell style={{ border: "1px solid black" }}>
-                    {selectedSalary.employeecategory}
-                  </TableCell>
-                  <TableCell style={{ border: "1px solid black" }}>
-                    <Typography variant="body1" style={{ fontWeight: "bold" }}>
-                      Payment Date
+                    <Typography variant="body1" sx={{ marginBottom: "5px" }}>
+                      <strong>Working Days: </strong>
+                      {selectedSalary.workingDays}
                     </Typography>
-                  </TableCell>
-                  <TableCell style={{ border: "1px solid black" }}>
-                    {selectedSalary.paymentDate}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell style={{ border: "1px solid black" }}>
-                    <Typography variant="body1" style={{ fontWeight: "bold" }}>
-                      Working Days
-                    </Typography>
-                  </TableCell>
-                  <TableCell style={{ border: "1px solid black" }}>
-                    {selectedSalary.workingDays}
-                  </TableCell>
-                  <TableCell style={{ border: "1px solid black" }}>
-                    <Typography variant="body1" style={{ fontWeight: "bold" }}>
-                      Transaction ID
-                    </Typography>
-                  </TableCell>
-                  <TableCell style={{ border: "1px solid black" }}>
-                    {selectedSalary.transactionId}
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Box>
 
             <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <Table
-                  size="small"
-                  style={{
-                    border: "1px solid black",
-                    borderCollapse: "collapse",
-                  }}
-                >
-                  <TableHead>
-                    <TableRow>
-                      <TableCell style={{ border: "1px solid black" }}>
-                        <Typography
-                          variant="body1"
-                          style={{ fontWeight: "bold" }}
-                        >
-                          Earnings
-                        </Typography>
-                      </TableCell>
-                      <TableCell style={{ border: "1px solid black" }}>
-                        <Typography
-                          variant="body1"
-                          style={{ fontWeight: "bold" }}
-                        >
-                          Amount
-                        </Typography>
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {earnings.map((earning, index) => (
-                      <TableRow key={index}>
-                        <TableCell style={{ border: "1px solid black" }}>
-                          {earning.label}
-                        </TableCell>
-                        <TableCell style={{ border: "1px solid black" }}>
-                          {earning.amount}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                    <TableRow>
-                      <TableCell style={{ border: "1px solid black" }}>
-                        <Typography
-                          variant="body1"
-                          style={{ fontWeight: "bold" }}
-                        >
-                          Total Earnings
-                        </Typography>
-                      </TableCell>
-                      <TableCell style={{ border: "1px solid black" }}>
-                        {earnings.reduce(
-                          (acc, earning) => acc + earning.amount,
-                          0
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </Grid>
+  <Grid item xs={6}>
+    <Box
+      sx={{
+        // border: "1px solid black",
+        padding: 2,
+      }}
+    >
+      <Typography variant="h6" style={{ fontWeight: "bold",  borderBottom: "1px solid black", }}>
+        Earnings
+      </Typography>
+      {earnings.map((earning, index) => (
+        <Box
+          key={index}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            padding: "8px 0",
+           
+          }}
+        >
+          <Typography>{earning.label}</Typography>
+          <Typography>₹{earning.amount}</Typography>
+        </Box>
+      ))}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          padding: "8px 0",
+          fontWeight: "bold",
+        }}
+      >
+        <Typography>Total Earnings</Typography>
+        <Typography>
+          ₹{earnings.reduce((acc, earning) => acc + earning.amount, 0)}
+        </Typography>
+      </Box>
+    </Box>
+  </Grid>
 
-              <Grid item xs={6}>
-                <Table
-                  size="small"
-                  style={{
-                    border: "1px solid black",
-                    borderCollapse: "collapse",
-                  }}
-                >
-                  <TableHead>
-                    <TableRow>
-                      <TableCell style={{ border: "1px solid black" }}>
-                        <Typography
-                          variant="body1"
-                          style={{ fontWeight: "bold" }}
-                        >
-                          Deductions
-                        </Typography>
-                      </TableCell>
-                      <TableCell style={{ border: "1px solid black" }}>
-                        <Typography
-                          variant="body1"
-                          style={{ fontWeight: "bold" }}
-                        >
-                          Amount
-                        </Typography>
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {deductions.map((deduction, index) => (
-                      <TableRow key={index}>
-                        <TableCell style={{ border: "1px solid black" }}>
-                          {deduction.label}
-                        </TableCell>
-                        <TableCell style={{ border: "1px solid black" }}>
-                          {deduction.amount}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                    <TableRow>
-                      <TableCell style={{ border: "1px solid black" }}>
-                        <Typography
-                          variant="body1"
-                          style={{ fontWeight: "bold" }}
-                        >
-                          Net Salary
-                        </Typography>
-                      </TableCell>
-                      <TableCell style={{ border: "1px solid black" }}>
-                        {selectedSalary.finalNetSalary}
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </Grid>
-            </Grid>
+  <Grid item xs={6}>
+    <Box
+      sx={{
+        // border: "1px solid black",
+        padding: 2,
+      }}
+    >
+      <Typography variant="h6" style={{ fontWeight: "bold", borderBottom: "1px solid black", }}>
+        Deductions
+      </Typography>
+      {deductions.map((deduction, index) => (
+        <Box
+          key={index}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            padding: "8px 0",
+            
+          }}
+        >
+          <Typography>{deduction.label}</Typography>
+          <Typography>₹{deduction.amount}</Typography>
+        </Box>
+      ))}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          padding: "8px 0",
+          fontWeight: "bold",
+        }}
+      >
+        <Typography>Net Salary</Typography>
+        <Typography>₹ {selectedSalary.finalNetSalary}</Typography>
+      </Box>
+    </Box>
+  </Grid>
+</Grid>
 
             <Typography
               variant="body1"
-              style={{ marginTop: "15px", textAlign: "center" }}
+              style={{ marginTop: "15px", textAlign: "center",borderBottom: "3px solid purple",borderTop:'3px solid purple' }}
             >
               <strong>Amount in Words:</strong>{" "}
-              {numberToWords(selectedSalary.finalNetSalary)} Only
+              ₹ {numberToWords(selectedSalary.finalNetSalary)} Only
             </Typography>
 
-            <Grid container spacing={2} mt={10}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: "10px",
+                marginBottom: "20px",
+                borderBottom:'3px solid purple',
+                padding: "10px",
+              }}
+            >
+              <div style={{ flex: "1", marginRight: "10px" }}>
+              <div style={{ marginBottom: "3px" }}>
+                  <Typography variant="body1">
+                    <strong>Payment Date: </strong>
+                    {selectedSalary.paymentDate}
+                  </Typography>
+                </div>
+                <div style={{ marginBottom: "3px" }}>
+                  <Typography variant="body1">
+                    <strong>Transaction ID: </strong>
+                    {selectedSalary.transactionId}
+                  </Typography>
+                </div>
+                
+              </div>
+            </div>
+
+            
+
+            <Grid container spacing={2} mt={1}>
               <Grid item xs={12} sm={6}>
                 <Typography variant="body1" style={{ textAlign: "center" }}>
                   <strong>Employer Sign</strong>
