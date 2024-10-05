@@ -444,7 +444,7 @@ const IncomeExpenseDashboard = () => {
   `;
   return (
     <div>
-      <PopTypography
+      {/* <PopTypography
         variant="h5"
         gutterBottom
         sx={{
@@ -458,7 +458,7 @@ const IncomeExpenseDashboard = () => {
         }}
       >
         Income & Expense Dashboard
-      </PopTypography>
+      </PopTypography> */}
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={2.4}>
           <Paper

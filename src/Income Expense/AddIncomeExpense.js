@@ -503,7 +503,7 @@ if (instituteImage) {
     <div>
       <ToastContainer />
 
-      <PopTypography
+      {/* <PopTypography
         variant="h5"
         gutterBottom
         sx={{
@@ -517,7 +517,7 @@ if (instituteImage) {
         }}
       >
         Add {formData.type || "Income/Expense"}
-      </PopTypography>
+      </PopTypography> */}
 
       <form onSubmit={handleSubmit}>
         <Grid container spacing={3} className="textField-root">

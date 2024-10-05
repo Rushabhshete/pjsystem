@@ -884,24 +884,36 @@ const createTable = (doc) => {
           )}
         </Box>
 
-        {/* Invoice Number and Date */}
         <Typography
-          variant="body2"
-          align="center"
-          sx={{
-            borderTop: "8px solid purple",
-            padding: "10px",
-            justifyContent: "space-between",
-            gap: "20px",
-            backgroundColor: "#f3e5f5",
-          }}
-        >
-          <Typography component="span">
-            <Typography component="span" sx={{ fontWeight: "bold" }}>
-              {selectedInquiry.name}, Enquiry Receipt
-            </Typography>
-          </Typography>
-        </Typography>
+  variant="body2"
+  sx={{
+    borderTop: "8px solid purple",
+    padding: "10px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#f3e5f5",
+  }}
+>
+  {/* Invoice Number on the left */}
+  <Typography component="span" sx={{ fontWeight: "bold" }}>
+    Invoice No: {selectedInquiry.id}
+  </Typography>
+
+  {/* Enquiry Receipt centered */}
+  <Typography
+    component="span"
+    sx={{
+      fontWeight: "bold",
+      position: "absolute",
+      left: "50%",
+      transform: "translateX(-50%)",
+    }}
+  >
+    Enquiry Receipt
+  </Typography>
+</Typography>
+
 
         {/* Table with Data */}
         <Table

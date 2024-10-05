@@ -806,7 +806,7 @@ const Category = () => {
       />
       <Grid container spacing={2} className="textField-root">
         <Grid item xs={12}>
-          <PopTypography
+          {/* <PopTypography
             variant="h5"
             gutterBottom
             sx={{
@@ -820,7 +820,7 @@ const Category = () => {
             }}
           >
             {category} List
-          </PopTypography>
+          </PopTypography> */}
         </Grid>
         <Grid item xs={6} md={1.8}>
           <FormControl fullWidth>
@@ -1098,7 +1098,7 @@ const Category = () => {
               Status
             </StyledTableCell>
 
-            <StyledTableCell style={{ fontWeight: "bold" }}>
+            <StyledTableCell style={{ fontWeight: "bold", textAlign:'center'}}>
               Actions
             </StyledTableCell>
           </TableRow>
@@ -1286,7 +1286,7 @@ const Category = () => {
 
                 <Typography component="span">
                   <Typography component="span" sx={{ fontWeight: "bold" }}>
-                    {selectedRow.user} {selectedRow.type} Receipt
+                  {selectedRow.type} Receipt
                   </Typography>
                 </Typography>
 

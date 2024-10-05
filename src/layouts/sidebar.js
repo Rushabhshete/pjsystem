@@ -874,31 +874,37 @@ const Sidebar = () => {
       icon: <CurrencyRupeeRoundedIcon color="primary" />,
       show: systemValues?.incomeandexpense,
       subOptions: [
+        // {
+        //   name: "Dashboard",
+        //   route: "/layout/Income-Expense-dashboard",
+        //   icon: <DashboardIcon sx={{ color: "#4682b4" }} />,
+        // },
         {
-          name: "Dashboard",
-          route: "/layout/Income-Expense-dashboard",
-          icon: <DashboardIcon sx={{ color: "#4682b4" }} />,
+          name: "Income Expense Manager",
+          icon: <CurrencyRupeeRoundedIcon color="primary" />,
+          route: "/layout/income-expense-manager", // Route for the manager
+          show: systemValues?.incomeandexpense,
         },
-        {
-          name: "Add income-expense",
-          route: "/layout/AddIncomeExpense",
-          icon: <PlaylistAddIcon sx={{ color: "#4682b4" }} />,
-        },
-        {
-          name: "Income-Expense List",
-          route: "/layout/incomeExpenseList",
-          icon: <FormatListBulletedIcon sx={{ color: "#4682b4" }} />,
-        },
-        {
-          name: "Add Category",
-          route: "/layout/AddCategory",
-          icon: <CategoryIcon sx={{ color: "#4682b4" }} />,
-        },
-        {
-          name: "Add User",
-          route: "/layout/AddUser",
-          icon: <PersonSearchRoundedIcon sx={{ color: "#4682b4" }} />,
-        },
+        // {
+        //   name: "Add income-expense",
+        //   route: "/layout/AddIncomeExpense",
+        //   icon: <PlaylistAddIcon sx={{ color: "#4682b4" }} />,
+        // },
+        // {
+        //   name: "Income-Expense List",
+        //   route: "/layout/incomeExpenseList",
+        //   icon: <FormatListBulletedIcon sx={{ color: "#4682b4" }} />,
+        // },
+        // {
+        //   name: "Add Category",
+        //   route: "/layout/AddCategory",
+        //   icon: <CategoryIcon sx={{ color: "#4682b4" }} />,
+        // },
+        // {
+        //   name: "Add User",
+        //   route: "/layout/AddUser",
+        //   icon: <PersonSearchRoundedIcon sx={{ color: "#4682b4" }} />,
+        // },
       ],
     },
     {

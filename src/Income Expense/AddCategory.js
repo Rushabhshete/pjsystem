@@ -282,7 +282,7 @@ const AddCategory = () => {
       pauseOnFocusLoss
       draggable
       pauseOnHover/>
-      <PopTypography
+      {/* <PopTypography
         variant="h5"
         gutterBottom
         sx={{
@@ -296,7 +296,7 @@ const AddCategory = () => {
         }}
       >
         Add Category
-      </PopTypography>
+      </PopTypography> */}
       <Grid container spacing={2} className="textField-root">
         <Typography
           variant="h6"

@@ -28,19 +28,19 @@ import Report from "./Enquiry/Report";
 import UpdateEnquiry from "./Enquiry/pages/UpdateInquiry";
 import AddEnquiry from "./Enquiry/pages/AddInquiry";
 import DashBoard from "./Enquiry/DashBoard";
-import AddmissionDashboard from "./Addmission/AdmissionDashboard";
-import AddmissionSource from "./Addmission/AddmissionSource";
-import AdmissionForm from "./Addmission/AdmissionForm";
-import StudentList from "./Addmission/StudentList";
-import UpdateForm from "./Addmission/AdmissionUpdateForm";
-import StudentFormDataDisplay from "./Addmission/StudentFormDataDisplay";
-import AddCourse from "./Addmission/AdmissionAddCourse";
-import AddGuide from "./Addmission/AddGuide";
-import IncomeExpenseDashboard from "./Income Expense/IncomeExpenseDashboard";
-import AddIncomeExpense from "./Income Expense/AddIncomeExpense";
-import Category from "./Income Expense/Category";
-import AddCategory from "./Income Expense/AddCategory";
-import AddUser from "./Income Expense/AddUser";
+// import AddmissionDashboard from "./Addmission/AdmissionDashboard";
+// import AddmissionSource from "./Addmission/AddmissionSource";
+// import AdmissionForm from "./Addmission/AdmissionForm";
+// import StudentList from "./Addmission/StudentList";
+// import UpdateForm from "./Addmission/AdmissionUpdateForm";
+// import StudentFormDataDisplay from "./Addmission/StudentFormDataDisplay";
+// import AddCourse from "./Addmission/AdmissionAddCourse";
+// import AddGuide from "./Addmission/AddGuide";
+// import IncomeExpenseDashboard from "./Income Expense/IncomeExpenseDashboard";
+// import AddIncomeExpense from "./Income Expense/AddIncomeExpense";
+// import Category from "./Income Expense/Category";
+// import AddCategory from "./Income Expense/AddCategory";
+// import AddUser from "./Income Expense/AddUser";
 import AdminProfile from "./layouts/AdminProfile"; // Ensure this path is correct
 import Memo from "./layouts/Memo";
 import ManageMemo from "./layouts/ManageMemo";
@@ -87,6 +87,8 @@ import AddFee from "./Student/Fees/AddFee";
 import FeeTable from "./Student/Fees/FeeTable";
 import AddMedium from "./Student/Fees/AddMedium";
 import FeeReport from "./Student/Fees/FeeReport";
+import IncomeExpenseManager from "./Income Expense/IncomeExpenseManager";
+import AdmissionManager from "./Addmission/AdmissionManager";
 
 function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -140,7 +142,7 @@ function AppContent() {
           <Route path="source" element={<Source />} />
 
           {/* Admission Routes */}
-          <Route path="admission-dashboard" element={<AddmissionDashboard />} />
+          {/* <Route path="admission-dashboard" element={<AddmissionDashboard />} />
           <Route path="admission-form" element={<AdmissionForm />} />
           <Route path="students" element={<StudentList />} />
           <Route path="update-admission/:sid" element={<UpdateForm />} />
@@ -150,11 +152,13 @@ function AppContent() {
           />
           <Route path="add-course" element={<AddCourse />} />
           <Route path="admission-source" element={<AddmissionSource />} />
-          <Route path="add-guide" element={<AddGuide />} />
+          <Route path="add-guide" element={<AddGuide />} /> */}
+<Route path="Admission-manager" element={<AdmissionManager />} />
+
 
           {/* Income Expense */}
 
-          <Route
+          {/* <Route
             path="Income-Expense-dashboard"
             element={<IncomeExpenseDashboard />}
           />
@@ -162,6 +166,9 @@ function AppContent() {
           <Route path="incomeExpenseList" element={<Category />} />
           <Route path="AddCategory" element={<AddCategory />} />
           <Route path="AddUser" element={<AddUser />} />
+        */}
+
+<Route path="income-expense-manager" element={<IncomeExpenseManager />} />
 
           {/* Employee */}
           <Route path="empDashboard" element={<EmployeeDashboard />} />
