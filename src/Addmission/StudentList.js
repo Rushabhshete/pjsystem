@@ -459,7 +459,7 @@ const StudentList = () => {
 
   return (
     <div>
-      <Typography
+      {/* <Typography
         variant="h5"
         gutterBottom
         sx={{
@@ -473,7 +473,7 @@ const StudentList = () => {
         }}
       >
         Admissions List
-      </Typography>
+      </Typography> */}
       <Grid container spacing={2} className="textField-root">
         <Grid item xs={8} sm={1.6} md={2}>
           <TextField

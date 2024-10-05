@@ -255,7 +255,7 @@ const AddCourse = () => {
       pauseOnFocusLoss
       draggable
       pauseOnHover/>
-      <Typography
+      {/* <Typography
         variant="h5"
         gutterBottom
         sx={{
@@ -269,7 +269,7 @@ const AddCourse = () => {
         }}
       >
         Add Course / Exam
-      </Typography>
+      </Typography> */}
 
       <Grid container spacing={2} className="textField-root">
         <Typography

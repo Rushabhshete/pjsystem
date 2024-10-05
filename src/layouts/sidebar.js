@@ -838,35 +838,41 @@ const Sidebar = () => {
       show: systemValues?.admissionmanagementsystem,
       subOptions: [
         {
-          name: "Dashboard",
-          route: "/layout/admission-dashboard",
-          icon: <DashboardIcon sx={{ color: "#4682b4" }} />,
+          name: "Admission Manager",
+          icon: <CurrencyRupeeRoundedIcon color="primary" />,
+          route: "/layout/Admission-manager", // Route for the manager
+         // show: systemValues?.incomeandexpense,
         },
-        {
-          name: "Admission Form",
-          route: "/layout/admission-form",
-          icon: <PeopleIcon sx={{ color: "#4682b4" }} />,
-        },
-        {
-          name: "Admission List",
-          route: "/layout/students",
-          icon: <RemoveRedEyeIcon sx={{ color: "#4682b4" }} />,
-        },
-        {
-          name: "Add Course/Exams",
-          route: "/layout/add-course",
-          icon: <AddToPhotosIcon sx={{ color: "#4682b4" }} />,
-        },
-        {
-          name: "Admission Source",
-          route: "/layout/admission-source",
-          icon: <AodIcon sx={{ color: "#4682b4" }} />,
-        },
-        {
-          name: "Admission Guide",
-          route: "/layout/add-guide",
-          icon: <LightbulbIcon sx={{ color: "#4682b4" }} />,
-        },
+        // {
+        //   name: "Dashboard",
+        //   route: "/layout/admission-dashboard",
+        //   icon: <DashboardIcon sx={{ color: "#4682b4" }} />,
+        // },
+        // {
+        //   name: "Admission Form",
+        //   route: "/layout/admission-form",
+        //   icon: <PeopleIcon sx={{ color: "#4682b4" }} />,
+        // },
+        // {
+        //   name: "Admission List",
+        //   route: "/layout/students",
+        //   icon: <RemoveRedEyeIcon sx={{ color: "#4682b4" }} />,
+        // },
+        // {
+        //   name: "Add Course/Exams",
+        //   route: "/layout/add-course",
+        //   icon: <AddToPhotosIcon sx={{ color: "#4682b4" }} />,
+        // },
+        // {
+        //   name: "Admission Source",
+        //   route: "/layout/admission-source",
+        //   icon: <AodIcon sx={{ color: "#4682b4" }} />,
+        // },
+        // {
+        //   name: "Admission Guide",
+        //   route: "/layout/add-guide",
+        //   icon: <LightbulbIcon sx={{ color: "#4682b4" }} />,
+        // },
       ],
     },
     {
