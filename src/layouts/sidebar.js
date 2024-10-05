@@ -9,7 +9,10 @@ import {
   Box,
   Typography,
   IconButton,
+  Grid,
 } from "@mui/material";
+import logo from "../img/logo.jpg";
+
 import { Link } from "react-router-dom";
 import {
   Add,
@@ -57,6 +60,7 @@ import NoteAltIcon from "@mui/icons-material/NoteAlt";
 import StickyNote2Icon from "@mui/icons-material/StickyNote2";
 import MapsUgcIcon from "@mui/icons-material/MapsUgc";
 import PriceCheckIcon from "@mui/icons-material/PriceCheck";
+import Header from "./header";
 
 const drawerWidth = 240;
 const collapsedWidth = 60;
@@ -67,6 +71,7 @@ const Sidebar = () => {
   const [open, setOpen] = useState(true);
   const [systemValues, setSystemValues] = useState(null);
   const institutecode = () => localStorage.getItem("institutecode");
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -86,6 +91,7 @@ const Sidebar = () => {
 
   const handleDrawerToggle = () => {
     setOpen(!open);
+    setIsSidebarCollapsed((prev) => !prev);
   };
 
   const isActive = (route) => location.pathname === route;
@@ -338,20 +344,23 @@ const Sidebar = () => {
           width: open ? drawerWidth : collapsedWidth,
           transition: "width 0.3s",
           overflowX: "hidden",
-          
+          backgroundColor:"black",
+    
         },
       }}
     >
+     
       <Box sx={{ display: "flex", alignItems: "center", p: 1 }}>
         <IconButton
           onClick={handleDrawerToggle}
-          sx={{ marginLeft: "auto", marginTop: "60px" }}
+          sx={{ marginLeft: "auto", marginTop: "60px",color:"white",marginBottom:"-30px" }}
+          
         >
           {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
         </IconButton>
       </Box>
       <Box sx={{ overflowY: "auto" }}>
-        <List>
+        <List sx={{color:"white"}}>
           {filteredSidebarOptions.map((option, index) => (
             <div key={index}>
               <ListItem
@@ -367,7 +376,8 @@ const Sidebar = () => {
                     backgroundColor: isActive(option.route)
                       ? "rgba(0, 0, 0, 0.05)"
                       : "rgba(0, 0, 0, 0.02)",
-                    marginLeft: "-10px",
+                 //   marginLeft: "-10px",
+          
                   },
                 }}
               >
@@ -394,7 +404,7 @@ const Sidebar = () => {
                     {expanded[option.name] ? (
                       <Remove sx={{ color: "red" }} />
                     ) : (
-                      <Add sx={{ color: "green" }} />
+                      <Add sx={{ color: "#269DD7" }} />
                     )}
                   </ListItemIcon>
                 )}
@@ -423,7 +433,7 @@ const Sidebar = () => {
                               backgroundColor: isActive(subOption.route)
                                 ? "rgba(0, 0, 0, 0.1)"
                                 : "rgba(0, 0, 0, 0.05)",
-                              marginLeft: "-10px",
+                             // marginLeft: "-10px",
                             },
                           }}
                         >
@@ -516,7 +526,9 @@ const Sidebar = () => {
           ))}
         </List>
       </Box>
+
     </Drawer>
+    
   );
 };
 

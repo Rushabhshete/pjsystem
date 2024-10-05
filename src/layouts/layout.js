@@ -8,7 +8,7 @@ const Layout = () => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Header />
-      <Box sx={{ display: 'flex', flexGrow: 1, mt: '64px' }}>
+      <Box sx={{ display: 'flex', flexGrow: 1, mt: '40px' }}>
         <Sidebar />
         <Box component="main" sx={{flexGrow: 1, p: 3}}>
     
