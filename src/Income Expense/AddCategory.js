@@ -77,7 +77,7 @@ const AddCategory = () => {
       try {
         const institutecode = getInstituteCode();
         const response = await fetch(
-          `http://13.233.43.240:8087/categories/getAllCategoriesByInstitutecode?institutecode=${encodeURIComponent(
+          `http://localhost:8087/categories/getAllCategoriesByInstitutecode?institutecode=${encodeURIComponent(
             institutecode
           )}`
         );
@@ -126,7 +126,7 @@ const AddCategory = () => {
       try {
         const institutecode = getInstituteCode();
         const response = await fetch(
-          `http://13.233.43.240:8087/categories/save?institutecode=${encodeURIComponent(
+          `http://localhost:8087/categories/save?institutecode=${encodeURIComponent(
             institutecode
           )}`,
           {
@@ -141,7 +141,7 @@ const AddCategory = () => {
           toast.success("Category added successfully");
   
           const updatedResponse = await fetch(
-            `http://13.233.43.240:8087/categories/getAllCategoriesByInstitutecode?institutecode=${encodeURIComponent(
+            `http://localhost:8087/categories/getAllCategoriesByInstitutecode?institutecode=${encodeURIComponent(
               institutecode
             )}`
           );
@@ -165,7 +165,7 @@ const AddCategory = () => {
   // const handleEditClickOpen = async (id) => {
   //   try {
   //     const response = await fetch(
-  //       `http://13.233.43.240:8087/categories/getById/${id}`
+  //       `http://localhost:8087/categories/getById/${id}`
   //     );
   //     const result = await response.json();
   //     setEditCategory(result);
@@ -191,7 +191,7 @@ const AddCategory = () => {
   //   } else {
   //     try {
   //       const response = await fetch(
-  //         `http://13.233.43.240:8087/categories/update/${editCategory.id}`,
+  //         `http://localhost:8087/categories/update/${editCategory.id}`,
   //         {
   //           method: "PUT",
   //           headers: {
@@ -205,7 +205,7 @@ const AddCategory = () => {
   //       if (response.ok) {
   //         const institutecode = getInstituteCode();
   //         const updatedResponse = await fetch(
-  //           `http://13.233.43.240:8087/categories/getAllCategoriesByInstitutecode?institutecode=${encodeURIComponent(
+  //           `http://localhost:8087/categories/getAllCategoriesByInstitutecode?institutecode=${encodeURIComponent(
   //             institutecode
   //           )}`
   //         );
@@ -232,7 +232,7 @@ const AddCategory = () => {
   const handleDelete = async () => {
     try {
       const response = await fetch(
-        `http://13.233.43.240:8087/categories/delete/${categoryIdToDelete}`,
+        `http://localhost:8087/categories/delete/${categoryIdToDelete}`,
         {
           method: "DELETE",
         }
@@ -240,7 +240,7 @@ const AddCategory = () => {
       if (response.ok) {
         const institutecode = getInstituteCode();
         const updatedResponse = await fetch(
-          `http://13.233.43.240:8087/categories/getAllCategoriesByInstitutecode?institutecode=${encodeURIComponent(
+          `http://localhost:8087/categories/getAllCategoriesByInstitutecode?institutecode=${encodeURIComponent(
             institutecode
           )}`
         );
@@ -282,7 +282,7 @@ const AddCategory = () => {
       pauseOnFocusLoss
       draggable
       pauseOnHover/>
-      <PopTypography
+      {/* <PopTypography
         variant="h5"
         gutterBottom
         sx={{
@@ -296,7 +296,7 @@ const AddCategory = () => {
         }}
       >
         Add Category
-      </PopTypography>
+      </PopTypography> */}
       <Grid container spacing={2} className="textField-root">
         <Typography
           variant="h6"

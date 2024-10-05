@@ -111,7 +111,7 @@ const Settings = () => {
         }
 
         const response = await axios.get(
-          `http://13.233.43.240:8081/findInstitutesby/email?emailaddress=${email}`
+          `http://localhost:8081/findInstitutesby/email?emailaddress=${email}`
         );
         setEmployeeDetails(response.data);
         setLoading(false);

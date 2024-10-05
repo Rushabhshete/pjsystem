@@ -44,7 +44,7 @@ function Category() {
     setError(null);
     try {
       const response = await axios.get(
-        `http://13.233.43.240:8082/categories/all?institutecode=${institutecode}`
+        `http://localhost:8082/categories/all?institutecode=${institutecode}`
       );
       setCategories(response.data);
     } catch (error) {
@@ -73,7 +73,7 @@ function Category() {
   //   e.preventDefault();
   //   try {
   //     await axios.put(
-  //       `http://13.233.43.240:8082/categories/updateCategoryById/${selectedCategory.id}`,
+  //       `http://localhost:8082/categories/updateCategoryById/${selectedCategory.id}`,
   //       selectedCategory
   //     );
   //     setShowUpdateModal(false);
@@ -94,7 +94,7 @@ function Category() {
     if (confirmation && id) {
       try {
         await axios.delete(
-          `http://13.233.43.240:8082/categories/delete/employeecategory/${id}`
+          `http://localhost:8082/categories/delete/employeecategory/${id}`
         );
         await fetchData();
         // toast.success('Category deleted successfully');
@@ -140,7 +140,7 @@ function Category() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `http://13.233.43.240:8082/categories/addEmployeeCategory?institutecode=${institutecode}`,
+        `http://localhost:8082/categories/addEmployeeCategory?institutecode=${institutecode}`,
         formData
       );
       console.log("Form submitted successfully:", response.data);

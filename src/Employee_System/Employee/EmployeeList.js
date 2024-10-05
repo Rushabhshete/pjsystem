@@ -167,7 +167,7 @@ const EmployeeList = () => {
   const loadCategory = async () => {
     try {
       const result = await axios.get(
-        `http://13.233.43.240:8082/categories/all?institutecode=${institutecode}`
+        `http://localhost:8082/categories/all?institutecode=${institutecode}`
       );
       setCategory(result.data);
     } catch (error) {
@@ -243,7 +243,7 @@ const EmployeeList = () => {
   const fetchDepartments = async () => {
     try {
       const response = await axios.get(
-        `http://13.233.43.240:8082/departments/allDepartment?institutecode=${institutecode}`
+        `http://localhost:8082/departments/allDepartment?institutecode=${institutecode}`
       );
       setDepartments(response.data);
     } catch (error) {
@@ -261,7 +261,7 @@ const EmployeeList = () => {
         }
 
         const response = await axios.get(
-          `http://13.233.43.240:8081/findInstitutesby/Institutecode?institutecode=${institutecode}`
+          `http://localhost:8081/findInstitutesby/Institutecode?institutecode=${institutecode}`
         );
         setEmployeeDetails(response.data);
       } catch (error) {
@@ -354,7 +354,7 @@ const EmployeeList = () => {
     if (confirmation) {
       try {
         const response = await axios.put(
-          `http://13.233.43.240:8082/updateEmployeeStatus/${empID}`,
+          `http://localhost:8082/updateEmployeeStatus/${empID}`,
           {
             status: "Terminated", // Or whatever status you want to set
           }

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://13.233.43.240:8083';
+const API_URL = 'http://localhost:8083';
 const institutecode = () => localStorage.getItem("institutecode");
 
 class StandardService {

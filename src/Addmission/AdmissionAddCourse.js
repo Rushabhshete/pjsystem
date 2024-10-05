@@ -140,7 +140,7 @@ const AddCourse = () => {
       }
 
       const response = await axios.get(
-        `http://13.233.43.240:8085/getAllCourse?institutecode=${institutecode}`
+        `http://localhost:8085/getAllCourse?institutecode=${institutecode}`
       );
       setCourses(response.data);
     } catch (error) {
@@ -156,7 +156,7 @@ const AddCourse = () => {
       }
 
       await axios.post(
-        `http://13.233.43.240:8085/AddCourse?institutecode=${institutecode}`,
+        `http://localhost:8085/AddCourse?institutecode=${institutecode}`,
         { cname: courseName }
       );
       toast.success("Course Added Successfully");
@@ -182,7 +182,7 @@ const AddCourse = () => {
   const confirmDeleteCourse = async () => {
     try {
       await axios.delete(
-        `http://13.233.43.240:8085/deleteById/${selectedCourseId}`
+        `http://localhost:8085/deleteById/${selectedCourseId}`
       );
       toast.success("Course Delete Successfully");
       console.log("Course deleted successfully");
@@ -214,7 +214,7 @@ const AddCourse = () => {
 
   //     // Send institutecode as a query parameter
   //     await axios.put(
-  //       `http://13.233.43.240:8085/updateCourse/${selectedCourseId}?institutecode=${institutecode}`,
+  //       `http://localhost:8085/updateCourse/${selectedCourseId}?institutecode=${institutecode}`,
   //       {
   //         cname: updateCourseName, // Only send course name in the request body
   //       }

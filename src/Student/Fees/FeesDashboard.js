@@ -29,15 +29,15 @@ const Home = () => {
 
 
   const apiUrls = {
-    '7Days': `http://13.233.43.240:8083/getNumberOfFeesOf7Days?institutecode=${institutecode()}`,
-    '30Days': `http://13.233.43.240:8083/getNumberOfFeesOf30Days?institutecode=${institutecode()}`,
-    '365Days': `http://13.233.43.240:8083/getNumberOfFeesOf365Days?institutecode=${institutecode()}`,
-    'completeFees': `http://13.233.43.240:8083/getNumberOfCompleteFees?institutecode=${institutecode()}`,
-    'pendingFees': `http://13.233.43.240:8083/getNumberOfPendingFees?institutecode=${institutecode()}`,
+    '7Days': `http://localhost:8083/getNumberOfFeesOf7Days?institutecode=${institutecode()}`,
+    '30Days': `http://localhost:8083/getNumberOfFeesOf30Days?institutecode=${institutecode()}`,
+    '365Days': `http://localhost:8083/getNumberOfFeesOf365Days?institutecode=${institutecode()}`,
+    'completeFees': `http://localhost:8083/getNumberOfCompleteFees?institutecode=${institutecode()}`,
+    'pendingFees': `http://localhost:8083/getNumberOfPendingFees?institutecode=${institutecode()}`,
   };
 
   const fetchTotalApplications = () => {
-    fetch(`http://13.233.43.240:8083/getAllFees?institutecode=${institutecode()}`)
+    fetch(`http://localhost:8083/getAllFees?institutecode=${institutecode()}`)
       .then(response => response.json())
       .then(data => {
         console.log('Data from getAllFees:', data);
@@ -94,7 +94,7 @@ const Home = () => {
 
   const fetchDataForDateRange = () => {
     if (startDate && endDate) {
-      const url = `http://13.233.43.240:8083/getNumberFeesBetweenDates?institutecode=${institutecode()}&startDate=${startDate}&endDate=${endDate}`;
+      const url = `http://localhost:8083/getNumberFeesBetweenDates?institutecode=${institutecode()}&startDate=${startDate}&endDate=${endDate}`;
       fetch(url)
         .then(response => response.json())
         .then(data => {

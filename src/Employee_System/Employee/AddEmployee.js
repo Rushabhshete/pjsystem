@@ -114,7 +114,7 @@ const UserComponent = () => {
   const loadCategory = async () => {
     try {
       const result = await axios.get(
-        `http://13.233.43.240:8082/categories/all?institutecode=${institutecode}`
+        `http://localhost:8082/categories/all?institutecode=${institutecode}`
       );
       setCategory(result.data);
     } catch (error) {
@@ -149,7 +149,7 @@ const UserComponent = () => {
       };
 
       const response = await fetch(
-        `http://13.233.43.240:8082/addEmp?institutecode=${institutecode}`,
+        `http://localhost:8082/addEmp?institutecode=${institutecode}`,
         {
           method: "POST",
           headers: {

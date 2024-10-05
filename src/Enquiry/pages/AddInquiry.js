@@ -106,13 +106,13 @@ export default function AddEnquiry() {
         const [examsResponse, sourcesResponse, conductsResponse] =
           await Promise.all([
             axios.get(
-              `http://13.233.43.240:8086/getAllExam?institutecode=${Enquiry.institutecode}`
+              `http://localhost:8086/getAllExam?institutecode=${Enquiry.institutecode}`
             ),
             axios.get(
-              `http://13.233.43.240:8086/getAllSource?institutecode=${Enquiry.institutecode}`
+              `http://localhost:8086/getAllSource?institutecode=${Enquiry.institutecode}`
             ),
             axios.get(
-              `http://13.233.43.240:8086/get/getAllConductModels?institutecode=${Enquiry.institutecode}`
+              `http://localhost:8086/get/getAllConductModels?institutecode=${Enquiry.institutecode}`
             ),
           ]);
 
@@ -174,7 +174,7 @@ export default function AddEnquiry() {
     try {
       // Send the form data to the API endpoint
       await axios.post(
-        `http://13.233.43.240:8086/save/enquiry?institutecode=${Enquiry.institutecode}`,
+        `http://localhost:8086/save/enquiry?institutecode=${Enquiry.institutecode}`,
         Enquiry
       );
       toast.success("Enquiry Added Successfully");

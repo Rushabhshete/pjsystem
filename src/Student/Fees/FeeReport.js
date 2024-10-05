@@ -47,7 +47,7 @@ const FeeReport = () => {
   // Fetch all fees once
   const fetchAllFees = useCallback(async () => {
     try {
-      const response = await axios.get(`http://13.233.43.240:8083/getAllFees?institutecode=${institutecode()}`);
+      const response = await axios.get(`http://localhost:8083/getAllFees?institutecode=${institutecode()}`);
       if (response.status === 200 && Array.isArray(response.data)) {
         setFees(response.data);
       } else {
@@ -476,7 +476,7 @@ const FeeReport = () => {
           <Button
             onClick={async () => {
               try {
-                const response = await axios.delete(`http://13.233.43.240:8083/deleteFee/${selectedFeeId}`);
+                const response = await axios.delete(`http://localhost:8083/deleteFee/${selectedFeeId}`);
                 if (response.status === 200) {
                   setFees((prevFees) => prevFees.filter((fee) => fee.id !== selectedFeeId));
                 } else {

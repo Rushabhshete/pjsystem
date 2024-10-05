@@ -163,7 +163,7 @@ const StudentForm = () => {
         console.log("Submitting form data:", formData);
         if (activeStep !== 4) {
           const studentResponse = await axios.post(
-            `http://13.233.43.240:8080/saveStudent?institutecode=${institutecode()}`,
+            `http://localhost:8080/saveStudent?institutecode=${institutecode()}`,
             formData,
             {
               headers: {
@@ -235,7 +235,7 @@ const StudentForm = () => {
         formData.append(name, file);
 
         axios
-          .post("http://13.233.43.240:8080/upload", formData)
+          .post("http://localhost:8080/upload", formData)
           .then((response) => {
             setFormData((prevData) => ({
               ...prevData,

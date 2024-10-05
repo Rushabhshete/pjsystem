@@ -126,8 +126,8 @@ const UpdateIncomeExpense = ({
   const fetchUpdatedData = async () => {
     const url =
       formData.type === "Income"
-        ? `http://13.233.43.240:8087/incomes/getAllIncomesByinstitutecode?institutecode=${getInstituteCode()}`
-        : `http://13.233.43.240:8087/expenses/getAllExpensesByInstitutecode?institutecode=${getInstituteCode()}`;
+        ? `http://localhost:8087/incomes/getAllIncomesByinstitutecode?institutecode=${getInstituteCode()}`
+        : `http://localhost:8087/expenses/getAllExpensesByInstitutecode?institutecode=${getInstituteCode()}`;
 
     try {
       const response = await axios.get(url);
@@ -145,8 +145,8 @@ const UpdateIncomeExpense = ({
 
     const url =
       formData.type === "Income"
-        ? `http://13.233.43.240:8087/incomes/updateIncomeBy/${formData.id}`
-        : `http://13.233.43.240:8087/expenses/updateExpenseBy/${formData.id}`;
+        ? `http://localhost:8087/incomes/updateIncomeBy/${formData.id}`
+        : `http://localhost:8087/expenses/updateExpenseBy/${formData.id}`;
 
     try {
       console.log("Sending request to:", url);
@@ -166,7 +166,7 @@ const UpdateIncomeExpense = ({
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
-          `http://13.233.43.240:8087/categories/getAllCategoriesByInstitutecode?institutecode=${getInstituteCode()}`
+          `http://localhost:8087/categories/getAllCategoriesByInstitutecode?institutecode=${getInstituteCode()}`
         );
         setCategories(response.data);
       } catch (error) {

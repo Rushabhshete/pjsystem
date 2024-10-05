@@ -132,7 +132,7 @@ const PersonalDetails = ({ formData = initialFormData, handleInputChange }) => {
   };
   useEffect(() => {
     axios
-      .get(`http://13.233.43.240:8080/all?institutecode=${institutecode()}`)
+      .get(`http://localhost:8080/all?institutecode=${institutecode()}`)
       .then((response) => {
         setStandards(response.data);
       })
@@ -143,7 +143,7 @@ const PersonalDetails = ({ formData = initialFormData, handleInputChange }) => {
 
   useEffect(() => {
     axios
-      .get(`http://13.233.43.240:8080/getall?institutecode=${institutecode()}`)
+      .get(`http://localhost:8080/getall?institutecode=${institutecode()}`)
       .then((response) => {
         setMedium(response.data);
       })

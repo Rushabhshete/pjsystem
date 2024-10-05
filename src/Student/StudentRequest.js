@@ -109,7 +109,7 @@ const StudentRequest = () => {
 
   useEffect(() => {
     axios
-      .get(`http://13.233.43.240:8080/getAllStudent?institutecode=${institutecode()}`)
+      .get(`http://localhost:8080/getAllStudent?institutecode=${institutecode()}`)
       .then((response) => {
         setLeaveRequests(response.data);
       })
@@ -145,7 +145,7 @@ const StudentRequest = () => {
     const updatedRequest = { ...selectedRequest, status };
     axios
       .put(
-        `http://13.233.43.240:8080/updateStudent/${selectedRequest.id}`,
+        `http://localhost:8080/updateStudent/${selectedRequest.id}`,
         updatedRequest
       )
       .then((response) => {
@@ -171,7 +171,7 @@ const StudentRequest = () => {
 
   const confirmDeleteRequest = () => {
     axios
-      .delete(`http://13.233.43.240:8080/deleteMapping/${requestToDelete}`)
+      .delete(`http://localhost:8080/deleteMapping/${requestToDelete}`)
       .then((response) => {
         setLeaveRequests((prevRequests) =>
           prevRequests.filter((req) => req.id !== requestToDelete)

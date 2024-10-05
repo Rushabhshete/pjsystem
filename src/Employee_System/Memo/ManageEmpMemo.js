@@ -34,7 +34,7 @@ export default function ManageEmpMemo() {
 
   useEffect(() => {
     const instituteCode = localStorage.getItem("institutecode");
-    fetch(`http://13.233.43.240:8082/memos/all?institutecode=${instituteCode}`)
+    fetch(`http://localhost:8082/memos/all?institutecode=${instituteCode}`)
       .then((response) => response.json())
       .then((data) => {
         setMemos(data);
@@ -56,7 +56,7 @@ export default function ManageEmpMemo() {
 
   const handleUpdateMemo = () => {
     const updatedMemo = { ...selectedMemo };
-    fetch(`http://13.233.43.240:8082/memos/updatememo/${selectedMemo.mid}`, {
+    fetch(`http://localhost:8082/memos/updatememo/${selectedMemo.mid}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -87,7 +87,7 @@ export default function ManageEmpMemo() {
   };
 
   const handleDeleteMemo = () => {
-    fetch(`http://13.233.43.240:8082/memos/deletememo/${confirmDeleteId}`, {
+    fetch(`http://localhost:8082/memos/deletememo/${confirmDeleteId}`, {
       method: "DELETE",
     })
       .then(() => {
@@ -103,7 +103,7 @@ export default function ManageEmpMemo() {
 
   const fetchData = () => {
     const instituteCode = localStorage.getItem("institutecode");
-    fetch(`http://13.233.43.240:8082/memos/all?institutecode=${instituteCode}`)
+    fetch(`http://localhost:8082/memos/all?institutecode=${instituteCode}`)
       .then((response) => response.json())
       .then((data) => {
         setMemos(data);

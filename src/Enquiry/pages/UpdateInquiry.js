@@ -106,7 +106,7 @@ export default function UpdateEnquiry() {
   const loadExams = async () => {
     try {
       const response = await axios.get(
-        `http://13.233.43.240:8086/getAllExam?institutecode=${institutecode}`
+        `http://localhost:8086/getAllExam?institutecode=${institutecode}`
       );
       setExamOptions(response.data);
     } catch (error) {
@@ -128,7 +128,7 @@ export default function UpdateEnquiry() {
   const loadSources = async () => {
     try {
       const sources = await axios.get(
-        `http://13.233.43.240:8086/getAllSource?institutecode=${institutecode}`
+        `http://localhost:8086/getAllSource?institutecode=${institutecode}`
       );
       setSourceOptions(sources.data);
     } catch (error) {
@@ -139,7 +139,7 @@ export default function UpdateEnquiry() {
   const loadConducts = async () => {
     try {
       const conducted = await axios.get(
-        `http://13.233.43.240:8086/get/getAllConductModels?institutecode=${institutecode}`
+        `http://localhost:8086/get/getAllConductModels?institutecode=${institutecode}`
       );
       setConductedBy(conducted.data);
     } catch (error) {
@@ -158,7 +158,7 @@ export default function UpdateEnquiry() {
       const loadUser = async () => {
         try {
           const result = await axios.get(
-            `http://13.233.43.240:8086/get/enquiry/${id}`
+            `http://localhost:8086/get/enquiry/${id}`
           );
           setEnquiry(result.data);
         } catch (error) {
@@ -174,7 +174,7 @@ export default function UpdateEnquiry() {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://13.233.43.240:8086/updateenquiry/${id}`, Enquiry);
+      await axios.put(`http://localhost:8086/updateenquiry/${id}`, Enquiry);
       toast.success("Enquiry Updated Successfully")
       setTimeout(() => {
         navigate("/layout/report"); // Navigate after a delay
@@ -191,7 +191,7 @@ export default function UpdateEnquiry() {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://13.233.43.240:8086/deleteenquiry/${id}`);
+      await axios.delete(`http://localhost:8086/deleteenquiry/${id}`);
       toast.success("Enquiry Deleted Successfully");
       navigate("/layout/report");
       
@@ -218,7 +218,7 @@ export default function UpdateEnquiry() {
         }
 
         const response = await axios.get(
-          `http://13.233.43.240:8081/findInstitutesby/Institutecode?institutecode=${institutecode}`
+          `http://localhost:8081/findInstitutesby/Institutecode?institutecode=${institutecode}`
         );
         setEmployeeDetails(response.data);
       } catch (error) {

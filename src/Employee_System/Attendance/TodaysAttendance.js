@@ -316,20 +316,20 @@ const TodaysAttendance = () => {
   
         // if (filter === 'All') {
         //   response = await axios.get(
-        //     `http://13.233.43.240:8082/joinedEmployeesList?institutecode=${instituteCode}`
+        //     `http://localhost:8082/joinedEmployeesList?institutecode=${instituteCode}`
         //   );
         // } else 
         if (filter === 'Today') {
           response = await axios.get(
-            `http://13.233.43.240:8082/today?institutecode=${instituteCode}`
+            `http://localhost:8082/today?institutecode=${instituteCode}`
           );
         } else if (filter === 'Yesterday') {
           response = await axios.get(
-            `http://13.233.43.240:8082/getAttendenceByyesterday?institutecode=${instituteCode}`
+            `http://localhost:8082/getAttendenceByyesterday?institutecode=${instituteCode}`
           );
         } else if (filter === 'Custom Date' && startDate && endDate) {
           response = await axios.get(
-            `http://13.233.43.240:8082/getAttendenceBYycustomDate?institutecode=${instituteCode}&startDate=${startDate}&endDate=${endDate}`
+            `http://localhost:8082/getAttendenceBYycustomDate?institutecode=${instituteCode}&startDate=${startDate}&endDate=${endDate}`
           );
         }
 

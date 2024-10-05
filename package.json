@@ -32,7 +32,7 @@
     "number-to-words": "^1.2.4",
     "papaparse": "^5.4.1",
     "razorpay": "^2.9.4",
-    "react": "^18.2.0",
+    "react": "^18.3.1",
     "react-awesome-calendar": "^1.0.14",
     "react-bootstrap": "^2.10.4",
     "react-chartjs-2": "^5.2.0",
@@ -83,5 +83,5 @@
     "babel-preset-react-app": "^10.0.1",
     "html-webpack-plugin": "^5.6.0"
   },
-  "proxy": "http://13.233.43.240:8081"
+  "proxy": "http://localhost:8081"
 }

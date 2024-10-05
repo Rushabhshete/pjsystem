@@ -40,7 +40,7 @@ const RevenueByCourse = () => {
       setLoading(true);
       try {
         const res = await axios.get(
-          `http://13.233.43.240:8085/admissionRevenueByCourseMonthAndYear?institutecode=${institutecode}&month=${month}&year=${year}`
+          `http://localhost:8085/admissionRevenueByCourseMonthAndYear?institutecode=${institutecode}&month=${month}&year=${year}`
         );
         const data = res.data;
         console.log(data); // Debugging: Log API response
