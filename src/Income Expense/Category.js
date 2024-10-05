@@ -1098,7 +1098,7 @@ const Category = () => {
               Status
             </StyledTableCell>
 
-            <StyledTableCell style={{ fontWeight: "bold" }}>
+            <StyledTableCell style={{ fontWeight: "bold", textAlign:'center'}}>
               Actions
             </StyledTableCell>
           </TableRow>
@@ -1286,7 +1286,7 @@ const Category = () => {
 
                 <Typography component="span">
                   <Typography component="span" sx={{ fontWeight: "bold" }}>
-                    {selectedRow.user} {selectedRow.type} Receipt
+                  {selectedRow.type} Receipt
                   </Typography>
                 </Typography>
 
