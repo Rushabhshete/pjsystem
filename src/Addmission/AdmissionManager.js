@@ -6,27 +6,37 @@ import AdmissionAddCourse from "./AdmissionAddCourse";
 import AddmissionSource from "./AddmissionSource";
 import AddGuide from "./AddGuide";
 
-const baseButtonStyle = {
-  backgroundColor: "#FF6969",
-  color: "#333",
-  border: "none",
-  borderRadius: "35px",
+// Base styles for the navbar items with hover effect and transitions
+const navItemStyle = {
   padding: "10px 20px",
-  fontSize: "16px",
   cursor: "pointer",
-  transition: "background-color 0.3s ease, transform 0.2s ease",
-  width: "180px",
-  flexGrow: 1,
-  margin: "0 10px",
+  fontSize: "16px",
+  fontWeight: "bold",
+  color: "#333",
   textAlign: "center",
+  flex: 1,
+  transition: "background-color 0.3s ease, color 0.3s ease, transform 0.2s ease",
+  borderRadius: "35px",
 };
 
-const activeButtonStyle = {
-  ...baseButtonStyle,
+// Active item styles
+const activeNavItemStyle = {
+  ...navItemStyle,
   backgroundColor: "#624E88",
-  transform: "scale(1.15)", // Slightly larger to indicate it is active
-  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)", // Add shadow for emphasis
   color: "white",
+  transform: "scale(1.1)", // Slightly larger for active state
+  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)", // Subtle shadow for active
+};
+
+// Subnavbar container style
+const subNavBarStyle = {
+  display: "flex",
+  justifyContent: "space-around",
+  marginBottom: "20px",
+  backgroundColor: "#f0f0f0",
+  padding: "10px",
+  borderRadius: "35px",
+  boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)", // Slight shadow for navbar
 };
 
 const AdmissionManager = () => {
@@ -43,72 +53,66 @@ const AdmissionManager = () => {
 
   return (
     <div>
-      {/* Horizontal buttons for navigation */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-around",
-          marginBottom: "20px",
-        }}
-      >
-        <button
+      {/* Mini navbar (subnavbar) */}
+      <div style={subNavBarStyle}>
+        <div
           style={
             activeComponent === "AdmissionDashboard"
-              ? activeButtonStyle
-              : baseButtonStyle
+              ? activeNavItemStyle
+              : navItemStyle
           }
           onClick={() => setActiveComponent("AdmissionDashboard")}
         >
           Dashboard
-        </button>
-        <button
+        </div>
+        <div
           style={
             activeComponent === "AdmissionForm"
-              ? activeButtonStyle
-              : baseButtonStyle
+              ? activeNavItemStyle
+              : navItemStyle
           }
           onClick={() => setActiveComponent("AdmissionForm")}
         >
           Admission Form
-        </button>
-        <button
+        </div>
+        <div
           style={
             activeComponent === "StudentList"
-              ? activeButtonStyle
-              : baseButtonStyle
+              ? activeNavItemStyle
+              : navItemStyle
           }
           onClick={() => setActiveComponent("StudentList")}
         >
           Student List
-        </button>
-        <button
+        </div>
+        <div
           style={
             activeComponent === "AdmissionAddCourse"
-              ? activeButtonStyle
-              : baseButtonStyle
+              ? activeNavItemStyle
+              : navItemStyle
           }
           onClick={() => setActiveComponent("AdmissionAddCourse")}
         >
           Add Course
-        </button>
-        <button
+        </div>
+        <div
           style={
             activeComponent === "AddmissionSource"
-              ? activeButtonStyle
-              : baseButtonStyle
+              ? activeNavItemStyle
+              : navItemStyle
           }
           onClick={() => setActiveComponent("AddmissionSource")}
         >
-          Add Sourse
-        </button>
-        <button
+          Add Source
+        </div>
+        <div
           style={
-            activeComponent === "AddGuide" ? activeButtonStyle : baseButtonStyle
+            activeComponent === "AddGuide" ? activeNavItemStyle : navItemStyle
           }
           onClick={() => setActiveComponent("AddGuide")}
         >
           Add Guide
-        </button>
+        </div>
       </div>
 
       {/* Render the selected component */}

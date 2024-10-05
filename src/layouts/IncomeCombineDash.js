@@ -246,22 +246,11 @@ export default function IncomeCombineDash() {
         />
       </Box>
       <Grid item xs={12}>
-        <Box
-          sx={{
-            width: '100%',
-            height: '100%',
-            margin: 'auto',
-            padding: 4,
-            border: '1px solid lightgray',
-            borderRadius: 2,
-            marginTop: '10px',
-            color:"#F2EAE5"
-          }}
-        >
+     
           <Grid container spacing={2} justifyContent="center" wrap="nowrap">
             {/* Cards Display */}
             <Grid item xs={12} sm={6} md={2.4}>
-              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#ffef96 ', borderRadius: '10px', color:'#50394c', font:'' }}>
+              <Paper sx={{ padding: '16px', backgroundColor: '#FFF7D1 ', borderRadius: '10px', color:'#50394c' }}>
                 <Typography variant="h7">Today's Income</Typography>
                 <Typography variant="h5">₹{formattedCountUp(incomeData.today || 0)}</Typography>
               </Paper>
@@ -305,7 +294,7 @@ export default function IncomeCombineDash() {
           {/* Chart Section */}
           <Grid container spacing={2} sx={{ marginTop: '20px', justifyContent: 'space-between' }}>
           <Grid item xs={12} sm={6} sx={{ height: '450px' }}>
-  <Typography variant="h6" align="center">
+  <Typography variant="h6" align="center" color="black">
     Overall Income & Expense Comparison
   </Typography>
   <ResponsiveContainer width="100%" height="100%">
@@ -346,17 +335,26 @@ export default function IncomeCombineDash() {
                   </MenuItem>
                 ))}
               </TextField>
+              <Paper  elevation={3}
+            sx={{
+              padding: 2,
+              backgroundColor: "#FFF7D1",
+              borderRadius: 2,
+              fontWeight: "bold",
+              boxShadow: 3,}}>
               <Typography variant="h6" align="center" mt={-4}>
                 {year} Income & Expense Comparison
               </Typography>
+          
               <div style={{ height: "400px" }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <Line data={monthlyData} options={monthlyOptions} />
                 </ResponsiveContainer>
               </div>
+              </Paper >
             </Grid>
           </Grid>
-        </Box>
+
       </Grid>
     </div>
   );

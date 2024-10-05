@@ -20,7 +20,7 @@ const navItemStyle = {
 // Styles for active item
 const activeNavItemStyle = {
   ...navItemStyle,
-  backgroundColor: "#624E88",
+  backgroundColor: "#269DD7",
   color: "white",
   borderRadius: "35px",
   transform: "scale(1.05)", // Slight increase for active state
@@ -32,7 +32,7 @@ const subNavBarStyle = {
   display: "flex",
   justifyContent: "space-between",
   marginBottom: "20px",
-  backgroundColor: "#269DD7",
+  backgroundColor: "#f0f0f0",
   padding: "10px",
   borderRadius: "35px",
   boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)", // Slight shadow for navbar
@@ -79,7 +79,7 @@ const IncomeExpenseManager = () => {
           }
           onClick={() => setActiveComponent("Category")}
         >
-          Category
+          List
         </div>
         <div
           style={

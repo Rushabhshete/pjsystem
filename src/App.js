@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext  } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { CssBaseline } from "@mui/material";
-import './App.css'; // Import the global styles
+import "./App.css"; // Import the global styles
 // Import the UserContext
 import { UserProvider, UserContext } from "./layouts/UserContext";
 
@@ -16,31 +16,7 @@ import { UserProvider, UserContext } from "./layouts/UserContext";
 import ForgotPassword from "./layouts/ForgotPassword";
 import Login from "./layouts/Login";
 import Layout from "./layouts/layout";
-import ProtectedRoute from "./layouts/ProtectedRoute";
 
-import Source from "./Enquiry/ConductBy/Sources/Source";
-
-import Exam from "./Enquiry/ExamPages/Exam";
-
-import Conduct from "./Enquiry/ConductBy/Conduct";
-
-import Report from "./Enquiry/Report";
-import UpdateEnquiry from "./Enquiry/pages/UpdateInquiry";
-import AddEnquiry from "./Enquiry/pages/AddInquiry";
-import DashBoard from "./Enquiry/DashBoard";
-// import AddmissionDashboard from "./Addmission/AdmissionDashboard";
-// import AddmissionSource from "./Addmission/AddmissionSource";
-// import AdmissionForm from "./Addmission/AdmissionForm";
-// import StudentList from "./Addmission/StudentList";
-// import UpdateForm from "./Addmission/AdmissionUpdateForm";
-// import StudentFormDataDisplay from "./Addmission/StudentFormDataDisplay";
-// import AddCourse from "./Addmission/AdmissionAddCourse";
-// import AddGuide from "./Addmission/AddGuide";
-// import IncomeExpenseDashboard from "./Income Expense/IncomeExpenseDashboard";
-// import AddIncomeExpense from "./Income Expense/AddIncomeExpense";
-// import Category from "./Income Expense/Category";
-// import AddCategory from "./Income Expense/AddCategory";
-// import AddUser from "./Income Expense/AddUser";
 import AdminProfile from "./layouts/AdminProfile"; // Ensure this path is correct
 import Memo from "./layouts/Memo";
 import ManageMemo from "./layouts/ManageMemo";
@@ -51,22 +27,9 @@ import HelpDesk from "./layouts/HelpDesk";
 //import bill from "./layouts/bill";
 import AddSubAdmin from "./layouts/AddSubAdmin";
 import Settings from "./layouts/Settings";
-import EmployeeDashboard from "./Employee_System/Employee/EmployeeDashboard";
-import AddEmployee from "./Employee_System/Employee/AddEmployee";
-import EmployeeList from "./Employee_System/Employee/EmployeeList";
+
 import CreateAccount from "./layouts/CreateAccount";
-import EmpReport from "./Employee_System/Employee/EmpReport";
-import AddEmpcategory from "./Employee_System/Employee/AddEmpcategory";
-import AddDepartment from "./Employee_System/Employee/AddDepartment";
-import ManageHoliday from "./Employee_System/Employee/ManageHoliday";
-import SalaryDashboard from "./Employee_System/Salary/SalaryDashboard";
-import EmpDetails from "./Employee_System/Salary/EmpDetails";
-import SalaryTable from "./Employee_System/Salary/SalaryTable";
-import AddSalary from "./Employee_System/Salary/AddSalary";
-import ManageAttendance from "./Employee_System/Attendance/ManageAttendance";
-import ViewAttendance from "./Employee_System/Attendance/ViewAttendance";
 import ManageLeave from "./Employee_System/Leave/ManageLeave";
-import TodaysAttendance from "./Employee_System/Attendance/TodaysAttendance";
 import AddMemo from "./Employee_System/Memo/AddMemo";
 import ManageEmpMemo from "./Employee_System/Memo/ManageEmpMemo";
 import AddNotice from "./Employee_System/Memo/AddNotice";
@@ -91,6 +54,8 @@ import IncomeExpenseManager from "./Income Expense/IncomeExpenseManager";
 import AdmissionManager from "./Addmission/AdmissionManager";
 import EnquiryManager from "./Enquiry/EnquiryManager";
 import EmployeeManager from "./Employee_System/Employee/EmployeeManager";
+import AttendanceManager from "./Employee_System/Attendance/AttendanceManager";
+import EmployeeSalaryManager from "./Employee_System/Salary/EmployeeSalaryManager";
 
 function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -135,67 +100,33 @@ function AppContent() {
           <Route path="manage-memo" element={<ManageMemo />} />
           <Route path="manage-notifications" element={<ManageNotification />} />
           {/* Enquiry Routes */}
-          {/* <Route path="dashboard" element={<DashBoard />} />
-          <Route path="add" element={<AddEnquiry />} />
-          <Route path="manage/:id" element={<UpdateEnquiry />} />
-          <Route path="report" element={<Report />} />
-          <Route path="conduct" element={<Conduct />} />
-          <Route path="exam" element={<Exam />} />
-          <Route path="source" element={<Source />} /> */}
-<Route path="Enquiry-manager" element={<EnquiryManager />} />
 
-
+          <Route path="Enquiry-manager" element={<EnquiryManager />} />
 
           {/* Admission Routes */}
-          {/* <Route path="admission-dashboard" element={<AddmissionDashboard />} />
-          <Route path="admission-form" element={<AdmissionForm />} />
-          <Route path="students" element={<StudentList />} />
-          <Route path="update-admission/:sid" element={<UpdateForm />} />
-          <Route
-            path="student-form-data-display"
-            element={<StudentFormDataDisplay />}
-          />
-          <Route path="add-course" element={<AddCourse />} />
-          <Route path="admission-source" element={<AddmissionSource />} />
-          <Route path="add-guide" element={<AddGuide />} /> */}
-<Route path="Admission-manager" element={<AdmissionManager />} />
 
+          <Route path="Admission-manager" element={<AdmissionManager />} />
 
           {/* Income Expense */}
 
-          {/* <Route
-            path="Income-Expense-dashboard"
-            element={<IncomeExpenseDashboard />}
+          <Route
+            path="income-expense-manager"
+            element={<IncomeExpenseManager />}
           />
-          <Route path="AddIncomeExpense" element={<AddIncomeExpense />} />
-          <Route path="incomeExpenseList" element={<Category />} />
-          <Route path="AddCategory" element={<AddCategory />} />
-          <Route path="AddUser" element={<AddUser />} />
-        */}
-
-<Route path="income-expense-manager" element={<IncomeExpenseManager />} />
 
           {/* Employee */}
-          {/* <Route path="empDashboard" element={<EmployeeDashboard />} />
-          <Route path="empAdd" element={<AddEmployee />} />
-          <Route path="empList" element={<EmployeeList />} />
-          <Route path="EmpReport" element={<EmpReport />} />
-          <Route path="AddEmpcategory" element={<AddEmpcategory />} />
-          <Route path="AddDepartment" element={<AddDepartment />} />
-          <Route path="ManageHoliday" element={<ManageHoliday />} /> */}
+
           <Route path="Employee-manager" element={<EmployeeManager />} />
 
           <Route path="EmpDash" element={<EmpDash />} />
           <Route path="AttenDash" element={<AttenDash />} />
 
-          <Route path="SalaryDashboard" element={<SalaryDashboard />} />
-          <Route path="AddSalary/:empID" element={<AddSalary />} />
-          <Route path="SalaryTable" element={<SalaryTable />} />
-          <Route path="EmpDetails" element={<EmpDetails />} />
+          <Route path="Attendance-manager" element={<AttendanceManager />} />
 
-          <Route path="ManageAttendance" element={<ManageAttendance />} />
-          <Route path="TodaysAttendance" element={<TodaysAttendance />} />
-          <Route path="ViewAttendance/:empID" element={<ViewAttendance />} />
+          <Route
+            path="EmployeeSalaryManager"
+            element={<EmployeeSalaryManager />}
+          />
 
           <Route path="ManageLeave" element={<ManageLeave />} />
 
