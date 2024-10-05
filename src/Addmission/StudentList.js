@@ -1,8 +1,10 @@
+
 import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import WhatsAppIcon from '@mui/icons-material/WhatsApp'; // Import WhatsApp Icon
+import InfoIcon from "@mui/icons-material/Info"; // Importing InfoIcon
 import {
   Table,
   TableBody,
@@ -93,6 +95,21 @@ const StudentList = () => {
     setSelectedPrintAdmission(instituteData);
     setOpenReceipt(true);
   };
+
+      // Additional state for viewing inquiry details
+      const [viewAdmissionOpen, setViewAdmissionOpen] = useState(false);
+      const [admissionDetail, setAdmissionDetail] = useState(null);
+
+
+      const handleViewAdmission = (admission) => {
+        setAdmissionDetail(admission);
+        setViewAdmissionOpen(true);
+      };
+    
+      const closeViewAdmission = () => {
+        setViewAdmissionOpen(false);
+        setAdmissionDetail(null);
+      };
 
   const downloadReceipt = () => {
     const receiptElement = document.getElementById("receipt");
@@ -459,21 +476,6 @@ const StudentList = () => {
 
   return (
     <div>
-      {/* <Typography
-        variant="h5"
-        gutterBottom
-        sx={{
-          fontWeight: "bold",
-          color: "#fff",
-          textAlign: "center",
-          backgroundColor: "#24A0ED",
-          borderRadius: "150px",
-          padding: "10px",
-          marginBottom: "40px",
-        }}
-      >
-        Admissions List
-      </Typography> */}
       <Grid container spacing={2} className="textField-root">
         <Grid item xs={8} sm={1.6} md={2}>
           <TextField
@@ -762,6 +764,10 @@ const StudentList = () => {
                   <IconButton onClick={() => handleWhatsAppClick(admission.mobile1)} color="success">
                     <WhatsAppIcon />
                   </IconButton>
+                   {/* Info Icon for Viewing Inquiry Details */}
+                   <IconButton size="small" color="info" onClick={() => handleViewAdmission(admission)}>
+                          <InfoIcon />
+                        </IconButton>
                 </TableCell>
               </TableRow>
             ))}
@@ -1063,6 +1069,133 @@ const StudentList = () => {
           onUpdate={handleUpdateAdmission}
         />
       )}
+
+<Dialog 
+  open={viewAdmissionOpen} 
+  onClose={closeViewAdmission} 
+  PaperProps={{ sx: { width: '600px', height: 'auto' } }} // Custom dialog size
+>
+  <DialogTitle>Admission Details</DialogTitle>
+  <DialogContent>
+    {admissionDetail && (
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+        {/* Using `gap` for spacing between fields */}
+        {admissionDetail.studentImage ? (
+ <Box sx={{ mt: 3, textAlign: 'center' }}>
+ <img 
+   src={admissionDetail.studentImage} 
+   alt="Inquiry" 
+   style={{ 
+     width: '150px',  // Set width
+     height: '150px', // Set height
+     objectFit: 'cover', // Ensure image fits well within the defined size
+     borderRadius: '50%', // Make image round
+     display: 'block', 
+     margin: '0 auto' // Center image horizontally
+   }} 
+ />
+</Box>
+) : (
+<Box sx={{ mt: 3, textAlign: 'center' }}>
+ <strong>Photo:</strong>
+ <Typography variant="body2" sx={{ mt: 2 }}>No photo available.</Typography>
+</Box>
+)}
+        <Grid container spacing={2}>
+          
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Name:</strong> {admissionDetail.name}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Email:</strong> {admissionDetail.email}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Mobile:</strong> {admissionDetail.mobile1}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Courses:</strong> {admissionDetail.courses}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Medium:</strong> {admissionDetail.medium}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Duration:</strong> {admissionDetail.duration}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Total Fees:</strong> {admissionDetail.totalFees}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Payment Method:</strong> {admissionDetail.paymentMethod}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Paid Fees:</strong> {admissionDetail.paidFees}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Pending Fees:</strong> {admissionDetail.pendingFees}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Payment Mode:</strong> {admissionDetail.paymentMode}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Transaction Id:</strong> {admissionDetail.transactionid}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Source By:</strong> {admissionDetail.sourceBy}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Guide Name:</strong> {admissionDetail.guideName}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Date:</strong> {admissionDetail.date}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Due Date:</strong> {admissionDetail.dueDate}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Remark:</strong> {admissionDetail.remark}
+            </Typography>
+          </Grid>
+        </Grid>
+      </Box>
+    )}
+  </DialogContent>
+  <DialogActions>
+    <Button onClick={closeViewAdmission}>Close</Button>
+  </DialogActions>
+</Dialog>
 
 
 
