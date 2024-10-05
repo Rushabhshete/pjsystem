@@ -730,7 +730,7 @@ const createTable = (doc) => {
                           : "NA"}
                       </b>
                     </TableCell>
-                    <TableCell>{inquiry.remark}</TableCell>
+                    <TableCell>{inquiry.remark || "NA"}</TableCell>
                     <TableCell>
                       <Box display="flex" alignItems="center">
                         <IconButton
