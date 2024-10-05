@@ -218,7 +218,7 @@ const AdmissionForm = () => {
   `;
   return (
     <>
-      <PopTypography
+      {/* <PopTypography
         variant="h5"
         gutterBottom
         sx={{
@@ -232,7 +232,7 @@ const AdmissionForm = () => {
         }}
       >
         Student Admission Form
-      </PopTypography>
+      </PopTypography> */}
       <div maxWidth="lg" className="required-asterisk">
         <form onSubmit={handleFormSubmit}>
           <Grid container spacing={3} className="textField-root">
