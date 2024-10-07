@@ -77,16 +77,6 @@ const AdmissionManager = () => {
         </div>
         <div
           style={
-            activeComponent === "StudentList"
-              ? activeNavItemStyle
-              : navItemStyle
-          }
-          onClick={() => setActiveComponent("StudentList")}
-        >
-          Student List
-        </div>
-        <div
-          style={
             activeComponent === "AdmissionAddCourse"
               ? activeNavItemStyle
               : navItemStyle
@@ -112,6 +102,16 @@ const AdmissionManager = () => {
           onClick={() => setActiveComponent("AddGuide")}
         >
           Add Guide
+        </div>
+        <div
+          style={
+            activeComponent === "StudentList"
+              ? activeNavItemStyle
+              : navItemStyle
+          }
+          onClick={() => setActiveComponent("StudentList")}
+        >
+          Student List
         </div>
       </div>
 

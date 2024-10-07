@@ -154,22 +154,6 @@ export default function AddMemo() {
 
   return (
     <div>
-      <Typography
-        variant="h5"
-        gutterBottom
-        sx={{
-          fontWeight: "bold",
-          color: "#fff",
-          textAlign: "center",
-          backgroundColor: "#24A0ED",
-          borderRadius: "150px",
-          padding: "10px",
-          marginBottom: "20px",
-        }}
-      >
-        Add Memo
-      </Typography>
-
       <Grid container spacing={2} alignItems="center" mb={2}>
         <Grid item xs={6} sm={4}>
           <FormControl fullWidth size="small">

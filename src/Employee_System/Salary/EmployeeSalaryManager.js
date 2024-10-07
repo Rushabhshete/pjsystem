@@ -70,7 +70,7 @@ const EmployeeSalaryManager = () => {
           }
           onClick={() => setActiveComponent("EmpDetails")}
         >
-          Add Employee
+          Add Salary
         </div>
         <div
           style={
@@ -80,7 +80,7 @@ const EmployeeSalaryManager = () => {
           }
           onClick={() => setActiveComponent("SalaryTable")}
         >
-          Employee List
+          Salary List
         </div>
    
       </div>

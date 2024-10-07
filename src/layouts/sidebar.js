@@ -183,29 +183,12 @@ const Sidebar = () => {
         {
           name: "Memo",
           icon: <NoteAltIcon sx={{ color: "#4682b4" }} />,
-          subSubOptions: [
-            {
-              name: "Add Memo",
-              route: "/layout/AddMemo",
-              icon: <MapsUgcIcon sx={{ color: "#76A7FA" }} />,
-            },
-            {
-              name: "Manage Memo",
-              route: "/layout/ManageEmpMemo",
-              icon: <CurrencyRupeeIcon sx={{ color: "#76A7FA" }} />,
-            }
-          ]
+          route:"/layout/Memo-manager",
         },
         {
           name: "Notice",
           icon: <StickyNote2Icon sx={{ color: "#4682b4" }} />,
-          subSubOptions: [
-            {
-              name: "Add Notice",
-              route: "/layout/AddNotice",
-              icon: <MapsUgcIcon sx={{ color: "#76A7FA" }} />,
-            }
-          ]
+          route: "/layout/AddNotice",
         },
       ],
     },

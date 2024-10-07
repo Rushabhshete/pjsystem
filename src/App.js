@@ -56,6 +56,7 @@ import EnquiryManager from "./Enquiry/EnquiryManager";
 import EmployeeManager from "./Employee_System/Employee/EmployeeManager";
 import AttendanceManager from "./Employee_System/Attendance/AttendanceManager";
 import EmployeeSalaryManager from "./Employee_System/Salary/EmployeeSalaryManager";
+import MemoManager from "./Employee_System/Memo/MemoManager";
 
 function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -96,9 +97,8 @@ function AppContent() {
 
           <Route path="combineDash" element={<CombineDashboard />} />
 
-          <Route path="memo" element={<Memo />} />
-          <Route path="manage-memo" element={<ManageMemo />} />
-          <Route path="manage-notifications" element={<ManageNotification />} />
+          <Route path="Memo-manager" element={<MemoManager />} />
+        
           {/* Enquiry Routes */}
 
           <Route path="Enquiry-manager" element={<EnquiryManager />} />

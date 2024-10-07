@@ -175,21 +175,6 @@ const EmployeeDashboard = () => {
 
     return (
         <div maxWidth="lg">
-            <Typography
-        variant="h5"
-        gutterBottom
-        sx={{
-          fontWeight: "bold",
-          color: "#fff",
-          textAlign: "center",
-          backgroundColor: "#24A0ED",
-          borderRadius: "150px",
-          padding: "10px",
-          marginBottom: "20px",
-        }}
-      >
-        Employee Dashboard
-      </Typography>
             <Grid container spacing={3}>
                 <Grid item xs={12} md={8} container spacing={2}>
                     <Grid item xs={6} md={4}>

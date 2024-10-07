@@ -125,22 +125,6 @@ export default function ManageEmpMemo() {
 
   return (
     <div>
-      <Typography
-        variant="h5"
-        gutterBottom
-        sx={{
-          fontWeight: "bold",
-          color: "#fff",
-          textAlign: "center",
-          backgroundColor: "#24A0ED",
-          borderRadius: "150px",
-          padding: "10px",
-          marginBottom: "20px",
-        }}
-      >
-        Memo List
-      </Typography>
-
       {/* Search Bar */}
       <TextField
         label="Search Memos"

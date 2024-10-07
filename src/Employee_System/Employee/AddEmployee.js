@@ -314,21 +314,6 @@ const UserComponent = () => {
 
   return (
     <>
-      <PopTypography
-        variant="h5"
-        gutterBottom
-        sx={{
-          fontWeight: "bold",
-          color: "#fff",
-          textAlign: "center",
-          backgroundColor: "#24A0ED",
-          borderRadius: "150px",
-          padding: "10px",
-          marginBottom: "-2px",
-        }}
-      >
-        Employee Registration
-      </PopTypography>
       <br />
       <div component="main" maxWidth="lg">
         <Paper elevation={3} style={{ padding: "20px" }}>

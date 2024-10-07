@@ -117,7 +117,7 @@ const filteredLeaveRequests = leaveRequests.filter(request =>
 
   return (
     <>
-    <Typography
+    {/* <Typography
     variant="h5"
     gutterBottom
     sx={{
@@ -131,7 +131,7 @@ const filteredLeaveRequests = leaveRequests.filter(request =>
     }}
   >
     Manage Leave
-  </Typography>
+  </Typography> */}
     <div style={{ padding: '20px' }}>
       <Grid container spacing={2} alignItems="center" sx={{ marginBottom: 2 }}>
         <Grid item xs={3}>

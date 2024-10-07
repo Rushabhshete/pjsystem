@@ -587,22 +587,6 @@ const SalaryTable = ({ id, initialStatus }) => {
   return (
     <div>
       <ToastContainer />
-      <PopTypography
-        variant="h5"
-        gutterBottom
-        sx={{
-          fontWeight: "bold",
-          color: "#fff",
-          textAlign: "center",
-          backgroundColor: "#24A0ED",
-          borderRadius: "150px",
-          padding: "10px",
-          marginBottom: "-2px",
-        }}
-      >
-        Salary Report
-      </PopTypography>
-
       <Grid container spacing={2} alignItems="center" mt={2}>
         <Grid item xs={12} sm={6} md={3}>
           <TextField

@@ -79,26 +79,6 @@ const EmployeeManager = () => {
         </div>
         <div
           style={
-            activeComponent === "EmployeeList"
-              ? activeNavItemStyle
-              : navItemStyle
-          }
-          onClick={() => setActiveComponent("EmployeeList")}
-        >
-          Employee List
-        </div>
-        <div
-          style={
-            activeComponent === "EmpReport"
-              ? activeNavItemStyle
-              : navItemStyle
-          }
-          onClick={() => setActiveComponent("EmpReport")}
-        >
-          Employee Report
-        </div>
-        <div
-          style={
             activeComponent === "AddEmpcategory"
               ? activeNavItemStyle
               : navItemStyle
@@ -126,6 +106,26 @@ const EmployeeManager = () => {
           onClick={() => setActiveComponent("ManageHoliday")}
         >
           Add Holiday
+        </div>
+        <div
+          style={
+            activeComponent === "EmployeeList"
+              ? activeNavItemStyle
+              : navItemStyle
+          }
+          onClick={() => setActiveComponent("EmployeeList")}
+        >
+          Employee List
+        </div>
+        <div
+          style={
+            activeComponent === "EmpReport"
+              ? activeNavItemStyle
+              : navItemStyle
+          }
+          onClick={() => setActiveComponent("EmpReport")}
+        >
+          Employee Report
         </div>
       </div>
 

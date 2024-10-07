@@ -144,21 +144,6 @@ export default function AddNotice() {
 
   return (
     <div>
-      <Typography
-        variant="h5"
-        gutterBottom
-        sx={{
-          fontWeight: "bold",
-          color: "#fff",
-          textAlign: "center",
-          backgroundColor: "#24A0ED",
-          borderRadius: "150px",
-          padding: "10px",
-          marginBottom: "20px",
-        }}
-      >
-        Add Notice
-      </Typography>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
         <TextField
           label="Notice Name"

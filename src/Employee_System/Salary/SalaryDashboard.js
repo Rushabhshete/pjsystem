@@ -193,21 +193,6 @@ const SalaryDashBoard = () => {
 
   return (
     <div sx={{ padding: 2, width: "100%" }}>
-      <Typography
-        variant="h5"
-        gutterBottom
-        sx={{
-          fontWeight: "bold",
-          color: "#fff",
-          textAlign: "center",
-          backgroundColor: "#24A0ED",
-          borderRadius: "150px",
-          padding: "10px",
-          marginBottom: "20px",
-        }}
-      >
-        Salary Dashboard
-      </Typography>
         <Grid container  justifyContent="center" >
           <Grid container spacing={2}  mt={1}>
             <Grid item xs={12} md={4}>

@@ -626,21 +626,6 @@ const EmployeeList = () => {
 
   return (
     <>
-      <Typography
-        variant="h5"
-        gutterBottom
-        sx={{
-          fontWeight: "bold",
-          color: "#fff",
-          textAlign: "center",
-          backgroundColor: "#24A0ED",
-          borderRadius: "150px",
-          padding: "10px",
-          marginBottom: "25px",
-        }}
-      >
-        Employee List
-      </Typography>
       <div className="container1">
         <div className="headertable1">
           <Paper

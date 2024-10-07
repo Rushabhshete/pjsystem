@@ -75,14 +75,6 @@ const IncomeExpenseManager = () => {
         </div>
         <div
           style={
-            activeComponent === "Category" ? activeNavItemStyle : navItemStyle
-          }
-          onClick={() => setActiveComponent("Category")}
-        >
-          List
-        </div>
-        <div
-          style={
             activeComponent === "AddCategory" ? activeNavItemStyle : navItemStyle
           }
           onClick={() => setActiveComponent("AddCategory")}
@@ -94,6 +86,14 @@ const IncomeExpenseManager = () => {
           onClick={() => setActiveComponent("AddUser")}
         >
           Add User
+        </div>
+        <div
+          style={
+            activeComponent === "Category" ? activeNavItemStyle : navItemStyle
+          }
+          onClick={() => setActiveComponent("Category")}
+        >
+          List
         </div>
       </div>
 

@@ -834,21 +834,6 @@ const ManageHoliday = () => {
 
   return (
     <div>
-      <PopTypography
-        variant="h5"
-        gutterBottom
-        sx={{
-          fontWeight: "bold",
-          color: "#fff",
-          textAlign: "center",
-          backgroundColor: "#24A0ED",
-          borderRadius: "150px",
-          padding: "10px",
-          marginBottom: "20px",
-        }}
-      >
-        Add Holiday
-      </PopTypography>
       <Grid container spacing={2} style={{ marginTop: "20px" }}>
   {/* Left Side - Calendar */}
   <Grid item xs={4}  >

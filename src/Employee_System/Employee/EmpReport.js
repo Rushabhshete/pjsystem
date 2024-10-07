@@ -341,21 +341,6 @@ const createTable = (doc, startY) => {
 
   return (
     <>
-     <PopTypography
-      variant="h5"
-      gutterBottom
-      sx={{
-        fontWeight: 'bold',
-        color: '#fff',
-        textAlign: 'center',
-        backgroundColor: '#24A0ED',
-        borderRadius: '150px',
-        padding: '10px',
-        marginBottom: '-2px'
-      }}
-    >
-      Employee Report
-      </PopTypography>
       {/* <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh"> */}
         {/* <Container component="main" maxWidth="xl">
           <Paper variant="outlined" style={{ padding: "16px", marginTop: "16px", minHeight: "80vh" }}> */}

@@ -139,21 +139,6 @@ export default function AddSalary() {
     <Grid container justifyContent="center">
       <Grid item xs={10} md={6}>
         <Box mt={4}>
-          <PopTypography
-            variant="h5"
-            gutterBottom
-            sx={{
-              fontWeight: 'bold',
-              color: '#fff',
-              textAlign: 'center',
-              backgroundColor: '#24A0ED',
-              borderRadius: '150px',
-              padding: '10px',
-              marginBottom: '-2px',
-            }}
-          >
-            Add Salary
-          </PopTypography>
           <form onSubmit={onSubmit} mt={2}>
             <Grid container spacing={2} mt={2}>
               <Grid item xs={12}>

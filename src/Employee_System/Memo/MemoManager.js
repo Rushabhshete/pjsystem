@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import AddMemo from "./AddMemo";
 import ManageEmpMemo from "./ManageEmpMemo";
-import SalaryTable from "./SalaryTable";
-import AddMemo from "./AddMemo";
+// import AddMemo from "./AddMemo";
 
 
 
@@ -61,7 +60,7 @@ const MemoManager = () => {
           }
           onClick={() => setActiveComponent("AddMemo")}
         >
-          Dashboard
+          Add Memo
         </div>
         <div
           style={
@@ -71,7 +70,7 @@ const MemoManager = () => {
           }
           onClick={() => setActiveComponent("ManageEmpMemo")}
         >
-          Add Employee
+          Memo List
         </div>
       
       </div>
