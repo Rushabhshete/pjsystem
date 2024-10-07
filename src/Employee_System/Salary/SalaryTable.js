@@ -20,6 +20,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Divider,
 } from "@mui/material";
 import axios from "axios";
 import { Box } from "@mui/system";
@@ -1066,7 +1067,7 @@ const SalaryTable = ({ id, initialStatus }) => {
             sx={{ fontFamily: "Arial, sans-serif" }}
           >
             <Box
-              sx={{ display: "flex", justifyContent: "space-between", mt: 1 }}
+              sx={{ display: "flex", justifyContent: "space-between", mt: 5 }}
             >
               {/* Left side content (Institute Name, Address, Phone) */}
               <Box>
@@ -1098,6 +1099,15 @@ const SalaryTable = ({ id, initialStatus }) => {
                       <strong>Mobile : </strong>
                       {employeeDetails.phonenumber}
                     </Typography>
+                  </Box><Box
+                    sx={{
+                      mt: 0, // Reduced margin-top to bring the addresses closer
+                    }}
+                  >
+                    <Typography variant="body2">
+                      <strong>Email : </strong>
+                      {employeeDetails.emailaddress}
+                    </Typography>
                   </Box>
                 </Typography>
               </Box>
@@ -1127,6 +1137,7 @@ const SalaryTable = ({ id, initialStatus }) => {
                 justifyContent: "space-between", // Evenly space the items
                 gap: "20px", // Gap between the data elements for spacing
                 backgroundColor: "#f3e5f5", // Light purple background
+                marginTop:'10px'
               }}
             >
               <Typography component="span">
@@ -1183,7 +1194,7 @@ const SalaryTable = ({ id, initialStatus }) => {
         padding: 2,
       }}
     >
-      <Typography variant="h6" style={{ fontWeight: "bold",  borderBottom: "1px solid black", }}>
+      <Typography variant="h6" style={{ fontWeight: "bold",  borderBottom: "1px solid black"}}>
         Earnings
       </Typography>
       {earnings.map((earning, index) => (
@@ -1232,8 +1243,7 @@ const SalaryTable = ({ id, initialStatus }) => {
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            padding: "8px 0",
-            
+            padding: "8px 0"
           }}
         >
           <Typography>{deduction.label}</Typography>
@@ -1254,52 +1264,99 @@ const SalaryTable = ({ id, initialStatus }) => {
     </Box>
   </Grid>
 </Grid>
+{/* <Divider/> */}
 
-            <Typography
+<Box sx={{ marginTop: '15px', padding: '5px', borderBottom:'3px solid purple', borderTop:'3px solid purple' }}>
+      {/* Grid Container for Labels and Values */}
+      <Grid container spacing={1} alignItems="center">
+        {/* Label Column */}
+        <Grid item xs={6}>
+          <Typography align="left"><strong>Total Earnings:</strong></Typography>
+        </Grid>
+        {/* Value Column */}
+        <Grid item xs={6}>
+        <Typography align="right">
+            ₹ {earnings.reduce((acc, earning) => acc + earning.amount, 0)}
+          </Typography>
+        </Grid>
+
+        <Grid item xs={6}>
+          <Typography align="left"><strong>Total Deductions:</strong></Typography>
+        </Grid>
+        <Grid item xs={6}>
+        <Typography align="right">₹ {selectedSalary.deductions}</Typography>
+        </Grid>
+
+        <Grid item xs={6}>
+          <Typography align="left"><strong>Final Net Salary:</strong></Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography align="right">₹ {selectedSalary.finalNetSalary}</Typography>
+        </Grid>
+
+        <Grid item xs={6} >
+          <Typography align="left"><strong>Salary In Words:</strong></Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography align="right">₹ {numberToWords(selectedSalary.finalNetSalary)} Only</Typography>
+        </Grid>
+
+      </Grid>
+    </Box>
+
+            {/* <Typography
               variant="body1"
-              style={{ marginTop: "15px", textAlign: "center",borderBottom: "3px solid purple",borderTop:'3px solid purple' }}
+              style={{ marginTop: "10px", textAlign: "center",borderBottom: "3px solid purple" }}
             >
-              <strong>Amount in Words:</strong>{" "}
+              <strong>Salary in Words:</strong>{" "}
               ₹ {numberToWords(selectedSalary.finalNetSalary)} Only
-            </Typography>
+            </Typography> */}
 
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginTop: "10px",
-                marginBottom: "20px",
-                borderBottom:'3px solid purple',
-                padding: "10px",
-              }}
-            >
-              <div style={{ flex: "1", marginRight: "10px" }}>
-              <div style={{ marginBottom: "3px" }}>
-                  <Typography variant="body1">
-                    <strong>Payment Date: </strong>
-                    {selectedSalary.paymentDate}
-                  </Typography>
-                </div>
-                <div style={{ marginBottom: "3px" }}>
-                  <Typography variant="body1">
-                    <strong>Transaction ID: </strong>
-                    {selectedSalary.transactionId}
-                  </Typography>
-                </div>
-                
-              </div>
-            </div>
+<Box
+      sx={{
+        borderBottom: '3px solid purple',
+        padding: '5px',
+        marginTop: '10px',
+      }}
+    >
+      {/* Grid Container for Labels and Values */}
+      <Grid container spacing={1} alignItems="center">
+        {/* Payment Date Row */}
+        <Grid item xs={6}>
+          <Typography variant="body1" align="left">
+            <strong>Payment Date:</strong>
+          </Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography variant="body1" align="right">
+            {selectedSalary.paymentDate}
+          </Typography>
+        </Grid>
+
+        {/* Transaction ID Row */}
+        <Grid item xs={6}>
+          <Typography variant="body1" align="left">
+            <strong>Transaction ID:</strong>
+          </Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography variant="body1" align="right">
+            {selectedSalary.transactionId}
+          </Typography>
+        </Grid>
+      </Grid>
+    </Box>
 
             
 
-            <Grid container spacing={2} mt={1}>
+            <Grid container spacing={2} mt={10}>
               <Grid item xs={12} sm={6}>
-                <Typography variant="body1" style={{ textAlign: "center" }}>
+                <Typography variant="body1" style={{ textAlign: "center", borderTop:'0.5px solid gray' }}>
                   <strong>Employer Sign</strong>
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Typography variant="body1" style={{ textAlign: "center" }}>
+                <Typography variant="body1" style={{ textAlign: "center" , borderTop:'0.5px solid gray' }}>
                   <strong>Employee Sign</strong>
                 </Typography>
               </Grid>

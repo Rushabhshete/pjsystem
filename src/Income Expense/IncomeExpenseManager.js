@@ -20,8 +20,8 @@ const navItemStyle = {
 // Styles for active item
 const activeNavItemStyle = {
   ...navItemStyle,
-  backgroundColor: "#269DD7",
-  color: "white",
+  backgroundColor: "#f0f0f0",
+  //color: "white",
   borderRadius: "35px",
   transform: "scale(1.05)", // Slight increase for active state
   boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)", // Subtle shadow for active
@@ -32,7 +32,7 @@ const subNavBarStyle = {
   display: "flex",
   justifyContent: "space-between",
   marginBottom: "20px",
-  backgroundColor: "#f0f0f0",
+  backgroundColor: "#b0b0b0",
   padding: "10px",
   borderRadius: "35px",
   boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)", // Slight shadow for navbar
