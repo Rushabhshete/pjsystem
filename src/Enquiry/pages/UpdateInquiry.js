@@ -44,12 +44,14 @@ const PopTypography = styled(Typography)`
   
 `;
 
-export default function UpdateEnquiry() {
+export default function UpdateEnquiry( onClose) {
   const [examOptions, setExamOptions] = useState([]);
   const [sourceOptions, setSourceOptions] = useState([]);
   const [conductedBy, setConductedBy] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
+
+  
 
   const [Enquiry, setEnquiry] = useState({
     name: "",
@@ -153,23 +155,20 @@ export default function UpdateEnquiry() {
     loadConducts();
   }, []);
 
-  useEffect(
-    () => {
-      const loadUser = async () => {
-        try {
-          const result = await axios.get(
-            `http://localhost:8086/get/enquiry/${id}`
-          );
-          setEnquiry(result.data);
-        } catch (error) {
-          console.error("Error fetching user:", error);
-        }
-      };
+  useEffect(() => {
+    const loadUser = async () => {
+      try {
+        const result = await axios.get(`http://localhost:8086/get/enquiry/${id}`);
+        setEnquiry(result.data);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+    if (id) {
       loadUser();
-    },
-    [id],
-    [institutecode]
-  );
+    }
+  }, [id]);
+  
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -708,6 +707,10 @@ export default function UpdateEnquiry() {
               >
                 Save
               </Button>
+              <Button variant="contained" color="primary" onClick={onClose}>
+  Close
+</Button>
+
             </Box>
           </Box>
         </Box>
