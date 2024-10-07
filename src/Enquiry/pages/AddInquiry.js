@@ -170,11 +170,18 @@ export default function AddEnquiry() {
     }
 
     try {
+      // Create FormData object
+      const formData = new FormData();
+      for (const key in Enquiry) {
+        formData.append(key, Enquiry[key]);
+      }
+
       // Send the form data to the API endpoint
-      await axios.post(
-        `http://localhost:8086/save/enquiry?institutecode=${Enquiry.institutecode}`,
-        Enquiry
-      );
+      await axios.post(`http://localhost:8086/save/enquiry?institutecode=${Enquiry.institutecode}`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+      });
       toast.success("Enquiry Added Successfully");
       // navigate("/layout/report");
     } catch (error) {
@@ -182,8 +189,10 @@ export default function AddEnquiry() {
         "There was an error adding the Enquiry!",
         error.response ? error.response.data : error.message
       );
+      setOpenSnackbar(true);
     }
-  };
+};
+
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") return;

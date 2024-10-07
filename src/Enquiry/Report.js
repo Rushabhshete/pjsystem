@@ -32,10 +32,34 @@ import PrintIcon from "@mui/icons-material/Print";
 import InfoIcon from "@mui/icons-material/Info"; // Importing InfoIcon
 import { styled } from "@mui/system";
 import html2pdf from "html2pdf.js"; // Importing html2pdf.js
+import UpdateEnquiry from '../../src/Enquiry/pages/UpdateInquiry';
 
 export default function Report() {
   const navigate = useNavigate();
   const { id } = useParams();
+  // const [isDialogOpen, setDialogOpen] = useState(false);
+  const [selectedInquiryId, setSelectedInquiryId] = useState(null);
+  const [isDialogOpen, setDialogOpen] = useState(false);
+
+  const handleOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleClose = () => {
+    setDialogOpen(false);
+  };
+
+  const handleOpenDialog = (inquiryId) => {
+    console.log("Dialog opening for ID:", inquiryId); // For debugging
+    setSelectedInquiryId(inquiryId);
+    setDialogOpen(true);
+};
+
+
+  const handleCloseDialog = () => {
+    setSelectedInquiryId(null);
+    setDialogOpen(false);
+  };
 
   // State management
   const [inquiries, setInquiries] = useState([]);
@@ -753,14 +777,14 @@ const createTable = (doc) => {
                           <SmsIcon />
                         </IconButton>
                         <IconButton
-                          size="small"
-                          variant="contained"
-                          color="primary"
-                          component={Link}
-                          to={`/layout/manage/${inquiry.id}`}
-                        >
-                          <EditIcon />
-                        </IconButton>
+    size="small"
+    variant="contained"
+    color="primary"
+    component={Link}
+    onClick={() => handleOpenDialog(inquiry.id)} // This should trigger the dialog opening
+>
+    <EditIcon />
+</IconButton>
                         <IconButton
                           onClick={() => handleGenerate(inquiry)}
                           color="inherit"
@@ -779,6 +803,18 @@ const createTable = (doc) => {
             </Table>
           </TableContainer>
         </Box>
+        
+        <Dialog 
+  open={isDialogOpen} 
+  onClose={handleCloseDialog} 
+  maxWidth="lg" 
+  fullWidth
+>
+  <DialogTitle>Edit Inquiry</DialogTitle>
+  <DialogContent>
+    <UpdateEnquiry id={selectedInquiryId} onClose={handleClose} />
+  </DialogContent>
+</Dialog>
 
         {/* sms dialog  */}
 
@@ -1082,15 +1118,11 @@ const createTable = (doc) => {
         {/* Using `gap` for spacing between fields */}
         {inquiryDetail.photo ? (
   <Box sx={{ mt: 3, textAlign: 'center' }}>
+    <strong>Photo:</strong>
     <img 
       src={inquiryDetail.photo} 
       alt="Inquiry" 
-      style={{ maxWidth: '150px', // Adjust the size as needed
-        width: '100%', 
-        height: '150px', 
-        borderRadius: '50%', 
-        objectFit: 'cover', 
-        marginTop: '10px' }} 
+      style={{ maxWidth: '100%', marginTop: '10px', borderRadius: '4px' }} 
     />
   </Box>
 ) : (
