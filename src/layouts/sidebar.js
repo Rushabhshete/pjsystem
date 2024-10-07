@@ -344,7 +344,7 @@ const Sidebar = () => {
           width: open ? drawerWidth : collapsedWidth,
           transition: "width 0.3s",
           overflowX: "hidden",
-          backgroundColor:"black",
+          backgroundColor:"#0a0a0a",
     
         },
       }}
