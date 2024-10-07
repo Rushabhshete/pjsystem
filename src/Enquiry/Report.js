@@ -752,7 +752,7 @@ const createTable = (doc) => {
                         >
                           <SmsIcon />
                         </IconButton>
-                        <IconButton
+                        {/* <IconButton
                           size="small"
                           variant="contained"
                           color="primary"
@@ -760,6 +760,12 @@ const createTable = (doc) => {
                           to={`/layout/manage/${inquiry.id}`}
                         >
                           <EditIcon />
+                        </IconButton> */}
+                        <IconButton 
+                          size="small"
+                          variant="contained"
+                          color="primary">
+                        <EditIcon/>
                         </IconButton>
                         <IconButton
                           onClick={() => handleGenerate(inquiry)}
@@ -1082,15 +1088,11 @@ const createTable = (doc) => {
         {/* Using `gap` for spacing between fields */}
         {inquiryDetail.photo ? (
   <Box sx={{ mt: 3, textAlign: 'center' }}>
+    <strong>Photo:</strong>
     <img 
       src={inquiryDetail.photo} 
       alt="Inquiry" 
-      style={{ maxWidth: '150px', // Adjust the size as needed
-        width: '100%', 
-        height: '150px', 
-        borderRadius: '50%', 
-        objectFit: 'cover', 
-        marginTop: '10px' }} 
+      style={{ maxWidth: '100%', marginTop: '10px', borderRadius: '4px' }} 
     />
   </Box>
 ) : (
