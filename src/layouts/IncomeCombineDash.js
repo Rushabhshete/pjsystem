@@ -250,31 +250,31 @@ export default function IncomeCombineDash() {
           <Grid container spacing={2} justifyContent="center" wrap="nowrap">
             {/* Cards Display */}
             <Grid item xs={12} sm={6} md={2.4}>
-              <Paper sx={{ padding: '16px', backgroundColor: '#FFF7D1 ', borderRadius: '10px', color:'#50394c' }}>
+              <Paper sx={{ padding: '16px', backgroundColor: '#F9E79F ', borderRadius: '10px',  }}>
                 <Typography variant="h7">Today's Income</Typography>
                 <Typography variant="h5">₹{formattedCountUp(incomeData.today || 0)}</Typography>
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6} md={2.4}>
-              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#b7d7e8', borderRadius: '10px' }}>
+              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#FF6F61', borderRadius: '10px' }}>
                 <Typography variant="h7">Total Income</Typography>
                 <Typography variant="h5">₹{formattedCountUp(incomeData.total || 0)}</Typography>
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6} md={2.4}>
-              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#f9d5e5 ', borderRadius: '10px', color:'#C94C4C' }}>
+              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#3498DB ', borderRadius: '10px' }}>
                 <Typography variant="h7">Today's Expense</Typography>
                 <Typography variant="h5">₹{formattedCountUp(expenseData.today || 0)}</Typography>
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6} md={2.4}>
-              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#b5e7a0', borderRadius: '10px' }}>
+              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#9ACD32', borderRadius: '10px' }}>
                 <Typography variant="h7">Total Expense</Typography>
                 <Typography variant="h5">₹{formattedCountUp(expenseData.total || 0)}</Typography>
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6} md={2.4}>
-              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#f9ccac ', borderRadius: '10px' }}>
+              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#F4C431 ', borderRadius: '10px' }}>
                 <Typography variant="h7">Today's {todaytext}</Typography>
                 <Typography variant="h5" className={incomeData.today - expenseData.today >= 0}>
                   ₹{formattedCountUp(incomeData.today - expenseData.today)}
@@ -282,7 +282,7 @@ export default function IncomeCombineDash() {
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6} md={2.4}>
-              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#d3d3e0', borderRadius: '10px' }}>
+              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#F9E79F', borderRadius: '10px' }}>
                 <Typography variant="h7">Total {savingsText}</Typography>
                 <Typography variant="h5" className={savingsData >= 0}>
                   ₹{formattedCountUp(savingsData)}
@@ -292,10 +292,8 @@ export default function IncomeCombineDash() {
           </Grid>
 
           {/* Chart Section */}
-          
           <Grid container spacing={2} sx={{ marginTop: '20px', justifyContent: 'space-between' }}>
           <Grid item xs={12} sm={6} sx={{ height: '450px' }}>
-            
   <Typography variant="h6" align="center" color="black">
     Overall Income & Expense Comparison
   </Typography>
@@ -337,13 +335,12 @@ export default function IncomeCombineDash() {
                   </MenuItem>
                 ))}
               </TextField>
-              <Paper 
+              <Paper  elevation={3}
             sx={{
               padding: 2,
-              backgroundColor: "#FFF7D1",
               borderRadius: 2,
               fontWeight: "bold",
-             }}>
+              boxShadow: 3,}}>
               <Typography variant="h6" align="center" mt={-4}>
                 {year} Income & Expense Comparison
               </Typography>
