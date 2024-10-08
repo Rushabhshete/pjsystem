@@ -32,7 +32,7 @@ import PrintIcon from "@mui/icons-material/Print";
 import InfoIcon from "@mui/icons-material/Info"; // Importing InfoIcon
 import { styled } from "@mui/system";
 import html2pdf from "html2pdf.js"; // Importing html2pdf.js
-import UpdateEnquiry from '../../src/Enquiry/pages/UpdateInquiry';
+import UpdateEnquiry from '../Enquiry/pages/UpdateInquiry';
 
 export default function Report() {
   const navigate = useNavigate();
@@ -49,11 +49,11 @@ export default function Report() {
     setDialogOpen(false);
   };
 
-  const handleOpenDialog = (inquiryId) => {
-    console.log("Dialog opening for ID:", inquiryId); // For debugging
-    setSelectedInquiryId(inquiryId);
+  const handleOpenDialog = (id) => {
+    console.log("Dialog opening for ID:", id); // Debugging
+    setSelectedInquiryId(id);
     setDialogOpen(true);
-};
+  };
 
 
   const handleCloseDialog = () => {
@@ -812,7 +812,10 @@ const createTable = (doc) => {
 >
   <DialogTitle>Edit Inquiry</DialogTitle>
   <DialogContent>
-    <UpdateEnquiry id={selectedInquiryId} onClose={handleClose} />
+  <UpdateEnquiry
+          id={selectedInquiryId}
+          onClose={() => setDialogOpen(false)} // Close dialog function
+        />
   </DialogContent>
 </Dialog>
 
@@ -1118,11 +1121,15 @@ const createTable = (doc) => {
         {/* Using `gap` for spacing between fields */}
         {inquiryDetail.photo ? (
   <Box sx={{ mt: 3, textAlign: 'center' }}>
-    <strong>Photo:</strong>
     <img 
       src={inquiryDetail.photo} 
       alt="Inquiry" 
-      style={{ maxWidth: '100%', marginTop: '10px', borderRadius: '4px' }} 
+      style={{  maxWidth: '150px', // Adjust the size as needed
+        width: '100%', 
+        height: '150px', 
+        borderRadius: '50%', 
+        objectFit: 'cover', 
+        marginTop: '-15px' }} 
     />
   </Box>
 ) : (
@@ -1166,6 +1173,16 @@ const createTable = (doc) => {
           <Grid item xs={12} sm={6}>
             <Typography variant="body2">
               <strong>Status:</strong> {inquiryDetail.status1}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Enquiry Date:</strong> {inquiryDetail.enquiryDate}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body2">
+              <strong>Remark:</strong> {inquiryDetail.remark}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>

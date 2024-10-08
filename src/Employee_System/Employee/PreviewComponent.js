@@ -111,7 +111,7 @@ const PreviewComponent = ({ formData }) => {
 
 
   const handleBackClick = () => {
-    navigate('/layout/empDashboard');
+    navigate('/layout/Employee-manager');
   };
 
   // Helper function to format field names

@@ -44,11 +44,11 @@ const PopTypography = styled(Typography)`
   
 `;
 
-export default function UpdateEnquiry( onClose) {
+const UpdateEnquiry = ({ id, onClose }) => {
+  //const [enquiry, setEnquiry] = useState({});
   const [examOptions, setExamOptions] = useState([]);
   const [sourceOptions, setSourceOptions] = useState([]);
   const [conductedBy, setConductedBy] = useState([]);
-  const { id } = useParams();
   const navigate = useNavigate();
 
   
@@ -156,19 +156,21 @@ export default function UpdateEnquiry( onClose) {
   }, []);
 
   useEffect(() => {
-    const loadUser = async () => {
-      try {
-        const result = await axios.get(`http://localhost:8086/get/enquiry/${id}`);
-        setEnquiry(result.data);
-      } catch (error) {
-        console.error("Error fetching user:", error);
+    const loadEnquiry = async () => {
+      if (id) {
+        try {
+          console.log("Selected Inquiry ID:", id);
+          const result = await axios.get(`http://localhost:8086/get/enquiry/${id}`);
+          setEnquiry(result.data); // Set the enquiry data in state
+        } catch (error) {
+          console.error("Error fetching enquiry:", error);
+        }
       }
     };
-    if (id) {
-      loadUser();
-    }
+
+    loadEnquiry();
   }, [id]);
-  
+
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -176,7 +178,8 @@ export default function UpdateEnquiry( onClose) {
       await axios.put(`http://localhost:8086/updateenquiry/${id}`, Enquiry);
       toast.success("Enquiry Updated Successfully")
       setTimeout(() => {
-        navigate("/layout/report"); // Navigate after a delay
+        //  navigate("/layout/report"); // Navigate after a delay
+        onClose();
       }, 2000); // Adjust time as needed
     } catch (error) {
       console.error("Error updating enquiry:", error);
@@ -192,7 +195,7 @@ export default function UpdateEnquiry( onClose) {
     try {
       await axios.delete(`http://localhost:8086/deleteenquiry/${id}`);
       toast.success("Enquiry Deleted Successfully");
-      navigate("/layout/report");
+    //  navigate("/layout/report");
       
     } catch (error) {
       console.error("Error deleting enquiry:", error);
@@ -338,7 +341,7 @@ export default function UpdateEnquiry( onClose) {
               </FormControl>
             </Grid>
 
-            {/* <Grid item xs={12} sm={6}>
+             <Grid item xs={12} sm={6}>
               <FormControl fullWidth variant="outlined" size="small">
                 <InputLabel id="source-label">Source By</InputLabel>
                 <Select
@@ -371,7 +374,7 @@ export default function UpdateEnquiry( onClose) {
                   ))}
                 </Select>
               </FormControl>
-            </Grid> */}
+            </Grid>
 
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth variant="outlined" size="small">
@@ -751,3 +754,4 @@ export default function UpdateEnquiry( onClose) {
     </Container>
   );
 }
+export default UpdateEnquiry;

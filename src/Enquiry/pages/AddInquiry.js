@@ -35,7 +35,6 @@ export default function AddEnquiry() {
   const [Enquiry, setInquiries] = useState({
     name: "",
     mobile: "",
-    institutecode: localStorage.getItem("institutecode") || "",
     email: "",
     source_by: "",
     status1: "",
@@ -61,7 +60,6 @@ export default function AddEnquiry() {
   const [errorMessage, setErrorMessage] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [emailError, setEmailError] = useState("");
-
   const theme = useTheme();
 
   const handleAddClick = () => {
@@ -104,13 +102,13 @@ export default function AddEnquiry() {
         const [examsResponse, sourcesResponse, conductsResponse] =
           await Promise.all([
             axios.get(
-              `http://localhost:8086/getAllExam?institutecode=${Enquiry.institutecode}`
+              `http://localhost:8086/getAllExam?institutecode=${localStorage.getItem("institutecode")}`
             ),
             axios.get(
-              `http://localhost:8086/getAllSource?institutecode=${Enquiry.institutecode}`
+              `http://localhost:8086/getAllSource?institutecode=${localStorage.getItem("institutecode")}`
             ),
             axios.get(
-              `http://localhost:8086/get/getAllConductModels?institutecode=${Enquiry.institutecode}`
+              `http://localhost:8086/get/getAllConductModels?institutecode=${localStorage.getItem("institutecode")}`
             ),
           ]);
 
@@ -123,7 +121,7 @@ export default function AddEnquiry() {
     };
 
     fetchOptions();
-  }, [Enquiry.institutecode]);
+  }, []);
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -176,8 +174,11 @@ export default function AddEnquiry() {
         formData.append(key, Enquiry[key]);
       }
 
+      // Get institutecode from localStorage to append it to the FormData
+      formData.append('institutecode', localStorage.getItem("institutecode"));
+
       // Send the form data to the API endpoint
-      await axios.post(`http://localhost:8086/save/enquiry?institutecode=${Enquiry.institutecode}`, formData, {
+      await axios.post(`http://localhost:8086/save/enquiry`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
@@ -191,8 +192,7 @@ export default function AddEnquiry() {
       );
       setOpenSnackbar(true);
     }
-};
-
+  };
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") return;
