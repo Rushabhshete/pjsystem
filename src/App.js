@@ -57,7 +57,22 @@ import EmployeeManager from "./Employee_System/Employee/EmployeeManager";
 import AttendanceManager from "./Employee_System/Attendance/AttendanceManager";
 import EmployeeSalaryManager from "./Employee_System/Salary/EmployeeSalaryManager";
 import MemoManager from "./Employee_System/Memo/MemoManager";
-
+import AdmissionForm from "./Addmission/AdmissionForm";
+import AddmissionSource from "./Addmission/AddmissionSource";
+import AddGuide from "./Addmission/AddGuide";
+import StudentList from "./Addmission/StudentList";
+import AdmissionAddCourse from './Addmission/AdmissionAddCourse'
+import IncomeExpenseDashboard from "./Income Expense/IncomeExpenseDashboard";
+import AddIncomeExpense from "./Income Expense/AddIncomeExpense";
+import AddCategory from "./Income Expense/AddCategory";
+import { Category } from "@mui/icons-material";
+import AddUser from "./Income Expense/AddUser";
+import DashBoard from "./Enquiry/DashBoard";
+import Report from "./Enquiry/Report";
+import Exam from "./Enquiry/ExamPages/Exam";
+import Source from "./Enquiry/ConductBy/Sources/Source";
+import Conduct from "./Enquiry/ConductBy/Conduct";
+import AddInquiry from './Enquiry/pages/AddInquiry'
 function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem("isAuthenticated") === "true"
@@ -101,18 +116,38 @@ function AppContent() {
         
           {/* Enquiry Routes */}
 
-          <Route path="Enquiry-manager" element={<EnquiryManager />} />
+            {/* Route for Enquiry Manager */}
+      <Route path="enquiry-manager" element={<EnquiryManager />}>
+        {/* Nested routes for Enquiry Manager */}
+        <Route index element={<DashBoard />} />
+        <Route path="add-inquiry" element={<AddInquiry />} />
+        <Route path="report" element={<Report />} />
+        <Route path="exam" element={<Exam />} />
+        <Route path="source" element={<Source />} />
+        <Route path="conduct" element={<Conduct />} />
+      </Route>
 
-          {/* Admission Routes */}
-
-          <Route path="Admission-manager" element={<AdmissionManager />} />
+        {/* AdmissionManager and nested routes */}
+        <Route path="Admission-manager" element={<AdmissionManager />}>
+            <Route index element={<AdmissionForm />} />
+            
+            <Route path="admission-form" element={<AdmissionForm />} />
+            <Route path="add-course" element={<AdmissionAddCourse />} />
+            <Route path="add-source" element={<AddmissionSource />} />
+            <Route path="add-guide" element={<AddGuide />} />
+            <Route path="student-list" element={<StudentList />} />
+          </Route>
 
           {/* Income Expense */}
 
-          <Route
-            path="income-expense-manager"
-            element={<IncomeExpenseManager />}
-          />
+          <Route path="income-expense-manager" element={<IncomeExpenseManager />}>
+          {/* Nested routes for IncomeExpenseManager */}
+          <Route index element={<IncomeExpenseDashboard />} />
+          <Route path="add-income-expense" element={<AddIncomeExpense />} />
+          <Route path="add-category" element={<AddCategory />} />
+          <Route path="category" element={<Category />} />
+          <Route path="add-user" element={<AddUser />} />
+        </Route>
 
           {/* Employee */}
 
