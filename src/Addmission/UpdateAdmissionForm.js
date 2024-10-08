@@ -9,7 +9,10 @@ import {
   DialogContent,
   DialogTitle,
   MenuItem,
+  IconButton,
+  Typography,
 } from "@mui/material";
+import { PhotoCamera } from "@mui/icons-material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -18,6 +21,8 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
   const [courses, setCourses] = useState([]);
   const [guides, setGuides] = useState([]);
   const [sources, setSources] = useState([]);
+  const [photoFile, setPhotoFile] = useState(null);
+  const [photoPreview, setPhotoPreview] = useState(null);
   const [open, setOpen] = useState(true);
 
   const institutecode = localStorage.getItem("institutecode");
@@ -68,6 +73,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
       [name]: value,
     }));
   };
+
   useEffect(() => {
     const calculateBalanceAmount = () => {
       const total = parseFloat(formData.totalFees) || 0;
@@ -75,7 +81,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
       const balanceAmount = total - paid;
       setFormData((prevFormData) => ({
         ...prevFormData,
-        balanceAmount: balanceAmount > 0 ? balanceAmount.toString() : "",
+        balanceAmount: balanceAmount > 0 ? balanceAmount.toString() : "0",
       }));
     };
 
@@ -88,10 +94,10 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
         ...prevFormData,
         paidFees: prevFormData.totalFees,
       }));
-    } else if (formData.paymentMethod === "Partial") {
-      // Handle Partial Payment if needed
     }
+    // Handle Partial Payment if needed
   }, [formData.paymentMethod]);
+
   const handleUpdateAdmission = async (event) => {
     event.preventDefault();
     try {
@@ -113,12 +119,56 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setPhotoFile(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPhotoPreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setPhotoPreview(null);
+    }
+  };
+
+  const handleImageUpload = async () => {
+    if (!photoFile) {
+      toast.error("Please select an image to upload.");
+      return;
+    }
+
+    const uploadData = new FormData();
+    uploadData.append("studentPhoto", photoFile);
+
+    try {
+      await axios.put(
+        `http://localhost:8085/updateStudentImage/${formData.email}`,
+        uploadData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      toast.success("Image uploaded successfully!");
+      // Optionally refresh the admission data here if necessary
+      setPhotoFile(null);
+      setPhotoPreview(null);
+    } catch (error) {
+      toast.error("Error uploading image. Please try again.");
+      console.error("Error uploading image:", error);
+    }
+  };
+
   const calculateBalance = () => {
     if (
       formData.paymentMethod === "Partial" ||
       formData.paymentMethod === "Pending"
     ) {
-      return formData.totalFees - formData.paidFees;
+      return formData.balanceAmount;
     }
 
     return 0; // No balance for other payment methods
@@ -130,6 +180,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
       <DialogContent>
         <form onSubmit={handleUpdateAdmission} className="required-asterisk">
           <Grid container spacing={3} marginTop={1}>
+            {/* Full Name */}
             <Grid item xs={12} sm={6} md={4}>
               <TextField
                 fullWidth
@@ -141,6 +192,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
                 required
               />
             </Grid>
+            {/* Email */}
             <Grid item xs={12} sm={6} md={4}>
               <TextField
                 fullWidth
@@ -152,6 +204,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
                 required
               />
             </Grid>
+            {/* Mobile 1 */}
             <Grid item xs={12} sm={6} md={4}>
               <TextField
                 fullWidth
@@ -163,6 +216,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
                 required
               />
             </Grid>
+            {/* Mobile 2 */}
             <Grid item xs={12} sm={6} md={4}>
               <TextField
                 fullWidth
@@ -173,6 +227,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
                 onChange={handleInputChange}
               />
             </Grid>
+            {/* Courses */}
             <Grid item xs={12} sm={6} md={4}>
               <TextField
                 fullWidth
@@ -191,6 +246,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
                 ))}
               </TextField>
             </Grid>
+            {/* Medium */}
             <Grid item xs={12} sm={6} md={4}>
               <TextField
                 fullWidth
@@ -201,6 +257,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
                 onChange={handleInputChange}
               />
             </Grid>
+            {/* Duration */}
             <Grid item xs={12} sm={6} md={4}>
               <TextField
                 fullWidth
@@ -212,7 +269,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
                 select
                 required
               >
-                <MenuItem value="1 Months">1 Months</MenuItem>
+                <MenuItem value="1 Months">1 Month</MenuItem>
                 <MenuItem value="2 Months">2 Months</MenuItem>
                 <MenuItem value="3 Months">3 Months</MenuItem>
                 <MenuItem value="4 Months">4 Months</MenuItem>
@@ -223,16 +280,19 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
                 <MenuItem value="48 Months">48 Months</MenuItem>
               </TextField>
             </Grid>
+            {/* Total Fees */}
             <Grid item xs={12} sm={6} md={4}>
               <TextField
                 fullWidth
                 id="totalFees"
                 name="totalFees"
                 label="Total Fees"
+                type="number"
                 value={formData.totalFees}
                 onChange={handleInputChange}
               />
             </Grid>
+            {/* Payment Method */}
             <Grid item xs={12} sm={4}>
               <TextField
                 fullWidth
@@ -249,30 +309,35 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
                 <MenuItem value="Complete">Complete</MenuItem>
               </TextField>
             </Grid>
+            {/* Paid Fees */}
             <Grid item xs={12} sm={6} md={4}>
               <TextField
                 fullWidth
                 id="paidFees"
                 name="paidFees"
                 label="Paid Fees"
+                type="number"
                 value={formData.paidFees}
                 onChange={handleInputChange}
                 required
               />
-            </Grid>{" "}
-            {formData.paymentMethod === "Pending" ||
-            formData.paymentMethod === "Partial" ? (
+            </Grid>
+            {/* Balance Amount */}
+            {(formData.paymentMethod === "Pending" ||
+              formData.paymentMethod === "Partial") && (
               <Grid item xs={12} sm={6} md={4}>
                 <TextField
                   fullWidth
                   id="balanceAmount"
                   name="balanceAmount"
                   label="Balance Amount"
+                  type="number"
                   value={calculateBalance()}
                   InputProps={{ readOnly: true }}
                 />
               </Grid>
-            ) : null}
+            )}
+            {/* Payment Mode */}
             <Grid item xs={12} sm={6} md={4}>
               <TextField
                 fullWidth
@@ -290,6 +355,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
                 <MenuItem value="Bank Transfer">Bank Transfer</MenuItem>
               </TextField>
             </Grid>
+            {/* Transaction ID */}
             {formData.paymentMode !== "Cash" && (
               <Grid item xs={12} sm={6} md={4}>
                 <TextField
@@ -302,6 +368,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
                 />
               </Grid>
             )}
+            {/* Source By */}
             <Grid item xs={12} sm={6} md={4}>
               <TextField
                 fullWidth
@@ -320,6 +387,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
                 ))}
               </TextField>
             </Grid>
+            {/* Guide Name */}
             <Grid item xs={12} sm={4}>
               <TextField
                 fullWidth
@@ -337,6 +405,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
                 ))}
               </TextField>
             </Grid>
+            {/* Date */}
             <Grid item xs={12} sm={6} md={4}>
               <TextField
                 fullWidth
@@ -352,27 +421,26 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
                 }}
               />
             </Grid>
-            {formData.paymentMethod === "Pending" ||
-            formData.paymentMethod === "Partial" ? (
-            <Grid item xs={12} sm={6} md={4}>
-              <TextField
-                fullWidth
-                id="dueDate"
-                name="dueDate"
-                label="Due Date"
-                value={formData.dueDate}
-                onChange={handleInputChange}
-                type="date"
-                required
-
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            </Grid>
-): null}
-          
-            
+            {/* Due Date */}
+            {(formData.paymentMethod === "Pending" ||
+              formData.paymentMethod === "Partial") && (
+              <Grid item xs={12} sm={6} md={4}>
+                <TextField
+                  fullWidth
+                  id="dueDate"
+                  name="dueDate"
+                  label="Due Date"
+                  value={formData.dueDate}
+                  onChange={handleInputChange}
+                  type="date"
+                  required
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+            )}
+            {/* Remark */}
             <Grid item xs={12} sm={6} md={4}>
               <TextField
                 fullWidth
@@ -383,6 +451,49 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
                 onChange={handleInputChange}
               />
             </Grid>
+            {/* Image Upload Section */}
+            <Grid item xs={12} sm={6} md={4}>
+              <input
+                accept="image/jpeg, image/jpg, image/png"
+                style={{ display: "none" }}
+                id="upload-photo"
+                type="file"
+                onChange={handleFileChange}
+              />
+              <label htmlFor="upload-photo">
+                <IconButton
+                  color="primary"
+                  aria-label="upload picture"
+                  component="span"
+                  sx={{ mr: 2 }}
+                >
+                  <PhotoCamera />
+                </IconButton>
+                <Button variant="contained" component="span">
+                  Upload Photo
+                </Button>
+              </label>
+              {photoPreview && (
+                <Typography variant="body2" sx={{ mt: 1 }}>
+                  <img
+                    src={photoPreview}
+                    alt="Preview"
+                    style={{ width: "100px", height: "100px", objectFit: "cover" }}
+                  />
+                </Typography>
+              )}
+            </Grid>
+            {/* Upload Image Button */}
+            <Grid item xs={12} sm={6} md={4} sx={{ display: "flex", alignItems: "center" }}>
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={handleImageUpload}
+                disabled={!photoFile}
+              >
+                Upload Image
+              </Button>
+            </Grid>
           </Grid>
         </form>
       </DialogContent>
@@ -390,8 +501,8 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
         <Button onClick={handleClose} color="secondary">
           Cancel
         </Button>
-        <Button onClick={handleUpdateAdmission} color="primary">
-          Update
+        <Button onClick={handleUpdateAdmission} color="primary" variant="contained">
+          Update Admission
         </Button>
       </DialogActions>
       <ToastContainer />

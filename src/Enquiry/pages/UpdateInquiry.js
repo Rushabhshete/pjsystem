@@ -67,6 +67,17 @@ const UpdateEnquiry = ({ id, onClose }) => {
     callBackTime: "",
     remark: "",
     enquiryDate: "",
+    dob: "",
+    gender: "",
+    motherTongue: "",
+    address: "",
+    landmark: "",
+    state: "",
+    district: "",
+    fatherProfession:"",
+    educationQualification: "",
+    annualIncome: "",
+    photo:null,
   });
   // const [adminemail, setAdminemail]=useState(localStorage.getItem('loggedInUserEmail') || '');
   const [institutecode, setInstituteCode] = useState(
@@ -174,17 +185,58 @@ const UpdateEnquiry = ({ id, onClose }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+  
+    // Create a FormData object to hold the form data
+    const formData = new FormData();
+    
+    // Append the necessary fields based on your Enquiry object
+    formData.append("name", Enquiry.name);
+    formData.append("mobile", Enquiry.mobile);
+    formData.append("source_by", Enquiry.source_by);
+    formData.append("status1", Enquiry.status1);
+    formData.append("exam", Enquiry.exam);
+    formData.append("conduct_by", Enquiry.conduct_by);
+    formData.append("remark", Enquiry.remark);
+    formData.append("email", Enquiry.email);
+    formData.append("enquiryDate", Enquiry.enquiryDate); // Ensure this is correctly formatted
+    formData.append("callBackDate", Enquiry.callBackDate || ""); // Optional
+    formData.append("callBackTime", Enquiry.callBackTime || ""); // Optional
+    formData.append("dob", Enquiry.dob || ""); // Optional
+    formData.append("gender", Enquiry.gender || ""); // Optional
+    formData.append("motherTongue", Enquiry.motherTongue || ""); // Optional
+    formData.append("address", Enquiry.address || ""); // Optional
+    formData.append("landmark", Enquiry.landmark || ""); // Optional
+    formData.append("state", Enquiry.state || ""); // Optional
+    formData.append("district", Enquiry.district || ""); // Optional
+    formData.append("fatherProfession", Enquiry.fatherProfession || ""); // Optional
+    formData.append("educationQualification", Enquiry.educationQualification || ""); // Optional
+    formData.append("annualIncome", Enquiry.annualIncome || ""); // Optional
+    
+    // Append the photo if it exists
+    if (Enquiry.photo) {
+      formData.append("photo", Enquiry.photo); // This assumes Enquiry.photo is a File object
+    }
+  
     try {
-      await axios.put(`http://localhost:8086/updateenquiry/${id}`, Enquiry);
-      toast.success("Enquiry Updated Successfully")
-      setTimeout(() => {
-        //  navigate("/layout/report"); // Navigate after a delay
-        onClose();
-      }, 2000); // Adjust time as needed
+      // Update the enquiry via PUT request
+      await axios.put(`http://localhost:8086/updateenquiry/${id}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data' // Important for form data
+        }
+      });
+      
+      toast.success("Enquiry Updated Successfully");
+  
+   // Close the form and refresh the page
+   onClose(); // This will close the form/modal
+   navigate(0); // This will refresh the page
+  
     } catch (error) {
       console.error("Error updating enquiry:", error);
+      toast.error("Error updating enquiry: " + error.message);
     }
   };
+  
 
   const enquiryDateRef = useRef();
   const handleEnquiryDateClick = () => {
@@ -196,7 +248,9 @@ const UpdateEnquiry = ({ id, onClose }) => {
       await axios.delete(`http://localhost:8086/deleteenquiry/${id}`);
       toast.success("Enquiry Deleted Successfully");
     //  navigate("/layout/report");
-      
+         // Close the form and refresh the page
+         onClose(); // This will close the form/modal
+        //  navigate(0); // This will refresh the page
     } catch (error) {
       console.error("Error deleting enquiry:", error);
     }
@@ -248,23 +302,9 @@ const UpdateEnquiry = ({ id, onClose }) => {
       draggable
       pauseOnHover/>
       <Box textAlign="center" sx={{ width: "100%" }}>
-        <PopTypography
-          variant="h5"
-          gutterBottom
-          sx={{
-            fontWeight: "bold",
-            color: "#fff",
-            backgroundColor: "#24A0ED",
-            borderRadius: "150px",
-            padding: "10px",
-            marginBottom: "20px",
-          }}
-        >
-          Update Enquiry
-        </PopTypography>
         <Box component="form" onSubmit={onSubmit}>
           <Grid container spacing={2} className="textField-root">
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={4}>
               <TextField
                 label="Name"
                 variant="outlined"
@@ -272,13 +312,12 @@ const UpdateEnquiry = ({ id, onClose }) => {
                 value={name}
                 onChange={onInputChange}
                 fullWidth
-                size="small"
                 InputProps={{
                   style: { textAlign: "left" },
                 }}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={4}>
               <TextField
                 label="Phone No."
                 variant="outlined"
@@ -286,13 +325,12 @@ const UpdateEnquiry = ({ id, onClose }) => {
                 value={mobile}
                 onChange={onInputChange}
                 fullWidth
-                size="small"
                 InputProps={{
                   style: { textAlign: "left" },
                 }}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={4}>
               <TextField
                 label="Email"
                 variant="outlined"
@@ -300,14 +338,13 @@ const UpdateEnquiry = ({ id, onClose }) => {
                 value={email}
                 onChange={onInputChange}
                 fullWidth
-                size="small"
                 InputProps={{
                   style: { textAlign: "left" },
                 }}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth variant="outlined" size="small">
+            <Grid item xs={12} sm={4}>
+              <FormControl fullWidth variant="outlined">
                 <InputLabel id="exam-label">Exam</InputLabel>
                 <Select
                   labelId="exam-label"
@@ -341,8 +378,8 @@ const UpdateEnquiry = ({ id, onClose }) => {
               </FormControl>
             </Grid>
 
-             <Grid item xs={12} sm={6}>
-              <FormControl fullWidth variant="outlined" size="small">
+             <Grid item xs={12} sm={4}>
+              <FormControl fullWidth variant="outlined">
                 <InputLabel id="source-label">Source By</InputLabel>
                 <Select
                   labelId="source-label"
@@ -376,8 +413,8 @@ const UpdateEnquiry = ({ id, onClose }) => {
               </FormControl>
             </Grid>
 
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth variant="outlined" size="small">
+            <Grid item xs={12} sm={4}>
+              <FormControl fullWidth variant="outlined">
                 <InputLabel id="conduct-label">Conducted By</InputLabel>
                 <Select
                   labelId="conduct-label"
@@ -411,8 +448,8 @@ const UpdateEnquiry = ({ id, onClose }) => {
               </FormControl>
             </Grid>
 
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth variant="outlined" size="small">
+            <Grid item xs={12} sm={4}>
+              <FormControl fullWidth variant="outlined">
                 <InputLabel id="status-label">Status</InputLabel>
                 <Select
                   labelId="status-label"
@@ -443,7 +480,7 @@ const UpdateEnquiry = ({ id, onClose }) => {
 
             {status1 === "Call Back" && (
               <>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={4}>
                   <TextField
                     label="Select Date"
                     type="date"
@@ -453,13 +490,12 @@ const UpdateEnquiry = ({ id, onClose }) => {
                     onChange={onInputChange}
                     fullWidth
                     InputLabelProps={{ shrink: true }}
-                    size="small"
                     InputProps={{
                       style: { textAlign: "left" },
                     }}
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={4}>
                   <TextField
                     label="Select Time"
                     type="time"
@@ -469,7 +505,6 @@ const UpdateEnquiry = ({ id, onClose }) => {
                     onChange={onInputChange}
                     fullWidth
                     InputLabelProps={{ shrink: true }}
-                    size="small"
                     InputProps={{
                       style: { textAlign: "left" },
                     }}
@@ -477,7 +512,7 @@ const UpdateEnquiry = ({ id, onClose }) => {
                 </Grid>
               </>
             )}
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={4}>
               <TextField
                 label="Enquiry Date"
                 type="date"
@@ -487,7 +522,6 @@ const UpdateEnquiry = ({ id, onClose }) => {
                 onChange={onInputChange}
                 fullWidth
                 InputLabelProps={{ shrink: true }}
-                size="small"
                 inputRef={enquiryDateRef}
                 onClick={handleEnquiryDateClick}
                 InputProps={{
@@ -495,7 +529,7 @@ const UpdateEnquiry = ({ id, onClose }) => {
                 }}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={4}>
               <TextField
                 label="Remark"
                 variant="outlined"
@@ -503,9 +537,6 @@ const UpdateEnquiry = ({ id, onClose }) => {
                 value={remark}
                 onChange={onInputChange}
                 fullWidth
-                size="small"
-                multiline
-                rows={4}
                 InputProps={{
                   style: { textAlign: "left" },
                 }}
@@ -530,6 +561,7 @@ const UpdateEnquiry = ({ id, onClose }) => {
                 select
                 value={Enquiry.gender}
                 onChange={onInputChange}
+                InputLabelProps={{ shrink: true }}
                 label="Gender"
               >
                 <MenuItem value="">
@@ -548,6 +580,7 @@ const UpdateEnquiry = ({ id, onClose }) => {
               name="motherTongue"
               value={Enquiry.motherTongue}
               onChange={onInputChange}
+              InputLabelProps={{ shrink: true }}
               fullWidth
             />
           </Grid>
@@ -558,6 +591,7 @@ const UpdateEnquiry = ({ id, onClose }) => {
               name="address"
               value={Enquiry.address}
               onChange={onInputChange}
+              InputLabelProps={{ shrink: true }}
               fullWidth
             />
           </Grid>
@@ -568,6 +602,7 @@ const UpdateEnquiry = ({ id, onClose }) => {
               name="landmark"
               value={Enquiry.landmark}
               onChange={onInputChange}
+              InputLabelProps={{ shrink: true }}
               fullWidth
             />
           </Grid>
@@ -579,6 +614,7 @@ const UpdateEnquiry = ({ id, onClose }) => {
                 select
                 value={selectedState}
                 onChange={handleStateChange}
+                InputLabelProps={{ shrink: true }}
                 label="State"
               >
                 <MenuItem value="All">
@@ -601,6 +637,7 @@ const UpdateEnquiry = ({ id, onClose }) => {
                 onChange={onInputChange}
                 label="District"
                 disabled={!districts.length}
+                InputLabelProps={{ shrink: true }}
                 select
               >
                 <MenuItem value="All">
@@ -621,6 +658,7 @@ const UpdateEnquiry = ({ id, onClose }) => {
               name="fatherProfession"
               value={Enquiry.fatherProfession}
               onChange={onInputChange}
+              InputLabelProps={{ shrink: true }}
               fullWidth
             />
           </Grid>
@@ -631,6 +669,7 @@ const UpdateEnquiry = ({ id, onClose }) => {
                 name="educationQualification"
                 value={Enquiry.educationQualification}
                 onChange={onInputChange}
+                InputLabelProps={{ shrink: true }}
                 label="Education Qualification"
                 select
               >
@@ -651,6 +690,7 @@ const UpdateEnquiry = ({ id, onClose }) => {
                 name="annualIncome"
                 value={Enquiry.annualIncome}
                 onChange={onInputChange}
+                InputLabelProps={{ shrink: true }}
                 label="Annual Income"
                 select
               >
@@ -682,7 +722,7 @@ const UpdateEnquiry = ({ id, onClose }) => {
             justifyContent="space-between"
             alignItems="center"
           >
-            <Button
+            {/* <Button
               variant="contained"
               color="warning"
               component={Link}
@@ -690,8 +730,8 @@ const UpdateEnquiry = ({ id, onClose }) => {
               startIcon={<CancelIcon />}
             >
               Cancel
-            </Button>
-            <Box display="flex" gap={2}>
+            </Button> */}
+            <Box display="flex" gap={1}>
               <Button
                 sx={{ mt: 2, mr: 2 }}
                 variant="contained"
@@ -710,7 +750,7 @@ const UpdateEnquiry = ({ id, onClose }) => {
               >
                 Save
               </Button>
-              <Button variant="contained" color="primary" onClick={onClose}>
+              <Button variant="contained" color="primary" onClick={onClose} sx={{ mt: 2, mr: 2 }}>
   Close
 </Button>
 

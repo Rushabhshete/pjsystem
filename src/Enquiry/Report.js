@@ -810,7 +810,7 @@ const createTable = (doc) => {
   maxWidth="lg" 
   fullWidth
 >
-  <DialogTitle>Edit Inquiry</DialogTitle>
+  <DialogTitle textAlign={"center"}>Update Enquiry</DialogTitle>
   <DialogContent>
   <UpdateEnquiry
           id={selectedInquiryId}

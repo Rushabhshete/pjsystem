@@ -414,10 +414,16 @@ const StudentList = () => {
     document.body.removeChild(link);
   };
 
-  const handleUpdateClick = (admission) => {
-    setSelectedAdmission(admission);
+   // Update click handler
+   const handleUpdateClick = (admission) => {
+    setSelectedAdmission(admission); // Set the selected admission
+    setOpenUpdateDialog(true); // Open the update dialog
   };
 
+  const handleCloseDialog = () => {
+    setOpenUpdateDialog(false); // Close the dialog
+    setSelectedAdmission(null); // Reset the admission state
+  };
   const handleUpdateAdmission = (updatedAdmission) => {
     // Update the list with the updated admission details
     setAdmissions((prevAdmissions) =>
@@ -447,9 +453,7 @@ const StudentList = () => {
     }
   };
 
-  const handleCloseDialog = () => {
-    setOpenUpdateDialog(false);
-  };
+
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
@@ -1055,7 +1059,9 @@ const StudentList = () => {
       <Dialog open={openUpdateDialog} onClose={handleCloseDialog}>
         <DialogTitle>Update Admission</DialogTitle>
         <DialogContent>
-          <UpdateAdmissionForm admission={currentAdmission} />
+        {currentAdmission && ( // Ensure we only render if currentAdmission is not null
+            <UpdateAdmissionForm admission={currentAdmission} />
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDialog} color="primary">
@@ -1063,6 +1069,7 @@ const StudentList = () => {
           </Button>
         </DialogActions>
       </Dialog>
+      
       {selectedAdmission && (
         <UpdateAdmissionForm
           admission={selectedAdmission}
