@@ -148,9 +148,9 @@ const AdmissionForm = () => {
     }
   };
 
-  // const handleFinalSubmit = () => {
-  //   navigate("/layout/students");
-  // };
+  const handleFinalSubmit = () => {
+    navigate("/layout/Admission-manager");
+  };
 
   const handleFileUpload = async (fieldName, endpoint) => {
     const file = formData[fieldName];
@@ -176,8 +176,7 @@ const AdmissionForm = () => {
     }
   };
 
-  const 
-  calculateBalance = () => {
+  const calculateBalance = () => {
     if (formData.paymentMethod === "Pending") {
       // If the payment method is "Pending", set paidFees to 0
       return formData.totalFees; // Balance will be the total fees since nothing is paid
@@ -218,22 +217,7 @@ const AdmissionForm = () => {
   `;
   return (
     <>
-      {/* <PopTypography
-        variant="h5"
-        gutterBottom
-        sx={{
-          fontWeight: "bold",
-          color: "#fff",
-          textAlign: "center",
-          backgroundColor: "#24A0ED",
-          borderRadius: "150px",
-          padding: "10px",
-          marginBottom: "20px",
-        }}
-      >
-        Student Admission Form
-      </PopTypography> */}
-      <div maxWidth="lg" className="required-asterisk">
+         <div maxWidth="lg" className="required-asterisk">
         <form onSubmit={handleFormSubmit}>
           <Grid container spacing={3} className="textField-root">
             <Grid item xs={12} sm={6} md={4}>
@@ -276,13 +260,20 @@ const AdmissionForm = () => {
                 onBlur={handleBlur("mobile1")}
                 required
                 error={
-                  touched.mobile1 && !validateMobileNumber(formData.mobile1)
+                  touched.mobile1 &&
+                  (!validateMobileNumber(formData.mobile1) ||
+                    formData.mobile1.length !== 10)
                 }
                 helperText={
                   touched.mobile1 && !validateMobileNumber(formData.mobile1)
                     ? "Mobile number must be 10 digits"
                     : ""
                 }
+                inputProps={{
+                  maxLength: 10, // Limit input to 10 digits
+                  pattern: "[0-9]*", // Optional: Restrict input to numbers only
+                  inputMode: "numeric", // Optional: Show numeric keyboard on mobile devices
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
@@ -293,6 +284,11 @@ const AdmissionForm = () => {
                 label="Mobile 2"
                 value={formData.mobile2}
                 onChange={handleInputChange}
+                inputProps={{
+                  maxLength: 10, // Limit input to 10 digits
+                  pattern: "[0-9]*", // Optional: Restrict input to numbers only
+                  inputMode: "numeric", // Optional: Show numeric keyboard on mobile devices
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
@@ -377,7 +373,7 @@ const AdmissionForm = () => {
                 id="paidFees"
                 name="paidFees"
                 label="Fees Paying"
-                value={formData.paidFees || 0}
+                value={formData.paidFees }
                 onChange={handleInputChange}
                 required
                 disabled={formData.paymentMethod === "Pending"} // Disable input if paymentMethod is "Pending"
@@ -532,41 +528,31 @@ const AdmissionForm = () => {
               spacing={1}
               justifyContent="space-evenly"
               display="flex"
+              alignItems="center" // Align items vertically in the center
             >
-              {/* <Grid item xs={12} sm={6} md={4}>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                {" "}
+                {/* Add flexbox styling here */}
                 <Button
                   variant="outlined"
                   component="label"
-                  style={{ marginRight: "10px" }}
-                >
-                  Upload Fees Receipt Photo
-                  <input
-                    type="file"
-                    hidden
-                    onChange={(event) => handleFileChange(event, "feesReceipt")}
-                  />
-                </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() =>
-                    handleFileUpload(
-                      "feesReceipt",
-                      `http://localhost:8085/saveFeesRecipt/${formData.email}`
-                    )
-                  }
-                  disabled={!isFormSubmitted}
-                >
-                  Upload
-                </Button>
-              </Grid> */}
-              <Grid item xs={12} sm={6} md={4}>
-                <Button
-                  variant="outlined"
-                  component="label"
-                  style={{ marginRight: "10px", marginTop:'20px'}}
+                  style={{ marginRight: "10px", marginTop: "20px" }}
+                  //color={errors.studentPhoto ? "error" : "primary"} // Change button color if there's an error
                 >
                   Upload Student Photo
+                  <Typography
+                    variant="body1"
+                    color="error"
+                    sx={{ display: "inline-block", marginLeft: 1 }}
+                  >
+                    * {/* Asterisk to indicate required field */}
+                  </Typography>
                   <input
                     type="file"
                     hidden
@@ -578,6 +564,7 @@ const AdmissionForm = () => {
                 <Button
                   variant="contained"
                   color="primary"
+                  style={{ marginTop: "20px" }}
                   onClick={() =>
                     handleFileUpload(
                       "studentPhoto",
@@ -597,7 +584,7 @@ const AdmissionForm = () => {
                 spacing={3}
                 style={{ marginTop: "10px" }}
               >
-                {/* <Grid item>
+                <Grid item>
                   <Button
                     variant="contained"
                     onClick={handleFinalSubmit}
@@ -605,7 +592,7 @@ const AdmissionForm = () => {
                   >
                     Submit
                   </Button>
-                </Grid> */}
+                </Grid>
               </Grid>
             )}
           </Grid>
