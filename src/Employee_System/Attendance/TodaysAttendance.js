@@ -594,7 +594,12 @@ const TodaysAttendance = () => {
                 <TableCell>{employee.breakOut || 'N/A'}</TableCell>
                 <TableCell>{employee.breakMinutes || '0'}</TableCell>
                 <TableCell>{employee.logoutTime || 'N/A'}</TableCell>
-                <TableCell>{employee.status}</TableCell>
+                <TableCell  sx={{
+          fontWeight: 'bold',
+          color: employee.status === 'On time' ? '#90ee90' : 
+                 employee.status === 'Late' ? 'orange' : 
+                 employee.status === 'Absent' ? 'red' : 'inherit',
+        }}>{employee.status}</TableCell>
               </TableRow>
             ))}
           </TableBody>
