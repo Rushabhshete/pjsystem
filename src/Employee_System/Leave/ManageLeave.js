@@ -273,7 +273,7 @@ const filteredLeaveRequests = leaveRequests.filter(request =>
                     {/* Delete Button */}
                     <IconButton
                       aria-label="delete"
-                      color="secondary"
+                      color="error"
                       onClick={() => handleDeleteRequest(request.id)}
                     >
                       <DeleteIcon />
