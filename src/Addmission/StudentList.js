@@ -1056,7 +1056,7 @@ const StudentList = () => {
 
 
 
-      <Dialog open={openUpdateDialog} onClose={handleCloseDialog}>
+      {/* <Dialog open={openUpdateDialog} onClose={handleCloseDialog}>
         <DialogTitle>Update Admission</DialogTitle>
         <DialogContent>
         {currentAdmission && ( // Ensure we only render if currentAdmission is not null
@@ -1068,7 +1068,7 @@ const StudentList = () => {
             Close
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
       
       {selectedAdmission && (
         <UpdateAdmissionForm

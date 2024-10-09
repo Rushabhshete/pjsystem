@@ -88,7 +88,7 @@ export default function AddSalary() {
       setSnackbarMessage('Salary added successfully!');
       setOpenSnackbar(true);
       setTimeout(() => {
-        navigate('/layout/SalaryTable');
+        navigate('/layout/employee-salary-manager/salary-list');
       }, 2000);
     } catch (error) {
       console.error('Error adding salary:', error);
