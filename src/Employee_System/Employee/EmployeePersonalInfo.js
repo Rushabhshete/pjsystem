@@ -1009,6 +1009,18 @@ const EmployeePersonalInfo = ({ formData, handleChange, handleSubmit }) => {
             </FormControl>
           </Grid>
 
+          <Grid item xs={12} sm={4}>
+              <TextField
+                required
+                name="taluka"
+                value={formData.taluka}
+                onChange={handleChangeWithValidation}
+                InputLabelProps={{ className: "required-asterisk" }}
+                label="Taluka"
+                fullWidth
+              />
+          </Grid>
+
           {/* City */}
           <Grid item xs={12} sm={4}>
               <TextField
@@ -1162,6 +1174,18 @@ const EmployeePersonalInfo = ({ formData, handleChange, handleSubmit }) => {
                     )}
                   </TextField>
                 </FormControl>
+              </Grid>
+
+              <Grid item xs={12} sm={4}>
+                  <TextField
+                    required
+                    name="permanenttaluka"
+                    value={formData.permanenttaluka}
+                    onChange={handleChangeWithValidation}
+                    InputLabelProps={{ className: "required-asterisk" }}
+                    label="Permanent Taluka"
+                    fullWidth
+                  />
               </Grid>
 
               {/* Permanent City */}

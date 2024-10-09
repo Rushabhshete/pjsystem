@@ -462,7 +462,9 @@ const EmployeeList = () => {
       { label: "District:", value: selectedUser?.district },
       { label: "Permanent District:", value: selectedUser?.permanentdistrict },
       { label: "City:", value: selectedUser?.city },
+      { label: "Taluka:", value: selectedUser?.taluka },
       { label: "Permanent City:", value: selectedUser?.permanentcity },
+      { label: "Permanent Taluka:", value: selectedUser?.permanenttaluka },
       { label: "State:", value: selectedUser?.state },
       { label: "Permanent State:", value: selectedUser?.permanentstate },
       { label: "Country:", value: selectedUser?.country },
@@ -586,7 +588,9 @@ const EmployeeList = () => {
         "District",
         "Permanent District",
         "City",
+        "Taluka",
         "Permanent City",
+        "Permanent Taluka",
         "State",
         "Permanent State",
         "Country",
@@ -1121,6 +1125,17 @@ const EmployeeList = () => {
 
                   <Grid item xs={12} sm={4}>
                     <TextField
+                      required
+                      name="taluka"
+                      value={selectedUser?.taluka}
+                      onChange={handleInputChange}
+                      label="Taluka"
+                      fullWidth
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} sm={4}>
+                    <TextField
                       label="Pincode"
                       name="pinCode"
                       value={selectedUser?.pinCode}
@@ -1216,6 +1231,16 @@ const EmployeeList = () => {
                       value={selectedUser?.permanentdistrict}
                       onChange={handleInputChange}
                       label="Permanent District"
+                      fullWidth
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <TextField
+                      required
+                      name="permanenttaluka"
+                      value={selectedUser?.permanenttaluka}
+                      onChange={handleInputChange}
+                      label="Permanent Taluka"
                       fullWidth
                     />
                   </Grid>
@@ -1677,6 +1702,34 @@ const EmployeeList = () => {
                     Permanent District:
                   </Typography>{" "}
                   {selectedUser?.permanentdistrict}
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  sx={{ display: "flex", alignItems: "center" }}
+                >
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ fontWeight: "bold", mr: 1 }}
+                  >
+                    Taluka:
+                  </Typography>{" "}
+                  {selectedUser?.taluka}
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  sx={{ display: "flex", alignItems: "center" }}
+                >
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ fontWeight: "bold", mr: 1 }}
+                  >
+                    Permanent Taluka:
+                  </Typography>{" "}
+                  {selectedUser?.permanenttaluka}
                 </Grid>
                 <Grid
                   item

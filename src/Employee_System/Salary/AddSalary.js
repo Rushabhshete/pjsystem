@@ -257,7 +257,7 @@ export default function AddSalary() {
                 </TextField>
               </Grid>
               <Grid item xs={12}>
-                <Button variant="contained" color="secondary" component={Link} to="/layout/Salarytable">
+                <Button variant="contained" color="secondary" component={Link} to="/layout/employee-salary-manager/add-detail">
                   Cancel
                 </Button>
                 <Button
