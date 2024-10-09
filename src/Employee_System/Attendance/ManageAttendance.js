@@ -142,7 +142,7 @@ const ManageAttendance = () => {
                         <Button
                           variant="contained"
                           color="primary"
-                          onClick={() => navigate(`/layout/ViewAttendance/${employee.empID}`)}
+                          onClick={() => navigate(`/layout/attendance-manager/View-attendance/${employee.empID}`)}
                         >
                           View
                         </Button>
