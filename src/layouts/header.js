@@ -172,7 +172,8 @@ const Header = () => {
       sx={{
         zIndex: (theme) => theme.zIndex.drawer + 1,
         // backgroundImage: "radial-gradient(circle, #FAD126, #FF564E)",
-       backgroundColor:"rgb(10,50,100)",
+      //  backgroundColor:"#0A3264",
+       backgroundColor:"#00649F",
       //  opacity:0.8
       }}
     >

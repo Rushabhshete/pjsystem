@@ -210,7 +210,7 @@ const IncomeExpenseDashboard = () => {
           incomeData.last365Days || 0,
           incomeData.total || 0,
         ],
-        backgroundColor: "#90EE90",
+        backgroundColor: "#3498DB",
       },
       {
         label: "Expense",
@@ -266,8 +266,8 @@ const IncomeExpenseDashboard = () => {
       {
         label: "Income",
         data: monthlyIncome,
-        borderColor: "#90EE90",
-        backgroundColor: "#90EE90",
+        borderColor: "#3498DB",
+        backgroundColor: "#3498DB",
         fill: false,
         tension: 0.1,
       },
@@ -382,10 +382,8 @@ const IncomeExpenseDashboard = () => {
         backgroundColor: [
           "#FF6F61",
           "#3498DB",
-          "#9ACD32",
-          "#FF6347",
-          "#F4C431",
-          "#FFCCCB",
+          "#F9E79F",
+          
         ],
       },
     ],
@@ -399,10 +397,8 @@ const IncomeExpenseDashboard = () => {
         backgroundColor: [
           "#FF6F61",
           "#3498DB",
-          "#9ACD32",
-          "#FF6347",
-          "#F4C431",
-          "#FFCCCB",
+          "#F9E79F",
+         
         ],
       },
     ],
@@ -516,7 +512,7 @@ const IncomeExpenseDashboard = () => {
             elevation={3}
             sx={{
               padding: 2,
-              backgroundColor: "#9ACD32",
+              backgroundColor: "#F9E79F",
               borderRadius: 2,
               fontWeight: "bold",
               boxShadow: 3,
@@ -533,7 +529,7 @@ const IncomeExpenseDashboard = () => {
             elevation={3}
             sx={{
               padding: 2,
-              backgroundColor: "#F4C431",
+              backgroundColor: "#FF6F61",
               borderRadius: 2,
               fontWeight: "bold",
               boxShadow: 3,
@@ -601,7 +597,7 @@ const IncomeExpenseDashboard = () => {
             elevation={3}
             sx={{
               padding: 2,
-              backgroundColor: "#9ACD32",
+              backgroundColor: "#F9E79F",
               borderRadius: 2,
               fontWeight: "bold",
               boxShadow: 3,
@@ -618,7 +614,7 @@ const IncomeExpenseDashboard = () => {
             elevation={3}
             sx={{
               padding: 2,
-              backgroundColor: "#F4C431",
+              backgroundColor: "#FF6F61",
               borderRadius: 2,
               fontWeight: "bold",
               boxShadow: 3,
@@ -696,7 +692,7 @@ const IncomeExpenseDashboard = () => {
             elevation={3}
             sx={{
               padding: 2,
-              backgroundColor: "#9ACD32", // Light Orange
+              backgroundColor: "#F9E79F", // Light Orange
               borderRadius: 2,
               fontWeight: "bold",
               boxShadow: 3,
@@ -719,7 +715,7 @@ const IncomeExpenseDashboard = () => {
             elevation={3}
             sx={{
               padding: 2,
-              backgroundColor: "#F4C431", // Light Orange
+              backgroundColor: "#FF6F61", // Light Orange
               borderRadius: 2,
               fontWeight: "bold",
               boxShadow: 3,
@@ -773,13 +769,13 @@ const IncomeExpenseDashboard = () => {
     <InfoCard
       title={<span style={{ fontSize: "15px" }}>365 Days Pending INC</span>}
       value={<span style={{ fontSize: "27px" }}>{formattedCountUp(pendingIncomeStats.last365Days || 0)}</span>}
-      color="#9ACD32"
+      color="#F9E79F"
     />
     {/* Total Pending Income */}
     <InfoCard
       title="Total Pending INC"
       value={<span style={{ fontSize: "27px" }}>{formattedCountUp(pendingIncomeStats.total || 0)}</span>}
-      color="#F4C431"
+      color="#FF6F61"
     />
 
     {/* Today's Pending Expense */}
@@ -804,13 +800,13 @@ const IncomeExpenseDashboard = () => {
     <InfoCard
       title={<span style={{ fontSize: "15px" }}>365 Days Pending EXP</span>}
       value={<span style={{ fontSize: "27px" }}>{formattedCountUp(pendingExpenseStats.last365Days || 0)}</span>}
-      color="#9ACD32"
+      color="#F9E79F"
     />
     {/* Total Pending Expense */}
     <InfoCard
       title="Total Pending EXP"
       value={<span style={{ fontSize: "27px" }}>{formattedCountUp(pendingExpenseStats.total || 0)}</span>}
-      color="#F4C431"
+      color="#FF6F61"
     />
   </Grid>
 )}

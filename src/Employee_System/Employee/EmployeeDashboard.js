@@ -142,13 +142,13 @@ const EmployeeDashboard = () => {
     const departmentChartData = [
         ['Department', 'Employee Count', { role: 'style' }],
         ...(departmentData.length ? departmentData.map(([dept, count], index) => {
-            const colors = ['#F9E79F', '#FF6F61', '#3498DB', '#9ACD32', '#F4C431'];
+            const colors = ['#3498DB', '#FF6F61', '#F9E79F',];
             return [dept, count, colors[index % colors.length]];
         }) : [['No Data', 0, 'color: #DDD']])
     ];
 
     const departmentChartOptions = {
-        title: 'Employee Distribution by Department',
+       // title: 'Employee Distribution by Department',
         vAxis: { title: 'Employee Count' },
         hAxis: { title: 'Department' },
         legend: 'none',
@@ -159,13 +159,13 @@ const EmployeeDashboard = () => {
     const categoryChartData = [
         ['Category', 'Employee Count', { role: 'style' }],
         ...(categoryData.length ? categoryData.map(([category, count], index) => {
-            const colors = ['#F9E79F', '#FF6F61', '#3498DB', '#9ACD32', '#F4C431'];
+            const colors = ['#F9E79F', '#FF6F61', '#3498DB',];
             return [category, count, colors[index % colors.length]];
         }) : [['No Data', 0, 'color: #DDD']])
     ];
 
     const categoryChartOptions = {
-        title: 'Employee Distribution by Category',
+      //  title: 'Employee Distribution by Category',
         vAxis: { title: 'Employee Count' },
         hAxis: { title: 'Category' },
         legend: 'none',

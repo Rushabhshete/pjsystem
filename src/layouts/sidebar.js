@@ -328,8 +328,8 @@ const Sidebar = () => {
           width: open ? drawerWidth : collapsedWidth,
           transition: "width 0.3s",
           overflowX: "hidden",
-          backgroundColor:"rgb(10,50,100)",
-          opacity: 0.8,
+          backgroundColor:"#3498DB",
+          //opacity: 0.8,
     
         },
       }}
@@ -389,7 +389,7 @@ const Sidebar = () => {
                     {expanded[option.name] ? (
                       <Remove sx={{ color: "red" }} />
                     ) : (
-                      <Add sx={{ color: "#269DD7" }} />
+                      <Add sx={{ color: "#FFF" }} />
                     )}
                   </ListItemIcon>
                 )}

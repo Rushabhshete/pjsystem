@@ -404,17 +404,9 @@ export default function DashBoard() {
     ...(examData.length
       ? examData.map(([ex, count], index) => {
           const colors = [
-            "#76A7FA",
-            "#FF5733",
-            "#33FF57",
-            "#3357FF",
-            "#FF33A6",
-            "#FFD700",
+            "#F9E79F",
             "#FF6F61",
-            "#8E44AD",
             "#3498DB",
-            "#2ECC71",
-            "#E74C3C",
           ];
           return [ex, count, colors[index % colors.length]];
         })
@@ -441,17 +433,9 @@ export default function DashBoard() {
     ...(sourceData.length
       ? sourceData.map(([sr, count], index) => {
           const colors = [
-            "#76A7FA",
-            "#FF5733",
-            "#33FF57",
-            "#3357FF",
-            "#FF33A6",
-            "#FFD700",
+            "#F9E79F",
             "#FF6F61",
-            "#8E44AD",
             "#3498DB",
-            "#2ECC71",
-            "#E74C3C",
           ];
           return [sr, count, colors[index % colors.length]];
         })
@@ -546,7 +530,7 @@ export default function DashBoard() {
               elevation={3}
               style={{
                 padding: "16px",
-                backgroundColor: "#9ACD32",
+                backgroundColor: "#F9E79F",
                 borderRadius: "10px",
               }}
             >
@@ -563,7 +547,7 @@ export default function DashBoard() {
               elevation={3}
               style={{
                 padding: "16px",
-                backgroundColor: "#F4C431",
+                backgroundColor: "#FF6F61",
                 borderRadius: "10px",
               }}
             >

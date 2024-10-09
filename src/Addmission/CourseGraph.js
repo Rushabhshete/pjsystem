@@ -120,6 +120,9 @@ const CourseByGraph = () => {
           options={{
           //  title: "Admissions by Course",
             is3D: true,
+            colors: [
+              "#3498DB"
+            ],
           }}
         />
       </Grid>

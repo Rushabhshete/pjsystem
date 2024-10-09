@@ -232,17 +232,8 @@ const MonthlyGraph = () => {
           hAxis: { title: "Month" },
           vAxis: { title: "Number of Admissions" },
           colors: [
-            "#76A7FA",
-            "#FF5733",
-            "#33FF57",
-            "#3357FF",
-            "#FF33A6",
-            "#FFD700",
-            "#FF6F61",
-            "#8E44AD",
             "#3498DB",
-            "#2ECC71",
-            "#E74C3C",
+          
           ],
         }}
         legendToggle

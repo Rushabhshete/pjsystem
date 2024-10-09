@@ -189,7 +189,7 @@ const SalaryDashBoard = () => {
     { name: `Year ${selectedEndYear}`, value: comparisonData[selectedEndYear] }
   ] : [];
 
-  const COLORS = ['#8884d8', '#82ca9d'];
+  const COLORS = ['#FF6F61', '#3498DB'];
 
   return (
     <div sx={{ padding: 2, width: "100%" }}>
@@ -214,19 +214,19 @@ const SalaryDashBoard = () => {
               </Paper>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#9ACD32', borderRadius: '10px' }}>
+              <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#F9E79F', borderRadius: '10px' }}>
                 <Typography variant="h6">Total Salary:</Typography>
                 <Typography variant="h5">{grossSalary || "0"}</Typography>
               </Paper>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#F4C431', borderRadius: '10px' }}>
+              <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#FF6F61', borderRadius: '10px' }}>
                 <Typography variant="h6">Paid Amount:</Typography>
                 <Typography variant="h5">{paidAmount !== null ? paidAmount : 0}</Typography>
               </Paper>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#F9E79F', borderRadius: '10px' }}>
+              <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#3498DB', borderRadius: '10px' }}>
                 <Typography variant="h6">Pending Amount:</Typography>
                 <Typography variant="h5">{pendingAmount !== null ? pendingAmount : 0}</Typography>
               </Paper>
@@ -320,8 +320,8 @@ const SalaryDashBoard = () => {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="currentMonthTotal" fill="#76A7FA" name="Current Month" />
-          <Bar dataKey="previousMonthTotal" fill="#FF5733" name="Previous Month" />
+          <Bar dataKey="currentMonthTotal" fill="#FF6F61" name="Current Month" />
+          <Bar dataKey="previousMonthTotal" fill="#3498DB" name="Previous Month" />
         </BarChart>
       </ResponsiveContainer>
     </Box>
@@ -425,7 +425,7 @@ const SalaryDashBoard = () => {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="finalNetSalary" fill="#8884d8" />
+        <Bar dataKey="finalNetSalary" fill="#FF6F61" />
       </BarChart>
     </ResponsiveContainer>
   </Paper>

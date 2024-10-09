@@ -21,7 +21,7 @@
 // // Styles for active item
 // const activeNavItemStyle = {
 //   ...navItemStyle,
-//   backgroundColor: "#624E88",
+//       backgroundColor: "#3498DB",
 //   color: "white",
 //   borderRadius: "35px",
 //   transform: "scale(1.05)", // Slight increase for active state

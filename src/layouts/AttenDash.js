@@ -198,13 +198,13 @@ const AttenDash = () => {
   </Box>
             <Grid container spacing={2} sx={{ marginBottom: 3 }}>
               <Grid item xs={12} md={4}>
-                <Paper elevation={3} style={{ padding: '19px', backgroundColor: '#9ACD32', borderRadius: '10px' }}>
+                <Paper elevation={3} style={{ padding: '19px', backgroundColor: '#F9E79F', borderRadius: '10px' }}>
                   <Typography variant="h6">Total Salaries:</Typography>
                   <Typography variant="h5">{totalEmployee !== null ? totalEmployee : 0}</Typography>
                 </Paper>
               </Grid>
               <Grid item xs={12} md={4}>
-                <Paper elevation={3} style={{ padding: '19px', backgroundColor: '#F4C431', borderRadius: '10px' }}>
+                <Paper elevation={3} style={{ padding: '19px', backgroundColor: '#FF6F61', borderRadius: '10px' }}>
                   <Typography variant="h6">Paid Salary:</Typography>
                   <Typography variant="h5">{paidEmployees !== null ? paidEmployees : 0}</Typography>
                 </Paper>

@@ -128,6 +128,10 @@ const RevenueByCourse = () => {
               vAxis: {
                 title: "Course",
               },
+              colors: [
+                "#3498DB",
+                "#3498DB"
+              ],
             }}
           />
         </Grid>
