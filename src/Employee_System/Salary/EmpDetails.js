@@ -376,7 +376,7 @@ const EmpDetails = ({ empID }) => {
                   <TableCell>{user.department}</TableCell>
                   <TableCell>{user.salary}</TableCell>
                   <TableCell>
-                    <Link className="btn btn-outline-primary mx-2" to={`/layout/AddSalary/${user.empID}`}>
+                    <Link className="btn btn-outline-primary mx-2" to={`/layout/employee-salary-manager/add-salary/${user.empID}`}>
                       Add
                     </Link>
                   </TableCell>

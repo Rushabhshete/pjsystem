@@ -73,6 +73,23 @@ import Exam from "./Enquiry/ExamPages/Exam";
 import Source from "./Enquiry/ConductBy/Sources/Source";
 import Conduct from "./Enquiry/ConductBy/Conduct";
 import AddInquiry from './Enquiry/pages/AddInquiry'
+import EmployeeManagerLayout from "./Employee_System/Employee/EmployeeManagerLayout";
+import EmployeeDashboard from "./Employee_System/Employee/EmployeeDashboard";
+import EmployeeList from "./Employee_System/Employee/EmployeeList";
+import EmpReport from "./Employee_System/Employee/EmpReport";
+import ManageHoliday from "./Employee_System/Employee/ManageHoliday";
+import AddEmployee from "./Employee_System/Employee/AddEmployee";
+import AddEmpcategory from "./Employee_System/Employee/AddEmpcategory";
+import AddDepartment from "./Employee_System/Employee/AddDepartment";
+import AttendanceManagerLayout from "./Employee_System/Attendance/AttendanceManagerLayout";
+import TodaysAttendance from "./Employee_System/Attendance/TodaysAttendance";
+import ManageAttendance from "./Employee_System/Attendance/ManageAttendance";
+import EmpDetails from "./Employee_System/Salary/EmpDetails";
+import SalaryTable from "./Employee_System/Salary/SalaryTable";
+import EmployeeSalaryManagerLayout from "./Employee_System/Salary/EmployeeSalaryManagerLayout";
+import SalaryDashBoard from "./Employee_System/Salary/SalaryDashboard";
+import AddSalary from "./Employee_System/Salary/AddSalary";
+import ViewAttendance from "./Employee_System/Attendance/ViewAttendance";
 function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem("isAuthenticated") === "true"
@@ -151,17 +168,36 @@ function AppContent() {
 
           {/* Employee */}
 
-          <Route path="Employee-manager" element={<EmployeeManager />} />
+        {/* Employee Manager Route with Nested Routes */}
+        <Route path="employee-manager" element={<EmployeeManagerLayout />}>
+          <Route index element={<EmployeeDashboard />} />   {/* Default page */}
+          <Route path="add-employee" element={<AddEmployee />} />
+          <Route path="employee-list" element={<EmployeeList />} />
+          <Route path="emp-report" element={<EmpReport />} />
+          <Route path="add-category" element={<AddEmpcategory />} />
+          <Route path="add-department" element={<AddDepartment />} />
+          <Route path="manage-holiday" element={<ManageHoliday />} />
+        </Route>
 
           <Route path="EmpDash" element={<EmpDash />} />
           <Route path="AttenDash" element={<AttenDash />} />
 
-          <Route path="Attendance-manager" element={<AttendanceManager />} />
+          <Route path="attendance-manager/*" element={<AttendanceManagerLayout />}>
+          <Route index element={<TodaysAttendance />} />  {/* Default route */}
+          <Route path="manage-attendance" element={<ManageAttendance />} />
+        <Route path="View-attendance/:empID" element={<ViewAttendance />} />
 
-          <Route
-            path="EmployeeSalaryManager"
-            element={<EmployeeSalaryManager />}
-          />
+        </Route>
+
+     {/* Employee Salary Manager */}
+     <Route path="employee-salary-manager/*" element={<EmployeeSalaryManagerLayout />}>
+            <Route index element={<SalaryDashBoard />} />
+            <Route path="salary-list" element={<SalaryTable />} />
+            <Route path="add-salary/:empID" element={<AddSalary />} />
+            <Route path="add-detail" element={<EmpDetails />} />
+            
+
+          </Route>
 
           <Route path="ManageLeave" element={<ManageLeave />} />
 

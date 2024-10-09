@@ -166,7 +166,7 @@ const Sidebar = () => {
         {
           name: "Attendance",
           icon: <SupervisorAccountRoundedIcon sx={{ color: "#4682b4" }} />,
-          route: "/layout/Attendance-manager",
+          route: "/layout/attendance-manager",
         },
         {
           name: "Leave",
@@ -177,7 +177,7 @@ const Sidebar = () => {
         {
           name: "Salary",
           icon: <AttachMoneyIcon sx={{ color: "#4682b4" }} />,
-          route: "/layout/EmployeeSalaryManager",
+          route: "/layout/employee-salary-manager",
         
         },
         {
