@@ -150,8 +150,11 @@ const SourceByGraph = () => {
             loader={<div>Loading Chart...</div>}
             data={chartData}
             options={{
-              title: "Admissions by Source",
+             // title: "Admissions by Source",
               is3D: true,
+              colors: [
+                "#FF6F61"
+              ],
             }}
           />
         </Grid>

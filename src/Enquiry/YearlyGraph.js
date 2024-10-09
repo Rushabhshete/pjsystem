@@ -128,7 +128,7 @@ export default function YearlyGraph() {
       </YAxis>
       <Tooltip />
       <Legend />
-      <Bar dataKey="count" fill="#90EE90" barSize={30} /> {/* Adjust bar size if needed */}
+      <Bar dataKey="count" fill="#3498DB" barSize={30} /> {/* Adjust bar size if needed */}
     </BarChart>
   </ResponsiveContainer>
 

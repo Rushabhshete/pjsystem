@@ -143,7 +143,7 @@ const EmpDash = () => {
     const departmentChartData = [
         ['Department', 'Employee Count', { role: 'style' }],
         ...(departmentData.length ? departmentData.map(([dept, count], index) => {
-            const colors = ['#F9E79F', '#FF6F61', '#3498DB', '#9ACD32', '#F4C431'];
+            const colors = ['#F9E79F', '#FF6F61', '#3498DB', '#F9E79F', '#FF6F61'];
             return [dept, count, colors[index % colors.length]];
         }) : [['No Data', 0, 'color: #DDD']])
     ];
@@ -160,7 +160,7 @@ const EmpDash = () => {
     const categoryChartData = [
         ['Category', 'Employee Count', { role: 'style' }],
         ...(categoryData.length ? categoryData.map(([category, count], index) => {
-            const colors = ['#F9E79F', '#FF6F61', '#3498DB', '#9ACD32', '#F4C431'];
+            const colors = ['#F9E79F', '#FF6F61', '#3498DB', '#F9E79F', '#FF6F61'];
             return [category, count, colors[index % colors.length]];
         }) : [['No Data', 0, 'color: #DDD']])
     ];

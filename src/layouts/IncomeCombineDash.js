@@ -175,8 +175,8 @@ export default function IncomeCombineDash() {
       {
         label: "Income",
         data: monthlyIncome,
-        borderColor: "#90EE90",
-        backgroundColor: "#90EE90",
+        borderColor: "#3498DB",
+        backgroundColor: "#3498DB",
         fill: false,
         tension: 0.1,
       },
@@ -268,13 +268,13 @@ export default function IncomeCombineDash() {
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6} md={2.4}>
-              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#9ACD32', borderRadius: '10px' }}>
+              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#F9E79F', borderRadius: '10px' }}>
                 <Typography variant="h7">Total Expense</Typography>
                 <Typography variant="h5">₹{formattedCountUp(expenseData.total || 0)}</Typography>
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6} md={2.4}>
-              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#F4C431 ', borderRadius: '10px' }}>
+              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#FF6F61 ', borderRadius: '10px' }}>
                 <Typography variant="h7">Today's {todaytext}</Typography>
                 <Typography variant="h5" className={incomeData.today - expenseData.today >= 0}>
                   ₹{formattedCountUp(incomeData.today - expenseData.today)}
@@ -282,7 +282,7 @@ export default function IncomeCombineDash() {
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6} md={2.4}>
-              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#F9E79F', borderRadius: '10px' }}>
+              <Paper elevation={3} sx={{ padding: '16px', backgroundColor: '#3498DB', borderRadius: '10px' }}>
                 <Typography variant="h7">Total {savingsText}</Typography>
                 <Typography variant="h5" className={savingsData >= 0}>
                   ₹{formattedCountUp(savingsData)}
@@ -313,7 +313,7 @@ export default function IncomeCombineDash() {
       />
       <Tooltip formatter={(value) => new Intl.NumberFormat('en-US').format(value)} />
       <Legend />
-      <Bar dataKey="Income" fill="#90EE90" />
+      <Bar dataKey="Income" fill="#3498DB" />
       <Bar dataKey="Expense" fill="#FF6F61" />
     </BarChart>
   </ResponsiveContainer>
@@ -340,6 +340,7 @@ export default function IncomeCombineDash() {
               padding: 2,
               borderRadius: 2,
               fontWeight: "bold",
+ 
               boxShadow: 3,}}>
               <Typography variant="h6" align="center" mt={-4}>
                 {year} Income & Expense Comparison

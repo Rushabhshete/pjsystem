@@ -365,7 +365,7 @@ const YearlyGraph = () => {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="revenue" fill="#FF9900" />
+                <Bar dataKey="revenue" fill="#FF6F61" />
               </BarChart>
             </ResponsiveContainer>
           )}
@@ -386,7 +386,7 @@ const YearlyGraph = () => {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="admissions" fill="#76A7FA" />
+                <Bar dataKey="admissions" fill="#3498DB" />
               </BarChart>
             </ResponsiveContainer>
           )}

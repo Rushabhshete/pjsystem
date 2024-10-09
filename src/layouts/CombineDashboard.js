@@ -1,4 +1,4 @@
-import React, { useState, useEffect ,useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Typography,
   Grid,
@@ -21,15 +21,15 @@ import {
   Legend,
 } from "recharts";
 import { Chart } from "react-google-charts";
-import ComparisonGraph from "../Addmission/AdmissionComparisonGraph"
+import ComparisonGraph from "../Addmission/AdmissionComparisonGraph";
 import { styled } from "@mui/system";
 import IncomeCombineDash from "./IncomeCombineDash";
-import YearlyGraph from '../Enquiry/YearlyGraph';
+import YearlyGraph from "../Enquiry/YearlyGraph";
 import EmpDash from "../layouts/EmpDash";
 
 export default function CombineDashboard() {
   //admission
-  //const { user } = useContext(UserContext); 
+  //const { user } = useContext(UserContext);
   const [data, setData] = useState({
     todayCount: 0,
     totalCount: 0,
@@ -42,7 +42,7 @@ export default function CombineDashboard() {
   const [selectedYear, setSelectedYear] = useState(currentYear);
   const institutecode = localStorage.getItem("institutecode") || "";
   const [systemValues, setSystemValues] = useState(null);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -305,58 +305,55 @@ export default function CombineDashboard() {
     fetchEnquiries();
   }, [institutecode]);
   const PopTypography = styled(Typography)`
-  @keyframes pop {
-    0% {
-      transform: scale(1);
+    @keyframes pop {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+      }
     }
-    50% {
-      transform: scale(1.1);
-    }
-    100% {
-      transform: scale(1);
-    }
+  `;
+
+  useEffect(() => {
+    const fetchSystemValues = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8081/getSystemValueByInstitutecode?institutecode=${institutecode}`
+        );
+        setSystemValues(response.data);
+      } catch (error) {
+        console.error("Error fetching system values", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchSystemValues();
+  }, [institutecode]);
+
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
+  if (!systemValues) {
+    return <div>Error fetching system values</div>;
+  }
 
-`;
-
-
-useEffect(() => {
-  const fetchSystemValues = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8081/getSystemValueByInstitutecode?institutecode=${institutecode}`
-      );
-      setSystemValues(response.data);
-    } catch (error) {
-      console.error("Error fetching system values", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-  fetchSystemValues();
-}, [institutecode]);
-
-if (loading) {
-  return <div>Loading...</div>;
-}
-
-if (!systemValues) {
-  return <div>Error fetching system values</div>;
-}
-
-const {
-  feesmanagementsystem,
-  enquirymanagementsystem,
-  employeemanagementsystem,
-  studentmanagementsystem,
-  incomeandexpense,
-  admissionmanagementsystem,
-} = systemValues;
+  const {
+    feesmanagementsystem,
+    enquirymanagementsystem,
+    employeemanagementsystem,
+    studentmanagementsystem,
+    incomeandexpense,
+    admissionmanagementsystem,
+  } = systemValues;
 
   return (
-    <div >
-       {/* <PopTypography
+    <div>
+      {/* <PopTypography
         variant="h5"
         gutterBottom
         sx={{
@@ -374,205 +371,201 @@ const {
       {incomeandexpense && <IncomeCombineDash />}
       {employeemanagementsystem && <EmpDash />}
       <Grid container spacing={2} justifyContent="center">
-              {/* Enquiry Dashboard */}
-      {enquirymanagementsystem && (
-        <Grid item xs={12} md={6}>
-  <Box
-    sx={{
-      display: "flex",
-      alignItems: "center",
-      width: "100%",
-    }}
-  >
-    <Box
-      sx={{
-        flexGrow: 1,
-        height: "3px",
-        backgroundColor: "#0D47A1",
-      }}
-    />
-  
-    <Typography variant="h6" sx={{ margin: "0 10px" }}>
-      <b>Enquiry</b>
-    </Typography>
-    <Box
-      sx={{
-        flexGrow: 1,
-        height: "3px",
-        backgroundColor: "#0D47A1",
-      }}
-    />
-  </Box>
-          <Box
-            sx={{
-              width: "100%",
-              padding: 2,
-              border: "1px solid lightgray",
-              borderRadius: 2,
-            }}
-          >
-            <Grid container spacing={2} justifyContent="center">
-              <Grid item xs={12} md={6}>
-                <Box
-                  sx={{
-                    backgroundColor: "#F9E79F",
-                    padding: 2,
-                    borderRadius: "10px",
-                    textAlign: "center",
-                  }}
-                >
-                  <Typography variant="h6">Today</Typography>
-                  <Typography variant="h4">{todaysApplications}</Typography>
-                </Box>
-                <Box
-                  sx={{
-                    backgroundColor: "#FF6F61",
-                    padding: 2,
-                    borderRadius: "10px",
-                    mt: 2,
-                    textAlign: "center",
-                  }}
-                >
-                  <Typography variant="h6">Last 7</Typography>
-                  <Typography variant="h4">{sevenDaysApplication}</Typography>
-                </Box>
+        {/* Enquiry Dashboard */}
+        {enquirymanagementsystem && (
+          <Grid item xs={12} md={6}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
+              }}
+            >
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  height: "3px",
+                  backgroundColor: "#0D47A1",
+                }}
+              />
+
+              <Typography variant="h6" sx={{ margin: "0 10px" }}>
+                <b>Enquiry</b>
+              </Typography>
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  height: "3px",
+                  backgroundColor: "#0D47A1",
+                }}
+              />
+            </Box>
+            <Box
+              sx={{
+                width: "100%",
+                padding: 2,
+                border: "1px solid lightgray",
+                borderRadius: 2,
+              }}
+            >
+              <Grid container spacing={2} justifyContent="center">
+                <Grid item xs={12} md={6}>
+                  <Box
+                    sx={{
+                      backgroundColor: "#F9E79F",
+                      padding: 2,
+                      borderRadius: "10px",
+                      textAlign: "center",
+                    }}
+                  >
+                    <Typography variant="h6">Today</Typography>
+                    <Typography variant="h4">{todaysApplications}</Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      backgroundColor: "#F9E79F",
+                      padding: 2,
+                      borderRadius: "10px",
+                      mt: 2,
+                      textAlign: "center",
+                    }}
+                  >
+                    <Typography variant="h6">Last 7</Typography>
+                    <Typography variant="h4">{sevenDaysApplication}</Typography>
+                  </Box>
+                </Grid>
+
+                <Grid item xs={12} md={6}>
+                  <Box
+                    sx={{
+                      backgroundColor: "#3498DB",
+                      padding: 2,
+                      borderRadius: "10px",
+                      textAlign: "center",
+                    }}
+                  >
+                    <Typography variant="h6">Last 30</Typography>
+                    <Typography variant="h4">
+                      {thirtyDaysApplication}
+                    </Typography>
+                  </Box>
+                  <Paper
+                    sx={{
+                      backgroundColor: "#3498DB",
+                      padding: 2,
+                      borderRadius: "10px",
+                      mt: 2,
+                      textAlign: "center",
+                    }}
+                  >
+                    <Typography variant="h6">Total</Typography>
+                    <Typography variant="h4">{totalApplications}</Typography>
+                  </Paper>
+                </Grid>
               </Grid>
 
-              <Grid item xs={12} md={6}>
-                <Box
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    padding: 2,
-                    borderRadius: "10px",
-                    textAlign: "center",
-                  }}
-                >
-                  <Typography variant="h6">Last 30</Typography>
-                  <Typography variant="h4">{thirtyDaysApplication}</Typography>
-                </Box>
-                <Paper
-                  sx={{
-                    backgroundColor: "#9ACD32",
-                    padding: 2,
-                    borderRadius: "10px",
-                    mt: 2,
-                    textAlign: "center",
-                  }}
-                >
-                  <Typography variant="h6">Total</Typography>
-                  <Typography variant="h4">{totalApplications}</Typography>
-                </Paper>
-              </Grid>
-            </Grid>
-
-         <YearlyGraph />
-         
-</Box>
-
-        </Grid>
-    
-  )}
+              <YearlyGraph />
+            </Box>
+          </Grid>
+        )}
 
         {/* Admission Dashboard */}
         {admissionmanagementsystem && (
-        <Grid item xs={12} md={6}>
-  <Box
-    sx={{
-      display: "flex",
-      alignItems: "center",
-      width: "100%",
-    }}
-  >
-    <Box
-      sx={{
-        flexGrow: 1,
-        height: "3px",
-        backgroundColor: "#0D47A1",
-      }}
-    />
-    <Typography variant="h6" sx={{ margin: "0 10px" }}>
-      <b>Admission</b>
-    </Typography>
-    <Box
-      sx={{
-        flexGrow: 1,
-        height: "3px",
-        backgroundColor: "#0D47A1",
-      }}
-    />
-  </Box>
-          <Box
-            sx={{
-              width: "100%",
-              padding: 2,
-              border: "1px solid lightgray",
-              borderRadius: 2,
-            }}
-          >
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={6}>
-                <Box
-                  sx={{
-                    backgroundColor: "#F9E79F",
-                    padding: 2,
-                    borderRadius: "10px",
-                    textAlign: "center",
-                  }}
-                >
-                  <Typography variant="h6">Today's Admissions</Typography>
-                  <Typography variant="h4">{data.todayCount}</Typography>
-                </Box>
-                <Box
-                  sx={{
-                    backgroundColor: "#FF6F61",
-                    padding: 2,
-                    borderRadius: "10px",
-                    mt: 2,
-                    textAlign: "center",
-                  }}
-                >
-                  <Typography variant="h6">Today's Revenue</Typography>
-                  <Typography variant="h5">{data.todayRevenue}</Typography>
-                </Box>
-              </Grid>
-
-              <Grid item xs={12} md={6}>
-                <Box
-                  sx={{
-                    backgroundColor: "#3498DB",
-                    padding: 2,
-                    borderRadius: "10px",
-                    textAlign: "center",
-                  }}
-                >
-                  <Typography variant="h6">Total Admissions</Typography>
-                  <Typography variant="h4">{data.totalCount}</Typography>
-                </Box>
-                <Box
-                  sx={{
-                    backgroundColor: "#9ACD32",
-                    padding: 2,
-                    borderRadius: "10px",
-                    mt: 2,
-                    textAlign: "center",
-                  }}
-                >
-                  <Typography variant="h6">Total Revenue</Typography>
-                  <Typography variant="h5">{data.totalRevenue}</Typography>
-                </Box>
-              </Grid>
-            </Grid>
-
-            <Box sx={{ marginTop: 2 }}>
-          
-              <ComparisonGraph />
+          <Grid item xs={12} md={6}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
+              }}
+            >
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  height: "3px",
+                  backgroundColor: "#0D47A1",
+                }}
+              />
+              <Typography variant="h6" sx={{ margin: "0 10px" }}>
+                <b>Admission</b>
+              </Typography>
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  height: "3px",
+                  backgroundColor: "#0D47A1",
+                }}
+              />
             </Box>
-          </Box>
-        </Grid>
-  )}
-      </Grid>
-              
+            <Box
+              sx={{
+                width: "100%",
+                padding: 2,
+                border: "1px solid lightgray",
+                borderRadius: 2,
+              }}
+            >
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={6}>
+                  <Box
+                    sx={{
+                      backgroundColor: "#F9E79F",
+                      padding: 2,
+                      borderRadius: "10px",
+                      textAlign: "center",
+                    }}
+                  >
+                    <Typography variant="h6">Today's Admissions</Typography>
+                    <Typography variant="h4">{data.todayCount}</Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      backgroundColor: "#F9E79F",
+                      padding: 2,
+                      borderRadius: "10px",
+                      mt: 2,
+                      textAlign: "center",
+                    }}
+                  >
+                    <Typography variant="h6">Today's Revenue</Typography>
+                    <Typography variant="h5">{data.todayRevenue}</Typography>
+                  </Box>
+                </Grid>
 
+                <Grid item xs={12} md={6}>
+                  <Box
+                    sx={{
+                      backgroundColor: "#3498DB",
+                      padding: 2,
+                      borderRadius: "10px",
+                      textAlign: "center",
+                    }}
+                  >
+                    <Typography variant="h6">Total Admissions</Typography>
+                    <Typography variant="h4">{data.totalCount}</Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      backgroundColor: "#3498DB",
+                      padding: 2,
+                      borderRadius: "10px",
+                      mt: 2,
+                      textAlign: "center",
+                    }}
+                  >
+                    <Typography variant="h6">Total Revenue</Typography>
+                    <Typography variant="h5">{data.totalRevenue}</Typography>
+                  </Box>
+                </Grid>
+              </Grid>
+
+              <Box sx={{ marginTop: 2 }}>
+                <ComparisonGraph />
+              </Box>
+            </Box>
+          </Grid>
+        )}
+      </Grid>
     </div>
   );
-};
+}

@@ -22,7 +22,7 @@
 // // Active item styles
 // const activeNavItemStyle = {
 //   ...navItemStyle,
-//   backgroundColor: "#624E88",
+//       backgroundColor: "#3498DB",
 //   color: "white",
 //   transform: "scale(1.1)", // Slightly larger for active state
 //   boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)", // Subtle shadow for active
