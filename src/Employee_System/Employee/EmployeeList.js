@@ -942,12 +942,8 @@ const EmployeeList = () => {
                 gutterBottom
                 sx={{
                   fontWeight: "bold",
-                  color: "#fff",
+                  color: "#24A0ED",
                   textAlign: "center",
-                  backgroundColor: "#24A0ED",
-                  borderRadius: "150px",
-                  padding: "10px",
-                  marginBottom: "-2px",
                 }}
               >
                 Update Employee
@@ -1506,12 +1502,8 @@ const EmployeeList = () => {
                 gutterBottom
                 sx={{
                   fontWeight: "bold",
-                  color: "#fff",
+                  color: "#24A0ED",
                   textAlign: "center",
-                  backgroundColor: "#24A0ED",
-                  borderRadius: "150px",
-                  padding: "10px",
-                  marginBottom: "-2px",
                 }}
               >
                 Employee Information
@@ -2076,11 +2068,51 @@ const EmployeeList = () => {
                 >
                   <Typography
                     variant="subtitle1"
-                    sx={{ fontWeight: "bold", mr: 1 }}
+                    sx={{ fontWeight: "bold", mr: 1  }}
                   >
                     Status:
                   </Typography>{" "}
                   {selectedUser?.status}
+                </Grid>
+                <Grid item xs={12} sm={6} sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography variant="subtitle1" sx={{ fontWeight: "bold", mr: 1 }}>
+                    Employee Photo:
+                    </Typography>
+                    <Button variant="contained" onClick={() => window.open(selectedUser?.employeePhoto, "_blank")}>
+                        View
+                    </Button>
+                </Grid>
+                <Grid item xs={12} sm={6} sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography variant="subtitle1" sx={{ fontWeight: "bold", mr: 1 }}>
+                        ID Proof:
+                    </Typography>
+                    <Button variant="contained" onClick={() => window.open(selectedUser?.idProof, "_blank")}>
+                        View
+                    </Button>
+                </Grid>
+                <Grid item xs={12} sm={6} sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography variant="subtitle1" sx={{ fontWeight: "bold", mr: 1 }}>
+                        Resume:
+                    </Typography>
+                    <Button variant="contained" onClick={() => window.open(selectedUser?.resume, "_blank")}>
+                        View
+                    </Button>
+                </Grid>
+                <Grid item xs={12} sm={6} sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography variant="subtitle1" sx={{ fontWeight: "bold", mr: 1 }}>
+                        Address Proof:
+                    </Typography>
+                    <Button variant="contained" onClick={() => window.open(selectedUser?.addressProof, "_blank")}>
+                        View
+                    </Button>
+                </Grid>
+                <Grid item xs={12} sm={6} sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography variant="subtitle1" sx={{ fontWeight: "bold", mr: 1 }}>
+                        Experience Letter:
+                    </Typography>
+                    <Button variant="contained" onClick={() => window.open(selectedUser?.experienceLetter, "_blank")}>
+                        View
+                    </Button>
                 </Grid>
               </Grid>
               <Box mt={2} textAlign="right">
