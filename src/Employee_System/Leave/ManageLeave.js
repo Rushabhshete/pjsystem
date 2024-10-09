@@ -245,7 +245,12 @@ const filteredLeaveRequests = leaveRequests.filter(request =>
                   <TableCell>{request.fromDate}</TableCell>
                   <TableCell>{request.toDate}</TableCell>
                   <TableCell>{request.reasondescription}</TableCell>
-                  <TableCell>{request.status}</TableCell>
+                  <TableCell sx={{
+          fontWeight: 'bold',
+          color: request.status === 'Approved' ? '#90ee90' : 
+          request.status === 'Pending' ? 'orange' : 
+          request.status === 'Rejected' ? 'red' : 'inherit',
+        }}>{request.status}</TableCell>
                   <TableCell>
                     {/* Approve Button */}
                     <IconButton
