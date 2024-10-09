@@ -172,7 +172,8 @@ const Header = () => {
       sx={{
         zIndex: (theme) => theme.zIndex.drawer + 1,
         // backgroundImage: "radial-gradient(circle, #FAD126, #FF564E)",
-        backgroundColor:'#269DD7'
+       backgroundColor:"rgb(10,50,100)",
+      //  opacity:0.8
       }}
     >
       <Toolbar>
@@ -192,7 +193,7 @@ const Header = () => {
                 alt="Logo"
                 style={{ marginRight: "8px", height: "30px" }}
               />
-              <Typography variant="h6" noWrap color="black">
+              <Typography variant="h6" noWrap color="white">
                 PJSOFTTECH
               </Typography>
             </Link>
@@ -202,7 +203,7 @@ const Header = () => {
               variant="h6"
               noWrap
               sx={{
-                background: "#333",
+                background: "#fff",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}
@@ -230,6 +231,7 @@ const Header = () => {
                   !hasSeenNotifications && notificationCount > 0
                     ? `${vibration} 0.8s ease-in-out`
                     : "none",
+                    color:'white',
               }}
             >
               <Badge
@@ -302,7 +304,7 @@ const Header = () => {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleMenu}
-              //color="inherit"
+              color="inherit"
             >
               <AccountCircle />
             </IconButton>

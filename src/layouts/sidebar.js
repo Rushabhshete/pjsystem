@@ -106,18 +106,18 @@ const Sidebar = () => {
   const sidebarOptions = [
     {
       name: "Main Dashboard",
-      icon: <DashboardIcon color="primary" />,
+      icon: <DashboardIcon  sx={{color:"#fff"}} />,
       route: "/layout/combineDash",
       subOptions: [],
     },
     {
       name: "Enquiry System",
-      icon: <PersonSearchRoundedIcon color="primary" />,
+      icon: <PersonSearchRoundedIcon  sx={{color:"#fff"}} />,
       show: systemValues?.enquirymanagementsystem,
       subOptions: [
         {
           name: "Enquiry Manager",
-          icon: <DashboardIcon color="primary" />,
+          icon: <DashboardIcon sx={{color:"#fff"}} />,
           route: "/layout/Enquiry-manager", // Route for the manager
          // show: systemValues?.incomeandexpense,
         },
@@ -126,12 +126,12 @@ const Sidebar = () => {
     },
     {
       name: "Admission System",
-      icon: <AddHomeRoundedIcon color="primary" />,
+      icon: <AddHomeRoundedIcon sx={{color:"#fff"}} />,
       show: systemValues?.admissionmanagementsystem,
       subOptions: [
         {
           name: "Admission Manager",
-          icon: <CurrencyRupeeRoundedIcon color="primary" />,
+          icon: <CurrencyRupeeRoundedIcon sx={{color:"#fff"}} />,
           route: "/layout/Admission-manager", // Route for the manager
          // show: systemValues?.incomeandexpense,
         },
@@ -140,13 +140,13 @@ const Sidebar = () => {
     },
     {
       name: "Income & Expense",
-      icon: <CurrencyRupeeRoundedIcon color="primary" />,
+      icon: <CurrencyRupeeRoundedIcon sx={{color:"#fff"}} />,
       show: systemValues?.incomeandexpense,
       subOptions: [
 
         {
           name: "Income Expense Manager",
-          icon: <CurrencyRupeeRoundedIcon color="primary" />,
+          icon: <CurrencyRupeeRoundedIcon sx={{color:"#fff"}} />,
           route: "/layout/income-expense-manager", // Route for the manager
           show: systemValues?.incomeandexpense,
         },
@@ -155,112 +155,112 @@ const Sidebar = () => {
     },
     {
       name: "Employee System",
-      icon: <PeopleIcon color="primary" />,
+      icon: <PeopleIcon sx={{color:"#fff"}} />,
       show: systemValues?.employeemanagementsystem,
       subOptions: [
         {
           name: "Employee Manager",
-          icon: <CurrencyRupeeRoundedIcon color="primary" />,
+          icon: <CurrencyRupeeRoundedIcon sx={{color:"#fff"}} />,
           route: "/layout/Employee-manager",
         },
         {
           name: "Attendance",
-          icon: <SupervisorAccountRoundedIcon sx={{ color: "#4682b4" }} />,
+          icon: <SupervisorAccountRoundedIcon sx={{color:"#fff"}} />,
           route: "/layout/attendance-manager",
         },
         {
           name: "Leave",
-          icon: <CategoryIcon sx={{ color: "#4682b4" }} />,
+          icon: <CategoryIcon sx={{color:"#fff"}} />,
           route: "/layout/ManageLeave",
          
         },
         {
           name: "Salary",
-          icon: <AttachMoneyIcon sx={{ color: "#4682b4" }} />,
+          icon: <AttachMoneyIcon sx={{color:"#fff"}} />,
           route: "/layout/employee-salary-manager",
         
         },
         {
           name: "Memo",
-          icon: <NoteAltIcon sx={{ color: "#4682b4" }} />,
+          icon: <NoteAltIcon sx={{color:"#fff"}} />,
           route:"/layout/Memo-manager",
         },
         {
           name: "Notice",
-          icon: <StickyNote2Icon sx={{ color: "#4682b4" }} />,
+          icon: <StickyNote2Icon sx={{color:"#fff"}} />,
           route: "/layout/AddNotice",
         },
       ],
     },
     {
       name: "Student System",
-      icon: <EmojiPeopleRoundedIcon color="primary" />,
+      icon: <EmojiPeopleRoundedIcon sx={{color:"#fff"}} />,
       show: systemValues?.studentmanagementsystem,
       subOptions: [
         { name: "Dashboard",
           route: "/layout/StudentDashboard",
-          icon: <DashboardIcon sx={{ color: "#4682b4" }}  /> 
+          icon: <DashboardIcon sx={{color:"#fff"}}  /> 
         },
         { name: "Student Form", 
           route:"/layout/StudentForm",
-          icon: <WorkspacesIcon sx={{ color: "#4682b4" }}  /> },
+          icon: <WorkspacesIcon sx={{color:"#fff"}}  /> },
         {
           name: "Student List",
           route: "/layout/StudentLists",
-          icon: <FormatListBulletedIcon sx={{ color: "#4682b4" }}  />,
+          icon: <FormatListBulletedIcon sx={{color:"#fff"}}  />,
         },
         {
           name: "Student Report",
           route: "/layout/StudentReport",
-          icon: <AssessmentIcon sx={{ color: "#4682b4" }}  />,
+          icon: <AssessmentIcon sx={{color:"#fff"}}  />,
         },
         {
           name: "Student Request",
           route: "/layout/StudentRequest",
-          icon: <DoneOutlineIcon sx={{ color: "#4682b4" }} />,
+          icon: <DoneOutlineIcon sx={{color:"#fff"}} />,
         },
         { name: "Add Fields",
           route:"/layout/ADDField",
-          icon: <CategoryIcon sx={{ color: "#4682b4" }} /> },
+          icon: <CategoryIcon sx={{color:"#fff"}} /> },
 
           {
             name: "Fees System",
-            icon: <AttachMoneyIcon sx={{ color: "#4682b4" }} />,
+            icon: <AttachMoneyIcon sx={{color:"#fff"}} />,
             subSubOptions: [
               {
                 name: "Dashboard",
                 route: "/layout/FeesDashboard",
-                icon: <DashboardIcon sx={{ color: "#4682b4" }} />,
+                icon: <DashboardIcon sx={{color:"#fff"}} />,
               },
               {
                 name: "Fees Invoice",
                 route: "/layout/FeeInvoice",
-                icon: <CurrencyRupeeIcon sx={{ color: "#76A7FA" }} />,
+                icon: <CurrencyRupeeIcon sx={{color:"#fff"}} />,
               },
               {
                 name: "Fees Invoice List",
                 route: "/layout/InvoiceList",
-                icon: <AssessmentIcon sx={{ color: "#76A7FA" }} />,
+                icon: <AssessmentIcon sx={{color:"#fff"}} />,
               },
               {
                 name: "Add Fees",
                 route: "/layout/AddFee",
-                icon: <AssessmentIcon sx={{ color: "#76A7FA" }} />,
+                icon: <AssessmentIcon sx={{color:"#fff"}} />,
               },
               {
                 name: "Fees Table",
                 route: "/layout/FeeTable",
-                icon: <AssessmentIcon sx={{ color: "#76A7FA" }} />,
+                icon: <AssessmentIcon sx={{color:"#fff"}} />,
               },
               {
                 name: "Add Medium",
                 route: "/layout/AddMedium",
-                icon: <AssessmentIcon sx={{ color: "#76A7FA" }} />,
+                icon: <AssessmentIcon sx={{color:"#fff"}} />,
               },
               {
                 name: "Fees Report",
                 route: "/layout/FeeReport",
-                icon: <AssessmentIcon sx={{ color: "#76A7FA" }} />,
+                icon: <AssessmentIcon sx={{color:"#fff"}} />,
               },
             ],
           },
@@ -268,7 +268,7 @@ const Sidebar = () => {
     },
     {
       name: "Classroom Management",
-      icon: <SchoolRoundedIcon color="primary" />,
+      icon: <SchoolRoundedIcon sx={{color:"#fff"}} />,
       subOptions: [
         { name: "Classroom", icon: <AnnouncementIcon /> },
         { name: "Subject", icon: <SubjectIcon /> },
@@ -287,25 +287,25 @@ const Sidebar = () => {
     },
     {
       name: "Add Sub-Admin",
-      icon: <AdminPanelSettingsIcon color="primary" />,
+      icon: <AdminPanelSettingsIcon sx={{color:"#fff"}} />,
       route: "/layout/subadmin",
       subOptions: [],
     },
     {
       name: "Help Desk",
-      icon: <HelpIcon color="primary" />,
+      icon: <HelpIcon sx={{color:"#fff"}} />,
       route: "/layout/helpDesk",
       subOptions: [],
     },
     {
       name: "Billing Section",
-      icon: <PriceCheckIcon color="primary" />,
+      icon: <PriceCheckIcon sx={{color:"#fff"}} />,
       route: "/layout/bill",
       subOptions: [],
     },
     {
       name: "Settings",
-      icon: <SettingsRoundedIcon color="primary" />,
+      icon: <SettingsRoundedIcon sx={{color:"#fff"}} />,
       route: "/layout/Settings",
       subOptions: [],
     },
@@ -323,11 +323,13 @@ const Sidebar = () => {
       sx={{
         width: open ? drawerWidth : collapsedWidth,
         transition: "width 0.3s",
+        //opacity: 0.8,
         "& .MuiDrawer-paper": {
           width: open ? drawerWidth : collapsedWidth,
           transition: "width 0.3s",
           overflowX: "hidden",
-          backgroundColor:"#0a0a0a",
+          backgroundColor:"rgb(10,50,100)",
+          opacity: 0.8,
     
         },
       }}

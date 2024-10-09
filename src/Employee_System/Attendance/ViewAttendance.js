@@ -223,20 +223,6 @@ const ViewAttendance = () => {
 
   return (
     <>
-      <Typography
-        variant="h5"
-        gutterBottom
-        sx={{
-          fontWeight: "bold",
-          color: "#fff",
-          textAlign: "center",
-          backgroundColor: "#24A0ED",
-          borderRadius: "150px",
-          padding: "10px"
-        }}
-      >
-        Attendance Report
-      </Typography>
       <Box sx={{ padding: { xs: 2, sm: 4 } }}>
         <Typography variant="h4" gutterBottom>
           Attendance for Employee ID: {empID}
@@ -296,7 +282,7 @@ const ViewAttendance = () => {
           <Grid item sx={{ marginLeft: 'auto' }}>
             <Button 
               variant="contained" 
-              onClick={() => navigate('/layout/ManageAttendance')} // Adjust the path as needed
+              onClick={() => navigate('/layout/attendance-manager/manage-attendance')} // Adjust the path as needed
             >
               Back to Report
             </Button>
