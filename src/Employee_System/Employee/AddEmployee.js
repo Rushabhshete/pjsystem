@@ -35,6 +35,7 @@ const UserComponent = () => {
     taluka:"",
     city: "",
     permanentcity: "",
+    permanenttaluka: "",
     permanentAddress: "",
     joiningDate: "",
     department: "",

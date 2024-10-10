@@ -591,9 +591,11 @@ const EmployeePersonalInfo = ({ formData, handleChange, handleSubmit }) => {
   const countries = Country.getAllCountries();
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
+  const [taluka, setTaluka] =useState ([]);
 
   const [permanentStates, setPermanentStates] = useState([]);
   const [permanentCities, setPermanentCities] = useState([]);
+  const [permanentTaluka, setPermanentTaluka] = useState([]);
 
   // Districts for current address
   const [districtsList, setDistrictsList] = useState([]);
@@ -708,10 +710,12 @@ const EmployeePersonalInfo = ({ formData, handleChange, handleSubmit }) => {
       handleChange({ target: { name: 'permanentlandmark', value: formData.landmark } });
       handleChange({ target: { name: 'permanentdistrict', value: formData.district } });
       handleChange({ target: { name: 'permanentcity', value: formData.city } });
+      handleChange({ target: { name: 'permanenttaluka', value: formData.taluka } });
       handleChange({ target: { name: 'permanentstate', value: formData.state } });
       handleChange({ target: { name: 'permanentCountry', value: formData.country } });
   
       setPermanentStates(states);
+      setPermanentTaluka(taluka);
       setPermanentCities(cities);
       setPermanentDistrictsList(districtsList);
     }

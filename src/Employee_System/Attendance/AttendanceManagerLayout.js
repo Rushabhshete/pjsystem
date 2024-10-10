@@ -11,6 +11,7 @@ const navItemStyle = {
   textAlign: "center",
   flex: 1,
   transition: "background-color 0.3s ease, color 0.3s ease",
+  textDecoration: "none", // Remove underline
 };
 
 // Active item styles
