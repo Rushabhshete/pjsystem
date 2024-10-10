@@ -169,7 +169,7 @@ function AppContent() {
           {/* Employee */}
 
         {/* Employee Manager Route with Nested Routes */}
-        <Route path="employee-manager/*" element={<EmployeeManagerLayout />}>
+        <Route path="employee-manager" element={<EmployeeManager />}>
           <Route index element={<EmployeeDashboard />} />   {/* Default page */}
           <Route path="add-employee" element={<AddEmployee />} />
           <Route path="employee-list" element={<EmployeeList />} />

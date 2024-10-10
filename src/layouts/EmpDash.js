@@ -1,8 +1,6 @@
-
-
 import React, { useState, useEffect } from 'react';
 import { Container, Typography, Grid, Paper, MenuItem, FormControl, TextField, Card, CardContent, Box } from '@mui/material';
-import { Chart } from 'react-google-charts';
+import { ResponsiveBar } from '@nivo/bar';
 
 const EmpDash = () => {
     const [employeeCount, setEmployeeCount] = useState(0);
@@ -103,8 +101,6 @@ const EmpDash = () => {
         }
     }, [selectedApi, startDate, endDate, institutecode]);
 
-
-
     const updateEmployeeData = (data) => {
         setEmployeeCount(data.length);
         const joined = data.filter(emp => emp.status === 'Joined').length;
@@ -124,11 +120,9 @@ const EmpDash = () => {
                 categoryCount[category] = (categoryCount[category] || 0) + 1;
             }
         });
-        setDepartmentData(Object.entries(departmentCount).map(([dept, count]) => [dept, count]));
-        setCategoryData(Object.entries(categoryCount).map(([category, count]) => [category, count]));
+        setDepartmentData(Object.entries(departmentCount).map(([dept, count]) => ({ department: dept, employeeCount: count })));
+        setCategoryData(Object.entries(categoryCount).map(([category, count]) => ({ category: category, employeeCount: count })));
     }
-
-
 
     if (error) {
         return (
@@ -140,71 +134,44 @@ const EmpDash = () => {
         );
     }
 
-    const departmentChartData = [
-        ['Department', 'Employee Count', { role: 'style' }],
-        ...(departmentData.length ? departmentData.map(([dept, count], index) => {
-            const colors = ['#F9E79F', '#FF6F61', '#3498DB', '#F9E79F', '#FF6F61'];
-            return [dept, count, colors[index % colors.length]];
-        }) : [['No Data', 0, 'color: #DDD']])
-    ];
-
-    const departmentChartOptions = {
-        title: 'Employee Distribution by Department',
-        vAxis: { title: 'Employee Count' },
-        hAxis: { title: 'Department' },
-        legend: 'none',
-        chartArea: { width: '70%', height: '70%' },
-        bar: { groupWidth: '75%' },
-    };
-
-    const categoryChartData = [
-        ['Category', 'Employee Count', { role: 'style' }],
-        ...(categoryData.length ? categoryData.map(([category, count], index) => {
-            const colors = ['#F9E79F', '#FF6F61', '#3498DB', '#F9E79F', '#FF6F61'];
-            return [category, count, colors[index % colors.length]];
-        }) : [['No Data', 0, 'color: #DDD']])
-    ];
-
-    const categoryChartOptions = {
-        title: 'Employee Distribution by Category',
-        vAxis: { title: 'Employee Count' },
-        hAxis: { title: 'Category' },
-        legend: 'none',
-        chartArea: { width: '70%', height: '70%' },
-        bar: { groupWidth: '75%' },
-    };
-
     return (
         <div>
-        <Box
-    sx={{
-      display: "flex",
-      alignItems: "center",
-      width: "100%",
-    }}
-  >
-    <Box
-      sx={{
-        flexGrow: 1,
-        height: "3px",
-        backgroundColor: "#0D47A1",
-      }}
-    />
-    <Typography variant="h6" sx={{ margin: "0 10px" }}>
-      <b>Employee</b>
-    </Typography>
-    <Box
-      sx={{
-        flexGrow: 1,
-        height: "3px",
-        backgroundColor: "#0D47A1",
-      }}
-    />
-  </Box>
+            <Box
+                sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    width: "100%",
+                }}
+            >
+                <Box
+                    sx={{
+                        flexGrow: 1,
+                        height: "3px",
+                        backgroundColor: "#0D47A1",
+                    }}
+                />
+                <Typography variant="h6" sx={{ margin: "0 10px" }}>
+                    <b>Employee</b>
+                </Typography>
+                <Box
+                    sx={{
+                        flexGrow: 1,
+                        height: "3px",
+                        backgroundColor: "#0D47A1",
+                    }}
+                />
+            </Box>
+            <Paper
+              sx={{
+                padding: "16px",
+               
+                borderRadius: "10px",
+              }}
+            >
             <Grid container spacing={3}>
                 <Grid item xs={12} md={8} container spacing={2}>
                     <Grid item xs={6} md={4}>
-                        <Card style={{ backgroundColor: '#F9E79F', borderRadius:'15px' }}>
+                        <Card style={{ backgroundColor: '#F9E79F', borderRadius: '15px' }}>
                             <CardContent>
                                 <Typography variant="h6">Total Employee</Typography>
                                 <Typography variant="h4">{employeeCount}</Typography>
@@ -212,7 +179,7 @@ const EmpDash = () => {
                         </Card>
                     </Grid>
                     <Grid item xs={6} md={4}>
-                        <Card style={{ backgroundColor: '#FF6F61', borderRadius:'15px' }}>
+                        <Card style={{ backgroundColor: '#FF6F61', borderRadius: '15px' }}>
                             <CardContent>
                                 <Typography variant="h6">Joined</Typography>
                                 <Typography variant="h4">{joinedCount}</Typography>
@@ -220,7 +187,7 @@ const EmpDash = () => {
                         </Card>
                     </Grid>
                     <Grid item xs={6} md={4}>
-                        <Card style={{ backgroundColor: '#3498DB', borderRadius:'15px' }}>
+                        <Card style={{ backgroundColor: '#3498DB', borderRadius: '15px' }}>
                             <CardContent>
                                 <Typography variant="h6">Terminated</Typography>
                                 <Typography variant="h4">{terminatedCount}</Typography>
@@ -229,78 +196,121 @@ const EmpDash = () => {
                     </Grid>
                 </Grid>
                 <Grid item xs={12} md={4} container spacing={2}>
-    <Grid item xs={12}>
-        <FormControl fullWidth>
-            <TextField
-                select
-                label="Select"
-                value={selectedApi}
-                onChange={(e) => setSelectedApi(e.target.value)}
-            >
-                <MenuItem value="All">All</MenuItem>
-                <MenuItem value="7Days">Last 7 Days</MenuItem>
-                <MenuItem value="30Days">Last 30 Days</MenuItem>
-                <MenuItem value="365Days">Last 365 Days</MenuItem>
-                <MenuItem value="byDateRange">Custom Date</MenuItem>
-            </TextField>
-        </FormControl>
-        {selectedApi === 'byDateRange' && (
-            <Grid container spacing={2} style={{ marginTop: '16px' }}>
-                <Grid item xs={6}>
-                    <FormControl fullWidth>
-                        <TextField
-                            type="date"
-                            label="Start Date"
-                            value={startDate}
-                            onChange={(e) => setStartDate(e.target.value)}
-                            InputLabelProps={{ shrink: true }}
-                        />
-                    </FormControl>
+                    <Grid item xs={12}>
+                        <FormControl fullWidth>
+                            <TextField
+                                select
+                                label="Select"
+                                value={selectedApi}
+                                onChange={(e) => setSelectedApi(e.target.value)}
+                            >
+                                <MenuItem value="All">All</MenuItem>
+                                <MenuItem value="7Days">Last 7 Days</MenuItem>
+                                <MenuItem value="30Days">Last 30 Days</MenuItem>
+                                <MenuItem value="365Days">Last 365 Days</MenuItem>
+                                <MenuItem value="byDateRange">Custom Date</MenuItem>
+                            </TextField>
+                        </FormControl>
+                        {selectedApi === 'byDateRange' && (
+                            <Grid container spacing={2} style={{ marginTop: '16px' }}>
+                                <Grid item xs={6}>
+                                    <FormControl fullWidth>
+                                        <TextField
+                                            type="date"
+                                            label="Start Date"
+                                            value={startDate}
+                                            onChange={(e) => setStartDate(e.target.value)}
+                                            InputLabelProps={{ shrink: true }}
+                                        />
+                                    </FormControl>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <FormControl fullWidth>
+                                        <TextField
+                                            type="date"
+                                            label="End Date"
+                                            value={endDate}
+                                            onChange={(e) => setEndDate(e.target.value)}
+                                            InputLabelProps={{ shrink: true }}
+                                        />
+                                    </FormControl>
+                                </Grid>
+                            </Grid>
+                        )}
+                    </Grid>
                 </Grid>
-                <Grid item xs={6}>
-                    <FormControl fullWidth>
-                        <TextField
-                            type="date"
-                            label="End Date"
-                            value={endDate}
-                            onChange={(e) => setEndDate(e.target.value)}
-                            InputLabelProps={{ shrink: true }}
-                        />
-                    </FormControl>
-                </Grid>
-            </Grid>
-        )}
-    </Grid>
+                <Grid item xs={12} md={6} sx={{ height: "450px" }}>
+    <Typography variant="h6">Department Chart</Typography>
+    <ResponsiveBar
+        data={departmentData}
+        keys={['employeeCount']}
+        indexBy="department"
+        margin={{ top: 20, right: 20, bottom: 50, left: 60 }}
+        padding={0.3}
+        layout="vertical"
+        colors={() => "#3498DB"} // Set color for department bars
+        borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+        axisBottom={{
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: 0,
+            legendPosition: 'middle',
+            legendOffset: 32,
+        }}
+        axisLeft={{
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: 0,
+            legend: 'Department',
+            legendPosition: 'middle',
+            legendOffset: -40,
+        }}
+        labelSkipWidth={12}
+        labelSkipHeight={12}
+        labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+        role="application"
+        ariaLabel="Department Chart"
+    />
+</Grid>
+<Grid item xs={12} md={6} sx={{ height: "450px" }}>
+    <Typography variant="h6">Category Chart</Typography>
+    <ResponsiveBar
+        data={categoryData}
+        keys={['employeeCount']}
+        indexBy="category"
+        margin={{ top: 20, right: 20, bottom: 50, left: 60 }}
+        padding={0.3}
+        layout="vertical"
+        colors={() => "#FF6F61"} // Set color for category bars
+        borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+        axisBottom={{
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: 0,
+            legendPosition: 'middle',
+            legendOffset: 32,
+        }}
+        axisLeft={{
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: 0,
+            legend: 'Category',
+            legendPosition: 'middle',
+            legendOffset: -40,
+        }}
+        labelSkipWidth={12}
+        labelSkipHeight={12}
+        labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+        role="application"
+        ariaLabel="Category Chart"
+    />
 </Grid>
 
-                <Grid item xs={12} md={6}>
-                    <Paper elevation={3} style={{ padding: '16px' }}>
-                        <Typography variant="h6">Department Chart</Typography>
-                        <Chart
-                            chartType="ColumnChart"
-                            data={departmentChartData}
-                            options={departmentChartOptions}
-                            width="100%"
-                            height="400px"
-                        />
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <Paper elevation={3} style={{ padding: '16px' }}>
-                        <Typography variant="h6">Category Chart</Typography>
-                        <Chart
-                            chartType="ColumnChart"
-                            data={categoryChartData}
-                            options={categoryChartOptions}
-                            width="100%"
-                            height="400px"
-                        />
-                    </Paper>
-                </Grid>
+                
             </Grid>
+            </Paper>
         </div>
     );
 };
 
 export default EmpDash;
-

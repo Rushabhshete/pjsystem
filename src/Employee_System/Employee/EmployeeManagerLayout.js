@@ -3,7 +3,7 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 
 // Base styles for the navbar items
 const navItemStyle = {
-  padding: "10px 20px",
+  padding: "5px 10px",
   cursor: "pointer",
   fontSize: "16px",
   fontWeight: "bold",

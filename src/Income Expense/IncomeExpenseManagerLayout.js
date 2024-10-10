@@ -7,7 +7,7 @@ import AddCategory from "./AddCategory";
 import AddUser from "./AddUser";
 
 const navItemStyle = {
-    padding: "10px 20px",
+  padding: "5px 10px",
     cursor: "pointer",
     fontSize: "16px",
     fontWeight: "bold",

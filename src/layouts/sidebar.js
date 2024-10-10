@@ -667,7 +667,7 @@ const isActive = (route) => location.pathname === route;
         {
           name: "Employee Manager",
           icon: <CurrencyRupeeRoundedIcon sx={{ color: "#fff" }} />,
-          route: "/layout/Employee-manager",
+          route: "/layout/employee-manager",
         },
         {
           name: "Attendance",
