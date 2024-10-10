@@ -573,7 +573,9 @@ import HelpIcon from "@mui/icons-material/Help";
 import NoteAltIcon from "@mui/icons-material/NoteAlt";
 import StickyNote2Icon from "@mui/icons-material/StickyNote2";
 import PriceCheckIcon from "@mui/icons-material/PriceCheck";
-
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import MenuIcon from '@mui/icons-material/Menu';
+import ViewQuiltIcon from '@mui/icons-material/ViewQuilt';
 const drawerWidth = 240; // Full sidebar width
 const iconOnlyWidth = 60; // Width when showing icons only
 const Sidebar = () => {
@@ -616,7 +618,7 @@ const isActive = (route) => location.pathname === route;
   const sidebarOptions = [
     {
       name: "Main Dashboard",
-      icon: <DashboardIcon sx={{ color: "#fff" }} />,
+      icon: <ViewQuiltIcon sx={{ color: "#fff" }} />,
       route: "/layout/combineDash",
       subOptions: [],
     },
@@ -810,15 +812,15 @@ const isActive = (route) => location.pathname === route;
           sx={{
             marginLeft: "auto",
             color: "white",
-              marginTop:"50px"
+              marginTop:"60px"
           }}
         >
-          {isMinimized ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          {isMinimized ? <MoreVertIcon /> : <MenuIcon />}
         </IconButton>
       </Box>
   
       {/* Sidebar Options */}
-      <Box sx={{ overflowY: "auto" }}>
+      <Box sx={{ overflowY: "auto",marginTop:"-20px" }}>
         <List sx={{ color: "white" }}>
           {sidebarOptions.map((option, index) => (
             <div key={index}>
