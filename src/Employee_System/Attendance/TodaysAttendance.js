@@ -443,7 +443,7 @@ const TodaysAttendance = () => {
     // Filter by search term
     if (search) {
       mergedData = mergedData.filter(employee =>
-        employee.fullName && employee.fullName.toLowerCase().includes(search.toLowerCase())
+        employee.name && employee.name.toLowerCase().includes(search.toLowerCase())
       );
     }
 

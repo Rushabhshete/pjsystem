@@ -2127,7 +2127,7 @@ const EmployeeList = () => {
                   </Typography>{" "}
                   {selectedUser?.status}
                 </Grid>
-                <Grid item xs={12} sm={6} sx={{ display: "flex", alignItems: "center" }}>
+                {/* <Grid item xs={12} sm={6} sx={{ display: "flex", alignItems: "center" }}>
                     <Typography variant="subtitle1" sx={{ fontWeight: "bold", mr: 1 }}>
                     Employee Photo:
                     </Typography>
@@ -2166,7 +2166,7 @@ const EmployeeList = () => {
                     <Button variant="contained" onClick={() => window.open(selectedUser?.experienceLetter, "_blank")}>
                         View
                     </Button>
-                </Grid>
+                </Grid> */}
               </Grid>
               <Box mt={2} textAlign="right">
                 <Button

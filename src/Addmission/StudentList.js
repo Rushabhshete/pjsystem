@@ -626,7 +626,7 @@ const StudentList = () => {
           </DownloadButton>
         </Grid>
         <Grid item xs={8} sm={1.6} md={2}>
-          <Link to="/layout/admission-form" style={{ textDecoration: "none" }}>
+          <Link to="/layout/Admission-manager/admission-form" style={{ textDecoration: "none" }}>
             <Button variant="contained" color="primary">
               Back to Form
             </Button>
