@@ -340,7 +340,7 @@ export default function IncomeCombineDash() {
               padding: 2,
               borderRadius: 2,
               fontWeight: "bold",
- 
+      
               boxShadow: 3,}}>
               <Typography variant="h6" align="center" mt={-4}>
                 {year} Income & Expense Comparison
