@@ -377,11 +377,11 @@ function Category() {
           <Table>
             <TableHead sx={{ background: "#f2f2f2" }}>
               <TableRow>
-                <TableCell>
+                {/* <TableCell>
                   <Typography variant="subtitle2" fontWeight="bold">
                     ID
                   </Typography>
-                </TableCell>
+                </TableCell> */}
                 <TableCell>
                   <Typography variant="subtitle2" fontWeight="bold">
                     Category Name
@@ -447,7 +447,7 @@ function Category() {
             <TableBody>
               {categories.map((category) => (
                 <TableRow key={category.id}>
-                  <TableCell>{category.id}</TableCell>
+                  {/* <TableCell>{category.id}</TableCell> */}
                   <TableCell>{ category. categoryName}</TableCell>
                   <TableCell>{category. hraPercentage}%</TableCell>
                   <TableCell>{category. taPercentage}%</TableCell>

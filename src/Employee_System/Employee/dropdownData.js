@@ -236,7 +236,7 @@ export const districts={
     'Nagpur',
     'Nanded',
     'Nandurbar',
-    'Nasik',
+    'Nashik',
     'Osmanabad',
     'Parbhani',
     'Pune',

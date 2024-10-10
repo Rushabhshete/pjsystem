@@ -43,6 +43,7 @@ export default function AddSalary() {
   });
 
   const [date, setDate] = useState('');
+  const [daysOfMonth, setDaysOfMonth] = useState('');
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
 
@@ -50,6 +51,10 @@ export default function AddSalary() {
 
   const onInputChange = (e) => {
     setEmployee({ ...employee, [e.target.name]: e.target.value });
+  };
+
+  const onDayChange = (e) => {
+    setDaysOfMonth(e.target.value);
   };
 
   const onDateChange = (e) => {
@@ -76,6 +81,7 @@ export default function AddSalary() {
         empID: empID,
         basicSalary: parseInt(salary), // Convert salary to integer if needed
         paymentDate: paymentDate,
+        daysOfMonth: daysOfMonth,
         month: parseInt(month), // Convert month to integer if needed
         year: parseInt(year), // Convert year to integer if needed
         fullName: fullName,
@@ -255,6 +261,17 @@ export default function AddSalary() {
                     </MenuItem>
                   ))}
                 </TextField>
+              </Grid>
+              <Grid item xs={4}>
+                <TextField
+                  name="daysOfMonth"
+                  label="Days of Month"
+                  type="number"
+                  fullWidth
+                  value={daysOfMonth}
+                  onChange={onDayChange}
+                  variant="outlined"
+                />
               </Grid>
               <Grid item xs={12}>
                 <Button variant="contained" color="secondary" component={Link} to="/layout/employee-salary-manager/add-detail">

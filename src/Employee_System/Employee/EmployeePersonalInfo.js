@@ -1033,7 +1033,7 @@ const EmployeePersonalInfo = ({ formData, handleChange, handleSubmit }) => {
                 value={formData.city}
                 onChange={handleChangeWithValidation}
                 InputLabelProps={{ className: "required-asterisk" }}
-                label="City"
+                label="City/Village/Nagar"
                 fullWidth
               />
           </Grid>
@@ -1200,7 +1200,7 @@ const EmployeePersonalInfo = ({ formData, handleChange, handleSubmit }) => {
                     value={formData.permanentcity}
                     onChange={handleChangeWithValidation}
                     InputLabelProps={{ className: "required-asterisk" }}
-                    label="Permanent City"
+                    label="Permanent City/Village/Nagar"
                     fullWidth
                   />
               </Grid>
