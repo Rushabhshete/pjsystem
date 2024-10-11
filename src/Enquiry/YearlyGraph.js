@@ -60,13 +60,13 @@ export default function YearlyGraph() {
 
   return (
     <div>
-      <Grid
-        container
-        direction="column"
-       
-        mt={1}
-      >
-        <Grid item xs={12} md={6} className="textField-root">
+     <Grid container justifyContent="center" alignItems="center" spacing={2} mt={2}>
+     <Grid item>
+          <Typography variant="h6" align="center" mt={1}>
+            Yearly Enquiry Chart
+          </Typography>
+        </Grid>
+        <Grid item>
           <FormControl variant="outlined" style={{ width: '100px' }}>
             <TextField
               select
@@ -80,15 +80,8 @@ export default function YearlyGraph() {
                 </MenuItem>
               ))}
             </TextField>
-            
           </FormControl>
-         
-   
         </Grid>
-        <Typography variant="h6" align="center" mt={-4}>
-            Yearly Enquiry Chart
-          </Typography>
-          
       </Grid>
 
       <div style={{ height: '410px', width: '100%' }}>

@@ -474,7 +474,13 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
                   />
                 </Typography>
               )}
-                 <Button
+            </Grid>
+            {/* Upload Image Button */}
+          </Grid>
+        </form>
+      </DialogContent>
+      <DialogActions>
+      <Button
                   sx={{ mt: 1 }}
                 variant="contained"
                 color="primary"
@@ -483,12 +489,6 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
               >
                 Upload Image
               </Button>
-            </Grid>
-            {/* Upload Image Button */}
-          </Grid>
-        </form>
-      </DialogContent>
-      <DialogActions>
         <Button onClick={handleClose} color="secondary">
           Cancel
         </Button>
