@@ -461,16 +461,8 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
                 onChange={handleFileChange}
               />
               <label htmlFor="upload-photo">
-                <IconButton
-                  color="primary"
-                  aria-label="upload picture"
-                  component="span"
-                  sx={{ mr: 2 }}
-                >
-                  <PhotoCamera />
-                </IconButton>
                 <Button variant="contained" component="span">
-                  Upload Photo
+                  Student Photo
                 </Button>
               </label>
               {photoPreview && (
@@ -482,11 +474,9 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
                   />
                 </Typography>
               )}
-            </Grid>
-            {/* Upload Image Button */}
-            <Grid item xs={12} sm={6} md={4} sx={{ display: "flex", alignItems: "center" }}>
-              <Button
-                variant="outlined"
+                 <Button
+                  sx={{ mt: 1 }}
+                variant="contained"
                 color="primary"
                 onClick={handleImageUpload}
                 disabled={!photoFile}
@@ -494,6 +484,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
                 Upload Image
               </Button>
             </Grid>
+            {/* Upload Image Button */}
           </Grid>
         </form>
       </DialogContent>

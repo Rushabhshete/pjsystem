@@ -184,7 +184,8 @@ export default function AddEnquiry() {
           }
       });
       toast.success("Enquiry Added Successfully");
-      // navigate("/layout/report");
+      // Use navigate to go to the report page
+      navigate("/layout/Enquiry-manager/report");
     } catch (error) {
       console.error(
         "There was an error adding the Enquiry!",
@@ -197,7 +198,7 @@ export default function AddEnquiry() {
   const handleClose = (event, reason) => {
     if (reason === "clickaway") return;
     setOpen(false);
-    navigate("/layout/report");
+    //navigate("/layout/report");
   };
 
   const PopTypography = styled(Typography)`
