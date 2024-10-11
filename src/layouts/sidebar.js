@@ -848,7 +848,7 @@ const isActive = (route) => location.pathname === route;
                         variant="body2"
                         sx={{
                           fontWeight: "normal",
-                          fontSize: "12px",
+                          fontSize: "13px",
                           marginLeft: "-20px",
                         }}
                       >
@@ -862,9 +862,9 @@ const isActive = (route) => location.pathname === route;
                 {option.subOptions.length > 0 && (
                   <ListItemIcon>
                     {expanded === option.name ? (
-                      <Remove sx={{ color: "#FFF" }} />
+                      <Remove sx={{ color: "red", marginLeft: "auto", }} />
                     ) : (
-                      <Add sx={{ color: "#FFF" }} />
+                      <Add sx={{ color: "#FFF", marginLeft: "auto", }} />
                     )}
                   </ListItemIcon>
                 )}
@@ -903,7 +903,7 @@ const isActive = (route) => location.pathname === route;
                               <Typography
                                 variant="body2"
                                 sx={{
-                                  fontSize: "10px",
+                                  fontSize: "11px",
                                   marginLeft: "-20px",
                                   fontWeight: "normal",
                                 }}
