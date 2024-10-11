@@ -797,7 +797,7 @@ export default function IncomeCombineDash() {
     keys={["Income", "Expense"]} // Data keys to map bars
     indexBy="category" // Grouped by "category"
     //groupMode="grouped"
-    margin={{ top: 20, right: 50, bottom: 50, left: 60 }}
+    margin={{ top: 20, right: 20, bottom: 50, left: 60 }}
     padding={0.3}
     colors={({ id }) => (id === "Income" ? "#3498DB" : "#FF6F61")} // Custom colors for bars
     
@@ -866,7 +866,7 @@ export default function IncomeCombineDash() {
                 <div style={{ height: "400px" }}>
                 <ResponsiveLine
   data={nivoData}
-  useMesh={false}
+  //useMesh={false}
   margin={{ top: 50, right: 10, bottom: 50, left: 60 }}
   xScale={{ type: 'point' }} // Set the x scale type to point
   yScale={{
@@ -875,13 +875,14 @@ export default function IncomeCombineDash() {
     max: 'auto',
     stacked: false,
     reverse: false,
+   
   }}
 
   colors={({ id }) => (id === "Income" ? "#3498DB" : "#FF6F61")}
   pointSize={10}
   pointBorderWidth={2}
   pointLabelYOffset={-12}
-
+  useMesh={true}
   tooltip={({ point }) => (
     <strong style={{ color: point.serieColor }}>
       {point.data.x}: {point.data.y.toLocaleString()} {/* Format tooltip as "Month: Value" */}
