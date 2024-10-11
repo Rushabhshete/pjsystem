@@ -2,7 +2,7 @@
   background-color: #fff; /* Set background color for input field */
   border: #000000;
   border-radius: 8px; /* Set border radius */
-  font-size: 12px; /* Adjust font size for input field */
+  font-size: 14px; /* Adjust font size for input field */
   /* font-family: 'Permanent Marker', cursive; */
 }
 
@@ -26,13 +26,13 @@
   padding: 0 20px; /* Padding to ensure the label text is not cut off */
   border-radius: 10px; /* Border radius for the label background */
   color: #333;
-  font-size: 12px; /* Adjust font size for label */
+  font-size: 14px; /* Adjust font size for label */
   /* font-family: 'Permanent Marker', cursive; */
 }
 
 /* Optional: Set font size for unfocused label */
 .textField-root .MuiInputLabel-outlined {
-  font-size: 12px; /* Adjust font size for unfocused label */
+  font-size: 14px; /* Adjust font size for unfocused label */
 }
 
 
