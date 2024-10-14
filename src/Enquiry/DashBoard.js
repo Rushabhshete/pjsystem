@@ -495,12 +495,13 @@ export default function DashBoard() {
                 padding: "16px",
                 backgroundColor: "#F9E79F",
                 borderRadius: "10px",
+                fontWeight:'bold'
               }}
             >
-              <Typography variant="h6" mt={1}>
+              <Typography variant="h7" mt={1}>
                 Today
               </Typography>
-              <Typography variant="h4">{todaysApplications}</Typography>
+              <Typography variant="h5">{todaysApplications}</Typography>
             </Paper>
           </Grid>
           <Grid item xs={2.4}>
@@ -510,12 +511,13 @@ export default function DashBoard() {
                 padding: "16px",
                 backgroundColor: "#FF6F61",
                 borderRadius: "10px",
+                fontWeight:'bold'
               }}
             >
-              <Typography variant="h6" mt={1}>
+              <Typography variant="h7" mt={1}>
                 Last 7 Days
               </Typography>
-              <Typography variant="h4">{sevenDaysApplication}</Typography>
+              <Typography variant="h5">{sevenDaysApplication}</Typography>
             </Paper>
           </Grid>
           <Grid item xs={2.4}>
@@ -525,12 +527,13 @@ export default function DashBoard() {
                 padding: "16px",
                 backgroundColor: "#3498DB",
                 borderRadius: "10px",
+                fontWeight:'bold'
               }}
             >
-              <Typography variant="h6" mt={1}>
+              <Typography variant="h7" mt={1}>
                 Last 30 Days
               </Typography>
-              <Typography variant="h4">{thirtyDaysApplication}</Typography>
+              <Typography variant="h5">{thirtyDaysApplication}</Typography>
             </Paper>
           </Grid>
           <Grid item xs={2.4}>
@@ -540,12 +543,13 @@ export default function DashBoard() {
                 padding: "16px",
                 backgroundColor: "#F9E79F",
                 borderRadius: "10px",
+                fontWeight:'bold'
               }}
             >
-              <Typography variant="h6" mt={1}>
+              <Typography variant="h7" mt={1}>
                 Last 365 Days
               </Typography>
-              <Typography variant="h4">
+              <Typography variant="h5">
                 {threeSixtyFiveDaysApplication}
               </Typography>
             </Paper>
@@ -557,12 +561,13 @@ export default function DashBoard() {
                 padding: "16px",
                 backgroundColor: "#FF6F61",
                 borderRadius: "10px",
+                fontWeight:'bold'
               }}
             >
-              <Typography variant="h6" mt={1}>
+              <Typography variant="h7" mt={1}>
                 Total Enquiries
               </Typography>
-              <Typography variant="h4">{totalApplications}</Typography>
+              <Typography variant="h5">{totalApplications}</Typography>
             </Paper>
           </Grid>
         </Grid>

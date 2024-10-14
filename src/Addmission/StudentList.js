@@ -619,7 +619,7 @@ const StudentList = () => {
         <Grid item xs={8} sm={1.6} md={2}>
           <DownloadButton
             variant="contained"
-            color="secondary"
+            color="primary"
             onClick={handleDownloadCSV}
           >
             Download CSV
@@ -649,7 +649,7 @@ const StudentList = () => {
           gutterBottom
           sx={{ flex: 1, marginRight: 2, whiteSpace: "nowrap", marginLeft: 5 }}
         >
-          Total Amount(+GST) : ₹ {formatValue(totalAmount)}
+          Total Amount (+GST) : ₹ {formatValue(totalAmount)}
         </Typography>
         <Typography
           variant="h6"

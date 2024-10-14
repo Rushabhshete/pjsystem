@@ -114,7 +114,7 @@ function ForgotPassword() {
       // Retrieve the email from localStorage
       const storedEmail = localStorage.getItem("email");
       // Create the URL with query parameters
-      const url = `http://localhost:8081/reset-password/Admin?email=${encodeURIComponent(
+      const url = `http://localhost:8081/resetpassword/institute?email=${encodeURIComponent(
         storedEmail
       )}&password=${encodeURIComponent(
         newPassword

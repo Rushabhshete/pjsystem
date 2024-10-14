@@ -102,13 +102,19 @@ export default function AddEnquiry() {
         const [examsResponse, sourcesResponse, conductsResponse] =
           await Promise.all([
             axios.get(
-              `http://localhost:8086/getAllExam?institutecode=${localStorage.getItem("institutecode")}`
+              `http://localhost:8086/getAllExam?institutecode=${localStorage.getItem(
+                "institutecode"
+              )}`
             ),
             axios.get(
-              `http://localhost:8086/getAllSource?institutecode=${localStorage.getItem("institutecode")}`
+              `http://localhost:8086/getAllSource?institutecode=${localStorage.getItem(
+                "institutecode"
+              )}`
             ),
             axios.get(
-              `http://localhost:8086/get/getAllConductModels?institutecode=${localStorage.getItem("institutecode")}`
+              `http://localhost:8086/get/getAllConductModels?institutecode=${localStorage.getItem(
+                "institutecode"
+              )}`
             ),
           ]);
 
@@ -175,13 +181,13 @@ export default function AddEnquiry() {
       }
 
       // Get institutecode from localStorage to append it to the FormData
-      formData.append('institutecode', localStorage.getItem("institutecode"));
+      formData.append("institutecode", localStorage.getItem("institutecode"));
 
       // Send the form data to the API endpoint
       await axios.post(`http://localhost:8086/save/enquiry`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
       toast.success("Enquiry Added Successfully");
       // Use navigate to go to the report page
@@ -538,7 +544,7 @@ export default function AddEnquiry() {
                 />
               </Grid>
 
-              <Grid item xs={12} sm={4}>
+              {/* <Grid item xs={12} sm={4}>
                 <FormControl fullWidth>
                   <TextField
                     name="educationQualification"
@@ -554,6 +560,16 @@ export default function AddEnquiry() {
                     <MenuItem value="Post-Graduate">Post-Graduate</MenuItem>
                   </TextField>
                 </FormControl>
+              </Grid> */}
+
+              <Grid item xs={12} sm={4}>
+                <TextField
+                  label="Education Qualification"
+                  name="educationQualification"
+                  value={Enquiry.educationQualification}
+                  onChange={onInputChange}
+                  fullWidth
+                />
               </Grid>
 
               <Grid item xs={12} sm={4}>

@@ -29,18 +29,18 @@ const MonthlyGraph = () => {
 
         const data = res.data;
         const months = [
-          "JANUARY",
-          "FEBRUARY",
-          "MARCH",
-          "APRIL",
+          "JAN",
+          "FEB",
+          "MAR",
+          "APR",
           "MAY",
-          "JUNE",
-          "JULY",
-          "AUGUST",
-          "SEPTEMBER",
-          "OCTOBER",
-          "NOVEMBER",
-          "DECEMBER",
+          "JUN",
+          "JUL",
+          "AUG",
+          "SEP",
+          "OCT",
+          "NOV",
+          "DEC",
         ];
 
         const formattedData = months.map((month) => ({
@@ -103,7 +103,7 @@ const MonthlyGraph = () => {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: -20,
-            //legend: 'Month',
+            legend: 'Month',
             legendPosition: 'middle',
             legendOffset: 32,
           }}

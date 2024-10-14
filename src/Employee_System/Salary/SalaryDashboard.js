@@ -197,37 +197,37 @@ const SalaryDashBoard = () => {
           <Grid container spacing={2}  mt={1}>
             <Grid item xs={12} md={4}>
               <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#F9E79F', borderRadius: '10px' }}>
-                <Typography variant="h6">Total Salaries:</Typography>
+                <Typography variant="h7">Total Salaries:</Typography>
                 <Typography variant="h5">{totalEmployees !== null ? totalEmployees : 0}</Typography>
               </Paper>
             </Grid>
             <Grid item xs={12} md={4}>
               <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#FF6F61', borderRadius: '10px' }}>
-                <Typography variant="h6">Paid Salary:</Typography>
+                <Typography variant="h7">Paid Salary:</Typography>
                 <Typography variant="h5">{paidEmployees !== null ? paidEmployees : 0}</Typography>
               </Paper>
             </Grid>
             <Grid item xs={12} md={4}>
               <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#3498DB', borderRadius: '10px' }}>
-                <Typography variant="h6">Pending Salary:</Typography>
+                <Typography variant="h7">Pending Salary:</Typography>
                 <Typography variant="h5">{pendingEmployees !== null ? pendingEmployees : 0}</Typography>
               </Paper>
             </Grid>
             <Grid item xs={12} md={4}>
               <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#F9E79F', borderRadius: '10px' }}>
-                <Typography variant="h6">Total Salary:</Typography>
+                <Typography variant="h7">Total Salary:</Typography>
                 <Typography variant="h5">{grossSalary || "0"}</Typography>
               </Paper>
             </Grid>
             <Grid item xs={12} md={4}>
               <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#FF6F61', borderRadius: '10px' }}>
-                <Typography variant="h6">Paid Amount:</Typography>
+                <Typography variant="h7">Paid Amount:</Typography>
                 <Typography variant="h5">{paidAmount !== null ? paidAmount : 0}</Typography>
               </Paper>
             </Grid>
             <Grid item xs={12} md={4}>
               <Paper elevation={3} style={{ padding: '16px', backgroundColor: '#3498DB', borderRadius: '10px' }}>
-                <Typography variant="h6">Pending Amount:</Typography>
+                <Typography variant="h7">Pending Amount:</Typography>
                 <Typography variant="h5">{pendingAmount !== null ? pendingAmount : 0}</Typography>
               </Paper>
             </Grid>

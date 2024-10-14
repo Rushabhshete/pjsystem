@@ -149,8 +149,8 @@ const Dashboard = () => {
       <Grid container spacing={2} alignItems="flex-end" justifyContent="center">
         {data.map((item, index) => (
           <Grid key={index} item  xs={12} sm={6} md={2.4}>
-            <Paper elevation={3} style={{ padding: '16px', textAlign: 'center', backgroundColor: item.color ,   borderRadius: 10,}}>
-              <Typography variant="h6">{item.label}</Typography>
+            <Paper elevation={3} style={{ padding: '16px', textAlign: 'center', backgroundColor: item.color ,   borderRadius: 10, fontWeight:'bold'}}>
+              <Typography variant="h7">{item.label}</Typography>
               <Typography variant="h5">{item.value !== null ? item.value : 0}</Typography>
             </Paper>
           </Grid>

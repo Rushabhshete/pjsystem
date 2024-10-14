@@ -462,7 +462,7 @@ function Category() {
                   <TableCell sx={{ whiteSpace: "nowrap" }}>
                     <IconButton
                       onClick={() => handleInfo(category)}
-                      sx={{ color: "green" }}
+                      color="primary"
                     >
                       <Info />
                     </IconButton>

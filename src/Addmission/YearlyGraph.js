@@ -254,19 +254,19 @@ const YearlyGraph = () => {
         const data = res.data || {}; // Default to empty object
 
         if (Object.keys(data).length === 0) {
-          setChartData([{ date: "No Data", admissions: 0 }]);
+          setChartData([{ date: "No Data", Admissions: 0 }]);
         } else {
           const formattedData = Object.entries(data)
             .map(([date, count]) => ({
               date: new Date(date).toLocaleDateString(),
-              admissions: count,
+              Admissions: count,
             }))
             .sort((a, b) => new Date(a.date) - new Date(b.date));
           setChartData(formattedData);
         }
       } catch (error) {
         console.error("Error fetching admissions data:", error);
-        setChartData([{ date: "Error", admissions: 0 }]);
+        setChartData([{ date: "Error", Admissions: 0 }]);
       } finally {
         setLoading(false);
       }
@@ -287,19 +287,19 @@ const YearlyGraph = () => {
         const data = res.data || {}; // Default to empty object
 
         if (Object.keys(data).length === 0) {
-          setRevenueData([{ date: "No Data", revenue: 0 }]);
+          setRevenueData([{ date: "No Data", Revenue: 0 }]);
         } else {
           const formattedRevenueData = Object.entries(data)
-            .map(([date, revenue]) => ({
+            .map(([date, Revenue]) => ({
               date: new Date(date).toLocaleDateString(),
-              revenue,
+              Revenue,
             }))
             .sort((a, b) => new Date(a.date) - new Date(b.date));
           setRevenueData(formattedRevenueData);
         }
       } catch (error) {
         console.error("Error fetching revenue data:", error);
-        setRevenueData([{ date: "Error", revenue: 0 }]);
+        setRevenueData([{ date: "Error", Revenue: 0 }]);
       } finally {
         setRevenueLoading(false);
       }
@@ -365,7 +365,7 @@ const YearlyGraph = () => {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="revenue" fill="#FF6F61" />
+                <Bar dataKey="Revenue" fill="#FF6F61" />
               </BarChart>
             </ResponsiveContainer>
           )}
@@ -386,7 +386,7 @@ const YearlyGraph = () => {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="admissions" fill="#3498DB" />
+                <Bar dataKey="Admissions" fill="#3498DB" />
               </BarChart>
             </ResponsiveContainer>
           )}

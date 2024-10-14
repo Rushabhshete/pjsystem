@@ -155,7 +155,7 @@ export default function AddMemo() {
   return (
     <div>
       <Grid container spacing={2} alignItems="center" mb={2}>
-        <Grid item xs={6} sm={4}>
+        <Grid item xs={6} sm={3}>
           <FormControl fullWidth size="small">
             <InputLabel>Department</InputLabel>
             <Select
@@ -174,7 +174,7 @@ export default function AddMemo() {
           </FormControl>
         </Grid>
 
-        <Grid item xs={6} sm={4}>
+        <Grid item xs={6} sm={3}>
           <FormControl fullWidth size="small">
             <InputLabel>Category</InputLabel>
             <Select
@@ -193,7 +193,7 @@ export default function AddMemo() {
           </FormControl>
         </Grid>
 
-        <Grid item xs={6} sm={4}>
+        <Grid item xs={6} sm={3}>
           <TextField
             label="Search"
             variant="outlined"
@@ -204,7 +204,7 @@ export default function AddMemo() {
           />
         </Grid>
 
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={3}>
           <Typography variant="h6">{`Total Employees: ${filteredEmployees.length}`}</Typography>
         </Grid>
       </Grid>
