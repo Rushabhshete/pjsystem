@@ -53,6 +53,8 @@ import FeeReport from "./Student/Fees/FeeReport";
 import IncomeExpenseManager from "./Income Expense/IncomeExpenseManager";
 import AdmissionManager from "./Addmission/AdmissionManager";
 import EnquiryManager from "./Enquiry/EnquiryManager";
+import ShipmentManager from "./Shipment/ShipmentManager";
+
 import EmployeeManager from "./Employee_System/Employee/EmployeeManager";
 import AttendanceManager from "./Employee_System/Attendance/AttendanceManager";
 import EmployeeSalaryManager from "./Employee_System/Salary/EmployeeSalaryManager";
@@ -73,6 +75,14 @@ import Exam from "./Enquiry/ExamPages/Exam";
 import Source from "./Enquiry/ConductBy/Sources/Source";
 import Conduct from "./Enquiry/ConductBy/Conduct";
 import AddInquiry from './Enquiry/pages/AddInquiry'
+
+import BookName from "./Shipment/Bookname";
+import VendorName from "./Shipment/VendorName";
+import Type from "./Shipment/Type";
+import Status from "./Shipment/Status";
+import ShipmentDashboard from "./Shipment/ShipmentDashboard";
+import ShipmentForm from "./Shipment/Shipmentform";
+
 import EmployeeManagerLayout from "./Employee_System/Employee/EmployeeManagerLayout";
 import EmployeeDashboard from "./Employee_System/Employee/EmployeeDashboard";
 import EmployeeList from "./Employee_System/Employee/EmployeeList";
@@ -90,6 +100,7 @@ import EmployeeSalaryManagerLayout from "./Employee_System/Salary/EmployeeSalary
 import SalaryDashBoard from "./Employee_System/Salary/SalaryDashboard";
 import AddSalary from "./Employee_System/Salary/AddSalary";
 import ViewAttendance from "./Employee_System/Attendance/ViewAttendance";
+import ShipmentReport from "./Shipment/ShipmentReport";
 function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem("isAuthenticated") === "true"
@@ -189,6 +200,17 @@ function AppContent() {
 
         </Route>
 
+        {/*shipmenmt routes*/}
+      <Route path="shipment-manager" element={<ShipmentManager/>}>
+      <Route index element={<ShipmentDashboard/>}/>
+      <Route path="shipment-form" element={<ShipmentForm/>}/>
+      <Route path="shipment-report" element={<ShipmentReport/>}/>
+      <Route path="shipment-type" element={<Type/>}/>
+      <Route path="status" element={<Status/>}/>
+      <Route path="bookname" element={<BookName/>}/>
+      <Route path="vendorname" element={<VendorName/>}/>
+      </Route>
+
      {/* Employee Salary Manager */}
      <Route path="employee-salary-manager/*" element={<EmployeeSalaryManagerLayout />}>
             <Route index element={<SalaryDashBoard />} />
@@ -231,12 +253,22 @@ function AppContent() {
 
           {/* <Route path="account" element={<ProtectedRoute isAuthenticated={isAuthenticated}><Account /></ProtectedRoute>} /> */}
         </Route>
-        {/* </Route> */}
-        {/* <Route path="/systems/" element={<Navigate to="/layout" />} /> */}
 
-        {/* <Route path="/" element={<Navigate to="/layout" />} /> */}
-        {/* Catch-all route to redirect all other paths to login */}
-        {/* <Route path="*" element={<Navigate to="/systems/" />} /> */}
+        {/* Enquiry Routes */}
+
+            {/* Route for Enquiry Manager */}
+      {/* <Route path="enquiry-manager" element={<EnquiryManager />}>
+        {/* Nested routes for Enquiry Manager */}
+        {/* <Route index element={<DashBoard />} />
+        <Route path="add-inquiry" element={<AddInquiry />} />
+        <Route path="report" element={<Report />} />
+        <Route path="exam" element={<Exam />} />
+        <Route path="source" element={<Source />} />
+        <Route path="conduct" element={<Conduct />} />
+      </Route> */}
+
+      
+
       </Routes>
       {showHelpDeskButton && <FloatingHelpDeskButton />}
     </>

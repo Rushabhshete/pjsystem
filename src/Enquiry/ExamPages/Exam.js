@@ -70,7 +70,6 @@ const Exam = () => {
   const [filteredExams, setFilteredExams] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [openAddDialog, setOpenAddDialog] = useState(false);
-  // const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const [examToDelete, setExamToDelete] = useState(null);
   const [exam, setExam] = useState({ name: "" });
@@ -120,8 +119,6 @@ const Exam = () => {
     try {
       await axios.delete(`http://localhost:8086/deleteExam/${examToDelete.id}`);
       loadExams();
-      // setSnackbarMessage("Exam deleted successfully");
-      // setSnackbarColor("green");
       toast.success("Exam Deleted Successfully");
       setOpenConfirmDialog(false);
     } catch (error) {
@@ -139,15 +136,6 @@ const Exam = () => {
   const handleCloseAddDialog = () => {
     setOpenAddDialog(false);
   };
-
-  // const handleOpenUpdateDialog = (exam) => {
-  //   setExam(exam);
-  //   setOpenUpdateDialog(true);
-  // };
-
-  // const handleCloseUpdateDialog = () => {
-  //   setOpenUpdateDialog(false);
-  // };
 
   const onAddExamSubmit = async (e) => {
     e.preventDefault();
@@ -172,38 +160,6 @@ const Exam = () => {
     }
   };
 
-  // const onUpdateExamSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   if (!exam.name) {
-  //     setSnackbarMessage("Exam name is required");
-  //     setSnackbarColor("red");
-  //     return;
-  //   }
-
-  //   try {
-  //     if (!exam.id) { // Ensure that the exam ID is set
-  //       throw new Error("No exam ID found");
-  //     }
-
-  //     await axios.put(`http://localhost:8086/updateExam/${exam.id}`, exam, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-
-  //     // setSnackbarMessage("Exam updated successfully");
-  //     toast.success("Exam Updated Successfully");
-  //     // setSnackbarColor("green");
-  //     handleCloseUpdateDialog();
-  //     loadExams();
-  //   } catch (error) {
-  //     console.error("Error updating exam:", error);
-  //     setSnackbarMessage(`Error updating exam: ${error.response?.data?.message || error.message}`);
-  //     setSnackbarColor("red");
-  //   }
-  // };
-
   return (
     <div>
       <ToastContainer
@@ -216,21 +172,6 @@ const Exam = () => {
       pauseOnFocusLoss
       draggable
       pauseOnHover/>
-    {/* <PopTypography
-      variant="h5"
-      gutterBottom
-      sx={{
-        fontWeight: "bold",
-        color: "#fff",
-        textAlign: "center",
-        backgroundColor: "#24A0ED",
-        borderRadius: "150px",
-        padding: "10px",
-        marginBottom: "20px",
-      }}
-    >
-          Exams / Course List
-          </PopTypography> */}
       <Grid container spacing={2} className="textField-root">
         <Typography
           variant="h6"
@@ -278,15 +219,6 @@ const Exam = () => {
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{exam.name}</TableCell>
                     <TableCell>
-                      {/* <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => handleOpenUpdateDialog(exam)}
-                        size="small"
-                        sx={{ marginRight: "10px" }}
-                      >
-                        Update
-                      </Button> */}
                       <Button
                         color="error"
                         onClick={() => handleOpenConfirmDialog(exam)}
@@ -334,37 +266,7 @@ const Exam = () => {
           </DialogContent>
         </Dialog>
 
-        {/* Update Exam Dialog */}
-        {/* <Dialog open={openUpdateDialog} onClose={handleCloseUpdateDialog}>
-          <DialogTitle>Update Exam</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Update the details of the exam.
-            </DialogContentText>
-            <form onSubmit={onUpdateExamSubmit}>
-              <Grid item className="textField-root">
-              <TextField
-                autoFocus
-                margin="dense"
-                label="Exam Name"
-                fullWidth
-                variant="outlined"
-                value={exam.name}
-                onChange={(e) => setExam({ ...exam, name: e.target.value })}
-              />
-              </Grid>
-              
-              <DialogActions>
-                <Button onClick={handleCloseUpdateDialog} color="primary">
-                  Cancel
-                </Button>
-                <Button type="submit" color="primary">
-                  Update
-                </Button>
-              </DialogActions>
-            </form>
-          </DialogContent>
-        </Dialog> */}
+       
 
         {/* Confirm Delete Dialog */}
         <ConfirmDialog
