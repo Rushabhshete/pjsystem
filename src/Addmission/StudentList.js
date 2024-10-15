@@ -1074,6 +1074,7 @@ const StudentList = () => {
         <UpdateAdmissionForm
           admission={selectedAdmission}
           onUpdate={handleUpdateAdmission}
+          onClose={handleCloseDialog} // Pass the close handler
         />
       )}
 
