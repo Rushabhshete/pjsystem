@@ -782,8 +782,8 @@ export default function Report() {
                           color="primary"
                           component={Link}
                           onClick={() => handleOpenDialog(inquiry.id)} // This should trigger the dialog opening
-                        >
-                          <EditIcon />
+                        >Edit
+                          {/* <EditIcon /> */}
                         </IconButton>
                         <IconButton
                           onClick={() => handleGenerate(inquiry)}
