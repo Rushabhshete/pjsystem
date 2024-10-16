@@ -356,6 +356,19 @@ const EmployeeList = () => {
     }
   };
 
+  const handleDocuments = async () => {
+    if (selectedUser) {
+      try {
+        await Userservice.updateDocuments(selectedUser.empID, selectedUser);
+        await fetchUsers();
+        toast.success("File updated successfully"); // Notify success
+      } catch (error) {
+        setError("Error updating Employee: " + error.message);
+        toast.error(`Error updating Employee: ${error.message}`); // Notify error
+      }
+    }
+  };
+
   const handleCancel = async (empID) => {
     const confirmation = window.confirm(
       "Are You Sure You Want To Terminate This Employee?"
@@ -1490,6 +1503,76 @@ const EmployeeList = () => {
                       InputLabelProps={{ shrink: true }}
                     />
                   </Grid>
+                  <Grid item xs={12} sm={4}>
+            <TextField
+              required
+              type="file"
+              accept=".jpeg"
+              name="idProofFile"
+              value={selectedUser?.idProofFile}
+              onChange={handleInputChange}
+              helperText="ID Proof (JPEG, max 1MB)"
+            />
+              <Button variant="contained" color="primary" onClick={() => handleDocuments('idProofFile')}>
+                Update
+              </Button>
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <TextField
+              required
+              type="file"
+              accept=".jpeg"
+              name="empFile"
+              value={selectedUser?.empFile}
+              onChange={handleInputChange}
+              helperText="Employee Photo (JPEG, max 1MB)"
+            />
+              <Button variant="contained" color="primary" onClick={() => handleDocuments('empFile')}>
+                Update
+              </Button>
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <TextField
+              required
+              type="file"
+              accept=".pdf"
+              name="resumeFile"
+              value={selectedUser?.resumeFile}
+              onChange={handleInputChange}
+              helperText="Resume (PDF, max 1MB)"
+            />
+              <Button variant="contained" color="primary" onClick={() => handleDocuments('resumeFile')}>
+                Upload
+              </Button>
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <TextField
+              required
+              type="file"
+              accept=".pdf"
+              name="addressProofFile"
+              value={selectedUser?.addressProofFile}
+              onChange={handleInputChange}
+              helperText="Address Proof (PDF, max 1MB)"
+            />
+              <Button variant="contained" color="primary" onClick={() => handleDocuments('addressProofFile')}>
+                Upload
+              </Button>
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <TextField
+              required
+              type="file"
+              accept=".pdf"
+              name="experienceLetterFile"
+              value={selectedUser?.experienceLetterFile}
+              onChange={handleInputChange}
+              helperText="Experience Letter (PDF, max 1MB)"
+            />
+              <Button variant="contained" color="primary" onClick={() => handleDocuments('experienceLetterFile')}>
+                Upload
+              </Button>
+          </Grid>
                   {/* <Grid item xs={12} sm={4}>
                 <FormControl fullWidth>
                   <TextField
