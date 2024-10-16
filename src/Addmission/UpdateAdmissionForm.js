@@ -15,8 +15,10 @@ import {
 import { PhotoCamera } from "@mui/icons-material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const UpdateAdmissionForm = ({ admission, onUpdate, onClose }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState(admission);
   const [courses, setCourses] = useState([]);
   const [guides, setGuides] = useState([]);
@@ -137,6 +139,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate, onClose }) => {
   const handleImageUpload = async () => {
     if (!photoFile) {
       toast.error("Please select an image to upload.");
+     
       return;
     }
 
@@ -154,6 +157,8 @@ const UpdateAdmissionForm = ({ admission, onUpdate, onClose }) => {
         }
       );
       toast.success("Image uploaded successfully!");
+      handleClose();
+      navigate(0); 
       // Optionally refresh the admission data here if necessary
       setPhotoFile(null);
       setPhotoPreview(null);
