@@ -34,6 +34,7 @@ import {
   EmployeeType,
   DutyType,
   ShiftType,
+  districts,
 } from "./dropdownData.js";
 import { Country, State, City } from "country-state-city";
 
@@ -177,12 +178,15 @@ const EmployeeList = () => {
   useEffect(() => {
     loadCategory();
   }, [institutecode]);
+
   const countries = Country.getAllCountries();
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
+  const [districtList, setDistrictList] = useState([]);
 
   const [permanentStates, setPermanentStates] = useState([]);
   const [permanentCities, setPermanentCities] = useState([]);
+  const [permanentDistrictList, setPermanentDistrictList] = useState([]);
 
   useEffect(() => {
     if (selectedUser?.country) {
@@ -208,6 +212,8 @@ const EmployeeList = () => {
             )
           : []
       );
+      // Set districts based on selected state
+      setDistrictList(districts[selectedUser.state] || []);
     }
   }, [selectedUser?.state, states]);
 
@@ -235,8 +241,11 @@ const EmployeeList = () => {
             )
           : []
       );
+      // Set permanent districts based on selected state
+      setPermanentDistrictList(districts[selectedUser.permanentstate] || []);
     }
   }, [selectedUser?.permanentstate, permanentStates]);
+
   useEffect(() => {
     fetchDepartments();
   }, [institutecode]);
@@ -421,7 +430,6 @@ const EmployeeList = () => {
     }
   };
 
-  
   const handleDownloadPDF = () => {
     const doc = new jsPDF();
     const instituteName = employeeDetails.institutename;
@@ -433,17 +441,28 @@ const EmployeeList = () => {
 
     // Add institute image
     if (imgData) {
-        doc.addImage(imgData, 'JPEG', (doc.internal.pageSize.getWidth() - 60) / 2, startY, 60, 30); // Adjust image size and position
+      doc.addImage(
+        imgData,
+        "JPEG",
+        (doc.internal.pageSize.getWidth() - 60) / 2,
+        startY,
+        60,
+        30
+      ); // Adjust image size and position
     }
 
     // Add title
     const title = "Employee Report";
     doc.setFontSize(18);
-    doc.text(title, doc.internal.pageSize.getWidth() / 2, startY + 40, { align: 'center' }); // Position the title below the image
+    doc.text(title, doc.internal.pageSize.getWidth() / 2, startY + 40, {
+      align: "center",
+    }); // Position the title below the image
 
     // Add institute name
     doc.setFontSize(14);
-    doc.text(instituteName, doc.internal.pageSize.getWidth() / 2, startY + 50, { align: 'center' }); // Position the institute name below the title
+    doc.text(instituteName, doc.internal.pageSize.getWidth() / 2, startY + 50, {
+      align: "center",
+    }); // Position the institute name below the title
 
     // Define user information
     const userInfo = [
@@ -483,8 +502,14 @@ const EmployeeList = () => {
       { label: "Salary:", value: selectedUser?.salary },
       { label: "CPF No:", value: selectedUser?.cpfNo },
       { label: "ESIC No:", value: selectedUser?.esicNo },
-      { label: "Basic Qualification:", value: selectedUser?.basicQualification },
-      { label: "Professional Qualification:", value: selectedUser?.professionalQualification },
+      {
+        label: "Basic Qualification:",
+        value: selectedUser?.basicQualification,
+      },
+      {
+        label: "Professional Qualification:",
+        value: selectedUser?.professionalQualification,
+      },
       { label: "Shift:", value: selectedUser?.shift },
       { label: "Shift Start Time:", value: selectedUser?.shiftStartTime },
       { label: "Shift End Time:", value: selectedUser?.shiftEndTime },
@@ -518,8 +543,7 @@ const EmployeeList = () => {
 
     // Save the PDF
     doc.save("UserInformation.pdf");
-};
-
+  };
 
   const handleDownloadCsv = () => {
     const csvData = filteredUsers.map((user) => ({
@@ -872,7 +896,7 @@ const EmployeeList = () => {
                       <IconButton
                         onClick={() => handleShowInfo(user.empID)}
                         aria-label="info"
-                        sx={{ color: "green" }}
+                        color="primary"
                       >
                         <Info />
                       </IconButton>
@@ -1094,31 +1118,39 @@ const EmployeeList = () => {
                       </TextField>
                     </FormControl>
                   </Grid>
+                  {/* District */}
                   <Grid item xs={12} sm={4}>
                     <FormControl fullWidth>
                       <TextField
                         required
-                        name="city"
-                        value={selectedUser?.city || ""}
+                        name="district"
+                        value={selectedUser?.district}
                         onChange={handleInputChange}
-                        label="City"
+                        label="District"
                         select
                       >
-                        {cities.map((option) => (
-                          <MenuItem key={option.name} value={option.name}>
-                            {option.name}
+                        {districtList.length > 0 ? (
+                          districtList.map((district) => (
+                            <MenuItem key={district} value={district}>
+                              {district}
+                            </MenuItem>
+                          ))
+                        ) : (
+                          <MenuItem value="">
+                            <em>Select a state first</em>
                           </MenuItem>
-                        ))}
+                        )}
                       </TextField>
                     </FormControl>
                   </Grid>
+                  {/* City */}
                   <Grid item xs={12} sm={4}>
                     <TextField
                       required
-                      name="district"
-                      value={selectedUser?.district}
+                      name="city"
+                      value={selectedUser?.city}
                       onChange={handleInputChange}
-                      label="District"
+                      label="City/Village/Nagar"
                       fullWidth
                     />
                   </Grid>
@@ -1206,31 +1238,39 @@ const EmployeeList = () => {
                       </TextField>
                     </FormControl>
                   </Grid>
+                  {/* Permanent District */}
                   <Grid item xs={12} sm={4}>
                     <FormControl fullWidth>
                       <TextField
                         required
-                        name="permanentcity"
-                        value={selectedUser?.permanentcity || ""}
+                        name="permanentdistrict"
+                        value={selectedUser?.permanentdistrict}
                         onChange={handleInputChange}
-                        label="Permanent City"
+                        label="Permanent District"
                         select
                       >
-                        {permanentCities.map((option) => (
-                          <MenuItem key={option.name} value={option.name}>
-                            {option.name}
+                        {permanentDistrictList.length > 0 ? (
+                          permanentDistrictList.map((district) => (
+                            <MenuItem key={district} value={district}>
+                              {district}
+                            </MenuItem>
+                          ))
+                        ) : (
+                          <MenuItem value="">
+                            <em>Select a state first</em>
                           </MenuItem>
-                        ))}
+                        )}
                       </TextField>
                     </FormControl>
                   </Grid>
+                  {/* Permanent City */}
                   <Grid item xs={12} sm={4}>
                     <TextField
                       required
-                      name="permanentdistrict"
-                      value={selectedUser?.permanentdistrict}
+                      name="permanentcity"
+                      value={selectedUser.permanentcity}
                       onChange={handleInputChange}
-                      label="Permanent District"
+                      label="Permanent City/Village/Nagar"
                       fullWidth
                     />
                   </Grid>
@@ -2121,51 +2161,112 @@ const EmployeeList = () => {
                 >
                   <Typography
                     variant="subtitle1"
-                    sx={{ fontWeight: "bold", mr: 1  }}
+                    sx={{ fontWeight: "bold", mr: 1 }}
                   >
                     Status:
                   </Typography>{" "}
                   {selectedUser?.status}
                 </Grid>
-                {/* <Grid item xs={12} sm={6} sx={{ display: "flex", alignItems: "center" }}>
-                    <Typography variant="subtitle1" sx={{ fontWeight: "bold", mr: 1 }}>
+                {/* <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  sx={{ display: "flex", alignItems: "center" }}
+                >
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ fontWeight: "bold", mr: 1 }}
+                  >
                     Employee Photo:
-                    </Typography>
-                    <Button variant="contained" onClick={() => window.open(selectedUser?.employeePhoto, "_blank")}>
-                        View
-                    </Button>
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    onClick={() =>
+                      window.open(selectedUser?.employeePhoto, "_blank")
+                    }
+                  >
+                    View
+                  </Button>
                 </Grid>
-                <Grid item xs={12} sm={6} sx={{ display: "flex", alignItems: "center" }}>
-                    <Typography variant="subtitle1" sx={{ fontWeight: "bold", mr: 1 }}>
-                        ID Proof:
-                    </Typography>
-                    <Button variant="contained" onClick={() => window.open(selectedUser?.idProof, "_blank")}>
-                        View
-                    </Button>
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  sx={{ display: "flex", alignItems: "center" }}
+                >
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ fontWeight: "bold", mr: 1 }}
+                  >
+                    ID Proof:
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    onClick={() => window.open(selectedUser?.idProof, "_blank")}
+                  >
+                    View
+                  </Button>
                 </Grid>
-                <Grid item xs={12} sm={6} sx={{ display: "flex", alignItems: "center" }}>
-                    <Typography variant="subtitle1" sx={{ fontWeight: "bold", mr: 1 }}>
-                        Resume:
-                    </Typography>
-                    <Button variant="contained" onClick={() => window.open(selectedUser?.resume, "_blank")}>
-                        View
-                    </Button>
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  sx={{ display: "flex", alignItems: "center" }}
+                >
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ fontWeight: "bold", mr: 1 }}
+                  >
+                    Resume:
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    onClick={() => window.open(selectedUser?.resume, "_blank")}
+                  >
+                    View
+                  </Button>
                 </Grid>
-                <Grid item xs={12} sm={6} sx={{ display: "flex", alignItems: "center" }}>
-                    <Typography variant="subtitle1" sx={{ fontWeight: "bold", mr: 1 }}>
-                        Address Proof:
-                    </Typography>
-                    <Button variant="contained" onClick={() => window.open(selectedUser?.addressProof, "_blank")}>
-                        View
-                    </Button>
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  sx={{ display: "flex", alignItems: "center" }}
+                >
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ fontWeight: "bold", mr: 1 }}
+                  >
+                    Address Proof:
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    onClick={() =>
+                      window.open(selectedUser?.addressProof, "_blank")
+                    }
+                  >
+                    View
+                  </Button>
                 </Grid>
-                <Grid item xs={12} sm={6} sx={{ display: "flex", alignItems: "center" }}>
-                    <Typography variant="subtitle1" sx={{ fontWeight: "bold", mr: 1 }}>
-                        Experience Letter:
-                    </Typography>
-                    <Button variant="contained" onClick={() => window.open(selectedUser?.experienceLetter, "_blank")}>
-                        View
-                    </Button>
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  sx={{ display: "flex", alignItems: "center" }}
+                >
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ fontWeight: "bold", mr: 1 }}
+                  >
+                    Experience Letter:
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    onClick={() =>
+                      window.open(selectedUser?.experienceLetter, "_blank")
+                    }
+                  >
+                    View
+                  </Button>
                 </Grid> */}
               </Grid>
               <Box mt={2} textAlign="right">

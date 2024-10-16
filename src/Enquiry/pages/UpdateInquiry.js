@@ -172,6 +172,8 @@ const UpdateEnquiry = ({ id, onClose }) => {
             `http://localhost:8086/get/enquiry/${id}`
           );
           setEnquiry(result.data); // Set the enquiry data in state
+          setSelectedState(result.data.state); // Set selectedState based on enquiry data
+          setDistricts(stateOptions[result.data.state] || []); // Set the districts based on the enquiry state
         } catch (error) {
           console.error("Error fetching enquiry:", error);
         }

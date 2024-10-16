@@ -16,7 +16,7 @@ import { PhotoCamera } from "@mui/icons-material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const UpdateAdmissionForm = ({ admission, onUpdate }) => {
+const UpdateAdmissionForm = ({ admission, onUpdate, onClose }) => {
   const [formData, setFormData] = useState(admission);
   const [courses, setCourses] = useState([]);
   const [guides, setGuides] = useState([]);
@@ -489,7 +489,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate }) => {
               >
                 Upload Image
               </Button>
-        <Button onClick={handleClose} color="secondary">
+        <Button onClick={onClose} color="secondary">
           Cancel
         </Button>
         <Button onClick={handleUpdateAdmission} color="primary" variant="contained">
