@@ -12,6 +12,8 @@ import {
 import axios from "axios";
 import logo from "../img/logo.jpg";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const StyledCard = styled(Card)({
   padding: "40px 30px",
@@ -61,12 +63,10 @@ function ForgotPassword() {
     setError("");
     setMessage("");
     try {
-      // Send OTP request
       await axios.post(
-        `http://localhost:8081/forgotPassword?email=${encodeURIComponent(
-          email
-        )}`
+        `http://localhost:8081/forgotPassword?email=${encodeURIComponent(email)}`
       );
+      localStorage.setItem("email", email); // Save email to localStorage
       setStep(2);
       setMessage("OTP sent to your email.");
     } catch (error) {
@@ -83,12 +83,9 @@ function ForgotPassword() {
     setError("");
     setMessage("");
     try {
-      // Retrieve the email from localStorage
-      const storedEmail = localStorage.getItem("email");
+      const storedEmail = localStorage.getItem("email"); // Retrieve email from localStorage
       const response = await axios.post(
-        `http://localhost:8081/verifyOTP?email=${encodeURIComponent(
-          storedEmail
-        )}&otp=${encodeURIComponent(otp)}`
+        `http://localhost:8081/verifyOTP?email=${encodeURIComponent(storedEmail)}&otp=${encodeURIComponent(otp)}`
       );
 
       if (response.data === "OTP verified successfully") {
@@ -98,6 +95,8 @@ function ForgotPassword() {
     } catch (error) {
       setError("Error verifying OTP. Please try again.");
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -111,22 +110,22 @@ function ForgotPassword() {
     setError("");
     setMessage("");
     try {
-      // Retrieve the email from localStorage
-      const storedEmail = localStorage.getItem("email");
-      // Create the URL with query parameters
-      const url = `http://localhost:8081/resetpassword/institute?email=${encodeURIComponent(
-        storedEmail
-      )}&password=${encodeURIComponent(
-        newPassword
-      )}&confirmPassword=${encodeURIComponent(confirmPassword)}`;
+      const storedEmail = localStorage.getItem("email"); // Retrieve email from localStorage
+      const url = `http://localhost:8081/resetpassword/institute?email=${encodeURIComponent(storedEmail)}&password=${encodeURIComponent(newPassword)}&confirmPassword=${encodeURIComponent(confirmPassword)}`;
 
-      // Send the PUT request
       await axios.put(url);
-
-      // Delay to show success message
+      // Show Toastify success message
+      toast.success("Password reset successful. Redirecting to login...", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      // Navigate to login page after 3 seconds
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
     } catch (error) {
       setError("Error resetting password. Please try again.");
-      console.error(error.response ? error.response.data : error.message);
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -236,6 +235,8 @@ function ForgotPassword() {
             </SubmitButton>
           </Box>
         )}
+        {/* ToastContainer for displaying notifications */}
+        <ToastContainer />
       </StyledCard>
     </Container>
   );
