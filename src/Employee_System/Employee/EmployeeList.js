@@ -2250,7 +2250,7 @@ const EmployeeList = () => {
                   </Typography>{" "}
                   {selectedUser?.status}
                 </Grid>
-                {/* <Grid
+                <Grid
                   item
                   xs={12}
                   sm={6}
@@ -2350,7 +2350,7 @@ const EmployeeList = () => {
                   >
                     View
                   </Button>
-                </Grid> */}
+                </Grid>
               </Grid>
               <Box mt={2} textAlign="right">
                 <Button
