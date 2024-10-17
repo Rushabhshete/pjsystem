@@ -142,15 +142,17 @@ export default function IdCard({ id, onClose }) {
           {/* <Typography variant="body1" style={{ marginTop: '10px' }}>
             <strong style={{ color: '#4A148C' }}>Email:</strong> {admission.email}
           </Typography> */}
-          <Typography variant="body1" mt={2} style={{textAlign:'center'}}>
-            <strong >Course:</strong> {admission.courses}
+         <div style={{textAlign:'center'}}>
+         <Typography variant="body1" mt={2} style={{textAlign:'left'}}>
+            <strong>Course: </strong> {admission.courses}
           </Typography>
-          <Typography variant="body1" style={{textAlign:'center'}}>
-            <strong >Joining Date:</strong> {admission.date}
+          <Typography variant="body1" style={{textAlign:'left'}}>
+            <strong>Joining Date: </strong> {admission.date}
           </Typography>
-          <Typography variant="body1" style={{textAlign:'center'}}>
-            <strong >Duration:</strong> {admission.duration}
+          <Typography variant="body1" style={{textAlign:'left'}}>
+            <strong>Duration: </strong> {admission.duration}
           </Typography>
+         </div>
         </CardContent>
         
 
@@ -162,7 +164,7 @@ export default function IdCard({ id, onClose }) {
             paddingTop: '40px',
             // fontWeight: 'bold',
             // fontSize: '18px', width:'150%',borderRadius:'50%',
-             width:'350px', borderRadius:'50%', marginLeft:'-40px',
+             width:'350px', borderRadius:'70%', marginLeft:'-50px',
              height:200, 
           }}>
             {/* <img 

@@ -1,59 +1,8 @@
-// import axios from 'axios';
-// import React, { useState, useEffect } from 'react'
-// import { Card, CardContent, Typography, Avatar } from '@mui/material';
-
-// export default function EmpIDCard(empID, onClose) {
-//     const institutecode = localStorage.getItem('institutecode');
-
-//     const [employee, setEMployee]=useState({});
-//     const [employeeDetails, setEmployeeDetails]=useState("");
-
-//     useEffect(()=>{
-//         const fetchEmployeeDetails = async ()=>{
-//             try{
-//                 if(!institutecode){
-//                     console.log("No Institutecode found in localstorage");
-//                     return;
-//                 }
-
-//                 const response = await axios.get(
-//                     `http://localhost:8081/findInstitutesby/Institutecode?institutecode=${institutecode}`
-//                 );
-//                 setEmployeeDetails(response.data);
-//             }catch(error){
-//                 console.error("Error fetching the institutecode0");
-//             }
-//         }
-//         fetchEmployeeDetails();
-//     }, [institutecode]);
-
-//     useEffect(()=>{
-//         const loadEmployees = async ()=>{
-//             if(empID){
-//                 try{
-//                     console.log('selected employee id:', empID);
-//                     const result  = await axios.get(
-//                         `http://localhost:8082/empById/${empID}`
-//                     );
-//                     setEMployee(result.data);
-//                 }catch(error){
-//                     console.error('error fetching employee', error);
-//                 }
-//             }
-//         }
-//         loadEmployees();
-//     }, [empID])
-
-//   return (
-    
-//   )
-// }
-
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Card, CardContent, Typography, Avatar } from "@mui/material";
+import { Card, CardContent, Typography, Avatar,Grid } from "@mui/material";
 
-export default function EmpIDCard({ empID, onClose }) {
+export default function EmpIDCard({ id, onClose }) {
   const institutecode = localStorage.getItem("institutecode");
 
   const [employee, setEmployee] = useState({});
@@ -80,11 +29,11 @@ export default function EmpIDCard({ empID, onClose }) {
 
   useEffect(() => {
     const loadEmployee = async () => {
-      if (empID) {
+      if (id) {
         try {
-          console.log("Selected employee ID:", empID);
+          console.log("Selected employee ID:", id);
           const result = await axios.get(
-            `http://localhost:8082/empById/${empID}`
+            `http://localhost:8082/empById/${id}`
           );
           setEmployee(result.data);
         } catch (error) {
@@ -93,7 +42,7 @@ export default function EmpIDCard({ empID, onClose }) {
       }
     };
     loadEmployee();
-  }, [empID]);
+  }, [id]);
 
   return (
     <Card sx={{
@@ -107,12 +56,10 @@ export default function EmpIDCard({ empID, onClose }) {
       }}>
         <Typography style={{
             textAlign: 'center',
-            background: 'linear-gradient(to right, #FAD126, #FF564E)' , // Purple background for the logo area
+            background: 'linear-gradient(to right, #FAD126, #FF564E)',
             color: 'white',
             paddingTop: '40px',
             paddingBottom: '10px',
-            // fontWeight: 'bold',
-            // fontSize: '18px',
             marginBottom: '15px',
             marginTop:'-50px', width:'150%',borderRadius:'50%',
             marginLeft:'-60px',
@@ -127,12 +74,10 @@ export default function EmpIDCard({ empID, onClose }) {
             <Typography style={{textAlign:'center', fontSize:'12px'}}>{employeeDetails.phonenumber}</Typography>
           </Typography>
         <CardContent>
-          {/* Institute Logo and Name */}
-
-          {/* Student Image */}
+          {/* Employee Image */}
           <Avatar
             src={employee.employeePhoto}
-            alt="Student Image"
+            alt="Employee Image"
             sx={{
               width: 120,
               height: 120,
@@ -140,52 +85,77 @@ export default function EmpIDCard({ empID, onClose }) {
             }}
           />
 
-          {/* Student Name and Contact */}
+          {/* Employee Name and Contact */}
           <Typography variant="h6" align="center" gutterBottom style={{ marginTop: '10px' }}>
-            <span style={{  fontWeight: 'bold' }}>{employee.name}</span>
+            <span style={{  fontWeight: 'bold' }}>{employee.fullName}</span>
             <Typography style={{ fontSize: '13px', color: '#757575' }}>
-              {employee.mobile1}
+              {employee.mobileNo}
             </Typography>
             <Typography style={{ fontSize: '13px', color: '#757575' }}>
               {employee.email}
             </Typography>
           </Typography>
 
-          {/* Other Student Details */}
-          {/* <Typography variant="body1" style={{ marginTop: '10px' }}>
-            <strong style={{ color: '#4A148C' }}>Email:</strong> {employee.email}
-          </Typography> */}
-          <Typography variant="body1" mt={2} style={{textAlign:'center'}}>
-            <strong >Course:</strong> {employee.courses}
-          </Typography>
-          <Typography variant="body1" style={{textAlign:'center'}}>
-            <strong >Joining Date:</strong> {employee.date}
-          </Typography>
-          <Typography variant="body1" style={{textAlign:'center'}}>
-            <strong >Duration:</strong> {employee.duration}
-          </Typography>
-        </CardContent>
+          {/* Additional Employee Details */}
+          <div style={{ padding: '2px' }}>
+  <Grid container spacing={1} alignItems="center">
+    {/* Department */}
+    <Grid item xs={4} style={{ textAlign: 'right', whiteSpace: 'nowrap',marginLeft:"-20px" }}>
+      <Typography variant="body2" sx={{ fontSize: '14px' }}><strong>Department</strong></Typography>
+    </Grid>
+    <Grid item xs={1} style={{  whiteSpace: 'nowrap',marginLeft:"20px" }}>
+      <Typography variant="body2" sx={{ fontSize: '14px' }}>:</Typography>
+    </Grid>
+    <Grid item xs={7} style={{ whiteSpace: 'nowrap' }}>
+      <Typography variant="body2" sx={{ fontSize: '14px' }}>{employee.department}</Typography>
+    </Grid>
 
+    {/* Joining Date */}
+    <Grid item xs={4} style={{ textAlign: 'right', whiteSpace: 'nowrap' ,marginLeft:"-20px"}}>
+      <Typography variant="body2" sx={{ fontSize: '14px' }}><strong>Joining Date</strong></Typography>
+    </Grid>
+    <Grid item xs={1} style={{ textAlign: 'center', whiteSpace: 'nowrap',marginLeft:"20px" }}>
+      <Typography variant="body2" sx={{ fontSize: '14px' }}>:</Typography>
+    </Grid>
+    <Grid item xs={7} style={{ whiteSpace: 'nowrap' }}>
+      <Typography variant="body2" sx={{ fontSize: '14px' }}>{new Date(employee.joiningDate).toLocaleDateString()}</Typography>
+    </Grid>
+
+    {/* Work Location */}
+    <Grid item xs={4} style={{ textAlign: 'right', whiteSpace: 'nowrap',marginLeft:"-20px" }}>
+      <Typography variant="body2" sx={{ fontSize: '14px' }}><strong>Work Location</strong></Typography>
+    </Grid>
+    <Grid item xs={1} style={{ textAlign: 'center', whiteSpace: 'nowrap',marginLeft:"20px" }}>
+      <Typography variant="body2" sx={{ fontSize: '14px' }}>:</Typography>
+    </Grid>
+    <Grid item xs={7} style={{ whiteSpace: 'nowrap' }}>
+      <Typography variant="body2" sx={{ fontSize: '14px' }}>{employee.workLocation}</Typography>
+    </Grid>
+
+    {/* Shift */}
+    <Grid item xs={4} style={{ textAlign: 'start', whiteSpace: 'nowrap',marginLeft:"-20px" }}>
+      <Typography variant="body2" sx={{ fontSize: '14px' }}><strong>Shift</strong></Typography>
+    </Grid>
+    <Grid item xs={1} style={{ textAlign: 'center', whiteSpace: 'nowrap',marginLeft:"20px" }}>
+      <Typography variant="body2" sx={{ fontSize: '14px' }}>:</Typography>
+    </Grid>
+    <Grid item xs={7} style={{ whiteSpace: 'nowrap' }}>
+      <Typography variant="body2" sx={{ fontSize: '14px' }}>{employee.shift} ({employee.shiftStartTime} - {employee.shiftEndTime})</Typography>
+    </Grid>
+  </Grid>
+</div>
+        </CardContent>
+    
+        {/* Placeholder for future use */}
         <Typography style={{
             textAlign: 'center',
-            background: 'linear-gradient(to right, #FAD126, #FF564E)' , // Purple background for the logo area
+            background: 'linear-gradient(to right, #FAD126, #FF564E)',
             color: 'white',
             paddingTop: '40px',
-            // fontWeight: 'bold',
-            // fontSize: '18px', width:'150%',borderRadius:'50%',
-             width:'350px', borderRadius:'50%', marginLeft:'-40px',
+            width:'350px', borderRadius:'50%', marginLeft:'-40px',
              height:200,
           }}>
-            {/* <img
-              src={employeeDetails.instituteimage}
-              alt="Institute Logo"
-              style={{ width: '20%',height:'30%', marginRight: '10px', verticalAlign: 'middle', marginBottom:'10px', borderRadius:'50%', fontSize:'20px' }}
-            />
-            {employeeDetails.institutename}<br/> */}
-            {/* <Typography style={{textAlign:'center', fontSize:'12px',}}>{employeeDetails.emailaddress}</Typography>
-            <Typography style={{textAlign:'center', fontSize:'12px'}}>{employeeDetails.phonenumber}</Typography> */}
-          </Typography>
-
+        </Typography>
       </Card>
   );
 }
