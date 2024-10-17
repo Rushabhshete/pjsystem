@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import TodaysNotification from "./TodaysNotification";
 import {
   AppBar,
   Toolbar,
@@ -87,11 +88,11 @@ const Header = () => {
         const response = await axios.get(
           `http://localhost:8081/getTodaysNotification?institutecode=${institutecode}`
         );
-        if(response.data.length > 0) {
+        if (response.data.length > 0) {
           setNotifications(response.data);
           setNotificationCount(response.data.length);
         } else {
-          setNotifications([{ message: "No Notifications for today" }]);  // Set a default notification message
+          setNotifications([{ message: "No Notifications for today" }]); // Set a default notification message
           setNotificationCount(1); // Indicate that there's 1 notification (the default message)
         }
         setLoadingNotifications(false);
@@ -100,10 +101,9 @@ const Header = () => {
         setLoadingNotifications(false);
       }
     };
-  
+
     fetchNotifications();
   }, [institutecode]);
-  
 
   useEffect(() => {
     if (notificationCount > 0 && !hasSeenNotifications) {
@@ -172,9 +172,9 @@ const Header = () => {
       sx={{
         zIndex: (theme) => theme.zIndex.drawer + 1,
         // backgroundImage: "radial-gradient(circle, #FAD126, #FF564E)",
-      //  backgroundColor:"#0A3264",
-       backgroundColor:"#00649F",
-      //  opacity:0.8
+        //  backgroundColor:"#0A3264",
+        backgroundColor: "#00649F",
+        //  opacity:0.8
       }}
     >
       <Toolbar>
@@ -209,9 +209,12 @@ const Header = () => {
                 WebkitTextFillColor: "transparent",
               }}
             >
-           <b>   {loading
-                ? "Loading..."
-                : `Welcome ${employeeDetails?.institutename || "Guest"}`}</b>
+              <b>
+                {" "}
+                {loading
+                  ? "Loading..."
+                  : `Welcome ${employeeDetails?.institutename || "Guest"}`}
+              </b>
             </Typography>
           </Grid>
           <Grid
@@ -232,7 +235,7 @@ const Header = () => {
                   !hasSeenNotifications && notificationCount > 0
                     ? `${vibration} 0.8s ease-in-out`
                     : "none",
-                    color:'white',
+                color: "white",
               }}
             >
               <Badge
@@ -274,7 +277,7 @@ const Header = () => {
                 <MenuItem >New Updates Are Comming Soon </MenuItem>
               )}
             </Menu> */}
-           <Menu
+            <Menu
   id="menu-notifications"
   anchorEl={notificationsAnchorEl}
   anchorOrigin={{
@@ -291,14 +294,13 @@ const Header = () => {
 >
   {loadingNotifications ? (
     <MenuItem>Loading notifications...</MenuItem>
-  ) : notifications.length > 0 ? (
-    notifications.map((notification, index) => (
-      <MenuItem key={index}>{notification.message}</MenuItem>
-    ))
   ) : (
-    <MenuItem>No Notifications for today</MenuItem>
+    <MenuItem>
+      <TodaysNotification />
+    </MenuItem>
   )}
 </Menu>
+
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -336,7 +338,9 @@ const Header = () => {
         aria-labelledby="logout-dialog-title"
         aria-describedby="logout-dialog-description"
       >
-        <DialogTitle id="logout-dialog-title" color="red">Confirm Logout</DialogTitle>
+        <DialogTitle id="logout-dialog-title" color="red">
+          Confirm Logout
+        </DialogTitle>
         <DialogContent>
           <DialogContentText id="logout-dialog-description">
             Are you sure you want to logout? This will clear your session and
