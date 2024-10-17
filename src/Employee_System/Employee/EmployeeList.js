@@ -31,9 +31,10 @@ import Userservice from "./Userservice";
 import { toast, ToastContainer } from "react-toastify"; // Import toast from react-toastify
 import "react-toastify/dist/ReactToastify.css"; // Ensure this is imported
 import { Worker, Viewer } from "@react-pdf-viewer/core"; // Import PDF Viewer components
-import { zoomPlugin } from '@react-pdf-viewer/zoom'; // Import zoom plugin
-import '@react-pdf-viewer/core/lib/styles/index.css'; // Required styles
-import '@react-pdf-viewer/zoom/lib/styles/index.css'; // Zoom plugin styles
+import { zoomPlugin } from "@react-pdf-viewer/zoom"; // Import zoom plugin
+import "@react-pdf-viewer/core/lib/styles/index.css"; // Required styles
+import "@react-pdf-viewer/zoom/lib/styles/index.css"; // Zoom plugin styles
+import BadgeIcon from "@mui/icons-material/Badge";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import {
@@ -45,6 +46,7 @@ import {
   districts,
 } from "./dropdownData.js";
 import { Country, State, City } from "country-state-city";
+import EmpIDCard from "./EmpIDCard.js";
 
 const EmployeeList = () => {
   const [users, setUsers] = useState([]);
@@ -67,9 +69,31 @@ const EmployeeList = () => {
   const [uniqueDesignations, setUniqueDesignations] = useState([]);
   const [employeeDetails, setEmployeeDetails] = useState(null);
   const [documentToView, setDocumentToView] = useState(null); // Stores the document URL
-const [documentType, setDocumentType] = useState(null); // Stores the type (pdf or image)
-const [openDocumentDialog, setOpenDocumentDialog] = useState(false);
-const zoomPluginInstance = zoomPlugin(); // Create zoom plugin instance
+  const [documentType, setDocumentType] = useState(null); // Stores the type (pdf or image)
+  const [openDocumentDialog, setOpenDocumentDialog] = useState(false);
+  const zoomPluginInstance = zoomPlugin(); // Create zoom plugin instance
+
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [isDialogOpen, setDialogOpen] = useState(false);
+
+  const handleOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleClose = () => {
+    setDialogOpen(false);
+  };
+
+  const handleOpenDialog = (empID) => {
+    console.log("Dialogue opening for ID: ", empID);
+    setSelectedEmployee(empID);
+    setDialogOpen(true);
+  };
+
+  const handleCloseIDDialog = () => {
+    setSelectedEmployee(null);
+    setDialogOpen(false);
+  };
 
   useEffect(() => {
     const fetchUsersAndFilters = async () => {
@@ -153,7 +177,7 @@ const zoomPluginInstance = zoomPlugin(); // Create zoom plugin instance
     setDocumentType(type); // Set the type of document (image/pdf)
     setOpenDocumentDialog(true); // Open the dialog
   };
-  
+
   const handleDownload = (url) => {
     const link = document.createElement("a");
     link.href = url;
@@ -958,6 +982,14 @@ const zoomPluginInstance = zoomPlugin(); // Create zoom plugin instance
                         <Cancel />
                       </IconButton>{" "}
                       {/* Cancel icon */}
+                      <IconButton
+                        size="small"
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => handleOpenDialog(user.empID)}
+                      >
+                        <BadgeIcon />
+                      </IconButton>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -975,6 +1007,21 @@ const zoomPluginInstance = zoomPlugin(); // Create zoom plugin instance
           rowsPerPageOptions={[10, 20, 50]}
           labelRowsPerPage="Entries per Page"
         />
+
+        {/* id card dialog  */}
+
+        <Dialog open={isDialogOpen}
+        onClose={handleCloseIDDialog}
+        maxWidth="sm"
+        fullWidth>
+          <DialogTitle textAlign={"center"}>Id Card</DialogTitle>
+          <DialogContent style={{ width: "auto", padding: "20px" }}>
+            <EmpIDCard
+              id={selectedEmployee}
+              onClose={() => setDialogOpen(false)}
+            />
+          </DialogContent>
+        </Dialog>
 
         {/* Update Modal */}
         {selectedUser && (
@@ -1526,98 +1573,118 @@ const zoomPluginInstance = zoomPlugin(); // Create zoom plugin instance
                       InputLabelProps={{ shrink: true }}
                     />
                   </Grid>
-                  <Grid item xs={12} sx={{ mt: 2, ml: 45}}>
+                  <Grid item xs={12} sx={{ mt: 2, ml: 45 }}>
                     <Button variant="contained" onClick={handleUpdate}>
                       Update
                     </Button>
                   </Grid>
                   <Grid item xs={12}>
-                  <hr />
-                  <Typography
-                variant="h5"
-                gutterBottom
-                sx={{
-                  fontWeight: "bold",
-                  color: "#24A0ED",
-                  textAlign: "center",
-                }}
-              >
-                Update Documents
-              </Typography>
-              <hr />
-              </Grid>
-              
-              <br />
+                    <hr />
+                    <Typography
+                      variant="h5"
+                      gutterBottom
+                      sx={{
+                        fontWeight: "bold",
+                        color: "#24A0ED",
+                        textAlign: "center",
+                      }}
+                    >
+                      Update Documents
+                    </Typography>
+                    <hr />
+                  </Grid>
+
+                  <br />
                   <Grid item xs={12} sm={4}>
-            <TextField
-              required
-              type="file"
-              accept=".jpeg"
-              name="idProofFile"
-              value={selectedUser?.idProofFile}
-              onChange={handleInputChange}
-              helperText="ID Proof (JPEG, max 1MB)"
-            />
-              <Button variant="contained" color="primary" onClick={() => handleDocuments('idProofFile')}>
-                Update
-              </Button>
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <TextField
-              required
-              type="file"
-              accept=".jpeg"
-              name="empFile"
-              value={selectedUser?.empFile}
-              onChange={handleInputChange}
-              helperText="Employee Photo (JPEG, max 1MB)"
-            />
-              <Button variant="contained" color="primary" onClick={() => handleDocuments('empFile')}>
-                Update
-              </Button>
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <TextField
-              required
-              type="file"
-              accept=".pdf"
-              name="resumeFile"
-              value={selectedUser?.resumeFile}
-              onChange={handleInputChange}
-              helperText="Resume (PDF, max 1MB)"
-            />
-              <Button variant="contained" color="primary" onClick={() => handleDocuments('resumeFile')}>
-              Update
-              </Button>
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <TextField
-              required
-              type="file"
-              accept=".pdf"
-              name="addressProofFile"
-              value={selectedUser?.addressProofFile}
-              onChange={handleInputChange}
-              helperText="Address Proof (PDF, max 1MB)"
-            />
-              <Button variant="contained" color="primary" onClick={() => handleDocuments('addressProofFile')}>
-              Update
-              </Button>
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <TextField
-              required
-              type="file"
-              accept=".pdf"
-              name="experienceLetterFile"
-              value={selectedUser?.experienceLetterFile}
-              onChange={handleInputChange}
-              helperText="Experience Letter (PDF, max 1MB)"
-            />
-              <Button variant="contained" color="primary" onClick={() => handleDocuments('experienceLetterFile')}>
-              Update
-              </Button>
-          </Grid>
+                    <TextField
+                      required
+                      type="file"
+                      accept=".jpeg"
+                      name="idProofFile"
+                      value={selectedUser?.idProofFile}
+                      onChange={handleInputChange}
+                      helperText="ID Proof (JPEG, max 1MB)"
+                    />
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleDocuments("idProofFile")}
+                    >
+                      Update
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <TextField
+                      required
+                      type="file"
+                      accept=".jpeg"
+                      name="empFile"
+                      value={selectedUser?.empFile}
+                      onChange={handleInputChange}
+                      helperText="Employee Photo (JPEG, max 1MB)"
+                    />
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleDocuments("empFile")}
+                    >
+                      Update
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <TextField
+                      required
+                      type="file"
+                      accept=".pdf"
+                      name="resumeFile"
+                      value={selectedUser?.resumeFile}
+                      onChange={handleInputChange}
+                      helperText="Resume (PDF, max 1MB)"
+                    />
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleDocuments("resumeFile")}
+                    >
+                      Update
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <TextField
+                      required
+                      type="file"
+                      accept=".pdf"
+                      name="addressProofFile"
+                      value={selectedUser?.addressProofFile}
+                      onChange={handleInputChange}
+                      helperText="Address Proof (PDF, max 1MB)"
+                    />
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleDocuments("addressProofFile")}
+                    >
+                      Update
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <TextField
+                      required
+                      type="file"
+                      accept=".pdf"
+                      name="experienceLetterFile"
+                      value={selectedUser?.experienceLetterFile}
+                      onChange={handleInputChange}
+                      helperText="Experience Letter (PDF, max 1MB)"
+                    />
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleDocuments("experienceLetterFile")}
+                    >
+                      Update
+                    </Button>
+                  </Grid>
 
                   {/* <Grid item xs={12} sm={4}>
                 <FormControl fullWidth>
@@ -1649,7 +1716,7 @@ const zoomPluginInstance = zoomPlugin(); // Create zoom plugin instance
                   InputLabelProps={{ shrink: true }}
                 />
               </Grid> */}
-               <Grid item xs={12} sx={{ mt: 2, ml: 75 }}>
+                  <Grid item xs={12} sx={{ mt: 2, ml: 75 }}>
                     <Button
                       variant="contained"
                       color="secondary"
@@ -2293,43 +2360,63 @@ const zoomPluginInstance = zoomPlugin(); // Create zoom plugin instance
                   </Typography>{" "}
                   {selectedUser?.status}
                 </Grid>
-                <Grid item xs={12} sm={6} sx={{ display: "flex", alignItems: "center" }}>
-  <Typography variant="subtitle1" sx={{ fontWeight: "bold", mr: 1 }}>
-    Employee Photo:
-  </Typography>
-  <Button
-    variant="contained"
-    onClick={() => handleViewDocument(selectedUser?.employeePhoto, "image")}
-  >
-    View
-  </Button>
-  <Button
-    variant="outlined"
-    sx={{ ml: 1 }}
-    onClick={() => handleDownload(selectedUser?.employeePhoto)}
-  >
-    Download
-  </Button>
-</Grid>
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  sx={{ display: "flex", alignItems: "center" }}
+                >
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ fontWeight: "bold", mr: 1 }}
+                  >
+                    Employee Photo:
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    onClick={() =>
+                      handleViewDocument(selectedUser?.employeePhoto, "image")
+                    }
+                  >
+                    View
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    sx={{ ml: 1 }}
+                    onClick={() => handleDownload(selectedUser?.employeePhoto)}
+                  >
+                    Download
+                  </Button>
+                </Grid>
 
-<Grid item xs={12} sm={6} sx={{ display: "flex", alignItems: "center" }}>
-  <Typography variant="subtitle1" sx={{ fontWeight: "bold", mr: 1 }}>
-    Resume:
-  </Typography>
-  <Button
-    variant="contained"
-    onClick={() => handleViewDocument(selectedUser?.resume, "pdf")}
-  >
-    View
-  </Button>
-  <Button
-    variant="outlined"
-    sx={{ ml: 1 }}
-    onClick={() => handleDownload(selectedUser?.resume)}
-  >
-    Download
-  </Button>
-</Grid>
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  sx={{ display: "flex", alignItems: "center" }}
+                >
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ fontWeight: "bold", mr: 1 }}
+                  >
+                    Resume:
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    onClick={() =>
+                      handleViewDocument(selectedUser?.resume, "pdf")
+                    }
+                  >
+                    View
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    sx={{ ml: 1 }}
+                    onClick={() => handleDownload(selectedUser?.resume)}
+                  >
+                    Download
+                  </Button>
+                </Grid>
               </Grid>
               <Box mt={2} textAlign="right">
                 <Button
@@ -2352,39 +2439,47 @@ const zoomPluginInstance = zoomPlugin(); // Create zoom plugin instance
           </Modal>
         )}
 
-<Dialog open={openDocumentDialog} onClose={() => setOpenDocumentDialog(false)}>
-  <DialogTitle>Document Viewer</DialogTitle>
-  <DialogContent dividers>
-    {documentType === "image" && (
-      <img src={documentToView} alt="Document" style={{ maxWidth: "100%" }} />
-    )}
-    {documentType === "pdf" && (
-     <Worker workerUrl={`https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js`}>
-     <Viewer
-       fileUrl={documentToView}
-       plugins={[zoomPluginInstance]} // Add zoom plugin here
-       onLoadError={(error) => {
-         if (error.message.includes("401")) {
-           console.error("Unauthorized access to the PDF file");
-           alert("You do not have access to view this file.");
-         } else {
-           console.error("Error loading PDF", error);
-         }
-       }}
-     />
-   </Worker>
-   
-    )}
-  </DialogContent>
-  <DialogActions>
-    <Button
-      onClick={() => setOpenDocumentDialog(false)}
-      color="primary"
-    >
-      Close
-    </Button>
-  </DialogActions>
-</Dialog>
+        <Dialog
+          open={openDocumentDialog}
+          onClose={() => setOpenDocumentDialog(false)}
+        >
+          <DialogTitle>Document Viewer</DialogTitle>
+          <DialogContent dividers>
+            {documentType === "image" && (
+              <img
+                src={documentToView}
+                alt="Document"
+                style={{ maxWidth: "100%" }}
+              />
+            )}
+            {documentType === "pdf" && (
+              <Worker
+                workerUrl={`https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js`}
+              >
+                <Viewer
+                  fileUrl={documentToView}
+                  plugins={[zoomPluginInstance]} // Add zoom plugin here
+                  onLoadError={(error) => {
+                    if (error.message.includes("401")) {
+                      console.error("Unauthorized access to the PDF file");
+                      alert("You do not have access to view this file.");
+                    } else {
+                      console.error("Error loading PDF", error);
+                    }
+                  }}
+                />
+              </Worker>
+            )}
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() => setOpenDocumentDialog(false)}
+              color="primary"
+            >
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
         <ToastContainer />
       </div>
     </>
