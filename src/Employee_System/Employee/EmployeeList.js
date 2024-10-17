@@ -20,12 +20,20 @@ import {
   Box,
   TablePagination,
   Select,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from "@mui/material";
 import { Delete, Edit, Info, Cancel } from "@mui/icons-material"; // Material Icons
 import axios from "axios";
 import Userservice from "./Userservice";
 import { toast, ToastContainer } from "react-toastify"; // Import toast from react-toastify
 import "react-toastify/dist/ReactToastify.css"; // Ensure this is imported
+import { Worker, Viewer } from "@react-pdf-viewer/core"; // Import PDF Viewer components
+import { zoomPlugin } from '@react-pdf-viewer/zoom'; // Import zoom plugin
+import '@react-pdf-viewer/core/lib/styles/index.css'; // Required styles
+import '@react-pdf-viewer/zoom/lib/styles/index.css'; // Zoom plugin styles
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import {
@@ -58,6 +66,10 @@ const EmployeeList = () => {
   const [uniqueCategories, setUniqueCategories] = useState([]);
   const [uniqueDesignations, setUniqueDesignations] = useState([]);
   const [employeeDetails, setEmployeeDetails] = useState(null);
+  const [documentToView, setDocumentToView] = useState(null); // Stores the document URL
+const [documentType, setDocumentType] = useState(null); // Stores the type (pdf or image)
+const [openDocumentDialog, setOpenDocumentDialog] = useState(false);
+const zoomPluginInstance = zoomPlugin(); // Create zoom plugin instance
 
   useEffect(() => {
     const fetchUsersAndFilters = async () => {
@@ -135,6 +147,19 @@ const EmployeeList = () => {
     selectedStatus,
     searchTerm,
   ]);
+
+  const handleViewDocument = (url, type) => {
+    setDocumentToView(url); // Set the URL of the document to view
+    setDocumentType(type); // Set the type of document (image/pdf)
+    setOpenDocumentDialog(true); // Open the dialog
+  };
+  
+  const handleDownload = (url) => {
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = url.split("/").pop(); // Extract the file name from the URL
+    link.click();
+  };
 
   const [institutecode, setInstituteCode] = useState(
     localStorage.getItem("institutecode") || ""
@@ -346,8 +371,6 @@ const EmployeeList = () => {
       try {
         await Userservice.updateUser(selectedUser.empID, selectedUser);
         await fetchUsers();
-        setShowUpdateModal(false);
-        setSelectedUser(null);
         toast.success("Employee updated successfully"); // Notify success
       } catch (error) {
         setError("Error updating Employee: " + error.message);
@@ -1503,6 +1526,28 @@ const EmployeeList = () => {
                       InputLabelProps={{ shrink: true }}
                     />
                   </Grid>
+                  <Grid item xs={12} sx={{ mt: 2, ml: 45}}>
+                    <Button variant="contained" onClick={handleUpdate}>
+                      Update
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12}>
+                  <hr />
+                  <Typography
+                variant="h5"
+                gutterBottom
+                sx={{
+                  fontWeight: "bold",
+                  color: "#24A0ED",
+                  textAlign: "center",
+                }}
+              >
+                Update Documents
+              </Typography>
+              <hr />
+              </Grid>
+              
+              <br />
                   <Grid item xs={12} sm={4}>
             <TextField
               required
@@ -1542,7 +1587,7 @@ const EmployeeList = () => {
               helperText="Resume (PDF, max 1MB)"
             />
               <Button variant="contained" color="primary" onClick={() => handleDocuments('resumeFile')}>
-                Upload
+              Update
               </Button>
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -1556,7 +1601,7 @@ const EmployeeList = () => {
               helperText="Address Proof (PDF, max 1MB)"
             />
               <Button variant="contained" color="primary" onClick={() => handleDocuments('addressProofFile')}>
-                Upload
+              Update
               </Button>
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -1570,9 +1615,10 @@ const EmployeeList = () => {
               helperText="Experience Letter (PDF, max 1MB)"
             />
               <Button variant="contained" color="primary" onClick={() => handleDocuments('experienceLetterFile')}>
-                Upload
+              Update
               </Button>
           </Grid>
+
                   {/* <Grid item xs={12} sm={4}>
                 <FormControl fullWidth>
                   <TextField
@@ -1603,10 +1649,7 @@ const EmployeeList = () => {
                   InputLabelProps={{ shrink: true }}
                 />
               </Grid> */}
-                  <Grid item xs={12} sx={{ mt: 2, ml: 75 }}>
-                    <Button variant="contained" onClick={handleUpdate}>
-                      Update
-                    </Button>
+               <Grid item xs={12} sx={{ mt: 2, ml: 75 }}>
                     <Button
                       variant="contained"
                       color="secondary"
@@ -2250,107 +2293,43 @@ const EmployeeList = () => {
                   </Typography>{" "}
                   {selectedUser?.status}
                 </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  sx={{ display: "flex", alignItems: "center" }}
-                >
-                  <Typography
-                    variant="subtitle1"
-                    sx={{ fontWeight: "bold", mr: 1 }}
-                  >
-                    Employee Photo:
-                  </Typography>
-                  <Button
-                    variant="contained"
-                    onClick={() =>
-                      window.open(selectedUser?.employeePhoto, "_blank")
-                    }
-                  >
-                    View
-                  </Button>
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  sx={{ display: "flex", alignItems: "center" }}
-                >
-                  <Typography
-                    variant="subtitle1"
-                    sx={{ fontWeight: "bold", mr: 1 }}
-                  >
-                    ID Proof:
-                  </Typography>
-                  <Button
-                    variant="contained"
-                    onClick={() => window.open(selectedUser?.idProof, "_blank")}
-                  >
-                    View
-                  </Button>
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  sx={{ display: "flex", alignItems: "center" }}
-                >
-                  <Typography
-                    variant="subtitle1"
-                    sx={{ fontWeight: "bold", mr: 1 }}
-                  >
-                    Resume:
-                  </Typography>
-                  <Button
-                    variant="contained"
-                    onClick={() => window.open(selectedUser?.resume, "_blank")}
-                  >
-                    View
-                  </Button>
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  sx={{ display: "flex", alignItems: "center" }}
-                >
-                  <Typography
-                    variant="subtitle1"
-                    sx={{ fontWeight: "bold", mr: 1 }}
-                  >
-                    Address Proof:
-                  </Typography>
-                  <Button
-                    variant="contained"
-                    onClick={() =>
-                      window.open(selectedUser?.addressProof, "_blank")
-                    }
-                  >
-                    View
-                  </Button>
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  sx={{ display: "flex", alignItems: "center" }}
-                >
-                  <Typography
-                    variant="subtitle1"
-                    sx={{ fontWeight: "bold", mr: 1 }}
-                  >
-                    Experience Letter:
-                  </Typography>
-                  <Button
-                    variant="contained"
-                    onClick={() =>
-                      window.open(selectedUser?.experienceLetter, "_blank")
-                    }
-                  >
-                    View
-                  </Button>
-                </Grid>
+                <Grid item xs={12} sm={6} sx={{ display: "flex", alignItems: "center" }}>
+  <Typography variant="subtitle1" sx={{ fontWeight: "bold", mr: 1 }}>
+    Employee Photo:
+  </Typography>
+  <Button
+    variant="contained"
+    onClick={() => handleViewDocument(selectedUser?.employeePhoto, "image")}
+  >
+    View
+  </Button>
+  <Button
+    variant="outlined"
+    sx={{ ml: 1 }}
+    onClick={() => handleDownload(selectedUser?.employeePhoto)}
+  >
+    Download
+  </Button>
+</Grid>
+
+<Grid item xs={12} sm={6} sx={{ display: "flex", alignItems: "center" }}>
+  <Typography variant="subtitle1" sx={{ fontWeight: "bold", mr: 1 }}>
+    Resume:
+  </Typography>
+  <Button
+    variant="contained"
+    onClick={() => handleViewDocument(selectedUser?.resume, "pdf")}
+  >
+    View
+  </Button>
+  <Button
+    variant="outlined"
+    sx={{ ml: 1 }}
+    onClick={() => handleDownload(selectedUser?.resume)}
+  >
+    Download
+  </Button>
+</Grid>
               </Grid>
               <Box mt={2} textAlign="right">
                 <Button
@@ -2372,6 +2351,40 @@ const EmployeeList = () => {
             </Box>
           </Modal>
         )}
+
+<Dialog open={openDocumentDialog} onClose={() => setOpenDocumentDialog(false)}>
+  <DialogTitle>Document Viewer</DialogTitle>
+  <DialogContent dividers>
+    {documentType === "image" && (
+      <img src={documentToView} alt="Document" style={{ maxWidth: "100%" }} />
+    )}
+    {documentType === "pdf" && (
+     <Worker workerUrl={`https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js`}>
+     <Viewer
+       fileUrl={documentToView}
+       plugins={[zoomPluginInstance]} // Add zoom plugin here
+       onLoadError={(error) => {
+         if (error.message.includes("401")) {
+           console.error("Unauthorized access to the PDF file");
+           alert("You do not have access to view this file.");
+         } else {
+           console.error("Error loading PDF", error);
+         }
+       }}
+     />
+   </Worker>
+   
+    )}
+  </DialogContent>
+  <DialogActions>
+    <Button
+      onClick={() => setOpenDocumentDialog(false)}
+      color="primary"
+    >
+      Close
+    </Button>
+  </DialogActions>
+</Dialog>
         <ToastContainer />
       </div>
     </>
