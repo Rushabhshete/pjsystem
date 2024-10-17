@@ -4,6 +4,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp"; // Import WhatsApp Icon
 import InfoIcon from "@mui/icons-material/Info"; // Importing InfoIcon
+import BadgeIcon from '@mui/icons-material/Badge';
 import {
   Table,
   TableBody,
@@ -25,6 +26,7 @@ import {
   styled,
   Typography,
   TablePagination,
+  Tooltip,
 } from "@mui/material";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -804,10 +806,10 @@ const StudentList = () => {
                   <IconButton
                     size="small"
                     variant="contained"
-                    color="info"
+                    color="secondary"
                     onClick={() => handleOpenDialog(admission.id)}
                   >
-                    ID Card
+                    <Tooltip><BadgeIcon/></Tooltip>
                   </IconButton>
                 </TableCell>
               </TableRow>

@@ -89,11 +89,11 @@ export default function IdCard({ id, onClose }) {
         borderRadius: 5, 
         padding: '20px', 
         backgroundColor: '#fff', 
-        border: '5px solid #4A148C' // Purple border for the card
+        height: 530
       }}>
         <Typography style={{ 
             textAlign: 'center', 
-            backgroundColor: '#4A148C', // Purple background for the logo area
+            background: 'linear-gradient(to right, #FAD126, #FF564E)' , // Purple background for the logo area
             color: 'white',
             paddingTop: '40px',
             paddingBottom: '10px',
@@ -101,12 +101,12 @@ export default function IdCard({ id, onClose }) {
             // fontSize: '18px',
             marginBottom: '15px',
             marginTop:'-50px', width:'150%',borderRadius:'50%',
-            marginLeft:'-60px'
+            marginLeft:'-60px',
           }}>
             <img 
               src={employeeDetails.instituteimage} 
               alt="Institute Logo" 
-              style={{ width: '20%',height:'30%', marginRight: '10px', verticalAlign: 'middle', marginBottom:'10px', borderRadius:'50%', fontSize:'20px' }} 
+              style={{ width: '10%',height:'10%', marginRight: '10px', verticalAlign: 'middle', marginBottom:'10px', borderRadius:'50%', fontSize:'20px' }} 
             />
             {employeeDetails.institutename}<br/>
             <Typography style={{textAlign:'center', fontSize:'12px',}}>{employeeDetails.emailaddress}</Typography>
@@ -124,13 +124,12 @@ export default function IdCard({ id, onClose }) {
               width: 120, 
               height: 120, 
               margin: 'auto', 
-              border: '3px solid #4A148C' // Purple border for the avatar
             }}
           />
   
           {/* Student Name and Contact */}
           <Typography variant="h6" align="center" gutterBottom style={{ marginTop: '10px' }}>
-            <span style={{ color: '#4A148C', fontWeight: 'bold' }}>{admission.name}</span>
+            <span style={{  fontWeight: 'bold' }}>{admission.name}</span>
             <Typography style={{ fontSize: '13px', color: '#757575' }}>
               {admission.mobile1}
             </Typography>
@@ -144,15 +143,38 @@ export default function IdCard({ id, onClose }) {
             <strong style={{ color: '#4A148C' }}>Email:</strong> {admission.email}
           </Typography> */}
           <Typography variant="body1" mt={2} style={{textAlign:'center'}}>
-            <strong style={{ color: '#4A148C' }}>Course:</strong> {admission.courses}
+            <strong >Course:</strong> {admission.courses}
           </Typography>
           <Typography variant="body1" style={{textAlign:'center'}}>
-            <strong style={{ color: '#4A148C' }}>Joining Date:</strong> {admission.date}
+            <strong >Joining Date:</strong> {admission.date}
           </Typography>
           <Typography variant="body1" style={{textAlign:'center'}}>
-            <strong style={{ color: '#4A148C' }}>Duration:</strong> {admission.duration}
+            <strong >Duration:</strong> {admission.duration}
           </Typography>
         </CardContent>
+        
+
+
+        <Typography style={{ 
+            textAlign: 'center', 
+            background: 'linear-gradient(to right, #FAD126, #FF564E)' , // Purple background for the logo area
+            color: 'white',
+            paddingTop: '40px',
+            // fontWeight: 'bold',
+            // fontSize: '18px', width:'150%',borderRadius:'50%',
+             width:'350px', borderRadius:'50%', marginLeft:'-40px',
+             height:200, 
+          }}>
+            {/* <img 
+              src={employeeDetails.instituteimage} 
+              alt="Institute Logo" 
+              style={{ width: '20%',height:'30%', marginRight: '10px', verticalAlign: 'middle', marginBottom:'10px', borderRadius:'50%', fontSize:'20px' }} 
+            />
+            {employeeDetails.institutename}<br/> */}
+            {/* <Typography style={{textAlign:'center', fontSize:'12px',}}>{employeeDetails.emailaddress}</Typography>
+            <Typography style={{textAlign:'center', fontSize:'12px'}}>{employeeDetails.phonenumber}</Typography> */}
+          </Typography>
+
       </Card>
   );
 }
