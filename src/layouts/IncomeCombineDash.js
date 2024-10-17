@@ -859,6 +859,8 @@ export default function IncomeCombineDash() {
                     {
                       dataFrom: "keys",
                       anchor: "bottom-right",
+                    
+                 
                       direction: "column",
                       justify: false,
                       translateX: 120,
@@ -932,6 +934,7 @@ export default function IncomeCombineDash() {
                     axisBottom={{
                       orient: 'bottom',
                       tickSize: 5,
+                 
                       tickPadding: 5,
                       tickRotation: 0,
                    //   legend: 'Month',
