@@ -843,6 +843,7 @@ export default function IncomeCombineDash() {
                   data={overallData}
                   keys={["Income", "Expense"]} // Data keys to map bars
                   indexBy="category" // Grouped by "category"
+       groupMode="grouped"
                   margin={{ top: 20, right: 20, bottom: 50, left: 60 }}
                   padding={0.3}
                   colors={({ id }) => (id === "Income" ? "#3498DB" : "#FF6F61")} // Custom colors for bars
