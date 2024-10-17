@@ -153,7 +153,7 @@ const SourceByGraph = () => {
              // title: "Admissions by Source",
               is3D: true,
               colors: [
-                "#FF6F61"
+                "#FF6F61", "#3498DB", "#F9E79F"
               ],
             }}
           />

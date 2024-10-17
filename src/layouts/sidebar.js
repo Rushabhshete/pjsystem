@@ -759,6 +759,18 @@ const isActive = (route) => location.pathname === route;
       ],
     },
     {
+      name: "Shipment System",
+      icon: <PersonSearchRoundedIcon sx={{ color: "#fff" }} />,
+      show: systemValues?.enquirymanagementsystem,
+      subOptions: [
+        {
+          name: "Shipment Manager",
+          icon: <DashboardIcon sx={{ color: "#fff" }} />,
+          route: "/layout/shipment-manager", // Route for the manager
+        },
+      ],
+    },
+    {
       name: "Add Sub-Admin",
       icon: <AdminPanelSettingsIcon sx={{ color: "#fff" }} />,
       route: "/layout/subadmin",

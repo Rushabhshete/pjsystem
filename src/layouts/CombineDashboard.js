@@ -389,7 +389,7 @@ export default function CombineDashboard() {
                 }}
               />
 
-              <Typography variant="h6" sx={{ margin: "0 10px" }}>
+              <Typography variant="h6" sx={{ margin: "0 10px",  marginBottom:'10px' }}>
                 <b>Enquiry</b>
               </Typography>
               <Box
@@ -416,10 +416,11 @@ export default function CombineDashboard() {
                       padding: 2,
                       borderRadius: "10px",
                       textAlign: "center",
+                      fontWeight:'bold'
                     }}
                   >
-                    <Typography variant="h6">Today</Typography>
-                    <Typography variant="h4">{todaysApplications}</Typography>
+                    <Typography variant="h7">Today</Typography>
+                    <Typography variant="h5">{todaysApplications}</Typography>
                   </Box>
                   <Box
                     sx={{
@@ -428,10 +429,11 @@ export default function CombineDashboard() {
                       borderRadius: "10px",
                       mt: 2,
                       textAlign: "center",
+                      fontWeight:'bold'
                     }}
                   >
-                    <Typography variant="h6">Last 7</Typography>
-                    <Typography variant="h4">{sevenDaysApplication}</Typography>
+                    <Typography variant="h7">Last 7</Typography>
+                    <Typography variant="h5">{sevenDaysApplication}</Typography>
                   </Box>
                 </Grid>
 
@@ -442,10 +444,11 @@ export default function CombineDashboard() {
                       padding: 2,
                       borderRadius: "10px",
                       textAlign: "center",
+                      fontWeight:'bold'
                     }}
                   >
-                    <Typography variant="h6">Last 30</Typography>
-                    <Typography variant="h4">
+                    <Typography variant="h7">Last 30</Typography>
+                    <Typography variant="h5">
                       {thirtyDaysApplication}
                     </Typography>
                   </Box>
@@ -456,10 +459,11 @@ export default function CombineDashboard() {
                       borderRadius: "10px",
                       mt: 2,
                       textAlign: "center",
+                      fontWeight:'bold'
                     }}
                   >
-                    <Typography variant="h6">Total</Typography>
-                    <Typography variant="h4">{totalApplications}</Typography>
+                    <Typography variant="h7">Total</Typography>
+                    <Typography variant="h5">{totalApplications}</Typography>
                   </Paper>
                 </Grid>
               </Grid>
@@ -486,7 +490,7 @@ export default function CombineDashboard() {
                   backgroundColor: "#0D47A1",
                 }}
               />
-              <Typography variant="h6" sx={{ margin: "0 10px" }}>
+              <Typography variant="h6" sx={{ margin: "0 10px" ,  marginBottom:'10px',}}>
                 <b>Admission</b>
               </Typography>
               <Box
@@ -513,10 +517,11 @@ export default function CombineDashboard() {
                       padding: 2,
                       borderRadius: "10px",
                       textAlign: "center",
+                      fontWeight:'bold'
                     }}
                   >
-                    <Typography variant="h6">Today's Admissions</Typography>
-                    <Typography variant="h4">{data.todayCount}</Typography>
+                    <Typography variant="h7">Today's Admissions</Typography>
+                    <Typography variant="h5">{data.todayCount}</Typography>
                   </Box>
                   <Box
                     sx={{
@@ -525,9 +530,10 @@ export default function CombineDashboard() {
                       borderRadius: "10px",
                       mt: 2,
                       textAlign: "center",
+                      fontWeight:'bold'
                     }}
                   >
-                    <Typography variant="h6">Today's Revenue</Typography>
+                    <Typography variant="h7">Today's Revenue</Typography>
                     <Typography variant="h5">{data.todayRevenue}</Typography>
                   </Box>
                 </Grid>
@@ -539,10 +545,11 @@ export default function CombineDashboard() {
                       padding: 2,
                       borderRadius: "10px",
                       textAlign: "center",
+                      fontWeight:'bold'
                     }}
                   >
-                    <Typography variant="h6">Total Admissions</Typography>
-                    <Typography variant="h4">{data.totalCount}</Typography>
+                    <Typography variant="h7">Total Admissions</Typography>
+                    <Typography variant="h5">{data.totalCount}</Typography>
                   </Box>
                   <Box
                     sx={{
@@ -551,15 +558,16 @@ export default function CombineDashboard() {
                       borderRadius: "10px",
                       mt: 2,
                       textAlign: "center",
+                      fontWeight:'bold'
                     }}
                   >
-                    <Typography variant="h6">Total Revenue</Typography>
+                    <Typography variant="h7">Total Revenue</Typography>
                     <Typography variant="h5">{data.totalRevenue}</Typography>
                   </Box>
                 </Grid>
               </Grid>
 
-              <Box sx={{ marginTop: 2 }}>
+              <Box sx={{ marginTop: 5 }}>
                 <ComparisonGraph />
               </Box>
             </Box>

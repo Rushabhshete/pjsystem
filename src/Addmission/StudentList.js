@@ -1,10 +1,10 @@
-
 import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import WhatsAppIcon from '@mui/icons-material/WhatsApp'; // Import WhatsApp Icon
+import WhatsAppIcon from "@mui/icons-material/WhatsApp"; // Import WhatsApp Icon
 import InfoIcon from "@mui/icons-material/Info"; // Importing InfoIcon
+import BadgeIcon from '@mui/icons-material/Badge';
 import {
   Table,
   TableBody,
@@ -26,6 +26,7 @@ import {
   styled,
   Typography,
   TablePagination,
+  Tooltip,
 } from "@mui/material";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -34,6 +35,7 @@ import UpdateAdmissionForm from "./UpdateAdmissionForm";
 import { Link } from "react-router-dom";
 import PrintIcon from "@mui/icons-material/Print";
 import html2pdf from "html2pdf.js"; // Importing html2pdf.js
+import IdCard from "./IdCard";
 
 const DownloadButton = styled(Button)(({ theme }) => ({
   margin: theme.spacing(1),
@@ -91,25 +93,45 @@ const StudentList = () => {
   const [selectedAdmission, setSelectedAdmission] = useState(null);
   const [selectedPrintAdmission, setSelectedPrintAdmission] = useState(false);
   const [openReceipt, setOpenReceipt] = useState(false);
+  const [selectedAdmissionId, setSelectedAdmissionId] = useState(null);
+  const [isDialogOpen, setDialogOpen] = useState(false);
+
+  const handleOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleClose = () => {
+    setDialogOpen(false);
+  };
+
+  const handleOpenDialog = (id) => {
+    console.log("Dialogue opening for ID: ", id);
+    setSelectedAdmissionId(id);
+    setDialogOpen(true);
+  };
+
+  const handleCloseIDDialog = () => {
+    setSelectedAdmissionId(null);
+    setDialogOpen(false);
+  };
   const handleGenerate = (instituteData) => {
     setSelectedPrintAdmission(instituteData);
     setOpenReceipt(true);
   };
 
-      // Additional state for viewing inquiry details
-      const [viewAdmissionOpen, setViewAdmissionOpen] = useState(false);
-      const [admissionDetail, setAdmissionDetail] = useState(null);
+  // Additional state for viewing inquiry details
+  const [viewAdmissionOpen, setViewAdmissionOpen] = useState(false);
+  const [admissionDetail, setAdmissionDetail] = useState(null);
 
+  const handleViewAdmission = (admission) => {
+    setAdmissionDetail(admission);
+    setViewAdmissionOpen(true);
+  };
 
-      const handleViewAdmission = (admission) => {
-        setAdmissionDetail(admission);
-        setViewAdmissionOpen(true);
-      };
-    
-      const closeViewAdmission = () => {
-        setViewAdmissionOpen(false);
-        setAdmissionDetail(null);
-      };
+  const closeViewAdmission = () => {
+    setViewAdmissionOpen(false);
+    setAdmissionDetail(null);
+  };
 
   const downloadReceipt = () => {
     const receiptElement = document.getElementById("receipt");
@@ -249,7 +271,6 @@ const StudentList = () => {
   };
 
   const handleStatusChange = (event) => {
-    // New handler for status change
     setSelectedStatus(event.target.value);
   };
 
@@ -259,7 +280,7 @@ const StudentList = () => {
 
   const handleWhatsAppClick = (mobile1) => {
     const url = `https://wa.me/${mobile1}`; // Format: wa.me/1234567890
-    window.open(url, '_blank'); // Open WhatsApp in new tab
+    window.open(url, "_blank"); // Open WhatsApp in new tab
   };
 
   const filteredAdmissions = useMemo(() => {
@@ -414,8 +435,8 @@ const StudentList = () => {
     document.body.removeChild(link);
   };
 
-   // Update click handler
-   const handleUpdateClick = (admission) => {
+  // Update click handler
+  const handleUpdateClick = (admission) => {
     setSelectedAdmission(admission); // Set the selected admission
     setOpenUpdateDialog(true); // Open the update dialog
   };
@@ -452,8 +473,6 @@ const StudentList = () => {
       console.error("Error deleting admission:", error);
     }
   };
-
-
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
@@ -619,14 +638,17 @@ const StudentList = () => {
         <Grid item xs={8} sm={1.6} md={2}>
           <DownloadButton
             variant="contained"
-            color="secondary"
+            color="primary"
             onClick={handleDownloadCSV}
           >
             Download CSV
           </DownloadButton>
         </Grid>
         <Grid item xs={8} sm={1.6} md={2}>
-          <Link to="/layout/Admission-manager/admission-form" style={{ textDecoration: "none" }}>
+          <Link
+            to="/layout/Admission-manager/admission-form"
+            style={{ textDecoration: "none" }}
+          >
             <Button variant="contained" color="primary">
               Back to Form
             </Button>
@@ -649,7 +671,7 @@ const StudentList = () => {
           gutterBottom
           sx={{ flex: 1, marginRight: 2, whiteSpace: "nowrap", marginLeft: 5 }}
         >
-          Total Amount(+GST) : ₹ {formatValue(totalAmount)}
+          Total Amount (+GST) : ₹ {formatValue(totalAmount)}
         </Typography>
         <Typography
           variant="h6"
@@ -700,7 +722,9 @@ const StudentList = () => {
                 Transaction ID
               </TableCell>
               <TableCell style={{ fontWeight: "bold" }}>Status</TableCell>
-              <TableCell style={{ fontWeight: "bold", textAlign:'center' }}>Actions</TableCell>
+              <TableCell style={{ fontWeight: "bold", textAlign: "center" }}>
+                Actions
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -765,13 +789,28 @@ const StudentList = () => {
                   >
                     <PrintIcon />
                   </IconButton>
-                  <IconButton onClick={() => handleWhatsAppClick(admission.mobile1)} color="success">
+                  <IconButton
+                    onClick={() => handleWhatsAppClick(admission.mobile1)}
+                    color="success"
+                  >
                     <WhatsAppIcon />
                   </IconButton>
-                   {/* Info Icon for Viewing Inquiry Details */}
-                   <IconButton size="small" color="info" onClick={() => handleViewAdmission(admission)}>
-                          <InfoIcon />
-                        </IconButton>
+                  {/* Info Icon for Viewing Inquiry Details */}
+                  <IconButton
+                    size="small"
+                    color="info"
+                    onClick={() => handleViewAdmission(admission)}
+                  >
+                    <InfoIcon />
+                  </IconButton>
+                  <IconButton
+                    size="small"
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => handleOpenDialog(admission.id)}
+                  >
+                    <Tooltip><BadgeIcon/></Tooltip>
+                  </IconButton>
                 </TableCell>
               </TableRow>
             ))}
@@ -779,7 +818,20 @@ const StudentList = () => {
         </Table>
       </TableContainer>
 
-
+      <Dialog
+        open={isDialogOpen}
+        onClose={handleCloseIDDialog}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle textAlign={"center"}>Id Card</DialogTitle>
+        <DialogContent style={{width:'auto', padding:'20px'}}>
+          <IdCard
+            id={selectedAdmissionId}
+            onClose={() => setDialogOpen(false)}
+          />
+        </DialogContent>
+      </Dialog>
 
       <AlertDialog
         open={confirmOpen}
@@ -787,274 +839,307 @@ const StudentList = () => {
         onConfirm={handleDelete}
       />
 
-
-
       {/* print receipt  */}
 
       <Dialog
-  open={openReceipt}
-  onClose={() => setOpenReceipt(false)}
-  maxWidth="md"
-  fullWidth
->
-  <DialogContent sx={{ p: 1 }}>
-    {selectedPrintAdmission ? (
-      <Box id="receipt" sx={{ p: 3 }}>
-        {/* Heading */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            mb: 1,
-          }}
-        >
-          {/* Left side content (Institute Name, Address, Phone) */}
-          <Box>
-            <Typography variant="h6" align="left">
-              <Typography
-                variant="h6"
-                align="left"
-                sx={{ fontSize: "30px", color: "purple" }}
-              >
-                {employeeDetails.institutename || "Guest"}
-              </Typography>
+        open={openReceipt}
+        onClose={() => setOpenReceipt(false)}
+        maxWidth="md"
+        fullWidth
+      >
+        <DialogContent sx={{ p: 1 }}>
+          {selectedPrintAdmission ? (
+            <Box id="receipt" sx={{ p: 3 }}>
+              {/* Heading */}
               <Box
                 sx={{
                   display: "flex",
                   justifyContent: "space-between",
-                  mb: 0.5,
+                  mb: 1,
                 }}
               >
-                {employeeDetails.address && (
-                  <Typography variant="body2">
-                    <strong>Address: </strong>
-                    {employeeDetails.address}
+                {/* Left side content (Institute Name, Address, Phone) */}
+                <Box>
+                  <Typography variant="h6" align="left">
+                    <Typography
+                      variant="h6"
+                      align="left"
+                      sx={{ fontSize: "30px", color: "purple" }}
+                    >
+                      {employeeDetails.institutename || "Guest"}
+                    </Typography>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        mb: 0.5,
+                      }}
+                    >
+                      {employeeDetails.address && (
+                        <Typography variant="body2">
+                          <strong>Address: </strong>
+                          {employeeDetails.address}
+                        </Typography>
+                      )}
+                    </Box>
+                    {employeeDetails.phonenumber && (
+                      <Box sx={{ mt: 0 }}>
+                        <Typography variant="body2">
+                          <strong>Mobile: </strong>
+                          {employeeDetails.phonenumber}
+                        </Typography>
+                      </Box>
+                    )}
+                    {employeeDetails.emailaddress && (
+                      <Box sx={{ mt: 0 }}>
+                        <Typography variant="body2">
+                          <strong>Email: </strong>
+                          {employeeDetails.emailaddress}
+                        </Typography>
+                      </Box>
+                    )}
                   </Typography>
+                </Box>
+
+                {/* Right side content (Institute Image) */}
+                {employeeDetails.instituteimage && (
+                  <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                    <img
+                      src={employeeDetails.instituteimage}
+                      alt="Institute Logo"
+                      style={{
+                        maxWidth: "100px",
+                        maxHeight: "100px",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  </Box>
                 )}
               </Box>
-              {employeeDetails.phonenumber && (
-                <Box sx={{ mt: 0 }}>
-                  <Typography variant="body2">
-                    <strong>Mobile: </strong>
-                    {employeeDetails.phonenumber}
-                  </Typography>
-                </Box>
-              )}
-              {employeeDetails.emailaddress && (
-                <Box sx={{ mt: 0 }}>
-                  <Typography variant="body2">
-                    <strong>Email: </strong>
-                    {employeeDetails.emailaddress}
-                  </Typography>
-                </Box>
-              )}
-            </Typography>
-          </Box>
 
-          {/* Right side content (Institute Image) */}
-          {employeeDetails.instituteimage && (
-            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-              <img
-                src={employeeDetails.instituteimage}
-                alt="Institute Logo"
-                style={{
-                  maxWidth: "100px",
-                  maxHeight: "100px",
-                  borderRadius: "50%",
+              <Typography
+                variant="body2"
+                sx={{
+                  borderTop: "8px solid purple",
+                  padding: "10px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  position: "relative",
+                  backgroundColor: "#f3e5f5",
                 }}
-              />
-            </Box>
-          )}
-        </Box>
+              >
+                {/* Invoice Number on the left */}
+                <Typography component="span" sx={{ fontWeight: "bold" }}>
+                  Invoice No: {selectedPrintAdmission.id}
+                </Typography>
 
-        <Typography
-  variant="body2"
-  sx={{
-    borderTop: "8px solid purple",
-    padding: "10px",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    position: "relative",
-    backgroundColor: "#f3e5f5",
-  }}
->
-  {/* Invoice Number on the left */}
-  <Typography component="span" sx={{ fontWeight: "bold" }}>
-    Invoice No: {selectedPrintAdmission.id}
-  </Typography>
+                {/* Admission Receipt centered */}
+                <Typography
+                  component="span"
+                  sx={{
+                    fontWeight: "bold",
+                    position: "absolute",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                  }}
+                >
+                  Admission Receipt
+                </Typography>
+              </Typography>
 
-  {/* Admission Receipt centered */}
-  <Typography
-    component="span"
-    sx={{
-      fontWeight: "bold",
-      position: "absolute",
-      left: "50%",
-      transform: "translateX(-50%)",
-    }}
-  >
-    Admission Receipt
-  </Typography>
-</Typography>
-
-
-
-        {/* Table with Data */}
-        <Table
-          size="small"
-          sx={{
-            marginTop: "10px",
-            textAlign: "center",
-            justifyContent: "space-evenly",
-          }}
-        >
-          <TableBody
-            sx={{
-              borderTop: "3px solid purple",
-              borderBottom: "3px solid purple",
-            }}
-          >
-            {selectedPrintAdmission.name && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Name:</TableCell>
-                <TableCell>{selectedPrintAdmission.name}</TableCell>
-              </TableRow>
-            )}
-            {selectedPrintAdmission.mobile1 && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Mobile No:</TableCell>
-                <TableCell>{selectedPrintAdmission.mobile1}</TableCell>
-              </TableRow>
-            )}
-            {selectedPrintAdmission.email && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Email:</TableCell>
-                <TableCell>{selectedPrintAdmission.email}</TableCell>
-              </TableRow>
-            )}
-            {selectedPrintAdmission.courses && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Course:</TableCell>
-                <TableCell>{selectedPrintAdmission.courses}</TableCell>
-              </TableRow>
-            )}
-            {selectedPrintAdmission.duration && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Duration:</TableCell>
-                <TableCell>{selectedPrintAdmission.duration}</TableCell>
-              </TableRow>
-            )}
-            {selectedPrintAdmission.joiningDate && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Joining Date:</TableCell>
-                <TableCell>{selectedPrintAdmission.joiningDate}</TableCell>
-              </TableRow>
-            )}
-            {selectedPrintAdmission.expiryDate && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Expiry Date:</TableCell>
-                <TableCell>{selectedPrintAdmission.expiryDate}</TableCell>
-              </TableRow>
-            )}
-            {selectedPrintAdmission.paymentMethod && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Status:</TableCell>
-                <TableCell>{selectedPrintAdmission.paymentMethod}</TableCell>
-              </TableRow>
-            )}
-            {/* {selectedPrintAdmission.remark && (
+              {/* Table with Data */}
+              <Table
+                size="small"
+                sx={{
+                  marginTop: "10px",
+                  textAlign: "center",
+                  justifyContent: "space-evenly",
+                }}
+              >
+                <TableBody
+                  sx={{
+                    borderTop: "3px solid purple",
+                    borderBottom: "3px solid purple",
+                  }}
+                >
+                  {selectedPrintAdmission.name && (
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>Name:</TableCell>
+                      <TableCell>{selectedPrintAdmission.name}</TableCell>
+                    </TableRow>
+                  )}
+                  {selectedPrintAdmission.mobile1 && (
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>
+                        Mobile No:
+                      </TableCell>
+                      <TableCell>{selectedPrintAdmission.mobile1}</TableCell>
+                    </TableRow>
+                  )}
+                  {selectedPrintAdmission.email && (
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>Email:</TableCell>
+                      <TableCell>{selectedPrintAdmission.email}</TableCell>
+                    </TableRow>
+                  )}
+                  {selectedPrintAdmission.courses && (
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>Course:</TableCell>
+                      <TableCell>{selectedPrintAdmission.courses}</TableCell>
+                    </TableRow>
+                  )}
+                  {selectedPrintAdmission.duration && (
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>
+                        Duration:
+                      </TableCell>
+                      <TableCell>{selectedPrintAdmission.duration}</TableCell>
+                    </TableRow>
+                  )}
+                  {selectedPrintAdmission.joiningDate && (
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>
+                        Joining Date:
+                      </TableCell>
+                      <TableCell>
+                        {selectedPrintAdmission.joiningDate}
+                      </TableCell>
+                    </TableRow>
+                  )}
+                  {selectedPrintAdmission.expiryDate && (
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>
+                        Expiry Date:
+                      </TableCell>
+                      <TableCell>{selectedPrintAdmission.expiryDate}</TableCell>
+                    </TableRow>
+                  )}
+                  {selectedPrintAdmission.paymentMethod && (
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>Status:</TableCell>
+                      <TableCell>
+                        {selectedPrintAdmission.paymentMethod}
+                      </TableCell>
+                    </TableRow>
+                  )}
+                  {/* {selectedPrintAdmission.remark && (
               <TableRow>
                 <TableCell sx={{ fontWeight: "bold" }}>Remark:</TableCell>
                 <TableCell>{selectedPrintAdmission.remark}</TableCell>
               </TableRow>
             )} */}
-            {selectedPrintAdmission.totalFees && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Total Fees:</TableCell>
-                <TableCell>{selectedPrintAdmission.totalFees}</TableCell>
-              </TableRow>
-            )}{selectedPrintAdmission.paidFees && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Paid Fees:</TableCell>
-                <TableCell>{selectedPrintAdmission.paidFees}</TableCell>
-              </TableRow>
-            )}{selectedPrintAdmission.pendingFees && selectedPrintAdmission.pendingFees !== "0.0" && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Pending Fees:</TableCell>
-                <TableCell>{selectedPrintAdmission.pendingFees}</TableCell>
-              </TableRow>
-            )}
-            
-            {selectedPrintAdmission.paymentMode && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Payment Mode:</TableCell>
-                <TableCell>{selectedPrintAdmission.paymentMode}</TableCell>
-              </TableRow>
-            )}
-            {selectedPrintAdmission.guideName && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Guide Name:</TableCell>
-                <TableCell>{selectedPrintAdmission.guideName}</TableCell>
-              </TableRow>
-            )}
-            {selectedPrintAdmission.sourceBy && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Source:</TableCell>
-                <TableCell>{selectedPrintAdmission.sourceBy}</TableCell>
-              </TableRow>
-            )}
-            {selectedPrintAdmission.medium && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Medium:</TableCell>
-                <TableCell>{selectedPrintAdmission.medium}</TableCell>
-              </TableRow>
-            )}
-            {selectedPrintAdmission.fatherProfession && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Father's Profession:</TableCell>
-                <TableCell>{selectedPrintAdmission.fatherProfession}</TableCell>
-              </TableRow>
-            )}
-            {selectedPrintAdmission.educationQualification && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Edu. Qualification:</TableCell>
-                <TableCell>{selectedPrintAdmission.educationQualification}</TableCell>
-              </TableRow>
-            )}
-            {selectedPrintAdmission.annualIncome && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Annual Income:</TableCell>
-                <TableCell>{selectedPrintAdmission.annualIncome}</TableCell>
-              </TableRow>
-            )}
-            {selectedPrintAdmission.photo && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Photo:</TableCell>
-                <TableCell>{selectedPrintAdmission.photo}</TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </Box>
-    ) : null}
-  </DialogContent>
+                  {selectedPrintAdmission.totalFees && (
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>
+                        Total Fees:
+                      </TableCell>
+                      <TableCell>{selectedPrintAdmission.totalFees}</TableCell>
+                    </TableRow>
+                  )}
+                  {selectedPrintAdmission.paidFees && (
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>
+                        Paid Fees:
+                      </TableCell>
+                      <TableCell>{selectedPrintAdmission.paidFees}</TableCell>
+                    </TableRow>
+                  )}
+                  {selectedPrintAdmission.pendingFees &&
+                    selectedPrintAdmission.pendingFees !== "0.0" && (
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          Pending Fees:
+                        </TableCell>
+                        <TableCell>
+                          {selectedPrintAdmission.pendingFees}
+                        </TableCell>
+                      </TableRow>
+                    )}
 
-  <DialogActions>
-    <Button
-      variant="contained"
-      color="primary"
-      onClick={() => downloadReceipt(selectedPrintAdmission)}
-    >
-      Download PDF
-    </Button>
-    <Button onClick={() => setOpenReceipt(false)}>Close</Button>
-  </DialogActions>
-</Dialog>
+                  {selectedPrintAdmission.paymentMode && (
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>
+                        Payment Mode:
+                      </TableCell>
+                      <TableCell>
+                        {selectedPrintAdmission.paymentMode}
+                      </TableCell>
+                    </TableRow>
+                  )}
+                  {selectedPrintAdmission.guideName && (
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>
+                        Guide Name:
+                      </TableCell>
+                      <TableCell>{selectedPrintAdmission.guideName}</TableCell>
+                    </TableRow>
+                  )}
+                  {selectedPrintAdmission.sourceBy && (
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>Source:</TableCell>
+                      <TableCell>{selectedPrintAdmission.sourceBy}</TableCell>
+                    </TableRow>
+                  )}
+                  {selectedPrintAdmission.medium && (
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>Medium:</TableCell>
+                      <TableCell>{selectedPrintAdmission.medium}</TableCell>
+                    </TableRow>
+                  )}
+                  {selectedPrintAdmission.fatherProfession && (
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>
+                        Father's Profession:
+                      </TableCell>
+                      <TableCell>
+                        {selectedPrintAdmission.fatherProfession}
+                      </TableCell>
+                    </TableRow>
+                  )}
+                  {selectedPrintAdmission.educationQualification && (
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>
+                        Edu. Qualification:
+                      </TableCell>
+                      <TableCell>
+                        {selectedPrintAdmission.educationQualification}
+                      </TableCell>
+                    </TableRow>
+                  )}
+                  {selectedPrintAdmission.annualIncome && (
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>
+                        Annual Income:
+                      </TableCell>
+                      <TableCell>
+                        {selectedPrintAdmission.annualIncome}
+                      </TableCell>
+                    </TableRow>
+                  )}
+                  {selectedPrintAdmission.photo && (
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>Photo:</TableCell>
+                      <TableCell>{selectedPrintAdmission.photo}</TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </Box>
+          ) : null}
+        </DialogContent>
 
-
-
-
+        <DialogActions>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => downloadReceipt(selectedPrintAdmission)}
+          >
+            Download PDF
+          </Button>
+          <Button onClick={() => setOpenReceipt(false)}>Close</Button>
+        </DialogActions>
+      </Dialog>
 
       {/* <Dialog open={openUpdateDialog} onClose={handleCloseDialog}>
         <DialogTitle>Update Admission</DialogTitle>
@@ -1069,144 +1154,144 @@ const StudentList = () => {
           </Button>
         </DialogActions>
       </Dialog> */}
-      
+
       {selectedAdmission && (
         <UpdateAdmissionForm
           admission={selectedAdmission}
           onUpdate={handleUpdateAdmission}
+          onClose={handleCloseDialog} // Pass the close handler
         />
       )}
 
-<Dialog 
-  open={viewAdmissionOpen} 
-  onClose={closeViewAdmission} 
-  PaperProps={{ sx: { width: '600px', height: 'auto' } }} // Custom dialog size
->
-  <DialogTitle>Admission Details</DialogTitle>
-  <DialogContent>
-    {admissionDetail && (
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-        {/* Using `gap` for spacing between fields */}
-        {admissionDetail.studentImage ? (
- <Box sx={{ mt: 3, textAlign: 'center' }}>
- <img 
-   src={admissionDetail.studentImage} 
-   alt="Inquiry" 
-   style={{ 
-     width: '150px',  // Set width
-     height: '150px', // Set height
-     objectFit: 'cover', // Ensure image fits well within the defined size
-     borderRadius: '50%', // Make image round
-     display: 'block', 
-     margin: '0 auto' // Center image horizontally
-   }} 
- />
-</Box>
-) : (
-<Box sx={{ mt: 3, textAlign: 'center' }}>
- <strong>Photo:</strong>
- <Typography variant="body2" sx={{ mt: 2 }}>No photo available.</Typography>
-</Box>
-)}
-        <Grid container spacing={2}>
-          
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Name:</strong> {admissionDetail.name}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Email:</strong> {admissionDetail.email}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Mobile:</strong> {admissionDetail.mobile1}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Courses:</strong> {admissionDetail.courses}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Medium:</strong> {admissionDetail.medium}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Duration:</strong> {admissionDetail.duration}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Total Fees:</strong> {admissionDetail.totalFees}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Payment Method:</strong> {admissionDetail.paymentMethod}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Paid Fees:</strong> {admissionDetail.paidFees}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Pending Fees:</strong> {admissionDetail.pendingFees}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Payment Mode:</strong> {admissionDetail.paymentMode}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Transaction Id:</strong> {admissionDetail.transactionid}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Source By:</strong> {admissionDetail.sourceBy}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Guide Name:</strong> {admissionDetail.guideName}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Date:</strong> {admissionDetail.date}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Due Date:</strong> {admissionDetail.dueDate}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Remark:</strong> {admissionDetail.remark}
-            </Typography>
-          </Grid>
-        </Grid>
-      </Box>
-    )}
-  </DialogContent>
-  <DialogActions>
-    <Button onClick={closeViewAdmission}>Close</Button>
-  </DialogActions>
-</Dialog>
-
-
-
-
+      <Dialog
+        open={viewAdmissionOpen}
+        onClose={closeViewAdmission}
+        PaperProps={{ sx: { width: "600px", height: "auto" } }} // Custom dialog size
+      >
+        <DialogTitle>Admission Details</DialogTitle>
+        <DialogContent>
+          {admissionDetail && (
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              {/* Using `gap` for spacing between fields */}
+              {admissionDetail.studentImage ? (
+                <Box sx={{ mt: 3, textAlign: "center" }}>
+                  <img
+                    src={admissionDetail.studentImage}
+                    alt="Inquiry"
+                    style={{
+                      width: "150px", // Set width
+                      height: "150px", // Set height
+                      objectFit: "cover", // Ensure image fits well within the defined size
+                      borderRadius: "50%", // Make image round
+                      display: "block",
+                      margin: "0 auto", // Center image horizontally
+                    }}
+                  />
+                </Box>
+              ) : (
+                <Box sx={{ mt: 3, textAlign: "center" }}>
+                  <strong>Photo:</strong>
+                  <Typography variant="body2" sx={{ mt: 2 }}>
+                    No photo available.
+                  </Typography>
+                </Box>
+              )}
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="body2">
+                    <strong>Name:</strong> {admissionDetail.name}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="body2">
+                    <strong>Email:</strong> {admissionDetail.email}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="body2">
+                    <strong>Mobile:</strong> {admissionDetail.mobile1}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="body2">
+                    <strong>Courses:</strong> {admissionDetail.courses}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="body2">
+                    <strong>Medium:</strong> {admissionDetail.medium}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="body2">
+                    <strong>Duration:</strong> {admissionDetail.duration}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="body2">
+                    <strong>Total Fees:</strong> {admissionDetail.totalFees}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="body2">
+                    <strong>Payment Method:</strong>{" "}
+                    {admissionDetail.paymentMethod}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="body2">
+                    <strong>Paid Fees:</strong> {admissionDetail.paidFees}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="body2">
+                    <strong>Pending Fees:</strong> {admissionDetail.pendingFees}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="body2">
+                    <strong>Payment Mode:</strong> {admissionDetail.paymentMode}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="body2">
+                    <strong>Transaction Id:</strong>{" "}
+                    {admissionDetail.transactionid}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="body2">
+                    <strong>Source By:</strong> {admissionDetail.sourceBy}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="body2">
+                    <strong>Guide Name:</strong> {admissionDetail.guideName}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="body2">
+                    <strong>Date:</strong> {admissionDetail.date}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="body2">
+                    <strong>Due Date:</strong> {admissionDetail.dueDate}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="body2">
+                    <strong>Remark:</strong> {admissionDetail.remark}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Box>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeViewAdmission}>Close</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

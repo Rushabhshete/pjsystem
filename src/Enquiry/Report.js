@@ -32,7 +32,7 @@ import PrintIcon from "@mui/icons-material/Print";
 import InfoIcon from "@mui/icons-material/Info"; // Importing InfoIcon
 import { styled } from "@mui/system";
 import html2pdf from "html2pdf.js"; // Importing html2pdf.js
-import UpdateEnquiry from '../Enquiry/pages/UpdateInquiry';
+import UpdateEnquiry from "../Enquiry/pages/UpdateInquiry";
 
 export default function Report() {
   const navigate = useNavigate();
@@ -54,7 +54,6 @@ export default function Report() {
     setSelectedInquiryId(id);
     setDialogOpen(true);
   };
-
 
   const handleCloseDialog = () => {
     setSelectedInquiryId(null);
@@ -87,9 +86,9 @@ export default function Report() {
   const [openReceipt, setOpenReceipt] = useState(false);
   const getInstituteCode = () => localStorage.getItem("institutecode");
 
-    // Additional state for viewing inquiry details
-    const [viewInquiryOpen, setViewInquiryOpen] = useState(false);
-    const [inquiryDetail, setInquiryDetail] = useState(null);
+  // Additional state for viewing inquiry details
+  const [viewInquiryOpen, setViewInquiryOpen] = useState(false);
+  const [inquiryDetail, setInquiryDetail] = useState(null);
 
   // Load data on component mount
   useEffect(() => {
@@ -303,60 +302,63 @@ export default function Report() {
 
     // Check if employeeDetails and image exist
     if (instituteImage) {
-        const img = new Image();
-        img.src = instituteImage;
+      const img = new Image();
+      img.src = instituteImage;
 
-        img.onload = () => {
-            // Calculate positions for alignment
-            const imageWidth = 40; // Width of the image
-            const imageHeight = 30; // Height of the image
-            const title = "Enquiries Report"; // Title
-            
-            // Calculate X position for centering
-            const middleX = (doc.internal.pageSize.getWidth() - imageWidth) / 2; // Centered X position for image
-            const imageY = 10; // Initial Y position for the image
+      img.onload = () => {
+        // Calculate positions for alignment
+        const imageWidth = 40; // Width of the image
+        const imageHeight = 30; // Height of the image
+        const title = "Enquiries Report"; // Title
 
-            // Adding the image, institute name, and title in vertical alignment
-            doc.addImage(img, "JPEG", middleX, imageY, imageWidth, imageHeight); // Place image
-            doc.text(instituteName, middleX, imageY + imageHeight + 5); // Place institute name below image
+        // Calculate X position for centering
+        const middleX = (doc.internal.pageSize.getWidth() - imageWidth) / 2; // Centered X position for image
+        const imageY = 10; // Initial Y position for the image
 
-            // Calculate the position for the title, centered above the table
-            const titleWidth = doc.getStringUnitWidth(title) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-            const titleY = imageY + imageHeight + 15; // Position for title below institute name
-            const titleX = (doc.internal.pageSize.getWidth() - titleWidth) / 2; // Centered X position for title
+        // Adding the image, institute name, and title in vertical alignment
+        doc.addImage(img, "JPEG", middleX, imageY, imageWidth, imageHeight); // Place image
+        doc.text(instituteName, middleX, imageY + imageHeight + 5); // Place institute name below image
 
-            doc.text(title, titleX, titleY); // Place title
+        // Calculate the position for the title, centered above the table
+        const titleWidth =
+          (doc.getStringUnitWidth(title) * doc.internal.getFontSize()) /
+          doc.internal.scaleFactor;
+        const titleY = imageY + imageHeight + 15; // Position for title below institute name
+        const titleX = (doc.internal.pageSize.getWidth() - titleWidth) / 2; // Centered X position for title
 
-            createTable(doc); // Function call to handle the table creation
-            doc.save("report.pdf");
-        };
-    } else {
-        const title = "Enquiries Report";
-        const textWidth = doc.getStringUnitWidth(instituteName) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+        doc.text(title, titleX, titleY); // Place title
 
-        // Center if no image present
-        const middleX = (doc.internal.pageSize.getWidth() - textWidth) / 2;
-
-        doc.text(instituteName, middleX, 10);
-        doc.text(title, middleX, 20);
-        createTable(doc); // Create the table if no image
+        createTable(doc); // Function call to handle the table creation
         doc.save("report.pdf");
+      };
+    } else {
+      const title = "Enquiries Report";
+      const textWidth =
+        (doc.getStringUnitWidth(instituteName) * doc.internal.getFontSize()) /
+        doc.internal.scaleFactor;
+
+      // Center if no image present
+      const middleX = (doc.internal.pageSize.getWidth() - textWidth) / 2;
+
+      doc.text(instituteName, middleX, 10);
+      doc.text(title, middleX, 20);
+      createTable(doc); // Create the table if no image
+      doc.save("report.pdf");
     }
-};
+  };
 
-
-const createTable = (doc) => {
+  const createTable = (doc) => {
     const tableColumn = [
-        "ID",
-        "Date of Enquiry",
-        "Name",
-        "Phone",
-        "Email",
-        "Exam",
-        "Source",
-        "Conducted By",
-        "Status",
-        "Remark",
+      "ID",
+      "Date of Enquiry",
+      "Name",
+      "Phone",
+      "Email",
+      "Exam",
+      "Source",
+      "Conducted By",
+      "Status",
+      "Remark",
     ];
 
     const tableRows = [];
@@ -364,32 +366,30 @@ const createTable = (doc) => {
     console.log(inquiries); // Check if valid data is returned
 
     inquiries.forEach((inquiry) => {
-        const inquiryData = [
-            inquiry.id,
-            inquiry.enquiryDate,
-            inquiry.name,
-            inquiry.mobile,
-            inquiry.email,
-            inquiry.exam,
-            inquiry.source_by,
-            inquiry.conduct_by,
-            inquiry.status1,
-            inquiry.remark,
-        ];
-        tableRows.push(inquiryData);
+      const inquiryData = [
+        inquiry.id,
+        inquiry.enquiryDate,
+        inquiry.name,
+        inquiry.mobile,
+        inquiry.email,
+        inquiry.exam,
+        inquiry.source_by,
+        inquiry.conduct_by,
+        inquiry.status1,
+        inquiry.remark,
+      ];
+      tableRows.push(inquiryData);
     });
 
     doc.autoTable({
-        head: [tableColumn],
-        body: tableRows,
-        startY: 60, // Adjust startY to avoid overlap with header
-        theme: "striped",
-        headStyles: { fillColor: [128, 0, 128] }, // Setting headStyles to purple
-        styles: { fontSize: 8 },
+      head: [tableColumn],
+      body: tableRows,
+      startY: 60, // Adjust startY to avoid overlap with header
+      theme: "striped",
+      headStyles: { fillColor: [128, 0, 128] }, // Setting headStyles to purple
+      styles: { fontSize: 8 },
     });
-};
-
-
+  };
 
   const handleDownloadCSV = () => {
     const csvContent = filterInquiries()
@@ -777,14 +777,14 @@ const createTable = (doc) => {
                           <SmsIcon />
                         </IconButton>
                         <IconButton
-    size="small"
-    variant="contained"
-    color="primary"
-    component={Link}
-    onClick={() => handleOpenDialog(inquiry.id)} // This should trigger the dialog opening
->
-    <EditIcon />
-</IconButton>
+                          size="small"
+                          variant="contained"
+                          color="primary"
+                          component={Link}
+                          onClick={() => handleOpenDialog(inquiry.id)} // This should trigger the dialog opening
+                        >
+                          <EditIcon />
+                        </IconButton>
                         <IconButton
                           onClick={() => handleGenerate(inquiry)}
                           color="inherit"
@@ -792,7 +792,11 @@ const createTable = (doc) => {
                           <PrintIcon />
                         </IconButton>
                         {/* Info Icon for Viewing Inquiry Details */}
-                        <IconButton size="small" color="info" onClick={() => handleViewInquiry(inquiry)}>
+                        <IconButton
+                          size="small"
+                          color="info"
+                          onClick={() => handleViewInquiry(inquiry)}
+                        >
                           <InfoIcon />
                         </IconButton>
                       </Box>
@@ -803,21 +807,21 @@ const createTable = (doc) => {
             </Table>
           </TableContainer>
         </Box>
-        
-        <Dialog 
-  open={isDialogOpen} 
-  onClose={handleCloseDialog} 
-  maxWidth="lg" 
-  fullWidth
->
-  <DialogTitle textAlign={"center"}>Update Enquiry</DialogTitle>
-  <DialogContent>
-  <UpdateEnquiry
-          id={selectedInquiryId}
-          onClose={() => setDialogOpen(false)} // Close dialog function
-        />
-  </DialogContent>
-</Dialog>
+
+        <Dialog
+          open={isDialogOpen}
+          onClose={handleCloseDialog}
+          maxWidth="lg"
+          fullWidth
+        >
+          <DialogTitle textAlign={"center"}>Update Enquiry</DialogTitle>
+          <DialogContent>
+            <UpdateEnquiry
+              id={selectedInquiryId}
+              onClose={() => setDialogOpen(false)} // Close dialog function
+            />
+          </DialogContent>
+        </Dialog>
 
         {/* sms dialog  */}
 
@@ -844,406 +848,441 @@ const createTable = (doc) => {
           </DialogActions>
         </Dialog>
 
-
         {/* print receipt  */}
 
         <Dialog
-  open={openReceipt}
-  onClose={() => setOpenReceipt(false)}
-  maxWidth="md"
-  fullWidth
->
-  <DialogContent sx={{ p: 1 }}>
-    {selectedInquiry ? (
-      <Box id="receipt" sx={{ p: 3 }}>
-        {/* Heading */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            mb: 1,
-          }}
+          open={openReceipt}
+          onClose={() => setOpenReceipt(false)}
+          maxWidth="md"
+          fullWidth
         >
-          {/* Left side content (Institute Name, Address, Phone) */}
-          <Box>
-            <Typography variant="h6" align="left">
-              <Typography
-                variant="h6"
-                align="left"
-                sx={{ fontSize: "30px", color: "purple" }}
-              >
-                {employeeDetails.institutename || "Guest"}
-              </Typography>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  mb: 0.5,
-                }}
-              >
-                {employeeDetails.address && (
-                  <Typography variant="body2">
-                    <strong>Address: </strong>
-                    {employeeDetails.address}
+          <DialogContent sx={{ p: 1 }}>
+            {selectedInquiry ? (
+              <Box id="receipt" sx={{ p: 3 }}>
+                {/* Heading */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    mb: 1,
+                  }}
+                >
+                  {/* Left side content (Institute Name, Address, Phone) */}
+                  <Box>
+                    <Typography variant="h6" align="left">
+                      <Typography
+                        variant="h6"
+                        align="left"
+                        sx={{ fontSize: "30px", color: "purple" }}
+                      >
+                        {employeeDetails.institutename || "Guest"}
+                      </Typography>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          mb: 0.5,
+                        }}
+                      >
+                        {employeeDetails.address && (
+                          <Typography variant="body2">
+                            <strong>Address: </strong>
+                            {employeeDetails.address}
+                          </Typography>
+                        )}
+                      </Box>
+                      {employeeDetails.phonenumber && (
+                        <Box sx={{ mt: 0 }}>
+                          <Typography variant="body2">
+                            <strong>Mobile: </strong>
+                            {employeeDetails.phonenumber}
+                          </Typography>
+                        </Box>
+                      )}
+                      {employeeDetails.emailaddress && (
+                        <Box sx={{ mt: 0 }}>
+                          <Typography variant="body2">
+                            <strong>Email: </strong>
+                            {employeeDetails.emailaddress}
+                          </Typography>
+                        </Box>
+                      )}
+                    </Typography>
+                  </Box>
+
+                  {/* Right side content (Institute Image) */}
+                  {employeeDetails.instituteimage && (
+                    <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                      <img
+                        src={employeeDetails.instituteimage}
+                        alt="Institute Logo"
+                        style={{
+                          maxWidth: "100px",
+                          maxHeight: "100px",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    </Box>
+                  )}
+                </Box>
+
+                <Typography
+                  variant="body2"
+                  sx={{
+                    borderTop: "8px solid purple",
+                    padding: "10px",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    backgroundColor: "#f3e5f5",
+                  }}
+                >
+                  <Typography component="span" sx={{ fontWeight: "bold" }}>
+                    Invoice No: {selectedInquiry.id}
                   </Typography>
-                )}
+
+                  {/* Enquiry Receipt centered */}
+                  <Typography
+                    component="span"
+                    sx={{ fontWeight: "bold", textAlign: "center" }}
+                  >
+                    Enquiry Receipt
+                  </Typography>
+                </Typography>
+
+                {/* Table with Data */}
+                <Table
+                  size="small"
+                  sx={{
+                    marginTop: "10px",
+                    textAlign: "center",
+                    justifyContent: "space-evenly",
+                  }}
+                >
+                  <TableBody
+                    sx={{
+                      borderTop: "3px solid purple",
+                      borderBottom: "3px solid purple",
+                    }}
+                  >
+                    {selectedInquiry.name && (
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: "bold" }}>Name:</TableCell>
+                        <TableCell>{selectedInquiry.name}</TableCell>
+                      </TableRow>
+                    )}
+                    {selectedInquiry.mobile && (
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          Phone No:
+                        </TableCell>
+                        <TableCell>{selectedInquiry.mobile}</TableCell>
+                      </TableRow>
+                    )}
+                    {selectedInquiry.email && (
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          Email:
+                        </TableCell>
+                        <TableCell>{selectedInquiry.email}</TableCell>
+                      </TableRow>
+                    )}
+                    {selectedInquiry.enquiryDate && (
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          Date of Enquiry:
+                        </TableCell>
+                        <TableCell>{selectedInquiry.enquiryDate}</TableCell>
+                      </TableRow>
+                    )}
+                    {selectedInquiry.exam && (
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          Exam / Course:
+                        </TableCell>
+                        <TableCell>{selectedInquiry.exam}</TableCell>
+                      </TableRow>
+                    )}
+                    {selectedInquiry.source_by && (
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          Source By:
+                        </TableCell>
+                        <TableCell>{selectedInquiry.source_by}</TableCell>
+                      </TableRow>
+                    )}
+                    {selectedInquiry.conduct_by && (
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          Conduct By:
+                        </TableCell>
+                        <TableCell>{selectedInquiry.conduct_by}</TableCell>
+                      </TableRow>
+                    )}
+                    {selectedInquiry.status1 && (
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          Status:
+                        </TableCell>
+                        <TableCell>
+                          {selectedInquiry.status1 === "Call Back"
+                            ? `${selectedInquiry.status1}, Date: ${
+                                selectedInquiry.callBackDate || "N/A"
+                              } Time: ${selectedInquiry.callBackTime}`
+                            : selectedInquiry.status1}
+                        </TableCell>
+                      </TableRow>
+                    )}
+                    {selectedInquiry.remark && (
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          Remark:
+                        </TableCell>
+                        <TableCell>{selectedInquiry.remark}</TableCell>
+                      </TableRow>
+                    )}
+                    {selectedInquiry.dob && (
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: "bold" }}>DOB:</TableCell>
+                        <TableCell>{selectedInquiry.dob}</TableCell>
+                      </TableRow>
+                    )}
+                    {selectedInquiry.gender && (
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          Gender:
+                        </TableCell>
+                        <TableCell>{selectedInquiry.gender}</TableCell>
+                      </TableRow>
+                    )}
+                    {selectedInquiry.motherTongue && (
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          Mother Tongue:
+                        </TableCell>
+                        <TableCell>{selectedInquiry.motherTongue}</TableCell>
+                      </TableRow>
+                    )}
+                    {selectedInquiry.address && (
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          Address:
+                        </TableCell>
+                        <TableCell>{selectedInquiry.address}</TableCell>
+                      </TableRow>
+                    )}
+                    {selectedInquiry.landmark && (
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          Landmark:
+                        </TableCell>
+                        <TableCell>{selectedInquiry.landmark}</TableCell>
+                      </TableRow>
+                    )}
+                    {selectedInquiry.state && (
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          State:
+                        </TableCell>
+                        <TableCell>{selectedInquiry.state}</TableCell>
+                      </TableRow>
+                    )}
+                    {selectedInquiry.district && (
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          District:
+                        </TableCell>
+                        <TableCell>{selectedInquiry.district}</TableCell>
+                      </TableRow>
+                    )}
+                    {selectedInquiry.fatherProfession && (
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          Father's Profession:
+                        </TableCell>
+                        <TableCell>
+                          {selectedInquiry.fatherProfession}
+                        </TableCell>
+                      </TableRow>
+                    )}
+                    {selectedInquiry.educationQualification && (
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          Edu. Qualification:
+                        </TableCell>
+                        <TableCell>
+                          {selectedInquiry.educationQualification}
+                        </TableCell>
+                      </TableRow>
+                    )}
+                    {selectedInquiry.annualIncome && (
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          Annual Income:
+                        </TableCell>
+                        <TableCell>{selectedInquiry.annualIncome}</TableCell>
+                      </TableRow>
+                    )}
+                    
+                  </TableBody>
+                </Table>
               </Box>
-              {employeeDetails.phonenumber && (
-                <Box sx={{ mt: 0 }}>
-                  <Typography variant="body2">
-                    <strong>Mobile: </strong>
-                    {employeeDetails.phonenumber}
-                  </Typography>
-                </Box>
-              )}
-              {employeeDetails.emailaddress && (
-                <Box sx={{ mt: 0 }}>
-                  <Typography variant="body2">
-                    <strong>Email: </strong>
-                    {employeeDetails.emailaddress}
-                  </Typography>
-                </Box>
-              )}
-            </Typography>
-          </Box>
+            ) : null}
+          </DialogContent>
 
-          {/* Right side content (Institute Image) */}
-          {employeeDetails.instituteimage && (
-            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-              <img
-                src={employeeDetails.instituteimage}
-                alt="Institute Logo"
-                style={{
-                  maxWidth: "100px",
-                  maxHeight: "100px",
-                  borderRadius: "50%",
-                }}
-              />
-            </Box>
-          )}
-        </Box>
+          <DialogActions>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => downloadReceipt(selectedInquiry)}
+            >
+              Download PDF
+            </Button>
+            <Button onClick={() => setOpenReceipt(false)}>Close</Button>
+          </DialogActions>
+        </Dialog>
 
-        <Typography
-  variant="body2"
-  sx={{
-    borderTop: "8px solid purple",
-    padding: "10px",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: "#f3e5f5",
-  }}
->
-  {/* Invoice Number on the left */}
-  <Typography component="span" sx={{ fontWeight: "bold" }}>
-    Invoice No: {selectedInquiry.id}
-  </Typography>
-
-  {/* Enquiry Receipt centered */}
-  <Typography
-    component="span"
-    sx={{
-      fontWeight: "bold",
-      position: "absolute",
-      left: "50%",
-      transform: "translateX(-50%)",
-    }}
-  >
-    Enquiry Receipt
-  </Typography>
-</Typography>
-
-
-        {/* Table with Data */}
-        <Table
-          size="small"
-          sx={{
-            marginTop: "10px",
-            textAlign: "center",
-            justifyContent: "space-evenly",
-          }}
+        <Dialog
+          open={viewInquiryOpen}
+          onClose={closeViewInquiry}
+          PaperProps={{ sx: { width: "600px", height: "auto" } }} // Custom dialog size
         >
-          <TableBody
-            sx={{
-              borderTop: "3px solid purple",
-              borderBottom: "3px solid purple",
-            }}
-          >
-            {selectedInquiry.name && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Name:</TableCell>
-                <TableCell>{selectedInquiry.name}</TableCell>
-              </TableRow>
+          <DialogTitle>Inquiry Details</DialogTitle>
+          <DialogContent>
+            {inquiryDetail && (
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                {/* Using `gap` for spacing between fields */}
+                {inquiryDetail.photo ? (
+                  <Box sx={{ mt: 3, textAlign: "center" }}>
+                    <img
+                      src={inquiryDetail.photo}
+                      alt="Inquiry"
+                      style={{
+                        maxWidth: "150px", // Adjust the size as needed
+                        width: "100%",
+                        height: "150px",
+                        borderRadius: "50%",
+                        objectFit: "cover",
+                        marginTop: "-15px",
+                      }}
+                    />
+                  </Box>
+                ) : (
+                  <Box sx={{ mt: 3, textAlign: "center" }}>
+                    <strong>Photo:</strong>
+                    <Typography variant="body2" sx={{ mt: 2 }}>
+                      No photo available.
+                    </Typography>
+                  </Box>
+                )}
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="body2">
+                      <strong>Name:</strong> {inquiryDetail.name}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="body2">
+                      <strong>Mobile:</strong> {inquiryDetail.mobile}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="body2">
+                      <strong>Email:</strong> {inquiryDetail.email}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="body2">
+                      <strong>Exam:</strong> {inquiryDetail.exam}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="body2">
+                      <strong>Source:</strong> {inquiryDetail.source_by}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="body2">
+                      <strong>Conducted By:</strong> {inquiryDetail.conduct_by}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="body2">
+                      <strong>Status:</strong> {inquiryDetail.status1}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="body2">
+                      <strong>Enquiry Date:</strong> {inquiryDetail.enquiryDate}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="body2">
+                      <strong>Remark:</strong> {inquiryDetail.remark}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="body2">
+                      <strong>DOB:</strong> {inquiryDetail.dob}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="body2">
+                      <strong>Gender:</strong> {inquiryDetail.gender}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="body2">
+                      <strong>Mother Tongue:</strong>{" "}
+                      {inquiryDetail.motherTongue}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="body2">
+                      <strong>Address:</strong> {inquiryDetail.address}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="body2">
+                      <strong>Landmark:</strong> {inquiryDetail.landmark}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="body2">
+                      <strong>State:</strong> {inquiryDetail.state}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="body2">
+                      <strong>District:</strong> {inquiryDetail.district}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="body2">
+                      <strong>Father's Profession:</strong>{" "}
+                      {inquiryDetail.fatherProfession}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="body2">
+                      <strong>Education Qualification:</strong>{" "}
+                      {inquiryDetail.educationQualification}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="body2">
+                      <strong>Annual Income:</strong>{" "}
+                      {inquiryDetail.annualIncome}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Box>
             )}
-            {selectedInquiry.mobile && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Phone No:</TableCell>
-                <TableCell>{selectedInquiry.mobile}</TableCell>
-              </TableRow>
-            )}
-            {selectedInquiry.email && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Email:</TableCell>
-                <TableCell>{selectedInquiry.email}</TableCell>
-              </TableRow>
-            )}
-            {selectedInquiry.enquiryDate && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Date of Enquiry:</TableCell>
-                <TableCell>{selectedInquiry.enquiryDate}</TableCell>
-              </TableRow>
-            )}
-            {selectedInquiry.exam && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Exam / Course:</TableCell>
-                <TableCell>{selectedInquiry.exam}</TableCell>
-              </TableRow>
-            )}
-            {selectedInquiry.source_by && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Source By:</TableCell>
-                <TableCell>{selectedInquiry.source_by}</TableCell>
-              </TableRow>
-            )}
-            {selectedInquiry.conduct_by && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Conduct By:</TableCell>
-                <TableCell>{selectedInquiry.conduct_by}</TableCell>
-              </TableRow>
-            )}
-            {selectedInquiry.status1 && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Status:</TableCell>
-                <TableCell>
-                  {selectedInquiry.status1 === "Call Back"
-                    ? `${selectedInquiry.status1}, Date: ${selectedInquiry.callBackDate || "N/A"} Time: ${selectedInquiry.callBackTime}`
-                    : selectedInquiry.status1}
-                </TableCell>
-              </TableRow>
-            )}
-            {selectedInquiry.remark && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Remark:</TableCell>
-                <TableCell>{selectedInquiry.remark}</TableCell>
-              </TableRow>
-            )}{selectedInquiry.dob && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>DOB:</TableCell>
-                <TableCell>{selectedInquiry.dob}</TableCell>
-              </TableRow>
-            )}{selectedInquiry.gender && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Gender:</TableCell>
-                <TableCell>{selectedInquiry.gender}</TableCell>
-              </TableRow>
-            )}{selectedInquiry.motherTongue && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Mother Tongue:</TableCell>
-                <TableCell>{selectedInquiry.motherTongue}</TableCell>
-              </TableRow>
-            )}
-            {selectedInquiry.address && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Address:</TableCell>
-                <TableCell>{selectedInquiry.address}</TableCell>
-              </TableRow>
-            )}
-            {selectedInquiry.landmark && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Landmark:</TableCell>
-                <TableCell>{selectedInquiry.landmark}</TableCell>
-              </TableRow>
-            )}
-            {selectedInquiry.state && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>State:</TableCell>
-                <TableCell>{selectedInquiry.state}</TableCell>
-              </TableRow>
-            )}
-            {selectedInquiry.district && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>District:</TableCell>
-                <TableCell>{selectedInquiry.district}</TableCell>
-              </TableRow>
-            )}
-            {selectedInquiry.fatherProfession && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Father's Profession:</TableCell>
-                <TableCell>{selectedInquiry.fatherProfession}</TableCell>
-              </TableRow>
-            )}
-            {selectedInquiry.educationQualification && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Edu. Qualification:</TableCell>
-                <TableCell>{selectedInquiry.educationQualification}</TableCell>
-              </TableRow>
-            )}
-            {selectedInquiry.annualIncome && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Annual Income:</TableCell>
-                <TableCell>{selectedInquiry.annualIncome}</TableCell>
-              </TableRow>
-            )}
-            {selectedInquiry.photo && (
-              <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Photo:</TableCell>
-                <TableCell>{selectedInquiry.photo}</TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </Box>
-    ) : null}
-  </DialogContent>
-
-  <DialogActions>
-    <Button
-      variant="contained"
-      color="primary"
-      onClick={() => downloadReceipt(selectedInquiry)}
-    >
-      Download PDF
-    </Button>
-    <Button onClick={() => setOpenReceipt(false)}>Close</Button>
-  </DialogActions>
-</Dialog>
-
-
-        <Dialog 
-  open={viewInquiryOpen} 
-  onClose={closeViewInquiry} 
-  PaperProps={{ sx: { width: '600px', height: 'auto' } }} // Custom dialog size
->
-  <DialogTitle>Inquiry Details</DialogTitle>
-  <DialogContent>
-    {inquiryDetail && (
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-        {/* Using `gap` for spacing between fields */}
-        {inquiryDetail.photo ? (
-  <Box sx={{ mt: 3, textAlign: 'center' }}>
-    <img 
-      src={inquiryDetail.photo} 
-      alt="Inquiry" 
-      style={{  maxWidth: '150px', // Adjust the size as needed
-        width: '100%', 
-        height: '150px', 
-        borderRadius: '50%', 
-        objectFit: 'cover', 
-        marginTop: '-15px' }} 
-    />
-  </Box>
-) : (
-  <Box sx={{ mt: 3, textAlign: 'center' }}>
-    <strong>Photo:</strong>
-    <Typography variant="body2" sx={{ mt: 2 }}>No photo available.</Typography>
-  </Box>
-)}
-        <Grid container spacing={2}>
-          
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Name:</strong> {inquiryDetail.name}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Mobile:</strong> {inquiryDetail.mobile}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Email:</strong> {inquiryDetail.email}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Exam:</strong> {inquiryDetail.exam}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Source:</strong> {inquiryDetail.source_by}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Conducted By:</strong> {inquiryDetail.conduct_by}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Status:</strong> {inquiryDetail.status1}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Enquiry Date:</strong> {inquiryDetail.enquiryDate}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Remark:</strong> {inquiryDetail.remark}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>DOB:</strong> {inquiryDetail.dob}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Gender:</strong> {inquiryDetail.gender}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Mother Tongue:</strong> {inquiryDetail.motherTongue}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Address:</strong> {inquiryDetail.address}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Landmark:</strong> {inquiryDetail.landmark}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>State:</strong> {inquiryDetail.state}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>District:</strong> {inquiryDetail.district}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Father's Profession:</strong> {inquiryDetail.fatherProfession}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Education Qualification:</strong> {inquiryDetail.educationQualification}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body2">
-              <strong>Annual Income:</strong> {inquiryDetail.annualIncome}
-            </Typography>
-          </Grid>
-        </Grid>
-      </Box>
-    )}
-  </DialogContent>
-  <DialogActions>
-    <Button onClick={closeViewInquiry}>Close</Button>
-  </DialogActions>
-</Dialog>
-
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={closeViewInquiry}>Close</Button>
+          </DialogActions>
+        </Dialog>
       </Box>
     </div>
   );

@@ -900,7 +900,7 @@ const ManageHoliday = () => {
                 <TableCell sx={{ padding: "4px" }}>{user.date}</TableCell>
                 <TableCell sx={{ padding: "4px" }}>{user.day}</TableCell>
                 <TableCell sx={{ padding: "4px" }}>
-                  <Button onClick={() => handleEditClickOpen(user.id)} color="success">
+                  <Button onClick={() => handleEditClickOpen(user.id)} color="primary">
                     <Edit />
                   </Button>
                   <Button onClick={() => { setUserIdToDelete(user.id); setConfirmOpen(true); }} color="error">

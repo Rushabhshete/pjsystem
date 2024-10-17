@@ -20,12 +20,21 @@ import {
   Box,
   TablePagination,
   Select,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from "@mui/material";
 import { Delete, Edit, Info, Cancel } from "@mui/icons-material"; // Material Icons
 import axios from "axios";
 import Userservice from "./Userservice";
 import { toast, ToastContainer } from "react-toastify"; // Import toast from react-toastify
 import "react-toastify/dist/ReactToastify.css"; // Ensure this is imported
+import { Worker, Viewer } from "@react-pdf-viewer/core"; // Import PDF Viewer components
+import { zoomPlugin } from "@react-pdf-viewer/zoom"; // Import zoom plugin
+import "@react-pdf-viewer/core/lib/styles/index.css"; // Required styles
+import "@react-pdf-viewer/zoom/lib/styles/index.css"; // Zoom plugin styles
+import BadgeIcon from "@mui/icons-material/Badge";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import {
@@ -34,8 +43,10 @@ import {
   EmployeeType,
   DutyType,
   ShiftType,
+  districts,
 } from "./dropdownData.js";
 import { Country, State, City } from "country-state-city";
+import EmpIDCard from "./EmpIDCard.js";
 
 const EmployeeList = () => {
   const [users, setUsers] = useState([]);
@@ -57,6 +68,32 @@ const EmployeeList = () => {
   const [uniqueCategories, setUniqueCategories] = useState([]);
   const [uniqueDesignations, setUniqueDesignations] = useState([]);
   const [employeeDetails, setEmployeeDetails] = useState(null);
+  const [documentToView, setDocumentToView] = useState(null); // Stores the document URL
+  const [documentType, setDocumentType] = useState(null); // Stores the type (pdf or image)
+  const [openDocumentDialog, setOpenDocumentDialog] = useState(false);
+  const zoomPluginInstance = zoomPlugin(); // Create zoom plugin instance
+
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [isDialogOpen, setDialogOpen] = useState(false);
+
+  const handleOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleClose = () => {
+    setDialogOpen(false);
+  };
+
+  const handleOpenDialog = (empID) => {
+    console.log("Dialogue opening for ID: ", empID);
+    setSelectedEmployee(empID);
+    setDialogOpen(true);
+  };
+
+  const handleCloseIDDialog = () => {
+    setSelectedEmployee(null);
+    setDialogOpen(false);
+  };
 
   useEffect(() => {
     const fetchUsersAndFilters = async () => {
@@ -135,6 +172,19 @@ const EmployeeList = () => {
     searchTerm,
   ]);
 
+  const handleViewDocument = (url, type) => {
+    setDocumentToView(url); // Set the URL of the document to view
+    setDocumentType(type); // Set the type of document (image/pdf)
+    setOpenDocumentDialog(true); // Open the dialog
+  };
+
+  const handleDownload = (url) => {
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = url.split("/").pop(); // Extract the file name from the URL
+    link.click();
+  };
+
   const [institutecode, setInstituteCode] = useState(
     localStorage.getItem("institutecode") || ""
   );
@@ -177,12 +227,15 @@ const EmployeeList = () => {
   useEffect(() => {
     loadCategory();
   }, [institutecode]);
+
   const countries = Country.getAllCountries();
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
+  const [districtList, setDistrictList] = useState([]);
 
   const [permanentStates, setPermanentStates] = useState([]);
   const [permanentCities, setPermanentCities] = useState([]);
+  const [permanentDistrictList, setPermanentDistrictList] = useState([]);
 
   useEffect(() => {
     if (selectedUser?.country) {
@@ -208,6 +261,8 @@ const EmployeeList = () => {
             )
           : []
       );
+      // Set districts based on selected state
+      setDistrictList(districts[selectedUser.state] || []);
     }
   }, [selectedUser?.state, states]);
 
@@ -235,8 +290,11 @@ const EmployeeList = () => {
             )
           : []
       );
+      // Set permanent districts based on selected state
+      setPermanentDistrictList(districts[selectedUser.permanentstate] || []);
     }
   }, [selectedUser?.permanentstate, permanentStates]);
+
   useEffect(() => {
     fetchDepartments();
   }, [institutecode]);
@@ -337,9 +395,20 @@ const EmployeeList = () => {
       try {
         await Userservice.updateUser(selectedUser.empID, selectedUser);
         await fetchUsers();
-        setShowUpdateModal(false);
-        setSelectedUser(null);
         toast.success("Employee updated successfully"); // Notify success
+      } catch (error) {
+        setError("Error updating Employee: " + error.message);
+        toast.error(`Error updating Employee: ${error.message}`); // Notify error
+      }
+    }
+  };
+
+  const handleDocuments = async () => {
+    if (selectedUser) {
+      try {
+        await Userservice.updateDocuments(selectedUser.empID, selectedUser);
+        await fetchUsers();
+        toast.success("File updated successfully"); // Notify success
       } catch (error) {
         setError("Error updating Employee: " + error.message);
         toast.error(`Error updating Employee: ${error.message}`); // Notify error
@@ -421,7 +490,6 @@ const EmployeeList = () => {
     }
   };
 
-  
   const handleDownloadPDF = () => {
     const doc = new jsPDF();
     const instituteName = employeeDetails.institutename;
@@ -433,17 +501,28 @@ const EmployeeList = () => {
 
     // Add institute image
     if (imgData) {
-        doc.addImage(imgData, 'JPEG', (doc.internal.pageSize.getWidth() - 60) / 2, startY, 60, 30); // Adjust image size and position
+      doc.addImage(
+        imgData,
+        "JPEG",
+        (doc.internal.pageSize.getWidth() - 60) / 2,
+        startY,
+        60,
+        30
+      ); // Adjust image size and position
     }
 
     // Add title
     const title = "Employee Report";
     doc.setFontSize(18);
-    doc.text(title, doc.internal.pageSize.getWidth() / 2, startY + 40, { align: 'center' }); // Position the title below the image
+    doc.text(title, doc.internal.pageSize.getWidth() / 2, startY + 40, {
+      align: "center",
+    }); // Position the title below the image
 
     // Add institute name
     doc.setFontSize(14);
-    doc.text(instituteName, doc.internal.pageSize.getWidth() / 2, startY + 50, { align: 'center' }); // Position the institute name below the title
+    doc.text(instituteName, doc.internal.pageSize.getWidth() / 2, startY + 50, {
+      align: "center",
+    }); // Position the institute name below the title
 
     // Define user information
     const userInfo = [
@@ -483,8 +562,14 @@ const EmployeeList = () => {
       { label: "Salary:", value: selectedUser?.salary },
       { label: "CPF No:", value: selectedUser?.cpfNo },
       { label: "ESIC No:", value: selectedUser?.esicNo },
-      { label: "Basic Qualification:", value: selectedUser?.basicQualification },
-      { label: "Professional Qualification:", value: selectedUser?.professionalQualification },
+      {
+        label: "Basic Qualification:",
+        value: selectedUser?.basicQualification,
+      },
+      {
+        label: "Professional Qualification:",
+        value: selectedUser?.professionalQualification,
+      },
       { label: "Shift:", value: selectedUser?.shift },
       { label: "Shift Start Time:", value: selectedUser?.shiftStartTime },
       { label: "Shift End Time:", value: selectedUser?.shiftEndTime },
@@ -518,8 +603,7 @@ const EmployeeList = () => {
 
     // Save the PDF
     doc.save("UserInformation.pdf");
-};
-
+  };
 
   const handleDownloadCsv = () => {
     const csvData = filteredUsers.map((user) => ({
@@ -872,7 +956,7 @@ const EmployeeList = () => {
                       <IconButton
                         onClick={() => handleShowInfo(user.empID)}
                         aria-label="info"
-                        sx={{ color: "green" }}
+                        color="primary"
                       >
                         <Info />
                       </IconButton>
@@ -898,6 +982,14 @@ const EmployeeList = () => {
                         <Cancel />
                       </IconButton>{" "}
                       {/* Cancel icon */}
+                      <IconButton
+                        size="small"
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => handleOpenDialog(user.empID)}
+                      >
+                        <BadgeIcon />
+                      </IconButton>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -915,6 +1007,21 @@ const EmployeeList = () => {
           rowsPerPageOptions={[10, 20, 50]}
           labelRowsPerPage="Entries per Page"
         />
+
+        {/* id card dialog  */}
+
+        <Dialog open={isDialogOpen}
+        onClose={handleCloseIDDialog}
+        maxWidth="sm"
+        fullWidth>
+          <DialogTitle textAlign={"center"}>Id Card</DialogTitle>
+          <DialogContent style={{ width: "auto", padding: "20px" }}>
+            <EmpIDCard
+              id={selectedEmployee}
+              onClose={() => setDialogOpen(false)}
+            />
+          </DialogContent>
+        </Dialog>
 
         {/* Update Modal */}
         {selectedUser && (
@@ -1094,31 +1201,39 @@ const EmployeeList = () => {
                       </TextField>
                     </FormControl>
                   </Grid>
+                  {/* District */}
                   <Grid item xs={12} sm={4}>
                     <FormControl fullWidth>
                       <TextField
                         required
-                        name="city"
-                        value={selectedUser?.city || ""}
+                        name="district"
+                        value={selectedUser?.district}
                         onChange={handleInputChange}
-                        label="City"
+                        label="District"
                         select
                       >
-                        {cities.map((option) => (
-                          <MenuItem key={option.name} value={option.name}>
-                            {option.name}
+                        {districtList.length > 0 ? (
+                          districtList.map((district) => (
+                            <MenuItem key={district} value={district}>
+                              {district}
+                            </MenuItem>
+                          ))
+                        ) : (
+                          <MenuItem value="">
+                            <em>Select a state first</em>
                           </MenuItem>
-                        ))}
+                        )}
                       </TextField>
                     </FormControl>
                   </Grid>
+                  {/* City */}
                   <Grid item xs={12} sm={4}>
                     <TextField
                       required
-                      name="district"
-                      value={selectedUser?.district}
+                      name="city"
+                      value={selectedUser?.city}
                       onChange={handleInputChange}
-                      label="District"
+                      label="City/Village/Nagar"
                       fullWidth
                     />
                   </Grid>
@@ -1206,31 +1321,39 @@ const EmployeeList = () => {
                       </TextField>
                     </FormControl>
                   </Grid>
+                  {/* Permanent District */}
                   <Grid item xs={12} sm={4}>
                     <FormControl fullWidth>
                       <TextField
                         required
-                        name="permanentcity"
-                        value={selectedUser?.permanentcity || ""}
+                        name="permanentdistrict"
+                        value={selectedUser?.permanentdistrict}
                         onChange={handleInputChange}
-                        label="Permanent City"
+                        label="Permanent District"
                         select
                       >
-                        {permanentCities.map((option) => (
-                          <MenuItem key={option.name} value={option.name}>
-                            {option.name}
+                        {permanentDistrictList.length > 0 ? (
+                          permanentDistrictList.map((district) => (
+                            <MenuItem key={district} value={district}>
+                              {district}
+                            </MenuItem>
+                          ))
+                        ) : (
+                          <MenuItem value="">
+                            <em>Select a state first</em>
                           </MenuItem>
-                        ))}
+                        )}
                       </TextField>
                     </FormControl>
                   </Grid>
+                  {/* Permanent City */}
                   <Grid item xs={12} sm={4}>
                     <TextField
                       required
-                      name="permanentdistrict"
-                      value={selectedUser?.permanentdistrict}
+                      name="permanentcity"
+                      value={selectedUser.permanentcity}
                       onChange={handleInputChange}
-                      label="Permanent District"
+                      label="Permanent City/Village/Nagar"
                       fullWidth
                     />
                   </Grid>
@@ -1450,6 +1573,119 @@ const EmployeeList = () => {
                       InputLabelProps={{ shrink: true }}
                     />
                   </Grid>
+                  <Grid item xs={12} sx={{ mt: 2, ml: 45 }}>
+                    <Button variant="contained" onClick={handleUpdate}>
+                      Update
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <hr />
+                    <Typography
+                      variant="h5"
+                      gutterBottom
+                      sx={{
+                        fontWeight: "bold",
+                        color: "#24A0ED",
+                        textAlign: "center",
+                      }}
+                    >
+                      Update Documents
+                    </Typography>
+                    <hr />
+                  </Grid>
+
+                  <br />
+                  <Grid item xs={12} sm={4}>
+                    <TextField
+                      required
+                      type="file"
+                      accept=".jpeg"
+                      name="idProofFile"
+                      value={selectedUser?.idProofFile}
+                      onChange={handleInputChange}
+                      helperText="ID Proof (JPEG, max 1MB)"
+                    />
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleDocuments("idProofFile")}
+                    >
+                      Update
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <TextField
+                      required
+                      type="file"
+                      accept=".jpeg"
+                      name="empFile"
+                      value={selectedUser?.empFile}
+                      onChange={handleInputChange}
+                      helperText="Employee Photo (JPEG, max 1MB)"
+                    />
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleDocuments("empFile")}
+                    >
+                      Update
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <TextField
+                      required
+                      type="file"
+                      accept=".pdf"
+                      name="resumeFile"
+                      value={selectedUser?.resumeFile}
+                      onChange={handleInputChange}
+                      helperText="Resume (PDF, max 1MB)"
+                    />
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleDocuments("resumeFile")}
+                    >
+                      Update
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <TextField
+                      required
+                      type="file"
+                      accept=".pdf"
+                      name="addressProofFile"
+                      value={selectedUser?.addressProofFile}
+                      onChange={handleInputChange}
+                      helperText="Address Proof (PDF, max 1MB)"
+                    />
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleDocuments("addressProofFile")}
+                    >
+                      Update
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <TextField
+                      required
+                      type="file"
+                      accept=".pdf"
+                      name="experienceLetterFile"
+                      value={selectedUser?.experienceLetterFile}
+                      onChange={handleInputChange}
+                      helperText="Experience Letter (PDF, max 1MB)"
+                    />
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleDocuments("experienceLetterFile")}
+                    >
+                      Update
+                    </Button>
+                  </Grid>
+
                   {/* <Grid item xs={12} sm={4}>
                 <FormControl fullWidth>
                   <TextField
@@ -1481,9 +1717,6 @@ const EmployeeList = () => {
                 />
               </Grid> */}
                   <Grid item xs={12} sx={{ mt: 2, ml: 75 }}>
-                    <Button variant="contained" onClick={handleUpdate}>
-                      Update
-                    </Button>
                     <Button
                       variant="contained"
                       color="secondary"
@@ -2121,52 +2354,69 @@ const EmployeeList = () => {
                 >
                   <Typography
                     variant="subtitle1"
-                    sx={{ fontWeight: "bold", mr: 1  }}
+                    sx={{ fontWeight: "bold", mr: 1 }}
                   >
                     Status:
                   </Typography>{" "}
                   {selectedUser?.status}
                 </Grid>
-                {/* <Grid item xs={12} sm={6} sx={{ display: "flex", alignItems: "center" }}>
-                    <Typography variant="subtitle1" sx={{ fontWeight: "bold", mr: 1 }}>
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  sx={{ display: "flex", alignItems: "center" }}
+                >
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ fontWeight: "bold", mr: 1 }}
+                  >
                     Employee Photo:
-                    </Typography>
-                    <Button variant="contained" onClick={() => window.open(selectedUser?.employeePhoto, "_blank")}>
-                        View
-                    </Button>
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    onClick={() =>
+                      handleViewDocument(selectedUser?.employeePhoto, "image")
+                    }
+                  >
+                    View
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    sx={{ ml: 1 }}
+                    onClick={() => handleDownload(selectedUser?.employeePhoto)}
+                  >
+                    Download
+                  </Button>
                 </Grid>
-                <Grid item xs={12} sm={6} sx={{ display: "flex", alignItems: "center" }}>
-                    <Typography variant="subtitle1" sx={{ fontWeight: "bold", mr: 1 }}>
-                        ID Proof:
-                    </Typography>
-                    <Button variant="contained" onClick={() => window.open(selectedUser?.idProof, "_blank")}>
-                        View
-                    </Button>
+
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  sx={{ display: "flex", alignItems: "center" }}
+                >
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ fontWeight: "bold", mr: 1 }}
+                  >
+                    Resume:
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    onClick={() =>
+                      handleViewDocument(selectedUser?.resume, "pdf")
+                    }
+                  >
+                    View
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    sx={{ ml: 1 }}
+                    onClick={() => handleDownload(selectedUser?.resume)}
+                  >
+                    Download
+                  </Button>
                 </Grid>
-                <Grid item xs={12} sm={6} sx={{ display: "flex", alignItems: "center" }}>
-                    <Typography variant="subtitle1" sx={{ fontWeight: "bold", mr: 1 }}>
-                        Resume:
-                    </Typography>
-                    <Button variant="contained" onClick={() => window.open(selectedUser?.resume, "_blank")}>
-                        View
-                    </Button>
-                </Grid>
-                <Grid item xs={12} sm={6} sx={{ display: "flex", alignItems: "center" }}>
-                    <Typography variant="subtitle1" sx={{ fontWeight: "bold", mr: 1 }}>
-                        Address Proof:
-                    </Typography>
-                    <Button variant="contained" onClick={() => window.open(selectedUser?.addressProof, "_blank")}>
-                        View
-                    </Button>
-                </Grid>
-                <Grid item xs={12} sm={6} sx={{ display: "flex", alignItems: "center" }}>
-                    <Typography variant="subtitle1" sx={{ fontWeight: "bold", mr: 1 }}>
-                        Experience Letter:
-                    </Typography>
-                    <Button variant="contained" onClick={() => window.open(selectedUser?.experienceLetter, "_blank")}>
-                        View
-                    </Button>
-                </Grid> */}
               </Grid>
               <Box mt={2} textAlign="right">
                 <Button
@@ -2188,6 +2438,48 @@ const EmployeeList = () => {
             </Box>
           </Modal>
         )}
+
+        <Dialog
+          open={openDocumentDialog}
+          onClose={() => setOpenDocumentDialog(false)}
+        >
+          <DialogTitle>Document Viewer</DialogTitle>
+          <DialogContent dividers>
+            {documentType === "image" && (
+              <img
+                src={documentToView}
+                alt="Document"
+                style={{ maxWidth: "100%" }}
+              />
+            )}
+            {documentType === "pdf" && (
+              <Worker
+                workerUrl={`https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js`}
+              >
+                <Viewer
+                  fileUrl={documentToView}
+                  plugins={[zoomPluginInstance]} // Add zoom plugin here
+                  onLoadError={(error) => {
+                    if (error.message.includes("401")) {
+                      console.error("Unauthorized access to the PDF file");
+                      alert("You do not have access to view this file.");
+                    } else {
+                      console.error("Error loading PDF", error);
+                    }
+                  }}
+                />
+              </Worker>
+            )}
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() => setOpenDocumentDialog(false)}
+              color="primary"
+            >
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
         <ToastContainer />
       </div>
     </>

@@ -846,7 +846,7 @@ const Category = () => {
             gutterBottom
             sx={{ marginRight: 10, whiteSpace: "nowrap", marginLeft: 5 }}
           >
-            Total Amount(+GST) : ₹ {formatValue(totalAmount)}
+            Total Amount (+GST) : ₹ {formatValue(totalAmount)}
           </Typography>
           <Typography
             variant="h6"
@@ -911,7 +911,7 @@ const Category = () => {
               GST Amount
             </StyledTableCell>
             <StyledTableCell style={{ fontWeight: "bold" }}>
-              Total(+GST)
+              Total (+GST)
             </StyledTableCell>
             <StyledTableCell style={{ fontWeight: "bold" }}>
               Paid

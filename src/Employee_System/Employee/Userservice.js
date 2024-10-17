@@ -48,6 +48,11 @@ class UserService {
     return axios.put(`${USER_API_URL}/updateEmpByPut/${empId}`, formData); // Corrected URL
   }
 
+  updateDocuments(empID, formData) {
+    console.log('Updating Document with id :', empID, formData);
+    return axios.put(`${USER_API_URL}/updateFiles/${empID}`, formData);
+  }
+
   deleteUser(empId) {
     console.log(`Deleting user with ID: ${empId}`);
     return axios.delete(`${USER_API_URL}/softDeleteById/${empId}`);

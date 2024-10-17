@@ -121,7 +121,7 @@ const CourseByGraph = () => {
           //  title: "Admissions by Course",
             is3D: true,
             colors: [
-              "#3498DB"
+              "#3498DB", "#FF6F61", "#F9E79F"
             ],
           }}
         />

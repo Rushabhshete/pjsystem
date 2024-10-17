@@ -848,7 +848,7 @@ if (instituteImage) {
                 Submit
               </Button>
             </Grid>
-            <Grid item xs={12} sm={3}>
+            {/* <Grid item xs={12} sm={3}>
               <Button
                 variant="outlined"
                 color="secondary"
@@ -858,7 +858,7 @@ if (instituteImage) {
               >
                 Cancel
               </Button>
-            </Grid>
+            </Grid> */}
           </Grid>
         </Grid>
       </form>

@@ -462,43 +462,43 @@ const TodaysAttendance = () => {
     <>
     <Container>
       <Grid container spacing={2} sx={{ marginBottom: 3 }}>
-        <Grid item xs={12} md={4}>
-          <Card sx={{ backgroundColor: '#F9E79F', borderRadius:"10px" }}>
+        <Grid item xs={12} md={3}>
+          <Card sx={{ backgroundColor: '#F9E79F', borderRadius:"10px", fontWeight:'bold' }}>
             <CardContent>
-              <Typography variant="h6" component="div">
+              <Typography variant="h7" component="div">
                 Total Employees
               </Typography>
-              <Typography variant="h4" component="div">
+              <Typography variant="h5" component="div">
                 {totalEmployeeCount}
               </Typography>
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} md={4}>
-          <Card sx={{ backgroundColor: '#FF6F61' }}>
+        <Grid item xs={12} md={3}>
+          <Card sx={{ backgroundColor: '#FF6F61', borderRadius:"10px", fontWeight:'bold' }}>
             <CardContent>
-              <Typography variant="h6" component="div">
+              <Typography variant="h7" component="div">
                 Present Employees
               </Typography>
-              <Typography variant="h4" component="div">
+              <Typography variant="h5" component="div">
                 {presentCount}
               </Typography>
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} md={4}>
-          <Card sx={{ backgroundColor: '#3498DB' }}>
+        <Grid item xs={12} md={3}>
+          <Card sx={{ backgroundColor: '#3498DB', borderRadius:"10px", fontWeight:'bold' }}>
             <CardContent>
-              <Typography variant="h6" component="div">
+              <Typography variant="h7" component="div">
                 Absent Employees
               </Typography>
-              <Typography variant="h4" component="div">
+              <Typography variant="h5" component="div">
                 {absentCount}
               </Typography>
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid item xs={12} md={3}>
           <TextField
             fullWidth
             label="Search by name"
@@ -579,6 +579,7 @@ const TodaysAttendance = () => {
               <TableCell sx={{ fontWeight: 'bold' }}>Break Out</TableCell>
               <TableCell sx={{ fontWeight: 'bold' }}>Break Minutes</TableCell>
               <TableCell sx={{ fontWeight: 'bold' }}>Logout</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }}>Total Minutes</TableCell>
               <TableCell sx={{ fontWeight: 'bold' }}>Status</TableCell>
             </TableRow>
           </TableHead>
@@ -592,11 +593,12 @@ const TodaysAttendance = () => {
                 <TableCell>{employee.loginTime || 'N/A'}</TableCell>
                 <TableCell>{employee.breakIn || 'N/A'}</TableCell>
                 <TableCell>{employee.breakOut || 'N/A'}</TableCell>
-                <TableCell>{employee.breakMinutes || '0'}</TableCell>
+                <TableCell  sx={{ fontWeight: 'bold' }}>{employee.breakMinutes || '0'}</TableCell>
                 <TableCell>{employee.logoutTime || 'N/A'}</TableCell>
+                <TableCell  sx={{ fontWeight: 'bold' }}>{employee.minutes || 'N/A'}</TableCell>
                 <TableCell  sx={{
           fontWeight: 'bold',
-          color: employee.status === 'On time' ? '#90ee90' : 
+          color: employee.status === 'On time' ? 'green' : 
                  employee.status === 'Late' ? 'orange' : 
                  employee.status === 'Absent' ? 'red' : 'inherit',
         }}>{employee.status}</TableCell>

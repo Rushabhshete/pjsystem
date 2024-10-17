@@ -131,7 +131,7 @@ const AttenDash = () => {
   </Box>
             <Grid container spacing={2} sx={{ marginBottom: 3 }}>
               <Grid item xs={12} md={4}>
-                <Card sx={{ backgroundColor: '#F9E79F', borderRadius: "10px" }}>
+                <Card sx={{ backgroundColor: '#F9E79F', borderRadius: "10px", fontWeight:'bold' }}>
                   <CardContent>
                     <Typography variant="h7" component="div">
                       Total Employee
@@ -143,7 +143,7 @@ const AttenDash = () => {
                 </Card>
               </Grid>
               <Grid item xs={12} md={4}>
-                <Card sx={{ backgroundColor: '#FF6F61',  borderRadius: '10px' }}>
+                <Card sx={{ backgroundColor: '#FF6F61',  borderRadius: '10px', fontWeight:'bold' }}>
                   <CardContent>
                     <Typography variant="h7" component="div">
                       Present
@@ -155,7 +155,7 @@ const AttenDash = () => {
                 </Card>
               </Grid>
               <Grid item xs={12} md={4}>
-                <Card sx={{ backgroundColor: '#3498DB',  borderRadius: '10px' }}>
+                <Card sx={{ backgroundColor: '#3498DB',  borderRadius: '10px', fontWeight:'bold' }}>
                   <CardContent>
                     <Typography variant="h7" component="div">
                       Absent
@@ -198,19 +198,19 @@ const AttenDash = () => {
   </Box>
             <Grid container spacing={2} sx={{ marginBottom: 3 }}>
               <Grid item xs={12} md={4}>
-                <Paper elevation={3} style={{ padding: '19px', backgroundColor: '#F9E79F', borderRadius: '10px' }}>
+                <Paper elevation={3} style={{ padding: '19px', backgroundColor: '#F9E79F', borderRadius: '10px', fontWeight:'bold' }}>
                   <Typography variant="h7">Total Salaries:</Typography>
                   <Typography variant="h5">{totalEmployee !== null ? totalEmployee : 0}</Typography>
                 </Paper>
               </Grid>
               <Grid item xs={12} md={4}>
-                <Paper elevation={3} style={{ padding: '19px', backgroundColor: '#FF6F61', borderRadius: '10px' }}>
+                <Paper elevation={3} style={{ padding: '19px', backgroundColor: '#FF6F61', borderRadius: '10px', fontWeight:'bold' }}>
                   <Typography variant="h7">Paid Salary:</Typography>
                   <Typography variant="h5">{paidEmployees !== null ? paidEmployees : 0}</Typography>
                 </Paper>
               </Grid>
               <Grid item xs={12} md={4}>
-                <Paper elevation={3} style={{ padding: '18px', backgroundColor: '#3498DB', borderRadius: '10px' }}>
+                <Paper elevation={3} style={{ padding: '18px', backgroundColor: '#3498DB', borderRadius: '10px', fontWeight:'bold' }}>
                   <Typography variant="h7">Pending Salary:</Typography>
                   <Typography variant="h5">{pendingEmployees !== null ? pendingEmployees : 0}</Typography>
                 </Paper>

@@ -23,7 +23,7 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableRow,TableHead, DialogActions
+  TableRow,TableHead, DialogActions, IconButton 
 } from "@mui/material";
 import html2pdf from 'html2pdf.js'; // Importing html2pdf.js
 //import logo from '../img/logo.jpg'; 
@@ -39,6 +39,7 @@ import phonepe from "../../src/img/phonepe.png"
 import gpay from "../../src/img/gpay.png";
 import paytm from "../../src/img/paytm.jpg";
 import upilite from "../../src/img/upilite.png";
+import { Login as LoginIcon } from "@mui/icons-material"; // Importing login icon
 
 const CreateAccount = () => {
   const [formData, setFormData] = useState({
@@ -453,33 +454,41 @@ const CreateAccount = () => {
   };
   return (
     <>
-      <AppBar
-        position="fixed"
-        sx={{
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-          backgroundImage: "radial-gradient(circle, #FF564E, #FAD126)",
-        }}
-      >
-        <Toolbar>
-          <Grid container justifyContent="center" alignItems="center">
-            <Grid item display="flex" alignItems="center">
-              <img
-                src={logo}
-                alt="Logo"
-                style={{ marginRight: "8px", height: "30px" }}
-              />
-              <Typography
-                variant="h5"
-                color="black"
-                textAlign="center"
-                fontWeight="bold"
-              >
-                PJSOFTTECH
-              </Typography>
-            </Grid>
+<AppBar
+      position="fixed"
+      sx={{
+        zIndex: (theme) => theme.zIndex.drawer + 1,
+        backgroundImage: "#00649F",
+      }}
+    >
+      <Toolbar>
+        <Grid container justifyContent="center" alignItems="center">
+          <Grid item display="flex" alignItems="center">
+            <img
+              src={logo}
+              alt="Logo"
+              style={{ marginRight: "8px", height: "30px" }}
+            />
+            <Typography
+              variant="h5"
+              color="white"
+              textAlign="center"
+              fontWeight="bold"
+            >
+              PJSOFTTECH
+            </Typography>
           </Grid>
-        </Toolbar>
-      </AppBar>
+        </Grid>
+        <IconButton
+          edge="end"
+          color="inherit"
+          onClick={() => navigate("/")} // Navigating to "/" on click
+          sx={{ position: 'absolute', right: 16 }} // Position the icon on the right
+        >
+          <LoginIcon />
+        </IconButton>
+      </Toolbar>
+    </AppBar>
 
       <div
         style={{ marginRight: "50px", marginLeft: "50px", marginTop: "80px" }}

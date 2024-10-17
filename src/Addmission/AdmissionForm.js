@@ -540,7 +540,7 @@ const AdmissionForm = () => {
                 {" "}
                 {/* Add flexbox styling here */}
                 <Button
-                  variant="outlined"
+                  variant="contained"
                   component="label"
                   style={{ marginRight: "10px", marginTop: "20px" }}
                   //color={errors.studentPhoto ? "error" : "primary"} // Change button color if there's an error

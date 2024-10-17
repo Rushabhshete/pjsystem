@@ -431,26 +431,26 @@ const EmployeeDashboard = () => {
             <Grid container spacing={3}>
                 <Grid item xs={12} md={8} container spacing={2}>
                     <Grid item xs={6} md={4}>
-                        <Card style={{ backgroundColor: '#F9E79F', borderRadius: '15px' }}>
+                        <Card style={{ backgroundColor: '#F9E79F', borderRadius: '15px', fontWeight:'bold' }}>
                             <CardContent>
-                                <Typography variant="h6">Total Employee</Typography>
-                                <Typography variant="h4">{employeeCount}</Typography>
+                                <Typography variant="h7">Total Employee</Typography>
+                                <Typography variant="h5">{employeeCount}</Typography>
                             </CardContent>
                         </Card>
                     </Grid>
                     <Grid item xs={6} md={4}>
-                        <Card style={{ backgroundColor: '#FF6F61', borderRadius: '15px' }}>
+                        <Card style={{ backgroundColor: '#FF6F61', borderRadius: '15px', fontWeight:'bold' }}>
                             <CardContent>
-                                <Typography variant="h6">Joined</Typography>
-                                <Typography variant="h4">{joinedCount}</Typography>
+                                <Typography variant="h7">Joined</Typography>
+                                <Typography variant="h5">{joinedCount}</Typography>
                             </CardContent>
                         </Card>
                     </Grid>
                     <Grid item xs={6} md={4}>
-                        <Card style={{ backgroundColor: '#3498DB', borderRadius: '15px' }}>
+                        <Card style={{ backgroundColor: '#3498DB', borderRadius: '15px', fontWeight:'bold' }}>
                             <CardContent>
-                                <Typography variant="h6">Terminated</Typography>
-                                <Typography variant="h4">{terminatedCount}</Typography>
+                                <Typography variant="h7">Terminated</Typography>
+                                <Typography variant="h5">{terminatedCount}</Typography>
                             </CardContent>
                         </Card>
                     </Grid>
@@ -500,7 +500,7 @@ const EmployeeDashboard = () => {
                     </Grid>
                 </Grid>
                 <Grid item xs={12} md={6} sx={{ height: "450px" }}>
-    <Typography variant="h6">Department Chart</Typography>
+    <Typography variant="h6" textAlign={'center'}>Department Chart</Typography>
     <ResponsiveBar
         data={departmentData}
         keys={['Department']}
@@ -516,6 +516,7 @@ const EmployeeDashboard = () => {
             tickRotation: 0,
             legendPosition: 'middle',
             legendOffset: 32,
+            tickValues: [], // Add this line to remove labels from x-axis
         }}
         axisLeft={{
             tickSize: 5,
@@ -533,7 +534,7 @@ const EmployeeDashboard = () => {
     />
 </Grid>
 <Grid item xs={12} md={6} sx={{ height: "450px" }}>
-    <Typography variant="h6">Category Chart</Typography>
+    <Typography variant="h6" textAlign={'center'}>Category Chart</Typography>
     <ResponsiveBar
         data={categoryData}
         keys={['Category']}
@@ -549,6 +550,7 @@ const EmployeeDashboard = () => {
             tickRotation: 0,
             legendPosition: 'middle',
             legendOffset: 32,
+            tickValues: [], // Add this line to remove labels from x-axis
         }}
         axisLeft={{
             tickSize: 5,
