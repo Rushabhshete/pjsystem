@@ -58,47 +58,56 @@ const ComparisonGraph = () => {
 
   return (
     <div>
-      <Grid
-        container
-        spacing={1}
-        className="textField-root"
-      >
-        <Grid item xs={12} sm={2.5}>
-          <TextField
-            select
-            label="Year From"
-            value={year1}
-            onChange={(e) => setYear1(e.target.value)}
-            fullWidth
-            variant="outlined"
-          >
-            {years.map((year) => (
-              <MenuItem key={year} value={year}>
-                {year}
-              </MenuItem>
-            ))}
-          </TextField>
-        </Grid>
-        <Grid item xs={12} sm={2.5}>
-          <TextField
-            select
-            label="Year To"
-            value={year2}
-            onChange={(e) => setYear2(e.target.value)}
-            variant="outlined"
-            fullWidth
-          >
-            {years.map((year) => (
-              <MenuItem key={year} value={year}>
-                {year}
-              </MenuItem>
-            ))}
-          </TextField>
-        </Grid>
-        <Typography variant="h6" marginLeft="10px">
-          Comparison of Admissions
-        </Typography>
-      </Grid>
+     <Grid
+  container
+  spacing={2}
+  justifyContent="center"
+  alignItems="center"
+  className="textField-root"
+>
+  <Grid item>
+    <Typography variant="body1" marginLeft="10px">
+      Comparison of Admissions
+    </Typography>
+  </Grid>
+
+  <Grid item>
+    <TextField
+      select
+      label="Year From"
+      value={year1}
+      onChange={(e) => setYear1(e.target.value)}
+      variant="outlined"
+      fullWidth
+      style={{ minWidth: 120 }} 
+    >
+      {years.map((year) => (
+        <MenuItem key={year} value={year}>
+          {year}
+        </MenuItem>
+      ))}
+    </TextField>
+  </Grid>
+
+  <Grid item>
+    <TextField
+      select
+      label="Year To"
+      value={year2}
+      onChange={(e) => setYear2(e.target.value)}
+      variant="outlined"
+      fullWidth
+      style={{ minWidth: 120 }} 
+    >
+      {years.map((year) => (
+        <MenuItem key={year} value={year}>
+          {year}
+        </MenuItem>
+      ))}
+    </TextField>
+  </Grid>
+</Grid>
+
 
       <div style={{ height: '400px' }}>
         <ResponsiveBar

@@ -6,6 +6,7 @@ import {
   TextField,
   MenuItem,
   Button,
+  Box,
 } from "@mui/material";
 import {
   Chart as ChartJS,
@@ -823,7 +824,7 @@ const IncomeExpenseDashboard = () => {
             elevation={3}
             style={{ padding: "20px", marginTop: "20px", flex: 1 }}
           >
-            <Typography variant="h6" align="center">
+            <Typography variant="body1" align="center">
               Overall Income & Expense Comparison
             </Typography>
             <Bar data={overallData} options={overallOptions} />
@@ -841,12 +842,20 @@ const IncomeExpenseDashboard = () => {
               elevation={3}
               style={{ padding: "20px", marginTop: "20px", flex: 1 }}
           >
+              <Box
+      display="flex" 
+      justifyContent="center" 
+      alignItems="center" 
+      mb={2} // Adds margin below the line
+    >
+              <Typography variant="body1" align="center" mr={2}>
+              {year} Income & Expense Comparison
+            </Typography>
             <TextField
               select
               label="Year"
               value={year}
               onChange={handleYearChange}
-              sx={{ marginTop: "10px" }}
             >
               {years.map((year) => (
                 <MenuItem key={year} value={year}>
@@ -854,9 +863,7 @@ const IncomeExpenseDashboard = () => {
                 </MenuItem>
               ))}
             </TextField>
-            <Typography variant="h6" align="center" mt={-4}>
-              {year} Income & Expense Comparison
-            </Typography>
+            </Box>
             <Line data={monthlyData} options={monthlyOptions} />
           </Paper>
         </Grid>
@@ -879,7 +886,7 @@ const IncomeExpenseDashboard = () => {
               marginTop: "10px",
             }}
           >
-            <Grid item xs={12} sm={6} md={2.4} className="textField-root">
+            <Grid item xs={12} sm={6} md={1.5} className="textField-root">
               <TextField
                 select
                 label="Year"
@@ -894,7 +901,7 @@ const IncomeExpenseDashboard = () => {
                 ))}
               </TextField>
             </Grid>
-            <Grid item xs={12} sm={6} md={2.4} className="textField-root">
+            <Grid item xs={12} sm={6} md={1.5} className="textField-root">
               <TextField
                 select
                 label="Month"
@@ -918,7 +925,7 @@ const IncomeExpenseDashboard = () => {
             style={{ marginTop: "10px", justifyContent: "center" }}
           >
             <Grid item xs={12} sm={6}>
-              <Typography variant="h6" gutterBottom align="center">
+              <Typography variant="body1" gutterBottom align="center">
                 Income Categories ({months[month - 1]} {year})
               </Typography>
               <div
@@ -934,7 +941,7 @@ const IncomeExpenseDashboard = () => {
               </div>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Typography variant="h6" gutterBottom align="center">
+              <Typography variant="body1" gutterBottom align="center">
                 Expense Categories ({months[month - 1]} {year})
               </Typography>
               <div

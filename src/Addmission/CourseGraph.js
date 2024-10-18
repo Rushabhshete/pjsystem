@@ -70,10 +70,9 @@ const CourseByGraph = () => {
 
   return (
     <div>
-      <Typography variant="h6" align="center">Admissions by Course</Typography>
-
       {/* Dropdowns for Month and Year */}
-      <Grid container spacing={2} justifyContent="center" style={{ marginBottom: "20px" }}>
+      <Grid container spacing={2} justifyContent="center" alignItems={"center"} style={{ marginBottom: "20px" }}>
+      <Typography variant="body1">Admissions by Course</Typography>
         <Grid item>
           <FormControl>
             <InputLabel>Month</InputLabel>

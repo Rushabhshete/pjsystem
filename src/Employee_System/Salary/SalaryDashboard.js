@@ -273,13 +273,11 @@ const SalaryDashBoard = () => {
         <Grid container spacing={2} mt={2} display="flex" className='textField-root'>
         <Grid item xs={12} sm={6}>
   <Paper elevation={3}  style={{ padding: '16px', height:'550px' }}>
-    <Box display="flex" flexDirection="column" alignItems="center">
-      <Typography variant="h5" gutterBottom align="center">
+    <Box display="flex"  justifyContent="center" alignItems="center" gap={3} mt={2}>
+      <Typography variant="body1" gutterBottom align="center" mr={2}>
         Monthly Comparison Chart
       </Typography>
-      <Grid item xs={12} sm={8} display="flex" justifyContent="center" padding={'2%'}>
-        <Box display="flex" flexDirection="row" alignItems="center" gap={2}>
-          <FormControl size="small" variant="outlined" style={{ minWidth: 150 }}>
+          <FormControl  variant="outlined" >
             <InputLabel id="select-chart-month-label">Select Month</InputLabel>
             <Select
               labelId="select-chart-month-label"
@@ -294,7 +292,7 @@ const SalaryDashBoard = () => {
               ))}
             </Select>
           </FormControl>
-          <FormControl size="small" variant="outlined" style={{ minWidth: 150 }}>
+          <FormControl  variant="outlined" >
             <InputLabel id="select-chart-year-label">Select Year</InputLabel>
             <Select
               labelId="select-chart-year-label"
@@ -309,8 +307,6 @@ const SalaryDashBoard = () => {
               ))}
             </Select>
           </FormControl>
-        </Box>
-      </Grid>
     </Box>
     <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 2 }}>
       <ResponsiveContainer width="90%" height={400}>
@@ -330,14 +326,11 @@ const SalaryDashBoard = () => {
 
 <Grid item xs={12} sm={6} className='textField-root'>
   <Paper elevation={3} style={{ padding: '16px', height:'550px' }}>
-    <Typography variant="h5" gutterBottom align='center'>
+  <Box display="flex" justifyContent="center" alignItems="center" gap={3} mt={2}>
+    <Typography variant="body1" gutterBottom align="center" mr={2}>
       Yearly Comparison Chart
     </Typography>
-
-    {/* Wrap FormControls in a Box for centering */}
-    <Box display="flex" justifyContent="center" padding={'2%'}>
-      <Box display={'flex'} flexDirection="row" alignItems="center" gap={2}>
-        <FormControl size="small" variant="outlined" style={{ minWidth: 150 }}>
+        <FormControl variant="outlined">
           <InputLabel>Select Start Year</InputLabel>
           <Select
             value={selectedStartYear}
@@ -351,7 +344,7 @@ const SalaryDashBoard = () => {
             ))}
           </Select>
         </FormControl>
-        <FormControl size="small" variant="outlined" style={{ minWidth: 150 }}>
+        <FormControl variant="outlined">
           <InputLabel>Select End Year</InputLabel>
           <Select
             value={selectedEndYear}
@@ -366,7 +359,6 @@ const SalaryDashBoard = () => {
           </Select>
         </FormControl>
       </Box>
-    </Box>
 
     <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <ResponsiveContainer width="90%" height={400}>
@@ -399,10 +391,10 @@ const SalaryDashBoard = () => {
   <Paper elevation={3} style={{ padding: '16px' }}>
     <Grid container alignItems="center" spacing={2} justifyContent="center">
       <Grid item xs={6} align="center">
-        <Typography variant="h6">Monthly Final Net Salary:</Typography>
+        <Typography variant="body1">Monthly Final Net Salary:</Typography>
       </Grid>
-      <Grid item xs={6} className='textField-root'>
-        <FormControl size="small" style={{ marginBottom: '16px', width: '100%' }}>
+      <Grid item xs={6} md={2} className='textField-root'>
+        <FormControl style={{ marginBottom: '6px', width: '100%' }}>
           <InputLabel>Select Year</InputLabel>
           <Select
             value={selectedChart2Year}

@@ -141,7 +141,7 @@ const SourceByGraph = () => {
   return (
     <div>
       {" "}
-      <Typography variant="h6" align="center">Admissions by Source</Typography>{" "}
+      <Typography variant="body1" align="center">Admissions by Source</Typography>{" "}
         <Grid>
           <Chart
             width={"100%"}

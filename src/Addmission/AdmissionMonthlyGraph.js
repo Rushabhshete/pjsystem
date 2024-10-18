@@ -68,10 +68,14 @@ const MonthlyGraph = () => {
       <Grid
         container
         spacing={2}
+        alignItems="center"
         justifyContent="center"
         className="textField-root"
       >
-        <Grid item xs={12} md={4} justifyContent="center">
+           <Typography variant="body1">
+        Monthly Admissions
+      </Typography>
+        <Grid item xs={12} md={3}>
           <TextField
             select
             label="Year"
@@ -88,9 +92,6 @@ const MonthlyGraph = () => {
           </TextField>
         </Grid>
       </Grid>
-      <Typography variant="h6" align="center">
-        Monthly Admissions
-      </Typography>
       <div style={{ height: '400px' }}>
         <ResponsiveBar
           data={chartData}

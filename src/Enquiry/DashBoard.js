@@ -1255,7 +1255,7 @@ export default function DashBoard() {
       <Paper elevation={3} style={{ padding: "16px", height: "100%" }}>
         <Grid container alignItems="center" justifyContent="center" gap={1}>
           <Grid item>
-            <Typography variant="h6">Monthly Inquiry Count Chart</Typography>
+            <Typography variant="body1">Monthly Inquiry Count Chart</Typography>
           </Grid>
           <Grid item style={{ display: "flex" }}>
             <TextField
@@ -1294,7 +1294,7 @@ export default function DashBoard() {
   {chartData.length ? (
     <ResponsiveLine
       data={chartData}
-      margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+      margin={{ top: 50, right: 35, bottom: 50, left: 60 }}
       xScale={{ type: "point" }}
       yScale={{
         type: "linear",
@@ -1352,13 +1352,11 @@ export default function DashBoard() {
             mt={4}
             align={"left"}
             display={"inline-flex"}
-            padding={"2%"}
             fullWidth
             className="textField-root"
-            sx={{ border: "0.5px solid lightgray", borderRadius: "12px" }}
           >
-            <Typography variant="h6" gutterBottom>
-              <strong>Custom Dates</strong>
+            <Typography variant="body1" ml={2}>
+              Enquiries: <strong>{dateRangeInquiriesCount}</strong>
             </Typography>
             <Box display="flex" alignItems="center" ml={2} gap={2}>
               <TextField
@@ -1384,9 +1382,6 @@ export default function DashBoard() {
                 variant="outlined"
               />
             </Box>
-            <Typography variant="h6" ml={4}>
-              Enquiries: <strong>{dateRangeInquiriesCount}</strong>
-            </Typography>
           </Grid>
 
           <Grid
@@ -1398,7 +1393,7 @@ export default function DashBoard() {
           >
             {/* Exam Chart and Source Chart in one line */}
             <Grid item xs={12} md={6}>
-              <Typography variant="h6">Exam Chart</Typography>
+              <Typography variant="body1">Exam Chart</Typography>
               <Chart
                 chartType="ColumnChart"
                 data={examChartData}
@@ -1408,7 +1403,7 @@ export default function DashBoard() {
               />
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography variant="h6">Source Chart</Typography>
+              <Typography variant="body1">Source Chart</Typography>
               <Chart
                 chartType="ColumnChart"
                 data={sourceChartData}

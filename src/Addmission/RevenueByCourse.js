@@ -68,13 +68,12 @@ const RevenueByCourse = () => {
 
   return (
     <Paper elevation={3} style={{ padding: "20px", marginTop: "20px" }}>
-      <Typography variant="h6" align="center" gutterBottom>
+      {/* Dropdowns for Month and Year */}
+      <Grid container spacing={2} justifyContent="center" alignItems={"center"} style={{ marginBottom: "20px" }}>
+      <Typography variant="body1" gutterBottom>
         Revenue By Course
       </Typography>
-
-      {/* Dropdowns for Month and Year */}
-      <Grid container spacing={2} justifyContent="center" style={{ marginBottom: "20px" }}>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} md={1.5}>
           <FormControl fullWidth>
             <InputLabel>Month</InputLabel>
             <Select
@@ -91,7 +90,7 @@ const RevenueByCourse = () => {
           </FormControl>
         </Grid>
 
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} md={1.5}>
           <FormControl fullWidth>
             <InputLabel>Year</InputLabel>
             <Select

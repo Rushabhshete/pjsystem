@@ -352,7 +352,7 @@ const YearlyGraph = () => {
       <Grid container spacing={3} style={{ marginTop: "20px" }}>
         {/* Revenue Graph */}
         <Grid item xs={12} sm={6}>
-          <Typography variant="h5" align="center">
+          <Typography variant="body1" align="center" marginBottom={'10px'}>
             Daily Revenue for {monthNames[selectedMonth]} {selectedYear}
           </Typography>
           {revenueLoading ? (
@@ -373,7 +373,7 @@ const YearlyGraph = () => {
 
         {/* Admissions Graph */}
         <Grid item xs={12} sm={6}>
-          <Typography variant="h5" align="center">
+          <Typography variant="body1" align="center" marginBottom={'10px'}>
             Daily Admissions for {monthNames[selectedMonth]} {selectedYear}
           </Typography>
           {loading ? (
