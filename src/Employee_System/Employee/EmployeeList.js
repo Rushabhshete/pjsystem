@@ -605,6 +605,15 @@ const EmployeeList = () => {
     doc.save("UserInformation.pdf");
   };
 
+  {/* Handle input changes */}
+const handleFileChange = (event, fieldName) => {
+  const file = event.target.files[0];
+  setSelectedUser((prevState) => ({
+    ...prevState,
+    [fieldName]: file,
+  }));
+};
+
   const handleDownloadCsv = () => {
     const csvData = filteredUsers.map((user) => ({
       Id: user.empID,
@@ -1596,95 +1605,94 @@ const EmployeeList = () => {
 
                   <br />
                   <Grid item xs={12} sm={4}>
-                    <TextField
-                      required
-                      type="file"
-                      accept=".jpeg"
-                      name="idProofFile"
-                      value={selectedUser?.idProofFile}
-                      onChange={handleInputChange}
-                      helperText="ID Proof (JPEG, max 1MB)"
-                    />
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => handleDocuments("idProofFile")}
-                    >
-                      Update
-                    </Button>
-                  </Grid>
-                  <Grid item xs={12} sm={4}>
-                    <TextField
-                      required
-                      type="file"
-                      accept=".jpeg"
-                      name="empFile"
-                      value={selectedUser?.empFile}
-                      onChange={handleInputChange}
-                      helperText="Employee Photo (JPEG, max 1MB)"
-                    />
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => handleDocuments("empFile")}
-                    >
-                      Update
-                    </Button>
-                  </Grid>
-                  <Grid item xs={12} sm={4}>
-                    <TextField
-                      required
-                      type="file"
-                      accept=".pdf"
-                      name="resumeFile"
-                      value={selectedUser?.resumeFile}
-                      onChange={handleInputChange}
-                      helperText="Resume (PDF, max 1MB)"
-                    />
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => handleDocuments("resumeFile")}
-                    >
-                      Update
-                    </Button>
-                  </Grid>
-                  <Grid item xs={12} sm={4}>
-                    <TextField
-                      required
-                      type="file"
-                      accept=".pdf"
-                      name="addressProofFile"
-                      value={selectedUser?.addressProofFile}
-                      onChange={handleInputChange}
-                      helperText="Address Proof (PDF, max 1MB)"
-                    />
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => handleDocuments("addressProofFile")}
-                    >
-                      Update
-                    </Button>
-                  </Grid>
-                  <Grid item xs={12} sm={4}>
-                    <TextField
-                      required
-                      type="file"
-                      accept=".pdf"
-                      name="experienceLetterFile"
-                      value={selectedUser?.experienceLetterFile}
-                      onChange={handleInputChange}
-                      helperText="Experience Letter (PDF, max 1MB)"
-                    />
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => handleDocuments("experienceLetterFile")}
-                    >
-                      Update
-                    </Button>
-                  </Grid>
+  <TextField
+    required
+    type="file"
+    accept=".jpeg"
+    name="idProof"
+    onChange={(e) => handleFileChange(e, "idProof")}
+    helperText="ID Proof (JPEG, max 1MB)"
+  />
+  <Button
+    variant="contained"
+    color="primary"
+    onClick={() => handleDocuments("idProof")}
+  >
+    Update
+  </Button>
+</Grid>
+
+<Grid item xs={12} sm={4}>
+  <TextField
+    required
+    type="file"
+    accept=".jpeg"
+    name="employeePhoto"
+    onChange={(e) => handleFileChange(e, "employeePhoto")}
+    helperText="Employee Photo (JPEG, max 1MB)"
+  />
+  <Button
+    variant="contained"
+    color="primary"
+    onClick={() => handleDocuments("employeePhoto")}
+  >
+    Update
+  </Button>
+</Grid>
+
+<Grid item xs={12} sm={4}>
+  <TextField
+    required
+    type="file"
+    accept=".pdf"
+    name="resume"
+    onChange={(e) => handleFileChange(e, "resume")}
+    helperText="Resume (PDF, max 1MB)"
+  />
+  <Button
+    variant="contained"
+    color="primary"
+    onClick={() => handleDocuments("resume")}
+  >
+    Update
+  </Button>
+</Grid>
+
+<Grid item xs={12} sm={4}>
+  <TextField
+    required
+    type="file"
+    accept=".pdf"
+    name="addressProof"
+    onChange={(e) => handleFileChange(e, "addressProof")}
+    helperText="Address Proof (PDF, max 1MB)"
+  />
+  <Button
+    variant="contained"
+    color="primary"
+    onClick={() => handleDocuments("addressProof")}
+  >
+    Update
+  </Button>
+</Grid>
+
+<Grid item xs={12} sm={4}>
+  <TextField
+    required
+    type="file"
+    accept=".pdf"
+    name="experienceLetter"
+    onChange={(e) => handleFileChange(e, "experienceLetter")}
+    helperText="Experience Letter (PDF, max 1MB)"
+  />
+  <Button
+    variant="contained"
+    color="primary"
+    onClick={() => handleDocuments("experienceLetter")}
+  >
+    Update
+  </Button>
+</Grid>
 
                   {/* <Grid item xs={12} sm={4}>
                 <FormControl fullWidth>
@@ -2380,6 +2388,20 @@ const EmployeeList = () => {
                   >
                     View
                   </Button>
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ fontWeight: "bold", mr: 1 }}
+                  >
+                    addressProof:
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    onClick={() =>
+                      handleViewDocument(selectedUser?.addressProof, "pdf")
+                    }
+                  >
+                    View
+                  </Button>
                   <Button
                     variant="outlined"
                     sx={{ ml: 1 }}
@@ -2480,7 +2502,7 @@ const EmployeeList = () => {
             </Button>
           </DialogActions>
         </Dialog>
-        <ToastContainer />
+        {/* <ToastContainer /> */}
       </div>
     </>
   );

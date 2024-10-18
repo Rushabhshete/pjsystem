@@ -49,9 +49,15 @@ class UserService {
   }
 
   updateDocuments(empID, formData) {
-    console.log('Updating Document with id :', empID, formData);
-    return axios.put(`${USER_API_URL}/updateFiles/${empID}`, formData);
+    console.log('Updating Document with id:', empID, formData);
+    
+    return axios.put(`${USER_API_URL}/updateFiles/${empID}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data', // Axios will automatically set this for FormData
+      },
+    });
   }
+  
 
   deleteUser(empId) {
     console.log(`Deleting user with ID: ${empId}`);

@@ -4,11 +4,11 @@
 
 // const Upload = ({ email, setFormData }) => {
 //   const [localFormData, setLocalFormData] = useState({
-//     idProofFile: null,
-//     resumeFile: null,
-//     addressProofFile: null,
-//     empFile: null,
-//     experienceLetterFile: null,
+//     idProof: null,
+//     resume: null,
+//     addressProof: null,
+//     employeePhoto: null,
+//     experienceLetter: null,
 //   });
 
 //   const [imagePreviewUrlEmp, setImagePreviewUrlEmp] = useState(null);
@@ -17,11 +17,11 @@
 //   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 
 //   const fileTypeMapping = {
-//     empFile: 'Employee Photo',
-//     idProofFile: 'ID Proof',
-//     resumeFile: 'Resume',
-//     addressProofFile: 'Address Proof',
-//     experienceLetterFile: 'Experience Letter'
+//     employeePhoto: 'Employee Photo',
+//     idProof: 'ID Proof',
+//     resume: 'Resume',
+//     addressProof: 'Address Proof',
+//     experienceLetter: 'Experience Letter'
 //   };
 
 //   const handleChange = (e) => {
@@ -29,7 +29,7 @@
 //     const selectedFile = files[0];
 //     const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1 MB
 
-//     if (name === 'resumeFile' || name === 'addressProofFile' || name === 'experienceLetterFile') {
+//     if (name === 'resume' || name === 'addressProof' || name === 'experienceLetter') {
 //       if (selectedFile) {
 //         if (selectedFile.type === 'application/pdf') {
 //           if (selectedFile.size <= MAX_FILE_SIZE) {
@@ -49,15 +49,15 @@
 //           setSnackbar({ open: true, message: 'Please select a PDF file for Resume, Address Proof, and Experience Letter.', severity: 'error' });
 //         }
 //       }
-//     } else if (name === 'empFile' || name === 'idProofFile') {
+//     } else if (name === 'employeePhoto' || name === 'idProof') {
 //       if (selectedFile && (selectedFile.type === 'image/jpeg' || selectedFile.type === 'image/jpg')) {
 //         setLocalFormData((prevData) => ({
 //           ...prevData,
 //           [name]: selectedFile
 //         }));
-//         if (name === 'empFile') {
+//         if (name === 'employeePhoto') {
 //           setImagePreviewUrlEmp(URL.createObjectURL(selectedFile));
-//         } else if (name === 'idProofFile') {
+//         } else if (name === 'idProof') {
 //           setImagePreviewUrlIdProof(URL.createObjectURL(selectedFile));
 //         }
 //         setError("");
@@ -75,11 +75,11 @@
 
 //   const handleUpload = async (type) => {
 //     const uploadEndpoints = {
-//       idProofFile: `http://localhost:8082/${email}/uploadIdProof`,
-//       resumeFile: `http://localhost:8082/${email}/uploadResume`,
-//       addressProofFile: `http://localhost:8082/${email}/uploadAddressProof`,
-//       empFile: `http://localhost:8082/${email}/uploadImage`,
-//       experienceLetterFile: `http://localhost:8082/${email}/uploadExperienceLetter`
+//       idProof: `http://localhost:8082/${email}/uploadIdProof`,
+//       resume: `http://localhost:8082/${email}/uploadResume`,
+//       addressProof: `http://localhost:8082/${email}/uploadAddressProof`,
+//       employeePhoto: `http://localhost:8082/${email}/uploadImage`,
+//       experienceLetter: `http://localhost:8082/${email}/uploadExperienceLetter`
 //     };
 
 //     const file = localFormData[type];
@@ -137,7 +137,7 @@
 //               required
 //               type="file"
 //               accept=".jpeg"
-//               name="empFile"
+//               name="employeePhoto"
 //               onChange={handleChange}
 //               helperText="Employee Photo (JPEG, max 1MB)"
 //             />
@@ -145,7 +145,7 @@
 //               <img src={imagePreviewUrlEmp} alt="Employee" style={{ marginTop: '10px', width: '100px', height: '80px', marginBottom: '10px' }} />
 //             )}
 //             <br/>
-//             <Button variant="contained" color="primary" onClick={() => handleUpload('empFile')} style={{}}>
+//             <Button variant="contained" color="primary" onClick={() => handleUpload('employeePhoto')} style={{}}>
 //               Upload
 //             </Button>
 //           </Grid>
@@ -154,7 +154,7 @@
 //               required
 //               type="file"
 //               accept=".jpeg"
-//               name="idProofFile"
+//               name="idProof"
 //               onChange={handleChange}
 //               helperText="ID Proof (JPEG, max 1MB)"
 //             />
@@ -162,7 +162,7 @@
 //               <img src={imagePreviewUrlIdProof} alt="ID Proof" style={{ marginTop: '10px', width: '100px', height: '80px', marginBottom: '10px' }} />
 //             )}
 //             <br/>
-//             <Button variant="contained" color="primary" onClick={() => handleUpload('idProofFile')}>
+//             <Button variant="contained" color="primary" onClick={() => handleUpload('idProof')}>
 //               Upload
 //             </Button>
 //           </Grid>
@@ -171,11 +171,11 @@
 //               required
 //               type="file"
 //               accept=".pdf"
-//               name="resumeFile"
+//               name="resume"
 //               onChange={handleChange}
 //               helperText="Resume (PDF, max 1MB)"
 //             />
-//             <Button variant="contained" color="primary" onClick={() => handleUpload('resumeFile')}>
+//             <Button variant="contained" color="primary" onClick={() => handleUpload('resume')}>
 //               Upload
 //             </Button>
 //           </Grid>
@@ -184,11 +184,11 @@
 //               required
 //               type="file"
 //               accept=".pdf"
-//               name="addressProofFile"
+//               name="addressProof"
 //               onChange={handleChange}
 //               helperText="Address Proof (PDF, max 1MB)"
 //             />
-//             <Button variant="contained" color="primary" onClick={() => handleUpload('addressProofFile')} >
+//             <Button variant="contained" color="primary" onClick={() => handleUpload('addressProof')} >
 //               Upload
 //             </Button>
 //           </Grid>
@@ -197,11 +197,11 @@
 //               required
 //               type="file"
 //               accept=".pdf"
-//               name="experienceLetterFile"
+//               name="experienceLetter"
 //               onChange={handleChange}
 //               helperText="Experience Letter (PDF, max 1MB)"
 //             />
-//             <Button variant="contained" color="primary" onClick={() => handleUpload('experienceLetterFile')} >
+//             <Button variant="contained" color="primary" onClick={() => handleUpload('experienceLetter')} >
 //               Upload
 //             </Button>
 //           </Grid>
@@ -222,11 +222,11 @@ import axios from 'axios';
 
 const Upload = ({ email, setFormData }) => {
   const [localFormData, setLocalFormData] = useState({
-    idProofFile: null,
-    resumeFile: null,
-    addressProofFile: null,
-    empFile: null,
-    experienceLetterFile: null,
+    idProof: null,
+    resume: null,
+    addressProof: null,
+    employeePhoto: null,
+    experienceLetter: null,
   });
 
   const [imagePreviewUrlEmp, setImagePreviewUrlEmp] = useState(null);
@@ -236,19 +236,19 @@ const Upload = ({ email, setFormData }) => {
 
   // New state to track loading status for each file
   const [loading, setLoading] = useState({
-    idProofFile: false,
-    resumeFile: false,
-    addressProofFile: false,
-    empFile: false,
-    experienceLetterFile: false,
+    idProof: false,
+    resume: false,
+    addressProof: false,
+    employeePhoto: false,
+    experienceLetter: false,
   });
 
   const fileTypeMapping = {
-    empFile: 'Employee Photo',
-    idProofFile: 'ID Proof',
-    resumeFile: 'Resume',
-    addressProofFile: 'Address Proof',
-    experienceLetterFile: 'Experience Letter'
+    employeePhoto: 'Employee Photo',
+    idProof: 'ID Proof',
+    resume: 'Resume',
+    addressProof: 'Address Proof',
+    experienceLetter: 'Experience Letter'
   };
 
   const handleChange = (e) => {
@@ -256,7 +256,7 @@ const Upload = ({ email, setFormData }) => {
     const selectedFile = files[0];
     const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1 MB
 
-    if (name === 'resumeFile' || name === 'addressProofFile' || name === 'experienceLetterFile') {
+    if (name === 'resume' || name === 'addressProof' || name === 'experienceLetter') {
       if (selectedFile) {
         if (selectedFile.type === 'application/pdf') {
           if (selectedFile.size <= MAX_FILE_SIZE) {
@@ -276,15 +276,15 @@ const Upload = ({ email, setFormData }) => {
           setSnackbar({ open: true, message: 'Please select a PDF file for Resume, Address Proof, and Experience Letter.', severity: 'error' });
         }
       }
-    } else if (name === 'empFile' || name === 'idProofFile') {
+    } else if (name === 'employeePhoto' || name === 'idProof') {
       if (selectedFile && (selectedFile.type === 'image/jpeg' || selectedFile.type === 'image/jpg')) {
         setLocalFormData((prevData) => ({
           ...prevData,
           [name]: selectedFile
         }));
-        if (name === 'empFile') {
+        if (name === 'employeePhoto') {
           setImagePreviewUrlEmp(URL.createObjectURL(selectedFile));
-        } else if (name === 'idProofFile') {
+        } else if (name === 'idProof') {
           setImagePreviewUrlIdProof(URL.createObjectURL(selectedFile));
         }
         setError("");
@@ -302,11 +302,11 @@ const Upload = ({ email, setFormData }) => {
 
   const handleUpload = async (type) => {
     const uploadEndpoints = {
-      idProofFile: `http://localhost:8082/${email}/uploadIdProof`,
-      resumeFile: `http://localhost:8082/${email}/uploadResume`,
-      addressProofFile: `http://localhost:8082/${email}/uploadAddressProof`,
-      empFile: `http://localhost:8082/${email}/uploadImage`,
-      experienceLetterFile: `http://localhost:8082/${email}/uploadExperienceLetter`
+      idProof: `http://localhost:8082/${email}/uploadIdProof`,
+      resume: `http://localhost:8082/${email}/uploadResume`,
+      addressProof: `http://localhost:8082/${email}/uploadAddressProof`,
+      employeePhoto: `http://localhost:8082/${email}/uploadImage`,
+      experienceLetter: `http://localhost:8082/${email}/uploadExperienceLetter`
     };
 
     const file = localFormData[type];
@@ -376,7 +376,7 @@ const Upload = ({ email, setFormData }) => {
               required
               type="file"
               accept=".jpeg"
-              name="empFile"
+              name="employeePhoto"
               onChange={handleChange}
               helperText="Employee Photo (JPEG, max 1MB)"
             />
@@ -385,8 +385,8 @@ const Upload = ({ email, setFormData }) => {
             )}
             <br />
             {/* Show loading spinner during upload */}
-            {loading.empFile ? <CircularProgress size={24} /> : (
-              <Button variant="contained" color="primary" onClick={() => handleUpload('empFile')} style={{}}>
+            {loading.employeePhoto ? <CircularProgress size={24} /> : (
+              <Button variant="contained" color="primary" onClick={() => handleUpload('employeePhoto')} style={{}}>
                 Upload
               </Button>
             )}
@@ -396,7 +396,7 @@ const Upload = ({ email, setFormData }) => {
               required
               type="file"
               accept=".jpeg"
-              name="idProofFile"
+              name="idProof"
               onChange={handleChange}
               helperText="ID Proof (JPEG, max 1MB)"
             />
@@ -405,8 +405,8 @@ const Upload = ({ email, setFormData }) => {
             )}
             <br />
             {/* Show loading spinner during upload */}
-            {loading.idProofFile ? <CircularProgress size={24} /> : (
-              <Button variant="contained" color="primary" onClick={() => handleUpload('idProofFile')}>
+            {loading.idProof ? <CircularProgress size={24} /> : (
+              <Button variant="contained" color="primary" onClick={() => handleUpload('idProof')}>
                 Upload
               </Button>
             )}
@@ -416,13 +416,13 @@ const Upload = ({ email, setFormData }) => {
               required
               type="file"
               accept=".pdf"
-              name="resumeFile"
+              name="resume"
               onChange={handleChange}
               helperText="Resume (PDF, max 1MB)"
             />
             {/* Show loading spinner during upload */}
-            {loading.resumeFile ? <CircularProgress size={24} /> : (
-              <Button variant="contained" color="primary" onClick={() => handleUpload('resumeFile')}>
+            {loading.resume ? <CircularProgress size={24} /> : (
+              <Button variant="contained" color="primary" onClick={() => handleUpload('resume')}>
                 Upload
               </Button>
             )}
@@ -432,13 +432,13 @@ const Upload = ({ email, setFormData }) => {
               required
               type="file"
               accept=".pdf"
-              name="addressProofFile"
+              name="addressProof"
               onChange={handleChange}
               helperText="Address Proof (PDF, max 1MB)"
             />
             {/* Show loading spinner during upload */}
-            {loading.addressProofFile ? <CircularProgress size={24} /> : (
-              <Button variant="contained" color="primary" onClick={() => handleUpload('addressProofFile')}>
+            {loading.addressProof ? <CircularProgress size={24} /> : (
+              <Button variant="contained" color="primary" onClick={() => handleUpload('addressProof')}>
                 Upload
               </Button>
             )}
@@ -448,13 +448,13 @@ const Upload = ({ email, setFormData }) => {
               required
               type="file"
               accept=".pdf"
-              name="experienceLetterFile"
+              name="experienceLetter"
               onChange={handleChange}
               helperText="Experience Letter (PDF, max 1MB)"
             />
             {/* Show loading spinner during upload */}
-            {loading.experienceLetterFile ? <CircularProgress size={24} /> : (
-              <Button variant="contained" color="primary" onClick={() => handleUpload('experienceLetterFile')}>
+            {loading.experienceLetter ? <CircularProgress size={24} /> : (
+              <Button variant="contained" color="primary" onClick={() => handleUpload('experienceLetter')}>
                 Upload
               </Button>
             )}
