@@ -31,7 +31,7 @@ const PreviewComponent = ({ formData }) => {
   // Filter out fields that should not be displayed
   const filteredFormData = Object.fromEntries(
     Object.entries(formData).filter(
-      ([key]) => !['idProofFile', 'resumeFile', 'addressProofFile', 'experienceLetterFile', 'empFile'].includes(key)
+      ([key]) => !['idProofFile', 'resumeFile', 'addressProofFile', 'experienceLetterFile', 'employeePhoto'].includes(key)
     )
   );
 
@@ -139,14 +139,14 @@ const PreviewComponent = ({ formData }) => {
             <Grid container justifyContent="center">
               <Grid item>
                 <Typography variant="subtitle1">Employee Photo:</Typography>
-                {formData.empFile && (
-                  <img src={formData.empFile} alt="Employee" style={{ width: '100px', height: '80px', marginBottom: '10px' }} />
+                {formData.employeePhoto && (
+                  <img src={formData.employeePhoto} alt="Employee" style={{ width: '100px', height: '90px', marginBottom: '10px', borderRadiu:'50px' }} />
                 )}
               </Grid>
             </Grid>
           </Grid>
           {Object.entries(filteredFormData).map(([key, value]) => (
-            key !== 'empFile' && // Exclude empFile from displaying again
+            key !== 'employeePhoto' && // Exclude employeePhoto from displaying again
             <Grid item xs={12} sm={6} key={key}>
               <Typography variant="body1" component="p">
                 <strong>{formatFieldName(key)}:</strong> {value}

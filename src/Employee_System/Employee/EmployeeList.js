@@ -2388,11 +2388,55 @@ const handleFileChange = (event, fieldName) => {
                   >
                     View
                   </Button>
+                  <Button
+                    variant="outlined"
+                    sx={{ ml: 1 }}
+                    onClick={() => handleDownload(selectedUser?.employeePhoto)}
+                  >
+                    Download
+                  </Button>
+                </Grid>
+
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  sx={{ display: "flex", alignItems: "center" }}
+                >
                   <Typography
                     variant="subtitle1"
                     sx={{ fontWeight: "bold", mr: 1 }}
                   >
-                    addressProof:
+                    ID Proof:
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    onClick={() =>
+                      handleViewDocument(selectedUser?.idProof, "image")
+                    }
+                  >
+                    View
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    sx={{ ml: 1 }}
+                    onClick={() => handleDownload(selectedUser?.idProof)}
+                  >
+                    Download
+                  </Button>
+                </Grid>
+
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  sx={{ display: "flex", alignItems: "center" }}
+                >
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ fontWeight: "bold", mr: 1 }}
+                  >
+                    Address Proof:
                   </Typography>
                   <Button
                     variant="contained"
@@ -2405,7 +2449,7 @@ const handleFileChange = (event, fieldName) => {
                   <Button
                     variant="outlined"
                     sx={{ ml: 1 }}
-                    onClick={() => handleDownload(selectedUser?.employeePhoto)}
+                    onClick={() => handleDownload(selectedUser?.addressProof)}
                   >
                     Download
                   </Button>
@@ -2439,6 +2483,36 @@ const handleFileChange = (event, fieldName) => {
                     Download
                   </Button>
                 </Grid>
+
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  sx={{ display: "flex", alignItems: "center" }}
+                >
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ fontWeight: "bold", mr: 1 }}
+                  >
+                    Experience Letter:
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    onClick={() =>
+                      handleViewDocument(selectedUser?.experienceLetter, "pdf")
+                    }
+                  >
+                    View
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    sx={{ ml: 1 }}
+                    onClick={() => handleDownload(selectedUser?.experienceLetter)}
+                  >
+                    Download
+                  </Button>
+                </Grid>
+
               </Grid>
               <Box mt={2} textAlign="right">
                 <Button
@@ -2461,47 +2535,59 @@ const handleFileChange = (event, fieldName) => {
           </Modal>
         )}
 
-        <Dialog
-          open={openDocumentDialog}
-          onClose={() => setOpenDocumentDialog(false)}
+<Dialog
+  open={openDocumentDialog}
+  onClose={() => setOpenDocumentDialog(false)}
+  maxWidth="md" // Set maximum width for the dialog
+  fullWidth // Ensures the dialog takes up the full width of the screen up to maxWidth
+>
+  <DialogTitle>Document Viewer</DialogTitle>
+  <DialogContent
+    dividers
+    sx={{
+      display: 'flex',
+      flexDirection: 'column', // Flexbox column layout
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 0, // Remove extra padding to maximize space
+      height: '600px', // Fix dialog height to avoid overlap
+    }}
+  >
+    {documentType === "image" && (
+      <img
+        src={documentToView}
+        alt="Document"
+        style={{ maxWidth: '100%', maxHeight: '100%' }} // Ensure image scales within the dialog
+      />
+    )}
+    {documentType === "pdf" && (
+      <div style={{ flexGrow: 1, width: '100%', height: '100%' }}> {/* Use flexGrow to fill space */}
+        <Worker
+          workerUrl={`https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js`}
         >
-          <DialogTitle>Document Viewer</DialogTitle>
-          <DialogContent dividers>
-            {documentType === "image" && (
-              <img
-                src={documentToView}
-                alt="Document"
-                style={{ maxWidth: "100%" }}
-              />
-            )}
-            {documentType === "pdf" && (
-              <Worker
-                workerUrl={`https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js`}
-              >
-                <Viewer
-                  fileUrl={documentToView}
-                  plugins={[zoomPluginInstance]} // Add zoom plugin here
-                  onLoadError={(error) => {
-                    if (error.message.includes("401")) {
-                      console.error("Unauthorized access to the PDF file");
-                      alert("You do not have access to view this file.");
-                    } else {
-                      console.error("Error loading PDF", error);
-                    }
-                  }}
-                />
-              </Worker>
-            )}
-          </DialogContent>
-          <DialogActions>
-            <Button
-              onClick={() => setOpenDocumentDialog(false)}
-              color="primary"
-            >
-              Close
-            </Button>
-          </DialogActions>
-        </Dialog>
+          <Viewer
+            fileUrl={documentToView}
+            plugins={[zoomPluginInstance]} // Add zoom plugin here
+            onLoadError={(error) => {
+              if (error.message.includes("401")) {
+                console.error("Unauthorized access to the PDF file");
+                alert("You do not have access to view this file.");
+              } else {
+                console.error("Error loading PDF", error);
+              }
+            }}
+          />
+        </Worker>
+      </div>
+    )}
+  </DialogContent>
+  <DialogActions>
+    <Button onClick={() => setOpenDocumentDialog(false)} color="primary">
+      Close
+    </Button>
+  </DialogActions>
+</Dialog>
+
         {/* <ToastContainer /> */}
       </div>
     </>
