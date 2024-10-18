@@ -241,7 +241,9 @@ const EmpDash = () => {
                     </Grid>
                 </Grid>
                 <Grid item xs={12} md={6} sx={{ height: "450px" }}>
-    <Typography variant="h6" textAlign={'center'}>Department Chart</Typography>
+                <Typography variant="body1" textAlign="center" gutterBottom>
+    Department Chart
+  </Typography>
     <ResponsiveBar
         data={departmentData}
         keys={['Department']}
@@ -275,7 +277,7 @@ const EmpDash = () => {
     />
 </Grid>
 <Grid item xs={12} md={6} sx={{ height: "450px" }}>
-    <Typography variant="h6" textAlign={'center'}>Category Chart</Typography>
+    <Typography variant="body1" textAlign={'center'}>Category Chart</Typography>
     <ResponsiveBar
         data={categoryData}
         keys={['Category']}

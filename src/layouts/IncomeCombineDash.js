@@ -828,10 +828,10 @@ export default function IncomeCombineDash() {
           {/* Chart Section */}
           <Grid container spacing={2} sx={{ marginTop: "20px" }}>
             {/* Nivo BarChart replacing Recharts BarChart */}
-            <Grid item xs={12} sm={6} sx={{ height: "450px" }}>
-              <Typography variant="h6" align="center" color="black" gutterBottom>
-                Overall Income & Expense Comparison
-              </Typography>
+            <Grid item xs={12} sm={6} sx={{ height: { xs: "400px", sm: "450px" } }}>
+    <Typography variant="body1" align="center"  gutterBottom >
+      Overall Income & Expense Comparison
+    </Typography>
               {incomeLoading || expenseLoading ? (
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
                   <CircularProgress />
@@ -890,25 +890,31 @@ export default function IncomeCombineDash() {
             {/* Line Chart for Monthly Income & Expense */}
             <Grid item xs={12} md={6} className="textField-root">
               {/* Year Selection Dropdown */}
-              <Box sx={{ marginBottom: 2 }}>
-                <TextField
-                  select
-                  label="Year"
-                  value={year}
-                  onChange={handleYearChange}
-                  sx={{ minWidth: 120 }}
-                >
-                  {years.map((yr) => (
-                    <MenuItem key={yr} value={yr}>
-                      {yr}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Box>
+              <Grid container alignItems="center" justifyContent="space-evenly">
+  {/* Year Income & Expense Comparison Text */}
+  <Grid item>
+    <Typography variant="body1" align="center" gutterBottom>
+      {year} Income & Expense Comparison
+    </Typography>
+  </Grid>
 
-              <Typography variant="h6" align="center" mt={-8} gutterBottom>
-                {year} Income & Expense Comparison
-              </Typography>
+  {/* Year Selection Dropdown */}
+  <Grid item>
+    <TextField
+      select
+      label="Year"
+      value={year}
+      onChange={handleYearChange}
+      sx={{ minWidth: 120 }}
+    >
+      {years.map((yr) => (
+        <MenuItem key={yr} value={yr}>
+          {yr}
+        </MenuItem>
+      ))}
+    </TextField>
+  </Grid>
+</Grid>
 
               {monthlyLoading ? (
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '400px' }}>
@@ -920,7 +926,7 @@ export default function IncomeCombineDash() {
                 <div style={{ height: "400px" }}>
                   <ResponsiveLine
                     data={cleanedNivoData}
-                    margin={{ top: 50, right: 10, bottom: 50, left: 60 }}
+                    margin={{ top: 10, right: 10, bottom: 30, left: 60 }}
                     xScale={{ type: 'point' }} // Set the x scale type to point
                     yScale={{
                       type: 'linear',
