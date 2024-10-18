@@ -1,0 +1,15 @@
+.speech-bubble::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #f0f4f8; /* Same color as the menu background */
+  }
+
+#menu-notifications:hover{
+    color:aqua;
+}
