@@ -101,6 +101,7 @@ import SalaryDashBoard from "./Employee_System/Salary/SalaryDashboard";
 import AddSalary from "./Employee_System/Salary/AddSalary";
 import ViewAttendance from "./Employee_System/Attendance/ViewAttendance";
 import ShipmentReport from "./Shipment/ShipmentReport";
+import TodaysNotification from "./layouts/TodaysNotification";
 function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem("isAuthenticated") === "true"
@@ -137,6 +138,7 @@ function AppContent() {
 
         <Route path="/layout/*" element={<Layout />}>
           <Route path="admin-profile" element={<AdminProfile />} />
+          <Route path="todaysNotifications" element={<TodaysNotification/>}/>
 
           <Route path="combineDash" element={<CombineDashboard />} />
 

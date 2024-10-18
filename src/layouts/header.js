@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import TodaysNotification from "./TodaysNotification";
+import './header.css';
 import {
   AppBar,
   Toolbar,
@@ -22,6 +23,7 @@ import {
 } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import CampaignIcon from "@mui/icons-material/Campaign";
 import logo from "../img/logo.jpg";
 import { keyframes } from "@mui/system";
 
@@ -40,6 +42,8 @@ const vibration = keyframes`
 `;
 
 const Header = () => {
+  const messageLimit = 50; // Define the character limit for "Read More"
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [notificationsAnchorEl, setNotificationsAnchorEl] = useState(null);
   const [employeeDetails, setEmployeeDetails] = useState(null);
@@ -249,34 +253,16 @@ const Header = () => {
                       : "none",
                 }}
               >
-                <NotificationsIcon />
+                <CampaignIcon
+                  style={{
+                    // fontSize: "5%",
+                    transform: "rotate(-25deg)", // Adjust the rotation angle as needed
+                    transformOrigin: "center", // This sets the point around which the icon will rotate
+                  }}
+                />
               </Badge>
             </IconButton>
-            {/* <Menu
-              id="menu-notifications"
-              anchorEl={notificationsAnchorEl}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(notificationsAnchorEl)}
-              onClose={handleNotificationsClose}
-            >
-              {loadingNotifications ? (
-                <MenuItem>Loading notifications...</MenuItem>
-              ) : notifications.length > 0 ? (
-                notifications.map((notification, index) => (
-                  <MenuItem key={index}>{notification.message}</MenuItem>
-                ))
-              ) : (
-                <MenuItem >New Updates Are Comming Soon </MenuItem>
-              )}
-            </Menu> */}
+
             <Menu
   id="menu-notifications"
   anchorEl={notificationsAnchorEl}
@@ -291,15 +277,40 @@ const Header = () => {
   }}
   open={Boolean(notificationsAnchorEl)}
   onClose={handleNotificationsClose}
+  className="speech-bubble"
 >
   {loadingNotifications ? (
     <MenuItem>Loading notifications...</MenuItem>
   ) : (
-    <MenuItem>
-      <TodaysNotification />
-    </MenuItem>
+    notifications.map((notification, index) => (
+      <MenuItem key={index}>
+        <Typography variant="body2">
+          {notification.message.length > messageLimit
+            ? `${notification.message.substring(0, messageLimit)}...`
+            : notification.message}
+        </Typography>
+        {notification.message.length > messageLimit && (
+          <Link
+            to="/layout/todaysNotifications"
+            style={{
+              textDecoration: "none",
+              color: "inherit",
+              marginLeft: "8px",
+              color:'blue',
+              fontSize:'13px'
+              
+            }}
+            onClick={handleNotificationsClose}
+          >
+            Read More
+          </Link>
+        )}
+      </MenuItem>
+    ))
   )}
 </Menu>
+
+
 
             <IconButton
               size="large"
