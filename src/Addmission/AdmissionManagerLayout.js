@@ -1,9 +1,8 @@
 import React from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 
-// Styles for each navbar item
 const navItemStyle = {
-    padding: "10px 20px",
+  padding: "5px 10px",
     cursor: "pointer",
     fontSize: "16px",
     fontWeight: "bold",
@@ -34,7 +33,6 @@ const navItemStyle = {
     borderRadius: "35px",
     boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)", // Slight shadow for navbar
   };
-
 const AdmissionManagerLayout = () => {
   const location = useLocation();
 

@@ -3,26 +3,22 @@
   border: #000000;
   border-radius: 8px; /* Set border radius */
   font-size: 14px; /* Adjust font size for input field */
-  /* font-family: 'Permanent Marker', cursive; */
-   font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif; /* Ensure Poppins is used */
 }
 
 .textField-root .MuiOutlinedInput-notchedOutline {
   border: 1px solid #bbb9b9; /* Set border color and thickness */
-  /* font-family: 'Permanent Marker', cursive; */
-   font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif; /* Ensure Poppins is used */
 }
 
 .textField-root .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
   border-color: #000000; /* Change border color on hover */
-  /* font-family: 'Permanent Marker', cursive; */
-   font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif; /* Ensure Poppins is used */
 }
 
 .textField-root .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
   border-color: #6200ea; /* Change border color when focused */
-  /* font-family: 'Permanent Marker', cursive; */
-   font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif; /* Ensure Poppins is used */
 }
 
 .textField-root .MuiInputLabel-outlined.Mui-focused {
@@ -31,13 +27,25 @@
   border-radius: 10px; /* Border radius for the label background */
   color: #333;
   font-size: 14px; /* Adjust font size for label */
-  /* font-family: 'Permanent Marker', cursive; */
-   font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif; /* Ensure Poppins is used */
 }
 
 /* Optional: Set font size for unfocused label */
 .textField-root .MuiInputLabel-outlined {
   font-size: 14px; /* Adjust font size for unfocused label */
+  font-family: 'Poppins', sans-serif; /* Ensure Poppins is used */
+}
+
+/* Ensure Poppins is used for all MUI components */
+.MuiButton-root,
+.MuiTypography-root,
+.MuiDialogTitle-root,
+.MuiDialogContent-root,
+.MuiMenuItem-root,
+.MuiFormControl-root,
+.MuiTableCell-root,
+.MuiTableRow-root {
+  font-family: 'Poppins', sans-serif; /* Ensure Poppins is used */
 }
 
 
