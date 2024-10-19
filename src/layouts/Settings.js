@@ -23,7 +23,7 @@ import PolicyPopup from "./PolicyPopup ";
 const plans = [
   {
     title: "Free/Demo",
-    price: 0,
+    price: 1,
     oldPrice: 99,
     save: 75,
     features: [
@@ -40,8 +40,8 @@ const plans = [
   },
   {
     title: "Basic",
-    price: 499,
-    oldPrice: 699,
+    price: 699,
+    oldPrice: 1399,
     features: [
       { feature: "CRM Software", items: ["Enquiry", "Admission", "Income Expense", "Fees Generation"], included: true },
       { feature: "Employee Management System", items: ["Attendance", "Leave", "Salary", "Employee Dashboard"], included: true },
@@ -57,8 +57,8 @@ const plans = [
   },
   {
     title: "Premium",
-    price: 699,
-    oldPrice: 899,
+    price: 899,
+    oldPrice: 1799,
     features: [
       { feature: "CRM Software", items: ["Enquiry", "Admission", "Income Expense", "Fees Generation"], included: true },
       { feature: "Employee Management System", items: ["Attendance", "Leave", "Salary", "Employee Dashboard"], included: true },
@@ -73,8 +73,8 @@ const plans = [
   },
   {
     title: "Business",
-    price: 999,
-    oldPrice: 1299,
+    price: 1299,
+    oldPrice: 2599,
     features: [
       { feature: "CRM Software", items: ["Enquiry", "Admission", "Income Expense", "Fees Generation"], included: true },
       { feature: "Employee Management System", items: ["Attendance", "Leave", "Salary", "Employee Dashboard"], included: true },
@@ -272,9 +272,8 @@ const Settings = () => {
             background: plan.background,
             boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
             borderRadius: 4,
-            transition: "height 0.3s ease", // Transition for smooth height change
-            height: openItem === index ? 600 : 'auto', // Adjust height dynamically
-           // fontSize: "0.45rem",
+            transition: "height 0.3s ease",
+            height: openItem === index ? 600 : 'auto',
           }}
         >
           {plan.isBestSeller && (
@@ -299,6 +298,22 @@ const Settings = () => {
               Best Seller
             </Box>
           )}
+         <Box
+  sx={{
+    position: "relative",
+    top: 105, // Adjusted the top position
+    left: -40,
+    backgroundColor: "#FF5722",
+    color: "#fff",
+    padding: "5px 10px",
+    borderRadius: "5px",
+    fontWeight: "bold",
+    transform: "rotate(-45deg)", // Rotate the tag by 45 degrees
+    transformOrigin: "left bottom", // Set the origin point for the rotation
+  }}
+>
+  50% OFF
+</Box>
           <CardContent>
             <Typography
               variant="h5"
@@ -308,9 +323,9 @@ const Settings = () => {
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 fontWeight: "bold",
-                whiteSpace: "nowrap", // Prevent text from wrapping
-                overflow: "hidden", // Hide overflowing text
-                textOverflow: "ellipsis", // Add ellipsis if text overflows
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
               }}
             >
               {plan.title}
@@ -339,14 +354,12 @@ const Settings = () => {
               <Typography variant="body2" sx={{ color: "#1E88E5" }}>
                 /Month
               </Typography>
-
-             
             </Box>
             {plan.oldPrice && (
-                <Typography variant="body1" color="red" sx={{ textDecoration: "line-through", fontSize: "1rem"}}>
-                  ₹{plan.oldPrice}
-                </Typography>
-              )}
+              <Typography variant="body1" color="red" sx={{ textDecoration: "line-through", fontSize: "1rem" }}>
+                ₹{plan.oldPrice}
+              </Typography>
+            )}
             {plan.features.map((feature, i) => (
               <div key={i}>
                 <Box
@@ -357,14 +370,14 @@ const Settings = () => {
                     cursor: "pointer",
                     color: "rgb(252, 74, 26)",
                     paddingTop: 0.5,
-                    whiteSpace: "nowrap", // Prevent text from wrapping
-                    overflow: "hidden", // Hide overflowing text
-                    textOverflow: "ellipsis", // Add ellipsis if text overflows
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
                     fontSize: ""
                   }}
                   onClick={() => toggleDropdown(`${index}-${i}`)}
                 >
-                  <Typography  sx={{ fontSize: "0.85rem" }}>{feature.feature}</Typography>
+                  <Typography sx={{ fontSize: "0.85rem" }}>{feature.feature}</Typography>
                   <Typography>
                     {feature.included === true ? "✔" : feature.included === false ? "✘" : `(${feature.included})`}
                   </Typography>
@@ -388,6 +401,7 @@ const Settings = () => {
     ))}
   </Grid>
 </Box>
+
 
       {/* Divider */}
       <Grid item xs={12}>

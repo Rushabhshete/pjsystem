@@ -586,10 +586,10 @@ const CreateAccount = () => {
                             {index === 0
                               ? 1
                               : index === 1
-                              ? 499
-                              : index === 2
                               ? 699
-                              : 999}
+                              : index === 2
+                              ? 899
+                              : 1299}
                           </Typography>
                           <Typography variant="body2" sx={{ color: "#1E88E5" }}>
                             /Per Month
@@ -608,10 +608,10 @@ const CreateAccount = () => {
                           {index === 0
                             ? 99
                             : index === 1
-                            ? 699
+                            ? 1399
                             : index === 2
-                            ? 899
-                            : 1299}
+                            ? 1799
+                            : 2599}
                         </Typography>
 
                         <div style={{ textAlign: "left", fontSize: "14px" }}>
