@@ -13,8 +13,8 @@ import {
 } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend, Tooltip } from 'recharts';
-import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import { ResponsiveBar } from '@nivo/bar'; // Import Nivo bar chart
+import { ResponsivePie } from '@nivo/pie'; // Import Nivo pie chart
 
 const theme = createTheme({
   palette: {
@@ -269,163 +269,233 @@ const SalaryDashBoard = () => {
         </Grid>
 
         
-        {/* comparison charts */}
-        <Grid container spacing={2} mt={2} display="flex" className='textField-root'>
+      {/* Comparison Charts */}
+      <Grid container spacing={2} mt={2} display="flex" className="textField-root">
+        {/* Monthly Comparison Chart */}
         <Grid item xs={12} sm={6}>
-  <Paper elevation={3}  style={{ padding: '16px', height:'550px' }}>
-    <Box display="flex"  justifyContent="center" alignItems="center" gap={3} mt={2}>
-      <Typography variant="body1" gutterBottom align="center" mr={2}>
-        Monthly Comparison Chart
-      </Typography>
-          <FormControl  variant="outlined" >
-            <InputLabel id="select-chart-month-label">Select Month</InputLabel>
-            <Select
-              labelId="select-chart-month-label"
-              value={selectChartMonth}
-              onChange={handleChartMonthChange}
-              label="Select Month"
-            >
-              {months.map((month) => (
-                <MenuItem key={month.value} value={month.value}>
-                  {month.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl  variant="outlined" >
-            <InputLabel id="select-chart-year-label">Select Year</InputLabel>
-            <Select
-              labelId="select-chart-year-label"
-              value={selectChartYear}
-              onChange={handleChartYearChange}
-              label="Select Year"
-            >
-              {years.map((year) => (
-                <MenuItem key={year} value={year}>
-                  {year}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-    </Box>
-    <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 2 }}>
-      <ResponsiveContainer width="90%" height={400}>
-        <BarChart data={formattedChartData}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="currentMonthTotal" fill="#FF6F61" name="Current Month" />
-          <Bar dataKey="previousMonthTotal" fill="#3498DB" name="Previous Month" />
-        </BarChart>
-      </ResponsiveContainer>
-    </Box>
-  </Paper>
-</Grid>
+          <Paper elevation={3} style={{ padding: '16px', height: '550px' }}>
+            <Box display="flex" justifyContent="center" alignItems="center" gap={3} mt={2}>
+              <Typography variant="body1" gutterBottom align="center" mr={2}>
+                Monthly Comparison Chart
+              </Typography>
+              <FormControl variant="outlined">
+                <InputLabel id="select-chart-month-label">Select Month</InputLabel>
+                <Select
+                  labelId="select-chart-month-label"
+                  value={selectChartMonth}
+                  onChange={handleChartMonthChange}
+                  label="Select Month"
+                >
+                  {months.map((month) => (
+                    <MenuItem key={month.value} value={month.value}>
+                      {month.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl variant="outlined">
+                <InputLabel id="select-chart-year-label">Select Year</InputLabel>
+                <Select
+                  labelId="select-chart-year-label"
+                  value={selectChartYear}
+                  onChange={handleChartYearChange}
+                  label="Select Year"
+                >
+                  {years.map((year) => (
+                    <MenuItem key={year} value={year}>
+                      {year}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
 
-<Grid item xs={12} sm={6} className='textField-root'>
-  <Paper elevation={3} style={{ padding: '16px', height:'550px' }}>
-  <Box display="flex" justifyContent="center" alignItems="center" gap={3} mt={2}>
-    <Typography variant="body1" gutterBottom align="center" mr={2}>
-      Yearly Comparison Chart
-    </Typography>
-        <FormControl variant="outlined">
-          <InputLabel>Select Start Year</InputLabel>
-          <Select
-            value={selectedStartYear}
-            onChange={handleStartYearChange}
-            label="Select Start Year"
-          >
-            {years.map((year) => (
-              <MenuItem key={year} value={year}>
-                {year}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <FormControl variant="outlined">
-          <InputLabel>Select End Year</InputLabel>
-          <Select
-            value={selectedEndYear}
-            onChange={handleEndYearChange}
-            label="Select End Year"
-          >
-            {years.map((year) => (
-              <MenuItem key={year} value={year}>
-                {year}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </Box>
-
-    <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <ResponsiveContainer width="90%" height={400}>
-        <PieChart>
-          <Pie
-            data={formattedComparisonData}
-            cx="50%"
-            cy="50%"
-            outerRadius={150}
-            fill="#8884d8"
-            dataKey="value"
-            label
-          >
-            {formattedComparisonData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-            ))}
-          </Pie>
-          <Tooltip />
-          <Legend />
-        </PieChart>
-      </ResponsiveContainer>
-    </Box>
-  </Paper>
-</Grid>
-
+            <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 2 }}>
+              <div style={{ height: 400, width: "100%" }}>
+                <ResponsiveBar
+                  data={formattedChartData}
+                  keys={['currentMonthTotal', 'previousMonthTotal']}
+                  indexBy="name"
+                  groupMode="grouped"
+                  margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+                  padding={0.3}
+                  valueScale={{ type: 'linear' }}
+                  indexScale={{ type: 'band', round: true }}
+                  colors={({ id, data }) => (id === 'currentMonthTotal' ? COLORS[0] : COLORS[1])} // Color logic for bars
+                  borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+                  axisBottom={{
+                    tickSize: 5,
+                    tickPadding: 5,
+                    tickRotation: 0,
+                    legend: 'Category',
+                    legendPosition: 'middle',
+                    legendOffset: 32,
+                  }}
+                  axisLeft={{
+                    tickSize: 5,
+                    tickPadding: 5,
+                    tickRotation: 0,
+                    legend: 'Total',
+                    legendPosition: 'middle',
+                    legendOffset: -50,
+                  }}
+                  legends={[
+                    {
+                      dataFrom: 'keys',
+                      anchor: 'bottom-right',
+                      direction: 'column',
+                      justify: false,
+                      translateX: 120,
+                      itemWidth: 100,
+                      itemHeight: 20,
+                      itemsSpacing: 2,
+                      symbolSize: 20,
+                      itemDirection: 'left-to-right',
+                    },
+                  ]}
+                />
+              </div>
+            </Box>
+          </Paper>
         </Grid>
 
+        {/* Yearly Comparison Pie Chart */}
+        <Grid item xs={12} sm={6} className="textField-root">
+          <Paper elevation={3} style={{ padding: '16px', height: '550px' }}>
+            <Box display="flex" justifyContent="center" alignItems="center" gap={3} mt={2}>
+              <Typography variant="body1" gutterBottom align="center" mr={2}>
+                Yearly Comparison Chart
+              </Typography>
+              <FormControl variant="outlined">
+                <InputLabel>Select Start Year</InputLabel>
+                <Select
+                  value={selectedStartYear}
+                  onChange={handleStartYearChange}
+                  label="Select Start Year"
+                >
+                  {years.map((year) => (
+                    <MenuItem key={year} value={year}>
+                      {year}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl variant="outlined">
+                <InputLabel>Select End Year</InputLabel>
+                <Select
+                  value={selectedEndYear}
+                  onChange={handleEndYearChange}
+                  label="Select End Year"
+                >
+                  {years.map((year) => (
+                    <MenuItem key={year} value={year}>
+                      {year}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
 
-        <Box mt={3}>
-  <Paper elevation={3} style={{ padding: '16px' }}>
-    <Grid container alignItems="center" spacing={2} justifyContent="center">
-      <Grid item xs={6} align="center">
-        <Typography variant="body1">Monthly Final Net Salary:</Typography>
+            <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ height: 400, width: "100%" }}>
+                <ResponsivePie
+                  data={formattedComparisonData}
+                  margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+                  innerRadius={0.5}
+                  padAngle={0.7}
+                  cornerRadius={3}
+                  colors={["#FF6F61","#FF6F61"]}  // Color logic for bars
+                  borderWidth={1}
+                  borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
+                  arcLinkLabelsSkipAngle={10}
+                  arcLinkLabelsTextColor="#333333"
+                  arcLinkLabelsThickness={2}
+                  arcLinkLabelsColor={{ from: 'color' }}
+                  arcLabelsSkipAngle={10}
+                  arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
+                  tooltip={({ datum }) => (
+                    <div>
+                      <strong>{datum.label}</strong>: {datum.value}
+                    </div>
+                  )}
+                />
+              </div>
+            </Box>
+          </Paper>
+        </Grid>
       </Grid>
-      <Grid item xs={6} md={2} className='textField-root'>
-        <FormControl style={{ marginBottom: '6px', width: '100%' }}>
-          <InputLabel>Select Year</InputLabel>
-          <Select
-            value={selectedChart2Year}
-            onChange={(e) => setSelectedChart2Year(e.target.value)}
-            label='Select Year'
-          >
-            {years.map((year) => (
-              <MenuItem key={year} value={year}>
-                {year}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </Grid>
-    </Grid>
-    <ResponsiveContainer mt={2} width="100%" height={400}>
-      <BarChart data={chart2Data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="finalNetSalary" fill="#FF6F61" />
-      </BarChart>
-    </ResponsiveContainer>
-  </Paper>
-</Box>
 
+      {/* Monthly Final Net Salary Chart */}
+      <Box mt={3}>
+        <Paper elevation={3} style={{ padding: '16px' }}>
+          <Grid container alignItems="center" spacing={2} justifyContent="center">
+            <Grid item xs={6} align="center">
+              <Typography variant="body1">Monthly Final Net Salary:</Typography>
+            </Grid>
+            <Grid item xs={6} md={2} className="textField-root">
+              <FormControl style={{ marginBottom: '6px', width: '100%' }}>
+                <InputLabel>Select Year</InputLabel>
+                <Select
+                  value={selectedChart2Year}
+                  onChange={(e) => setSelectedChart2Year(e.target.value)}
+                  label="Select Year"
+                >
+                  {years.map((year) => (
+                    <MenuItem key={year} value={year}>
+                      {year}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
 
-
-      </div>
+          <div style={{ height: 400, width: "100%" }}>
+            <ResponsiveBar
+              data={chart2Data}
+              keys={['finalNetSalary']}
+              indexBy="name"
+              margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+              padding={0.3}
+              valueScale={{ type: 'linear' }}
+              indexScale={{ type: 'band', round: true }}
+             colors={["#FF6F61"]}
+              borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+              axisBottom={{
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: 0,
+                legend: 'Month',
+                legendPosition: 'middle',
+                legendOffset: 32,
+              }}
+              axisLeft={{
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: 0,
+                legend: 'Final Net Salary',
+                legendPosition: 'middle',
+                legendOffset: -50,
+              }}
+              legends={[
+                {
+                  dataFrom: 'keys',
+                  anchor: 'bottom-right',
+                  direction: 'column',
+                  justify: false,
+                  translateX: 120,
+                  itemWidth: 100,
+                  itemHeight: 20,
+                  itemsSpacing: 2,
+                  symbolSize: 20,
+                  itemDirection: 'left-to-right',
+                },
+              ]}
+            />
+          </div>
+        </Paper>
+      </Box>
+    </div>
   );
 };
 

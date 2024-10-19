@@ -14,6 +14,7 @@
     "@nivo/bar": "^0.87.0",
     "@nivo/core": "^0.87.0",
     "@nivo/line": "^0.87.0",
+    "@nivo/pie": "^0.87.0",
     "@react-pdf-viewer/core": "^3.12.0",
     "@react-pdf-viewer/zoom": "^3.12.0",
     "@restart/ui": "^1.8.0",
