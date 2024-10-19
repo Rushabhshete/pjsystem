@@ -48,6 +48,9 @@ const AdmissionManagerLayout = () => {
         <Link to="/layout/Admission-manager/admission-form" style={isActive("/layout/Admission-manager/admission-form") ? activeNavItemStyle : navItemStyle}>
           Admission Form
         </Link>
+        <Link to="/layout/Admission-manager/student-list" style={isActive("/layout/Admission-manager/student-list") ? activeNavItemStyle : navItemStyle}>
+          Student List
+        </Link>
         <Link to="/layout/Admission-manager/add-course" style={isActive("/layout/Admission-manager/add-course") ? activeNavItemStyle : navItemStyle}>
           Add Course
         </Link>
@@ -57,9 +60,7 @@ const AdmissionManagerLayout = () => {
         <Link to="/layout/Admission-manager/add-guide" style={isActive("/layout/Admission-manager/add-guide") ? activeNavItemStyle : navItemStyle}>
           Add Guide
         </Link>
-        <Link to="/layout/Admission-manager/student-list" style={isActive("/layout/Admission-manager/student-list") ? activeNavItemStyle : navItemStyle}>
-          Student List
-        </Link>
+      
       </div>
 
       {/* This is where the content of each route will be displayed */}

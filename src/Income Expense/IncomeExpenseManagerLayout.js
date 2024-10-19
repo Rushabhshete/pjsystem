@@ -54,15 +54,16 @@ const IncomeExpenseManagerLayout = () => {
         <Link to="/layout/income-expense-manager/add-income-expense" style={isActive("/layout/income-expense-manager/add-income-expense") ? activeNavItemStyle : navItemStyle}>
           Add Income/Expense
         </Link>
+        <Link to="/layout/income-expense-manager/category" style={isActive("/layout/income-expense-manager/category") ? activeNavItemStyle : navItemStyle}>
+          List
+        </Link>
         <Link to="/layout/income-expense-manager/add-category" style={isActive("/layout/income-expense-manager/add-category") ? activeNavItemStyle : navItemStyle}>
           Add Category
         </Link>
         <Link to="/layout/income-expense-manager/add-user" style={isActive("/layout/income-expense-manager/add-user") ? activeNavItemStyle : navItemStyle}>
           Add User
         </Link>
-        <Link to="/layout/income-expense-manager/category" style={isActive("/layout/income-expense-manager/category") ? activeNavItemStyle : navItemStyle}>
-          List
-        </Link>
+     
       </div>
 
       {/* This is where the content of each route will be displayed */}

@@ -7,6 +7,9 @@ import {
   MenuItem,
   Button,
   Box,
+  FormControl,
+  InputLabel,
+  Select,
 } from "@mui/material";
 import {
   Chart as ChartJS,
@@ -70,6 +73,281 @@ const IncomeExpenseDashboard = () => {
   const [pendingIncomeStats, setPendingIncomeStats] = useState({});
   const [pendingExpenseStats, setPendingExpenseStats] = useState({});
   const [showPending, setShowPending] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("income");
+
+  const renderCards = () => {
+    let cards = [];
+    if (selectedCategory === "all") {
+      // All cards logic
+      cards = [
+        { title: "Today's Income", value: incomeData.today, color: "#F9E79F" },
+        {
+          title: "7 Day's Income",
+          value: incomeData.last7Days,
+          color: "#FF6F61",
+        },
+        {
+          title: "30 Day's Income",
+          value: incomeData.last30Days,
+          color: "#3498DB",
+        },
+        {
+          title: "365 Day's Income",
+          value: incomeData.last365Days,
+          color: "#F9E79F",
+        },
+        { title: "Total Income", value: incomeData.total, color: "#FF6F61" },
+
+        {
+          title: "Today's Expense",
+          value: expenseData.today,
+          color: "#F9E79F",
+        },
+        {
+          title: "7 Day's Expense",
+          value: expenseData.last7Days,
+          color: "#FF6F61",
+        },
+        {
+          title: "30 Day's Expense",
+          value: expenseData.last30Days,
+          color: "#3498DB",
+        },
+        {
+          title: "365 Day's Expense",
+          value: expenseData.last365Days,
+          color: "#F9E79F",
+        },
+        { title: "Total Expense", value: expenseData.total, color: "#FF6F61" },
+        // Limit to 5 cards or less
+
+        {
+          title: `Today's ${todaytext}`,
+          value: incomeData.today - expenseData.today,
+          color: "#F9E79F",
+        },
+        {
+          title: `7 Day's ${_7Daystext}`,
+          value: incomeData.last7Days - expenseData.last7Days,
+          color: "#FF6F61",
+        },
+        {
+          title: `30 Day's ${_30Daystext}`,
+          value: incomeData.last30Days - expenseData.last30Days,
+          color: "#3498DB",
+        },
+        {
+          title: `365 Day's ${_365Daystext}`,
+          value: incomeData.last365Days - expenseData.last365Days,
+          color: "#F9E79F",
+        },
+        { title: `Total ${savingsText}`, value: savingsData, color: "#FF6F61" },
+
+        {
+          title: "Today's Pending Inc",
+          value: pendingIncomeStats.today,
+          color: "#F9E79F",
+        },
+        {
+          title: "7 Day's Pending Inc",
+          value: pendingIncomeStats.last7Days,
+          color: "#FF6F61",
+        },
+        {
+          title: "30 Day's Pending Inc",
+          value: pendingIncomeStats.last30Days,
+          color: "#3498DB",
+        },
+        {
+          title: "365 Day's Pending Inc",
+          value: pendingIncomeStats.last365Days,
+          color: "#F9E79F",
+        },
+        {
+          title: "Today's Pending Inc",
+          value: pendingIncomeStats.total,
+          color: "#FF6F61",
+        },
+        // Add other pending income cards as necessary
+        {
+          title: "Today's Pending Exp",
+          value: pendingExpenseStats.today,
+          color: "#F9E79F",
+        },
+        {
+          title: "7 Day's Pending Exp",
+          value: pendingExpenseStats.last7Days,
+          color: "#FF6F61",
+        },
+        {
+          title: "30 Day's Pending Exp",
+          value: pendingExpenseStats.last30Days,
+          color: "#3498DB",
+        },
+        {
+          title: "365 Day's Pending Exp",
+          value: pendingExpenseStats.last365Days,
+          color: "#F9E79F",
+        },
+        {
+          title: "Today's Pending Exp",
+          value: pendingExpenseStats.total,
+          color: "#FF6F61",
+        },
+
+        // Add other pending expense cards as necessary
+      ];
+    } else if (selectedCategory === "income") {
+      cards = [
+        { title: "Today's Income", value: incomeData.today, color: "#F9E79F" },
+        {
+          title: "7 Day's Income",
+          value: incomeData.last7Days,
+          color: "#FF6F61",
+        },
+        {
+          title: "30 Day's Income",
+          value: incomeData.last30Days,
+          color: "#3498DB",
+        },
+        {
+          title: "365 Day's Income",
+          value: incomeData.last365Days,
+          color: "#F9E79F",
+        },
+        { title: "Total Income", value: incomeData.total, color: "#FF6F61" },
+        // Limit to 5 cards or less
+      ];
+    } else if (selectedCategory === "expense") {
+      cards = [
+        {
+          title: "Today's Expense",
+          value: expenseData.today,
+          color: "#F9E79F",
+        },
+        {
+          title: "7 Day's Expense",
+          value: expenseData.last7Days,
+          color: "#FF6F61",
+        },
+        {
+          title: "30 Day's Expense",
+          value: expenseData.last30Days,
+          color: "#3498DB",
+        },
+        {
+          title: "365 Day's Expense",
+          value: expenseData.last365Days,
+          color: "#F9E79F",
+        },
+        { title: "Total Expense", value: expenseData.total, color: "#FF6F61" },
+        // Limit to 5 cards or less
+      ];
+    } else if (selectedCategory === "pendingInc") {
+      cards = [
+        {
+          title: "Today's Pending Inc",
+          value: pendingIncomeStats.today,
+          color: "#F9E79F",
+        },
+        {
+          title: "7 Day's Pending Inc",
+          value: pendingIncomeStats.last7Days,
+          color: "#FF6F61",
+        },
+        {
+          title: "30 Day's Pending Inc",
+          value: pendingIncomeStats.last30Days,
+          color: "#3498DB",
+        },
+        {
+          title: "365 Day's Pending Inc",
+          value: pendingIncomeStats.last365Days,
+          color: "#F9E79F",
+        },
+        {
+          title: "Today's Pending Inc",
+          value: pendingIncomeStats.total,
+          color: "#FF6F61",
+        },
+        // Add other pending income cards as necessary
+      ];
+    } else if (selectedCategory === "pendingExp") {
+      cards = [
+        {
+          title: "Today's Pending Exp",
+          value: pendingExpenseStats.today,
+          color: "#F9E79F",
+        },
+        {
+          title: "7 Day's Pending Exp",
+          value: pendingExpenseStats.last7Days,
+          color: "#FF6F61",
+        },
+        {
+          title: "30 Day's Pending Exp",
+          value: pendingExpenseStats.last30Days,
+          color: "#3498DB",
+        },
+        {
+          title: "365 Day's Pending Exp",
+          value: pendingExpenseStats.last365Days,
+          color: "#F9E79F",
+        },
+        {
+          title: "Today's Pending Exp",
+          value: pendingExpenseStats.total,
+          color: "#FF6F61",
+        },
+
+        // Add other pending expense cards as necessary
+      ];
+    } else if (selectedCategory === "savings") {
+      cards = [
+        {
+          title: `Today's ${todaytext}`,
+          value: incomeData.today - expenseData.today,
+          color: "#F9E79F",
+        },
+        {
+          title: `7 Day's ${_7Daystext}`,
+          value: incomeData.last7Days - expenseData.last7Days,
+          color: "#FF6F61",
+        },
+        {
+          title: `30 Day's ${_30Daystext}`,
+          value: incomeData.last30Days - expenseData.last30Days,
+          color: "#3498DB",
+        },
+        {
+          title: `365 Day's ${_365Daystext}`,
+          value: incomeData.last365Days - expenseData.last365Days,
+          color: "#F9E79F",
+        },
+        { title: `Total ${savingsText}`, value: savingsData, color: "#FF6F61" },
+      ];
+    }
+
+    return cards.map((card, index) => (
+      <Grid item xs={12} sm={6} md={2.4} key={index}>
+        <Paper
+          elevation={3}
+          sx={{
+            padding: 2,
+            backgroundColor: card.color,
+            borderRadius: 2,
+            fontWeight: "bold",
+            boxShadow: 3,
+          }}
+        >
+          <Typography variant="h7">{card.title}</Typography>
+          <Typography variant="h5">
+            ₹{formattedCountUp(card.value || 0)}
+          </Typography>
+        </Paper>
+      </Grid>
+    ));
+  };
 
   const getInstituteCode = () => localStorage.getItem("institutecode");
   useEffect(() => {
@@ -328,64 +606,59 @@ const IncomeExpenseDashboard = () => {
   }));
 
   useEffect(() => {
-    if (showPending) {
-      const fetchPendingData = async () => {
-        try {
-          const [pendingIncomeResponse, pendingExpenseResponse] = await Promise.all([
-            fetch(`http://localhost:8087/dashboard/income/pending?institutecode=${getInstituteCode()}`),
-            fetch(`http://localhost:8087/dashboard/expense/pending?institutecode=${getInstituteCode()}`),
+    const fetchPendingData = async () => {
+      try {
+        const [pendingIncomeResponse, pendingExpenseResponse] =
+          await Promise.all([
+            fetch(
+              `http://localhost:8087/dashboard/income/pending?institutecode=${getInstituteCode()}`
+            ),
+            fetch(
+              `http://localhost:8087/dashboard/expense/pending?institutecode=${getInstituteCode()}`
+            ),
           ]);
-  
-          const [incomeData, expenseData] = await Promise.all([
-            pendingIncomeResponse.json(),
-            pendingExpenseResponse.json(),
-          ]);
-  
-          // Assuming the structure of the response matches the one you provided
-          const incomeStats = {
-            today: incomeData.today,
-            last7Days: incomeData.last7Days,
-            last30Days: incomeData.last30Days,
-            last365Days: incomeData.last365Days,
-            total: incomeData.total,
-          };
-  
-          const expenseStats = {
-            today: expenseData.today,
-            last7Days: expenseData.last7Days,
-            last30Days: expenseData.last30Days,
-            last365Days: expenseData.last365Days,
-            total: expenseData.total,
-          };
-  
-          // Update your state with the fetched data
-          setPendingIncomeStats(incomeStats);
-          setPendingExpenseStats(expenseStats);
-        } catch (error) {
-          console.error("Error fetching pending data:", error);
-        }
-      };
-  
-      fetchPendingData();
-    }
-  }, [showPending]);
-  
 
-  const togglePending = () => {
-    setShowPending((prev) => !prev);
-  };
+        const [incomeData, expenseData] = await Promise.all([
+          pendingIncomeResponse.json(),
+          pendingExpenseResponse.json(),
+        ]);
+
+        // Assuming the structure of the response matches the one you provided
+        const incomeStats = {
+          today: incomeData.today,
+          last7Days: incomeData.last7Days,
+          last30Days: incomeData.last30Days,
+          last365Days: incomeData.last365Days,
+          total: incomeData.total,
+        };
+
+        const expenseStats = {
+          today: expenseData.today,
+          last7Days: expenseData.last7Days,
+          last30Days: expenseData.last30Days,
+          last365Days: expenseData.last365Days,
+          total: expenseData.total,
+        };
+
+        // Update your state with the fetched data
+        setPendingIncomeStats(incomeStats);
+        setPendingExpenseStats(expenseStats);
+      } catch (error) {
+        console.error("Error fetching pending data:", error);
+      }
+    };
+
+    fetchPendingData();
+  }, []);
+
+
 
   const incomePieData = {
     labels: Object.keys(incomeCategories),
     datasets: [
       {
         data: Object.values(incomeCategories),
-        backgroundColor: [
-          "#FF6F61",
-          "#3498DB",
-          "#F9E79F",
-          
-        ],
+        backgroundColor: ["#FF6F61", "#3498DB", "#F9E79F"],
       },
     ],
   };
@@ -395,12 +668,7 @@ const IncomeExpenseDashboard = () => {
     datasets: [
       {
         data: Object.values(expenseCategories),
-        backgroundColor: [
-          "#FF6F61",
-          "#3498DB",
-          "#F9E79F",
-         
-        ],
+        backgroundColor: ["#FF6F61", "#3498DB", "#F9E79F"],
       },
     ],
   };
@@ -426,391 +694,38 @@ const IncomeExpenseDashboard = () => {
   const formattedCountUp = (value) => (
     <CountUp end={value} duration={2.5} formattingFn={formatValue} />
   );
-  const PopTypography = styled(Typography)`
-    @keyframes pop {
-      0% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.1);
-      }
-      100% {
-        transform: scale(1);
-      }
-    }
-  `;
+ 
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
+  };
   return (
     <div>
-      {/* <PopTypography
-        variant="h5"
-        gutterBottom
-        sx={{
-          fontWeight: "bold",
-          color: "#fff",
-          textAlign: "center",
-          backgroundColor: "#24A0ED",
-          borderRadius: "150px",
-          padding: "10px",
-          marginBottom: "20px",
-        }}
+      {/* Dropdown to select category */}
+      <FormControl
+        variant="outlined"
+        sx={{ mb: 2, minWidth: 120 }}
+        className="textField-root"
       >
-        Income & Expense Dashboard
-      </PopTypography> */}
+        <TextField
+          select
+          value={selectedCategory}
+          onChange={handleCategoryChange}
+          label="Category"
+          size="small"
+        >
+          <MenuItem value="all">All</MenuItem>
+          <MenuItem value="income">Income</MenuItem>
+          <MenuItem value="expense">Expense</MenuItem>
+          <MenuItem value="pendingInc">Pending Income</MenuItem>
+          <MenuItem value="pendingExp">Pending Expense</MenuItem>
+          <MenuItem value="savings">Savings</MenuItem>
+        </TextField>
+      </FormControl>
+
+      {/* Display cards based on selected category */}
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6} md={2.4}>
-          <Paper
-            elevation={3}
-            sx={{
-              padding: 2,
-              backgroundColor: "#F9E79F",
-              borderRadius: 2,
-              fontWeight: "bold",
-              boxShadow: 3,
-            }}
-          >
-            <Typography variant="h7">Today's Income</Typography>
-            <Typography variant="h5">
-              ₹{formattedCountUp(incomeData.today || 0)}
-            </Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={2.4}>
-          <Paper
-            elevation={3}
-            sx={{
-              padding: 2,
-              backgroundColor: "#FF6F61", // Mint Green
-              borderRadius: 2,
-              fontWeight: "bold",
-              boxShadow: 3,
-            }}
-          >
-            <Typography variant="h7">7 Day's Income</Typography>
-            <Typography variant="h5">
-              ₹{formattedCountUp(incomeData.last7Days || 0)}
-            </Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={2.4}>
-          <Paper
-            elevation={3}
-            sx={{
-              padding: 2,
-              backgroundColor: "#3498DB",
-              borderRadius: 2,
-              fontWeight: "bold",
-              boxShadow: 3,
-            }}
-          >
-            <Typography variant="h7">30 Day's Income</Typography>
-            <Typography variant="h5">
-              ₹{formattedCountUp(incomeData.last30Days || 0)}
-            </Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={2.4}>
-          <Paper
-            elevation={3}
-            sx={{
-              padding: 2,
-              backgroundColor: "#F9E79F",
-              borderRadius: 2,
-              fontWeight: "bold",
-              boxShadow: 3,
-            }}
-          >
-            <Typography variant="h7">365 Day's Income</Typography>
-            <Typography variant="h5">
-              ₹{formattedCountUp(incomeData.last365Days || 0)}
-            </Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={2.4}>
-          <Paper
-            elevation={3}
-            sx={{
-              padding: 2,
-              backgroundColor: "#FF6F61",
-              borderRadius: 2,
-              fontWeight: "bold",
-              boxShadow: 3,
-            }}
-          >
-            <Typography variant="h7">Total Income</Typography>
-            <Typography variant="h5">
-              ₹{formattedCountUp(incomeData.total || 0)}
-            </Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={2.4}>
-          <Paper
-            elevation={3}
-            sx={{
-              padding: 2,
-              backgroundColor: "#F9E79F",
-              borderRadius: 2,
-              fontWeight: "bold",
-              boxShadow: 3,
-            }}
-          >
-            <Typography variant="h7">Today's Expense</Typography>
-            <Typography variant="h5">
-              ₹{formattedCountUp(expenseData.today || 0)}
-            </Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={2.4}>
-          <Paper
-            elevation={3}
-            sx={{
-              padding: 2,
-              backgroundColor: "#FF6F61",
-              borderRadius: 2,
-              fontWeight: "bold",
-              boxShadow: 3,
-            }}
-          >
-            <Typography variant="h7">7 Day's Expense</Typography>
-            <Typography variant="h5">
-              ₹{formattedCountUp(expenseData.last7Days || 0)}
-            </Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={2.4}>
-          <Paper
-            elevation={3}
-            sx={{
-              padding: 2,
-              backgroundColor: "#3498DB",
-              borderRadius: 2,
-              fontWeight: "bold",
-              boxShadow: 3,
-            }}
-          >
-            <Typography variant="h7">30 Day's Expense</Typography>
-            <Typography variant="h5">
-              ₹{formattedCountUp(expenseData.last30Days || 0)}
-            </Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={2.4}>
-          <Paper
-            elevation={3}
-            sx={{
-              padding: 2,
-              backgroundColor: "#F9E79F",
-              borderRadius: 2,
-              fontWeight: "bold",
-              boxShadow: 3,
-            }}
-          >
-            <Typography variant="h7">365 Day's Expense</Typography>
-            <Typography variant="h5">
-              ₹{formattedCountUp(expenseData.last365Days || 0)}
-            </Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={2.4}>
-          <Paper
-            elevation={3}
-            sx={{
-              padding: 2,
-              backgroundColor: "#FF6F61",
-              borderRadius: 2,
-              fontWeight: "bold",
-              boxShadow: 3,
-            }}
-          >
-            <Typography variant="h7">Total Expense</Typography>
-            <Typography variant="h5">
-              ₹{formattedCountUp(expenseData.total || 0)}
-            </Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={2.4}>
-          <Paper
-            elevation={3}
-            sx={{
-              padding: 2,
-              backgroundColor: "#F9E79F",
-              borderRadius: 2,
-              fontWeight: "bold",
-              boxShadow: 3,
-            }}
-          >
-            <Typography variant="h7">Today's {todaytext}</Typography>
-            <Typography
-              variant="h5"
-              className={incomeData.today - expenseData.today >= 0}
-            >
-              ₹{formattedCountUp(incomeData.today - expenseData.today)}
-            </Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={2.4}>
-          <Paper
-            elevation={3}
-            sx={{
-              padding: 2,
-              backgroundColor: "#FF6F61", // Light Orange
-              borderRadius: 2,
-              fontWeight: "bold",
-              boxShadow: 3,
-            }}
-          >
-            <Typography variant="h7">7 Day's {_7Daystext}</Typography>
-            <Typography
-              variant="h5"
-              className={incomeData.last7Days - expenseData.last7Days >= 0}
-            >
-              ₹{formattedCountUp(incomeData.last7Days - expenseData.last7Days)}
-            </Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={2.4}>
-          <Paper
-            elevation={3}
-            sx={{
-              padding: 2,
-              backgroundColor: "#3498DB", // Light Orange
-              borderRadius: 2,
-              fontWeight: "bold",
-              boxShadow: 3,
-            }}
-          >
-            <Typography variant="h7">30 Day's {_30Daystext}</Typography>
-            <Typography
-              variant="h5"
-              className={incomeData.last30Days - expenseData.last30Days >= 0}
-            >
-              ₹
-              {formattedCountUp(incomeData.last30Days - expenseData.last30Days)}
-            </Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={2.4}>
-          <Paper
-            elevation={3}
-            sx={{
-              padding: 2,
-              backgroundColor: "#F9E79F", // Light Orange
-              borderRadius: 2,
-              fontWeight: "bold",
-              boxShadow: 3,
-            }}
-          >
-            <Typography variant="h7">365 Day's {_365Daystext}</Typography>
-            <Typography
-              variant="h5"
-              className={incomeData.last365Days - expenseData.last365Days >= 0}
-            >
-              ₹
-              {formattedCountUp(
-                incomeData.last365Days - expenseData.last365Days
-              )}
-            </Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={2.4}>
-          <Paper
-            elevation={3}
-            sx={{
-              padding: 2,
-              backgroundColor: "#FF6F61", // Light Orange
-              borderRadius: 2,
-              fontWeight: "bold",
-              boxShadow: 3,
-            }}
-          >
-            <Typography variant="h7">Total {savingsText}</Typography>
-            <Typography
-              variant="h5"
-              className={
-                savingsData >= 0 //? "savings-positive" : "savings-negative"
-              }
-            >
-              ₹{formattedCountUp(savingsData)}
-            </Typography>
-          </Paper>
-        </Grid>
+        {renderCards()}
       </Grid>
-
-      {/* pending income & Exepense */}
-
-      <Grid container justifyContent="center" spacing={2} mt={1}>
-        <Grid item>
-          <Button variant="contained" onClick={togglePending}>
-            {showPending ? "Hide Pending Amount" : "Show Pending Amount"}
-          </Button>
-        </Grid>
-      </Grid>
-
-      {showPending && (
-  <Grid container spacing={2} style={{ marginTop: "10px" }}>
-    {/* Today's Pending Income */}
-    <InfoCard
-      sx={{}}
-      title="Today's Pending INC"
-      value={<span style={{ fontSize: "27px" }}>{formattedCountUp(pendingIncomeStats.today || 0)}</span>}
-      color="#F9E79F"
-    />
-    {/* Last 7 Days Pending Income */}
-    <InfoCard
-      title="7 Days Pending INC"
-      value={<span style={{ fontSize: "27px" }}>{formattedCountUp(pendingIncomeStats.last7Days || 0)}</span>}
-      color="#FF6F61"
-    />
-    {/* Last 30 Days Pending Income */}
-    <InfoCard
-      title="30 Days Pending INC"
-      value={<span style={{ fontSize: "27px" }}>{formattedCountUp(pendingIncomeStats.last30Days || 0)}</span>}
-      color="#3498DB"
-    />
-    {/* Last 365 Days Pending Income */}
-    <InfoCard
-      title={<span style={{ fontSize: "15px" }}>365 Days Pending INC</span>}
-      value={<span style={{ fontSize: "27px" }}>{formattedCountUp(pendingIncomeStats.last365Days || 0)}</span>}
-      color="#F9E79F"
-    />
-    {/* Total Pending Income */}
-    <InfoCard
-      title="Total Pending INC"
-      value={<span style={{ fontSize: "27px" }}>{formattedCountUp(pendingIncomeStats.total || 0)}</span>}
-      color="#FF6F61"
-    />
-
-    {/* Today's Pending Expense */}
-    <InfoCard
-      title="Today's Pending EXP"
-      value={<span style={{ fontSize: "27px" }}>{formattedCountUp(pendingExpenseStats.today || 0)}</span>}
-      color="#F9E79F"
-    />
-    {/* Last 7 Days Pending Expense */}
-    <InfoCard
-      title="7 Days Pending EXP"
-      value={<span style={{ fontSize: "27px" }}>{formattedCountUp(pendingExpenseStats.last7Days || 0)}</span>}
-      color="#FF6F61"
-    />
-    {/* Last 30 Days Pending Expense */}
-    <InfoCard
-      title="30 Days Pending EXP"
-      value={<span style={{ fontSize: "27px" }}>{formattedCountUp(pendingExpenseStats.last30Days || 0)}</span>}
-      color="#3498DB"
-    />
-    {/* Last 365 Days Pending Expense */}
-    <InfoCard
-      title={<span style={{ fontSize: "15px" }}>365 Days Pending EXP</span>}
-      value={<span style={{ fontSize: "27px" }}>{formattedCountUp(pendingExpenseStats.last365Days || 0)}</span>}
-      color="#F9E79F"
-    />
-    {/* Total Pending Expense */}
-    <InfoCard
-      title="Total Pending EXP"
-      value={<span style={{ fontSize: "27px" }}>{formattedCountUp(pendingExpenseStats.total || 0)}</span>}
-      color="#FF6F61"
-    />
-  </Grid>
-)}
 
       {/* pending inc exp */}
       <Grid container spacing={3}>
@@ -839,30 +754,30 @@ const IncomeExpenseDashboard = () => {
           style={{ display: "flex", alignItems: "stretch" }}
         >
           <Paper
-              elevation={3}
-              style={{ padding: "20px", marginTop: "20px", flex: 1 }}
+            elevation={3}
+            style={{ padding: "20px", marginTop: "20px", flex: 1 }}
           >
-              <Box
-      display="flex" 
-      justifyContent="center" 
-      alignItems="center" 
-      mb={2} // Adds margin below the line
-    >
-              <Typography variant="body1" align="center" mr={2}>
-              {year} Income & Expense Comparison
-            </Typography>
-            <TextField
-              select
-              label="Year"
-              value={year}
-              onChange={handleYearChange}
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              mb={2} // Adds margin below the line
             >
-              {years.map((year) => (
-                <MenuItem key={year} value={year}>
-                  {year}
-                </MenuItem>
-              ))}
-            </TextField>
+              <Typography variant="body1" align="center" mr={2}>
+                {year} Income & Expense Comparison
+              </Typography>
+              <TextField
+                select
+                label="Year"
+                value={year}
+                onChange={handleYearChange}
+              >
+                {years.map((year) => (
+                  <MenuItem key={year} value={year}>
+                    {year}
+                  </MenuItem>
+                ))}
+              </TextField>
             </Box>
             <Line data={monthlyData} options={monthlyOptions} />
           </Paper>

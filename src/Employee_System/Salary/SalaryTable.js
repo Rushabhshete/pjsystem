@@ -720,131 +720,131 @@ const SalaryTable = ({ id, initialStatus }) => {
 
       <Box mt={4} width={"100%"}>
         <TableContainer overFlowX={"auto"}>
-          <Table>
+          <Table className="table-root">
             <TableHead sx={{ backgroundColor: "#f2f2f2" }}>
-              <TableRow sx={{ align: "center" }}>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>Salary Id</strong>
+              <TableRow >
+                <TableCell >
+                  Salary Id
                 </TableCell>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>Emp Id</strong>
+                <TableCell >
+                  Emp Id
                 </TableCell>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>Emp Name</strong>
+                <TableCell >
+                  Emp Name
                 </TableCell>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>Category</strong>
+                <TableCell >
+                  Category
                 </TableCell>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>Department</strong>
+                <TableCell >
+                  Department
                 </TableCell>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>Basic Salary</strong>
+                <TableCell >
+                  Basic Salary
                 </TableCell>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>Working Days</strong>
+                <TableCell >
+                  Working Days
                 </TableCell>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>HRA </strong>
+                <TableCell >
+                  HRA 
                 </TableCell>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>TA</strong>
+                <TableCell >
+                  TA
                 </TableCell>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>Incentive</strong>
+                <TableCell >
+                  Incentive
                 </TableCell>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>SPI</strong>
+                <TableCell >
+                  SPI
                 </TableCell>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>Medi Allowance</strong>
+                <TableCell >
+                  Medi Allowance
                 </TableCell>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>Salary Before Taxes</strong>
+                <TableCell >
+                  Salary Before Taxes
                 </TableCell>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>PF</strong>
+                <TableCell >
+                  PF
                 </TableCell>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>ESIC</strong>
+                <TableCell >
+                  ESIC
                 </TableCell>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>Prof Tax</strong>
+                <TableCell >
+                  Prof Tax
                 </TableCell>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>Income Tax</strong>
+                <TableCell >
+                  Income Tax
                 </TableCell>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>Deducts</strong>
+                <TableCell >
+                  Deducts
                 </TableCell>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>Net Salary</strong>
+                <TableCell >
+                  Net Salary
                 </TableCell>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>Month</strong>
+                <TableCell >
+                  Month
                 </TableCell>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>Year</strong>
+                <TableCell >
+                  Year
                 </TableCell>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>Payment Date</strong>
+                <TableCell >
+                  Payment Date
                 </TableCell>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>Status</strong>
+                <TableCell >
+                  Status
                 </TableCell>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>Transaction ID</strong>
+                <TableCell >
+                  Transaction ID
                 </TableCell>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>Action</strong>
+                <TableCell >
+                  Action
                 </TableCell>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>Payslip</strong>
+                <TableCell >
+                  Payslip
                 </TableCell>
-                <TableCell sx={{ align: "center" }}>
-                  <strong>Info</strong>
+                <TableCell >
+                  Info
                 </TableCell>
               </TableRow>
             </TableHead>
-            <TableBody sx={{ align: "center" }} padding={"10px"}>
+            <TableBody  >
               {salaries.map((salary) => (
-                <TableRow align={"center"} key={salary.id}>
-                  <TableCell align={"center"}>{salary.id}</TableCell>
-                  <TableCell align={"center"}>{salary.empID}</TableCell>
-                  <TableCell align={"center"}>{salary.fullName}</TableCell>
-                  <TableCell align={"center"}>
+                <TableRow  key={salary.id}>
+                  <TableCell >{salary.id}</TableCell>
+                  <TableCell >{salary.empID}</TableCell>
+                  <TableCell >{salary.fullName}</TableCell>
+                  <TableCell >
                     {salary.employeecategory}
                   </TableCell>
-                  <TableCell align={"center"}>{salary.department}</TableCell>
-                  <TableCell align={"center"}>{salary.basicSalary}</TableCell>
-                  <TableCell align={"center"}>{salary.workingDays}</TableCell>
-                  <TableCell align={"center"}>{salary.hraAllowance}</TableCell>
-                  <TableCell align={"center"}>{salary.taAllowance}</TableCell>
-                  <TableCell align={"center"}>{salary.incentive}</TableCell>
-                  <TableCell align={"center"}>{salary.spi}</TableCell>
-                  <TableCell align={"center"}>
+                  <TableCell >{salary.department}</TableCell>
+                  <TableCell >{salary.basicSalary}</TableCell>
+                  <TableCell >{salary.workingDays}</TableCell>
+                  <TableCell >{salary.hraAllowance}</TableCell>
+                  <TableCell >{salary.taAllowance}</TableCell>
+                  <TableCell >{salary.incentive}</TableCell>
+                  <TableCell >{salary.spi}</TableCell>
+                  <TableCell >
                     {salary.medicalAllowance}
                   </TableCell>
-                  <TableCell align={"center"}>
+                  <TableCell >
                     {salary.netSalaryBeforeTaxes}
                   </TableCell>
-                  <TableCell align={"center"}>{salary.pf}</TableCell>
-                  <TableCell align={"center"}>{salary.esic}</TableCell>
-                  <TableCell align={"center"}>
+                  <TableCell >{salary.pf}</TableCell>
+                  <TableCell >{salary.esic}</TableCell>
+                  <TableCell >
                     {salary.professionalTax}
                   </TableCell>
-                  <TableCell align={"center"}>{salary.incomeTax}</TableCell>
-                  <TableCell align={"center"}>{salary.deductions}</TableCell>
-                  <TableCell align={"center"}>
+                  <TableCell >{salary.incomeTax}</TableCell>
+                  <TableCell >{salary.deductions}</TableCell>
+                  <TableCell >
                     {salary.finalNetSalary}
                   </TableCell>
-                  <TableCell align={"center"}>
+                  <TableCell >
                     {monthNames[salary.month - 1]}
                   </TableCell>
-                  <TableCell align={"center"}>{salary.year}</TableCell>
-                  <TableCell align={"center"}>{salary.paymentDate}</TableCell>
+                  <TableCell >{salary.year}</TableCell>
+                  <TableCell >{salary.paymentDate}</TableCell>
                   <TableCell
-                    align={"center"}
+                    
                     style={{
                       color: salary.status === "Pending" ? "red" : "green",
                     }}
