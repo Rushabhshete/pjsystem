@@ -60,13 +60,13 @@
 //   const [searchTerm, setSearchTerm] = useState("");
 //   const [page, setPage] = useState(0);
 //   const [rowsPerPage, setRowsPerPage] = useState(20);
-//   const [selectedDepartment, setSelectedDepartment] = useState("");
-//   const [selectedCategory, setSelectedCategory] = useState("");
-//   const [selectedDesignation, setSelectedDesignation] = useState("");
-//   const [selectedStatus, setSelectedStatus] = useState("");
-//   const [uniqueDepartments, setUniqueDepartments] = useState([]);
-//   const [uniqueCategories, setUniqueCategories] = useState([]);
-//   const [uniqueDesignations, setUniqueDesignations] = useState([]);
+  // const [selectedDepartment, setSelectedDepartment] = useState("");
+  // const [selectedCategory, setSelectedCategory] = useState("");
+  // const [selectedDesignation, setSelectedDesignation] = useState("");
+  // const [selectedStatus, setSelectedStatus] = useState("");
+  // const [uniqueDepartments, setUniqueDepartments] = useState([]);
+  // const [uniqueCategories, setUniqueCategories] = useState([]);
+  // const [uniqueDesignations, setUniqueDesignations] = useState([]);
 //   const [employeeDetails, setEmployeeDetails] = useState(null);
 //   const [documentToView, setDocumentToView] = useState(null); // Stores the document URL
 //   const [documentType, setDocumentType] = useState(null); // Stores the type (pdf or image)
@@ -95,57 +95,57 @@
   //   setDialogOpen(false);
   // };
 
-//   useEffect(() => {
-//     const fetchUsersAndFilters = async () => {
-//       try {
-//         const usersResponse = await Userservice.getUser();
-//         setUsers(usersResponse.data);
+  // useEffect(() => {
+  //   const fetchUsersAndFilters = async () => {
+  //     try {
+  //       const usersResponse = await Userservice.getUser();
+  //       setUsers(usersResponse.data);
 
-//         // Extract unique departments, categories, and designations
-//         const departments = [
-//           ...new Set(usersResponse.data.map((user) => user.department)),
-//         ];
-//         const categories = [
-//           ...new Set(usersResponse.data.map((user) => user.employeecategory)),
-//         ];
-//         const designations = [
-//           ...new Set(usersResponse.data.map((user) => user.workDetail)),
-//         ];
+  //       // Extract unique departments, categories, and designations
+  //       const departments = [
+  //         ...new Set(usersResponse.data.map((user) => user.department)),
+  //       ];
+  //       const categories = [
+  //         ...new Set(usersResponse.data.map((user) => user.employeecategory)),
+  //       ];
+  //       const designations = [
+  //         ...new Set(usersResponse.data.map((user) => user.workDetail)),
+  //       ];
 
-//         setUniqueDepartments(departments);
-//         setUniqueCategories(categories);
-//         setUniqueDesignations(designations);
-//       } catch (error) {
-//         console.error("Error fetching users:", error);
-//         toast.error("Error fetching users.");
-//       }
-//     };
+  //       setUniqueDepartments(departments);
+  //       setUniqueCategories(categories);
+  //       setUniqueDesignations(designations);
+  //     } catch (error) {
+  //       console.error("Error fetching users:", error);
+  //       toast.error("Error fetching users.");
+  //     }
+  //   };
 
-//     fetchUsersAndFilters();
-//   }, []);
+  //   fetchUsersAndFilters();
+  // }, []);
 
-//   useEffect(() => {
-//     let filtered = users;
+  // useEffect(() => {
+  //   let filtered = users;
 
-//     // Filtering users based on selected filters
-//     if (selectedDepartment) {
-//       filtered = filtered.filter(
-//         (user) => user.department === selectedDepartment
-//       );
-//     }
-//     if (selectedCategory) {
-//       filtered = filtered.filter(
-//         (user) => user.employeecategory === selectedCategory
-//       );
-//     }
-//     if (selectedDesignation) {
-//       filtered = filtered.filter(
-//         (user) => user.workDetail === selectedDesignation
-//       );
-//     }
-//     if (selectedStatus) {
-//       filtered = filtered.filter((user) => user.status === selectedStatus);
-//     }
+  //   // Filtering users based on selected filters
+  //   if (selectedDepartment) {
+  //     filtered = filtered.filter(
+  //       (user) => user.department === selectedDepartment
+  //     );
+  //   }
+  //   if (selectedCategory) {
+  //     filtered = filtered.filter(
+  //       (user) => user.employeecategory === selectedCategory
+  //     );
+  //   }
+  //   if (selectedDesignation) {
+  //     filtered = filtered.filter(
+  //       (user) => user.workDetail === selectedDesignation
+  //     );
+  //   }
+  //   if (selectedStatus) {
+  //     filtered = filtered.filter((user) => user.status === selectedStatus);
+  //   }
 
 //     // Search functionality
 //     if (searchTerm) {
@@ -348,13 +348,13 @@
 //       const filtered = users.filter(
 //         (user) =>
 //           user.fullName.toLowerCase().includes(term.toLowerCase()) ||
-//           user.department.toLowerCase().includes(term.toLowerCase()) ||
-//           user.employeecategory.toLowerCase().includes(term.toLowerCase()) ||
-//           user.gender.toLowerCase().includes(term.toLowerCase()) ||
-//           user.city.toLowerCase().includes(term.toLowerCase()) ||
-//           user.workDetail.toLowerCase().includes(term.toLowerCase()) ||
-//           user.status.toLowerCase().includes(term.toLowerCase()) ||
-//           user.email.toLowerCase().includes(term.toLowerCase())
+          // user.department.toLowerCase().includes(term.toLowerCase()) ||
+          // user.employeecategory.toLowerCase().includes(term.toLowerCase()) ||
+          // user.gender.toLowerCase().includes(term.toLowerCase()) ||
+          // user.city.toLowerCase().includes(term.toLowerCase()) ||
+          // user.workDetail.toLowerCase().includes(term.toLowerCase()) ||
+          // user.status.toLowerCase().includes(term.toLowerCase()) ||
+          // user.email.toLowerCase().includes(term.toLowerCase())
 //       );
 //       setFilteredUsers(filtered);
 //     }
@@ -614,219 +614,219 @@
 //   }));
 // };
 
-//   const handleDownloadCsv = () => {
-//     const csvData = filteredUsers.map((user) => ({
-//       Id: user.empID,
-//       "Full Name": user.fullName,
-//       DOB: user.dob,
-//       "Blood Group": user.bloodGroup,
-//       Gender: user.gender,
-//       "Aadhar No": user.adharNo,
-//       "PAN No": user.panNo,
-//       Email: user.email,
-//       Password: user.password,
-//       "Confirm Password": user.confirmPassword,
-//       "Current Address": user.currentAddress,
-//       "Permanent Address": user.permanentAddress,
-//       "PIN Code": user.pinCode,
-//       "Permanent PinCode": user.permanentpinCode,
-//       Landmark: user.landmark,
-//       "Permanent Landmark": user.permanentlandmark,
-//       District: user.district,
-//       "Permanent District": user.permanentdistrict,
-//       City: user.city,
-//       "Permanent City": user.permanentcity,
-//       State: user.state,
-//       "Permanent State": user.permanentstate,
-//       Country: user.country,
-//       "Mobile No": user.mobileNo,
-//       "Parent No": user.parentNo,
-//       "Joining Date": user.joiningDate,
-//       Department: user.department,
-//       "Duty Type": user.dutyType,
-//       Salary: user.salary,
-//       "Work Detail": user.workDetail,
-//       "Work Location": user.workLocation,
-//       "CPF No": user.cpf_no,
-//       "Employee Type": user.employee_type,
-//       "Employee Category": user.employeecategory,
-//       "End Date": user.enddate,
-//       "ESIC No": user.esic_no,
-//       "Basic Qualification": user.basicQualification,
-//       "Professional Qualification": user.professionalQualification,
-//       "Shift Start Time": user.shiftStartTime,
-//       "Shift End Time": user.shiftEndTime,
-//       Status: user.status,
-//       Shift: user.shift,
-//     }));
+  // const handleDownloadCsv = () => {
+  //   const csvData = filteredUsers.map((user) => ({
+  //     Id: user.empID,
+  //     "Full Name": user.fullName,
+  //     DOB: user.dob,
+  //     "Blood Group": user.bloodGroup,
+  //     Gender: user.gender,
+  //     "Aadhar No": user.adharNo,
+  //     "PAN No": user.panNo,
+  //     Email: user.email,
+  //     Password: user.password,
+  //     "Confirm Password": user.confirmPassword,
+  //     "Current Address": user.currentAddress,
+  //     "Permanent Address": user.permanentAddress,
+  //     "PIN Code": user.pinCode,
+  //     "Permanent PinCode": user.permanentpinCode,
+  //     Landmark: user.landmark,
+  //     "Permanent Landmark": user.permanentlandmark,
+  //     District: user.district,
+  //     "Permanent District": user.permanentdistrict,
+  //     City: user.city,
+  //     "Permanent City": user.permanentcity,
+  //     State: user.state,
+  //     "Permanent State": user.permanentstate,
+  //     Country: user.country,
+  //     "Mobile No": user.mobileNo,
+  //     "Parent No": user.parentNo,
+  //     "Joining Date": user.joiningDate,
+  //     Department: user.department,
+  //     "Duty Type": user.dutyType,
+  //     Salary: user.salary,
+  //     "Work Detail": user.workDetail,
+  //     "Work Location": user.workLocation,
+  //     "CPF No": user.cpf_no,
+  //     "Employee Type": user.employee_type,
+  //     "Employee Category": user.employeecategory,
+  //     "End Date": user.enddate,
+  //     "ESIC No": user.esic_no,
+  //     "Basic Qualification": user.basicQualification,
+  //     "Professional Qualification": user.professionalQualification,
+  //     "Shift Start Time": user.shiftStartTime,
+  //     "Shift End Time": user.shiftEndTime,
+  //     Status: user.status,
+  //     Shift: user.shift,
+  //   }));
 
-//     const csvContent = [
-//       [
-//         "Id",
-//         "Full Name",
-//         "DOB",
-//         "Blood Group",
-//         "Gender",
-//         "Aadhar No",
-//         "PAN No",
-//         "Email",
-//         "Password",
-//         "Confirm Password",
-//         "Current Address",
-//         "Permanent Address",
-//         "PIN Code",
-//         "Permanent PinCode",
-//         "Landmark",
-//         "Permanent Landmark",
-//         "District",
-//         "Permanent District",
-//         "City",
-//         "Taluka",
-//         "Permanent City",
-//         "Permanent Taluka",
-//         "State",
-//         "Permanent State",
-//         "Country",
-//         "Joining Date",
-//         "Department",
-//         "Duty Type",
-//         "Salary",
-//         "Work Detail",
-//         "Work Location",
-//         "Mobile No",
-//         "Parent No",
-//         "CPF No",
-//         "Employee Type",
-//         "Employee Category",
-//         "End Date",
-//         "ESIC No",
-//         "Basic Qualification",
-//         "Professional Qualification",
-//         "Shift Start Time",
-//         "Shift End Time",
-//         "Status",
-//         "Shift",
-//       ],
-//       ...csvData.map((row) => Object.values(row)),
-//     ]
-//       .map((e) => e.join(","))
-//       .join("\n");
-//     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-//     const url = URL.createObjectURL(blob);
-//     const link = document.createElement("a");
-//     link.href = url;
-//     link.setAttribute("download", "users.csv");
-//     document.body.appendChild(link);
-//     link.click();
-//     document.body.removeChild(link);
-//   };
+  //   const csvContent = [
+  //     [
+  //       "Id",
+  //       "Full Name",
+  //       "DOB",
+  //       "Blood Group",
+  //       "Gender",
+  //       "Aadhar No",
+  //       "PAN No",
+  //       "Email",
+  //       "Password",
+  //       "Confirm Password",
+  //       "Current Address",
+  //       "Permanent Address",
+  //       "PIN Code",
+  //       "Permanent PinCode",
+  //       "Landmark",
+  //       "Permanent Landmark",
+  //       "District",
+  //       "Permanent District",
+  //       "City",
+  //       "Taluka",
+  //       "Permanent City",
+  //       "Permanent Taluka",
+  //       "State",
+  //       "Permanent State",
+  //       "Country",
+  //       "Joining Date",
+  //       "Department",
+  //       "Duty Type",
+  //       "Salary",
+  //       "Work Detail",
+  //       "Work Location",
+  //       "Mobile No",
+  //       "Parent No",
+  //       "CPF No",
+  //       "Employee Type",
+  //       "Employee Category",
+  //       "End Date",
+  //       "ESIC No",
+  //       "Basic Qualification",
+  //       "Professional Qualification",
+  //       "Shift Start Time",
+  //       "Shift End Time",
+  //       "Status",
+  //       "Shift",
+  //     ],
+  //     ...csvData.map((row) => Object.values(row)),
+  //   ]
+  //     .map((e) => e.join(","))
+  //     .join("\n");
+  //   const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  //   const url = URL.createObjectURL(blob);
+  //   const link = document.createElement("a");
+  //   link.href = url;
+  //   link.setAttribute("download", "users.csv");
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
 
 //   return (
 //     <>
 //       <div className="container1">
 //         <div className="headertable1">
-//           <Paper
-//             component={Box}
-//             p={2}
-//             sx={{ display: "flex", alignItems: "center" }}
-//           >
-//             <Grid
-//               container
-//               spacing={2}
-//               sx={{ marginBottom: "5px" }}
-//               className="textField-root"
-//             >
-//               <Grid item xs={6} md={1.8}>
-//                 <FormControl fullWidth>
-//                   <TextField
-//                     select
-//                     label="Department"
-//                     value={selectedDepartment}
-//                     onChange={(e) => setSelectedDepartment(e.target.value)}
-//                   >
-//                     <MenuItem value="">
-//                       <em>All</em>
-//                     </MenuItem>
-//                     {uniqueDepartments.map((department) => (
-//                       <MenuItem key={department} value={department}>
-//                         {department}
-//                       </MenuItem>
-//                     ))}
-//                   </TextField>
-//                 </FormControl>
-//               </Grid>
-//               <Grid item xs={6} md={1.8}>
-//                 <FormControl fullWidth>
-//                   <TextField
-//                     select
-//                     label="Category"
-//                     value={selectedCategory}
-//                     onChange={(e) => setSelectedCategory(e.target.value)}
-//                   >
-//                     <MenuItem value="">
-//                       <em>All</em>
-//                     </MenuItem>
-//                     {uniqueCategories.map((category) => (
-//                       <MenuItem key={category} value={category}>
-//                         {category}
-//                       </MenuItem>
-//                     ))}
-//                   </TextField>
-//                 </FormControl>
-//               </Grid>
-//               <Grid item xs={6} md={1.8}>
-//                 <FormControl fullWidth>
-//                   <TextField
-//                     select
-//                     label="Designation"
-//                     value={selectedDesignation}
-//                     onChange={(e) => setSelectedDesignation(e.target.value)}
-//                   >
-//                     <MenuItem value="">
-//                       <em>All</em>
-//                     </MenuItem>
-//                     {uniqueDesignations.map((designation) => (
-//                       <MenuItem key={designation} value={designation}>
-//                         {designation}
-//                       </MenuItem>
-//                     ))}
-//                   </TextField>
-//                 </FormControl>
-//               </Grid>{" "}
-//               <Grid item xs={6} md={1.8}>
-//                 <FormControl fullWidth>
-//                   <TextField
-//                     select
-//                     label="Status"
-//                     value={selectedStatus}
-//                     onChange={(e) => setSelectedStatus(e.target.value)}
-//                   >
-//                     <MenuItem value=""> All</MenuItem>
-//                     <MenuItem value="Joined">Joined</MenuItem>
-//                     <MenuItem value="Terminated">Terminated</MenuItem>
-//                   </TextField>
-//                 </FormControl>
-//               </Grid>{" "}
-//               <Grid item xs={6} md={1.8}>
-//                 <FormControl fullwidth>
-//                   <TextField
-//                     label="Search"
-//                     id="search-input"
-//                     value={searchTerm}
-//                     onChange={handleSearch}
-//                     placeholder="Search"
-//                   />
-//                 </FormControl>
-//               </Grid>
-//               <Button
-//                 variant="contained"
-//                 onClick={handleDownloadCsv}
-//                 sx={{ ml: 2, mt: 2 }}
-//               >
-//                 Download CSV
-//               </Button>
-//             </Grid>
-//           </Paper>
+          // <Paper
+          //   component={Box}
+          //   p={2}
+          //   sx={{ display: "flex", alignItems: "center" }}
+          // >
+          //   <Grid
+          //     container
+          //     spacing={2}
+          //     sx={{ marginBottom: "5px" }}
+          //     className="textField-root"
+          //   >
+          //     <Grid item xs={6} md={1.8}>
+          //       <FormControl fullWidth>
+          //         <TextField
+          //           select
+          //           label="Department"
+          //           value={selectedDepartment}
+          //           onChange={(e) => setSelectedDepartment(e.target.value)}
+          //         >
+          //           <MenuItem value="">
+          //             <em>All</em>
+          //           </MenuItem>
+          //           {uniqueDepartments.map((department) => (
+          //             <MenuItem key={department} value={department}>
+          //               {department}
+          //             </MenuItem>
+          //           ))}
+          //         </TextField>
+          //       </FormControl>
+          //     </Grid>
+          //     <Grid item xs={6} md={1.8}>
+          //       <FormControl fullWidth>
+          //         <TextField
+          //           select
+          //           label="Category"
+          //           value={selectedCategory}
+          //           onChange={(e) => setSelectedCategory(e.target.value)}
+          //         >
+          //           <MenuItem value="">
+          //             <em>All</em>
+          //           </MenuItem>
+          //           {uniqueCategories.map((category) => (
+          //             <MenuItem key={category} value={category}>
+          //               {category}
+          //             </MenuItem>
+          //           ))}
+          //         </TextField>
+          //       </FormControl>
+          //     </Grid>
+          //     <Grid item xs={6} md={1.8}>
+          //       <FormControl fullWidth>
+          //         <TextField
+          //           select
+          //           label="Designation"
+          //           value={selectedDesignation}
+          //           onChange={(e) => setSelectedDesignation(e.target.value)}
+          //         >
+          //           <MenuItem value="">
+          //             <em>All</em>
+          //           </MenuItem>
+          //           {uniqueDesignations.map((designation) => (
+          //             <MenuItem key={designation} value={designation}>
+          //               {designation}
+          //             </MenuItem>
+          //           ))}
+          //         </TextField>
+          //       </FormControl>
+          //     </Grid>{" "}
+          //     <Grid item xs={6} md={1.8}>
+          //       <FormControl fullWidth>
+          //         <TextField
+          //           select
+          //           label="Status"
+          //           value={selectedStatus}
+          //           onChange={(e) => setSelectedStatus(e.target.value)}
+          //         >
+          //           <MenuItem value=""> All</MenuItem>
+          //           <MenuItem value="Joined">Joined</MenuItem>
+          //           <MenuItem value="Terminated">Terminated</MenuItem>
+          //         </TextField>
+          //       </FormControl>
+          //     </Grid>{" "}
+          //     <Grid item xs={6} md={1.8}>
+          //       <FormControl fullwidth>
+          //         <TextField
+          //           label="Search"
+          //           id="search-input"
+          //           value={searchTerm}
+          //           onChange={handleSearch}
+          //           placeholder="Search"
+          //         />
+          //       </FormControl>
+          //     </Grid>
+          //     <Button
+          //       variant="contained"
+          //       onClick={handleDownloadCsv}
+          //       sx={{ ml: 2, mt: 2 }}
+          //     >
+          //       Download CSV
+          //     </Button>
+          //   </Grid>
+          // </Paper>
 //         </div>
 //         <TablePagination
 //           component="div"
@@ -2617,6 +2617,7 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
+  IconButton
 } from "@mui/material";
 import { Info, Edit, Delete, Cancel } from "@mui/icons-material";
 import UpdateEmployee from "./UpdateEmployee"; // Import the update component
@@ -2636,6 +2637,12 @@ const EmployeeList = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(20);
   const [selectedDepartment, setSelectedDepartment] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedDesignation, setSelectedDesignation] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("");
+  const [uniqueDepartments, setUniqueDepartments] = useState([]);
+  const [uniqueCategories, setUniqueCategories] = useState([]);
+  const [uniqueDesignations, setUniqueDesignations] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [isDialogOpen, setDialogOpen] = useState(false);
   const paginatedUsers = filteredUsers.slice(
@@ -2660,6 +2667,67 @@ const EmployeeList = () => {
       console.error("Error fetching users:", error);
     }
   };
+
+  useEffect(() => {
+    const fetchUsersAndFilters = async () => {
+      try {
+        const usersResponse = await Userservice.getUser();
+        setUsers(usersResponse.data);
+
+        // Extract unique departments, categories, and designations
+        const departments = [
+          ...new Set(usersResponse.data.map((user) => user.department)),
+        ];
+        const categories = [
+          ...new Set(usersResponse.data.map((user) => user.employeecategory)),
+        ];
+        const designations = [
+          ...new Set(usersResponse.data.map((user) => user.workDetail)),
+        ];
+
+        setUniqueDepartments(departments);
+        setUniqueCategories(categories);
+        setUniqueDesignations(designations);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        toast.error("Error fetching users.");
+      }
+    };
+
+    fetchUsersAndFilters();
+  }, []);
+
+  useEffect(() => {
+    let filtered = users;
+
+    // Filtering users based on selected filters
+    if (selectedDepartment) {
+      filtered = filtered.filter(
+        (user) => user.department === selectedDepartment
+      );
+    }
+    if (selectedCategory) {
+      filtered = filtered.filter(
+        (user) => user.employeecategory === selectedCategory
+      );
+    }
+    if (selectedDesignation) {
+      filtered = filtered.filter(
+        (user) => user.workDetail === selectedDesignation
+      );
+    }
+    if (selectedStatus) {
+      filtered = filtered.filter((user) => user.status === selectedStatus);
+    }
+    setFilteredUsers(filtered);
+  },
+  [
+        users,
+        selectedDepartment,
+        selectedCategory,
+        selectedDesignation,
+        selectedStatus,
+      ]);
 
   const handleCancel = async (empID) => {
     const confirmation = window.confirm(
@@ -2701,7 +2769,14 @@ const EmployeeList = () => {
     const term = event.target.value.toLowerCase();
     setSearchTerm(term);
     const filtered = users.filter((user) =>
-      user.fullName.toLowerCase().includes(term)
+      user.fullName.toLowerCase().includes(term) ||
+    user.department.toLowerCase().includes(term.toLowerCase()) ||
+    user.employeecategory.toLowerCase().includes(term.toLowerCase()) ||
+    user.gender.toLowerCase().includes(term.toLowerCase()) ||
+    user.city.toLowerCase().includes(term.toLowerCase()) ||
+    user.workDetail.toLowerCase().includes(term.toLowerCase()) ||
+    user.status.toLowerCase().includes(term.toLowerCase()) ||
+    user.email.toLowerCase().includes(term.toLowerCase())
     );
     setFilteredUsers(filtered);
   };
@@ -2724,6 +2799,8 @@ const EmployeeList = () => {
   };
 
   const handleDelete = async (userId) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this employee?");
+    if(confirmDelete){
     try {
       await Userservice.deleteUser(userId);
       const updatedUsers = users.filter((user) => user.empID !== userId);
@@ -2732,6 +2809,7 @@ const EmployeeList = () => {
     } catch (error) {
       toast.error("Error deleting employee.");
     }
+  }
   };
 
   const handleCloseIDDialog = () => {
@@ -2739,20 +2817,227 @@ const EmployeeList = () => {
     setDialogOpen(false);
   };
 
+  const handleDownloadCsv = () => {
+    const csvData = filteredUsers.map((user) => ({
+      Id: user.empID,
+      "Full Name": user.fullName,
+      DOB: user.dob,
+      "Blood Group": user.bloodGroup,
+      Gender: user.gender,
+      "Aadhar No": user.adharNo,
+      "PAN No": user.panNo,
+      Email: user.email,
+      Password: user.password,
+      "Confirm Password": user.confirmPassword,
+      "Current Address": user.currentAddress,
+      "Permanent Address": user.permanentAddress,
+      "PIN Code": user.pinCode,
+      "Permanent PinCode": user.permanentpinCode,
+      Landmark: user.landmark,
+      "Permanent Landmark": user.permanentlandmark,
+      District: user.district,
+      "Permanent District": user.permanentdistrict,
+      City: user.city,
+      "Permanent City": user.permanentcity,
+      State: user.state,
+      "Permanent State": user.permanentstate,
+      Country: user.country,
+      "Mobile No": user.mobileNo,
+      "Parent No": user.parentNo,
+      "Joining Date": user.joiningDate,
+      Department: user.department,
+      "Duty Type": user.dutyType,
+      Salary: user.salary,
+      "Work Detail": user.workDetail,
+      "Work Location": user.workLocation,
+      "CPF No": user.cpf_no,
+      "Employee Type": user.employee_type,
+      "Employee Category": user.employeecategory,
+      "End Date": user.enddate,
+      "ESIC No": user.esic_no,
+      "Basic Qualification": user.basicQualification,
+      "Professional Qualification": user.professionalQualification,
+      "Shift Start Time": user.shiftStartTime,
+      "Shift End Time": user.shiftEndTime,
+      Status: user.status,
+      Shift: user.shift,
+    }));
+
+    const csvContent = [
+      [
+        "Id",
+        "Full Name",
+        "DOB",
+        "Blood Group",
+        "Gender",
+        "Aadhar No",
+        "PAN No",
+        "Email",
+        "Password",
+        "Confirm Password",
+        "Current Address",
+        "Permanent Address",
+        "PIN Code",
+        "Permanent PinCode",
+        "Landmark",
+        "Permanent Landmark",
+        "District",
+        "Permanent District",
+        "City",
+        "Taluka",
+        "Permanent City",
+        "Permanent Taluka",
+        "State",
+        "Permanent State",
+        "Country",
+        "Joining Date",
+        "Department",
+        "Duty Type",
+        "Salary",
+        "Work Detail",
+        "Work Location",
+        "Mobile No",
+        "Parent No",
+        "CPF No",
+        "Employee Type",
+        "Employee Category",
+        "End Date",
+        "ESIC No",
+        "Basic Qualification",
+        "Professional Qualification",
+        "Shift Start Time",
+        "Shift End Time",
+        "Status",
+        "Shift",
+      ],
+      ...csvData.map((row) => Object.values(row)),
+    ]
+      .map((e) => e.join(","))
+      .join("\n");
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "users.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+
   return (
     <div>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Paper component={Box} p={2}>
-            <TextField
-              fullWidth
-              label="Search"
-              value={searchTerm}
-              onChange={handleSearch}
-            />
-          </Paper>
-        </Grid>
+      <Grid container spacing={2} sx={{ padding: "20px" }}>
+            <Grid
+              container
+              spacing={2}
+              className="textField-root"
+            >
+              <Grid item xs={6} md={1.8}>
+                <FormControl fullWidth>
+                  <TextField
+                  size="small"
+                    select
+                    label="Department"
+                    value={selectedDepartment}
+                    onChange={(e) => setSelectedDepartment(e.target.value)}
+                  >
+                    <MenuItem value="">
+                      <em>All</em>
+                    </MenuItem>
+                    {uniqueDepartments.map((department) => (
+                      <MenuItem key={department} value={department}>
+                        {department}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </FormControl>
+              </Grid>
+              <Grid item xs={6} md={1.8}>
+                <FormControl fullWidth>
+                  <TextField
+                  size="small"
+                    select
+                    label="Category"
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                  >
+                    <MenuItem value="">
+                      <em>All</em>
+                    </MenuItem>
+                    {uniqueCategories.map((category) => (
+                      <MenuItem key={category} value={category}>
+                        {category}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </FormControl>
+              </Grid>
+              <Grid item xs={6} md={1.8}>
+                <FormControl fullWidth>
+                  <TextField
+                  size="small"
+                    select
+                    label="Designation"
+                    value={selectedDesignation}
+                    onChange={(e) => setSelectedDesignation(e.target.value)}
+                  >
+                    <MenuItem value="">
+                      <em>All</em>
+                    </MenuItem>
+                    {uniqueDesignations.map((designation) => (
+                      <MenuItem key={designation} value={designation}>
+                        {designation}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </FormControl>
+              </Grid>{" "}
+              <Grid item xs={6} md={1.8}>
+                <FormControl fullWidth>
+                  <TextField
+                  size="small"
+                    select
+                    label="Status"
+                    value={selectedStatus}
+                    onChange={(e) => setSelectedStatus(e.target.value)}
+                  >
+                    <MenuItem value=""> All</MenuItem>
+                    <MenuItem value="Joined">Joined</MenuItem>
+                    <MenuItem value="Terminated">Terminated</MenuItem>
+                  </TextField>
+                </FormControl>
+              </Grid>{" "}
+              <Grid item xs={6} md={1.8}>
+                <FormControl fullwidth>
+                  <TextField
+                  size="small"
+                    label="Search"
+                    id="search-input"
+                    value={searchTerm}
+                    onChange={handleSearch}
+                    placeholder="Search"
+                  />
+                </FormControl>
+              </Grid>
+              <Button
+                variant="contained"
+                onClick={handleDownloadCsv}
+                sx={{ ml: 2, mt: 2 }}
+              >
+                Download CSV
+              </Button>
+            </Grid>
       </Grid>
+      <TablePagination
+        component="div"
+        count={filteredUsers.length}
+        page={page}
+        onPageChange={(e, newPage) => setPage(newPage)}
+        rowsPerPage={rowsPerPage}
+        onRowsPerPageChange={(e) => setRowsPerPage(parseInt(e.target.value))}
+      />
+
 
       <TableContainer>
              <Table>
@@ -2876,24 +3161,24 @@ const EmployeeList = () => {
                       {user.status}
                     </TableCell>
                   <TableCell sx={{whiteSpace:"nowrap"}}>
-                    <Button onClick={() => handleShowInfo(user.empID)}>
+                    <IconButton color="primary" onClick={() => handleShowInfo(user.empID)}>
                       <Info />
-                    </Button>
-                    <Button onClick={() => handleUpdate(user.empID)}>
+                    </IconButton>
+                    <IconButton sx={{color:'blue'}} onClick={() => handleUpdate(user.empID)}>
                       <Edit />
-                    </Button>
-                    <Button onClick={() => handleDelete(user.empID)}>
+                    </IconButton>
+                    <IconButton sx={{color:'red'}} onClick={() => handleDelete(user.empID)}>
                       <Delete />
-                    </Button>
-                    <Button onClick={()=> handleCancel(user.empID)}>
+                    </IconButton>
+                    <IconButton sx={{color:'red'}} onClick={()=> handleCancel(user.empID)}>
                       <Cancel />
-                    </Button>
-                    <Button
-                     
+                    </IconButton>
+                    <IconButton
+                     color="secondary"
                         onClick={() => handleOpenDialog(user.empID)}
                       >
                         <BadgeIcon />
-                      </Button>
+                      </IconButton>
                   </TableCell>
                 </TableRow>
               ))}

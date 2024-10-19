@@ -675,6 +675,7 @@ const Category = () => {
         <Grid item xs={6} md={1.8}>
           <FormControl fullWidth>
             <TextField
+            size="small"
               select
               label="Type"
               value={category}
@@ -688,6 +689,7 @@ const Category = () => {
         <Grid item xs={6} md={1.8}>
           <FormControl fullWidth>
             <TextField
+             size="small"
               select
               label="Date Range"
               value={dateRange}
@@ -707,6 +709,7 @@ const Category = () => {
             <Grid item xs={6} md={1.8}>
               <FormControl fullWidth>
                 <TextField
+                 size="small"
                   type="date"
                   label="Start Date"
                   value={customDateStart}
@@ -718,6 +721,7 @@ const Category = () => {
             <Grid item xs={6} md={1.8}>
               <FormControl fullWidth>
                 <TextField
+                 size="small"
                   type="date"
                   label="End Date"
                   value={customDateEnd}
@@ -731,6 +735,7 @@ const Category = () => {
         <Grid item xs={6} md={1.8}>
           <FormControl fullWidth>
             <TextField
+             size="small"
               select
               label="Bill Type"
               value={billType}
@@ -748,6 +753,7 @@ const Category = () => {
         <Grid item xs={6} md={1.8}>
           <FormControl fullWidth>
             <TextField
+             size="small"
               select
               label="Category"
               value={categoryType}
@@ -765,6 +771,7 @@ const Category = () => {
         <Grid item xs={6} md={1.8}>
           <FormControl fullWidth>
             <TextField
+             size="small"
               select
               label="Payment Method"
               value={paymentMethod}
@@ -782,6 +789,7 @@ const Category = () => {
         <Grid item xs={6} md={1.8}>
           <FormControl fullWidth>
             <TextField
+             size="small"
               select
               label="Paid Using"
               value={paidBy}
@@ -799,6 +807,7 @@ const Category = () => {
         <Grid item xs={6} md={1.8}>
           <FormControl fullWidth>
             <TextField
+             size="small"
               label="Search By User Name"
               value={searchUser}
               onChange={handleSearchUserChange}
@@ -808,6 +817,7 @@ const Category = () => {
         <Grid item xs={6} md={1.8}>
           <FormControl fullWidth>
             <TextField
+             size="small"
               label="Search By Amount"
               value={amount}
               onChange={handleAmountChange}
@@ -818,6 +828,7 @@ const Category = () => {
         <Grid item xs={6} md={1.8}>
           <FormControl fullWidth>
             <TextField
+             size="small"
               label="Search By Status"
               value={searchStatus}
               onChange={handleStatusChange}

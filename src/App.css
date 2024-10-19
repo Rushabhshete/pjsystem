@@ -9,7 +9,7 @@ body, html, #root {
 }
 */
 
-/* 
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 body, html, #root {
@@ -19,7 +19,7 @@ body, html, #root {
   min-height: 100vh;
   font-family: 'Poppins', sans-serif;
 }
-
+/* 
 body, html, #root {
    background-color: #f2f2f2; 
   margin: 0;

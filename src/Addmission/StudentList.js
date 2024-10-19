@@ -502,6 +502,7 @@ const StudentList = () => {
       <Grid container spacing={2} className="textField-root">
         <Grid item xs={8} sm={1.6} md={2}>
           <TextField
+          size="small"
             select
             fullWidth
             variant="outlined"
@@ -521,6 +522,7 @@ const StudentList = () => {
           <>
             <Grid item xs={8} sm={1.6} md={2}>
               <TextField
+              size="small"
                 type="date"
                 label="Start Date"
                 value={startDate}
@@ -531,6 +533,7 @@ const StudentList = () => {
             </Grid>
             <Grid item xs={8} sm={1.6} md={2}>
               <TextField
+              size="small"
                 type="date"
                 label="End Date"
                 fullWidth
@@ -543,6 +546,7 @@ const StudentList = () => {
         )}
         <Grid item xs={8} sm={1.6} md={2}>
           <TextField
+          size="small"
             select
             fullWidth
             label="Source"
@@ -559,6 +563,7 @@ const StudentList = () => {
         </Grid>
         <Grid item xs={8} sm={1.6} md={2}>
           <TextField
+          size="small"
             select
             fullWidth
             label="Course"
@@ -575,6 +580,7 @@ const StudentList = () => {
         </Grid>
         <Grid item xs={8} sm={1.6} md={2}>
           <TextField
+          size="small"
             select
             fullWidth
             label="Guide"
@@ -591,6 +597,7 @@ const StudentList = () => {
         </Grid>
         <Grid item xs={8} sm={1.6} md={2}>
           <TextField
+          size="small"
             select
             fullWidth
             label="Payment Mode"
@@ -606,6 +613,7 @@ const StudentList = () => {
         </Grid>
         <Grid item xs={8} sm={1.6} md={2}>
           <TextField
+          size="small"
             select
             fullWidth
             label="Status" // New dropdown for status
@@ -620,6 +628,7 @@ const StudentList = () => {
         </Grid>
         <Grid item xs={8} sm={1.6} md={2}>
           <TextField
+          size="small"
             label="Search by Student Name"
             value={searchQuery}
             fullWidth
