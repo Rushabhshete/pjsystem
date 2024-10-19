@@ -55,6 +55,8 @@
     "react-transition-group": "^4.4.5",
     "reactstrap": "^9.2.2",
     "recharts": "^2.12.7",
+    "sweetalert2": "^11.14.3",
+    "sweetalert2-react-content": "^5.0.7",
     "web-vitals": "^2.1.4",
     "yup": "^1.4.0"
   },
