@@ -851,7 +851,7 @@ const Category = () => {
           </Button>
         </Grid>
 
-        <Box display="flex" marginTop="20px">
+        <Box display="flex" marginTop="20px" className="MuiTypography-root">
           <Typography
             variant="h6"
             gutterBottom
@@ -892,14 +892,14 @@ const Category = () => {
         onClose={() => setConfirmOpen(false)}
         onConfirm={handleDelete}
       />
-      <Table>
+      <Table className="table-root">
         <TableHead
           style={{
             backgroundColor: "#f2f2f2",
             justifyContent: "center",
           }}
         >
-          <TableRow>
+          <TableRow className="MuiTableRow-root">
             {/* <StyledTableCell style={{ fontWeight: "bold" }}>
               Type
             </StyledTableCell> */}

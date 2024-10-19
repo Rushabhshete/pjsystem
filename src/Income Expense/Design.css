@@ -49,6 +49,33 @@
 }
 
 
+/* Styles for the Table and its cells */
+.table-root .MuiTableCell-root {
+  font-size: 12px; /* Adjust font size for table cells (reduced size) */
+  padding: 4px 4px 4px 4px; /* Adjust padding if necessary */
+  font-family: 'Poppins', sans-serif; /* Ensure Poppins is used */
+}
+
+.table-root .MuiTableHead-root .MuiTableCell-root {
+  font-weight: bold; /* Keep bold for header */
+ 
+  white-space: nowrap;
+}
+
+.table-root .MuiTableHead-root{
+  text-align: center;
+}
+/* Vertical lines */
+.table-root .MuiTableCell-root {
+ /* Vertical line between columns */
+ white-space: nowrap;
+}
+
+.table-root .MuiTableCell-root:last-child {
+  border-right: none; /* Remove right border from the last column */
+}
+
+
 .income {
   color: #28a745; /* Green */
 }

@@ -102,6 +102,8 @@ import AddSalary from "./Employee_System/Salary/AddSalary";
 import ViewAttendance from "./Employee_System/Attendance/ViewAttendance";
 import ShipmentReport from "./Shipment/ShipmentReport";
 import TodaysNotification from "./layouts/TodaysNotification";
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './layouts/theme'; // Import your custom theme
 function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem("isAuthenticated") === "true"
@@ -279,12 +281,14 @@ function AppContent() {
 
 function App() {
   return (
+    <ThemeProvider theme={theme}>
     <Router>
       <UserProvider>
         <CssBaseline />
         <AppContent />
       </UserProvider>
     </Router>
+  </ThemeProvider>
   );
 }
 

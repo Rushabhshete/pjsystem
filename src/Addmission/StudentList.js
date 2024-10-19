@@ -709,26 +709,26 @@ const StudentList = () => {
       </Box>
 
       <TableContainer style={{ marginTop: "10px" }}>
-        <Table style={{ overflowX: "hidden" }}>
+        <Table style={{ overflowX: "hidden" }} className="table-root">
           <TableHead
             style={{ backgroundColor: "#f2f2f2", justifyContent: "center" }}
           >
             <TableRow>
               <TableCell style={{ fontWeight: "bold" }}>ID</TableCell>
               <TableCell style={{ fontWeight: "bold" }}>Name</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Mobile 1</TableCell>
+              <TableCell style={{ fontWeight: "bold" }}>Mobile</TableCell>
               <TableCell style={{ fontWeight: "bold" }}>Email</TableCell>
               <TableCell style={{ fontWeight: "bold" }}>Course</TableCell>
               <TableCell style={{ fontWeight: "bold" }}>Source</TableCell>
               <TableCell style={{ fontWeight: "bold" }}>Duration</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Joining Date</TableCell>
+              <TableCell style={{ fontWeight: "bold" }}>Join Date</TableCell>
               <TableCell style={{ fontWeight: "bold" }}>Due Date</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Total Fees</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Paid Fees</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Pending Fees</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Payment Mode</TableCell>
+              <TableCell style={{ fontWeight: "bold" }}>Total</TableCell>
+              <TableCell style={{ fontWeight: "bold" }}>Paid</TableCell>
+              <TableCell style={{ fontWeight: "bold" }}>Pending</TableCell>
+              <TableCell style={{ fontWeight: "bold" }}>Pay Mode</TableCell>
               <TableCell style={{ fontWeight: "bold" }}>
-                Transaction ID
+                Txn ID
               </TableCell>
               <TableCell style={{ fontWeight: "bold" }}>Status</TableCell>
               <TableCell style={{ fontWeight: "bold", textAlign: "center" }}>

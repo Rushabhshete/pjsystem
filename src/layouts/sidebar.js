@@ -578,7 +578,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import MenuIcon from '@mui/icons-material/Menu';
 import ViewQuiltIcon from '@mui/icons-material/ViewQuilt';
 import WorkOffIcon from '@mui/icons-material/WorkOff';
-const drawerWidth = 240; // Full sidebar width
+const drawerWidth = 255; // Full sidebar width
 const iconOnlyWidth = 60; // Width when showing icons only
 const Sidebar = () => {
   const [expanded, setExpanded] = useState("");
@@ -862,7 +862,7 @@ const isActive = (route) => location.pathname === route;
                         variant="body2"
                         sx={{
                           fontWeight: "normal",
-                          fontSize: "13px",
+                          fontSize: "12.5px",
                           marginLeft: "-20px",
                         }}
                       >
@@ -905,10 +905,11 @@ const isActive = (route) => location.pathname === route;
                             : "transparent",
                           "&:hover": {
                             backgroundColor: "#1F618D",
+                            
                           },
                         }}
                       >
-                        <ListItemIcon>{subOption.icon}</ListItemIcon>
+                        <ListItemIcon sx={{ml:"-8px"}}>{subOption.icon}</ListItemIcon>
   
                         {/* Sub-option text */}
                         {!isMinimized && (
