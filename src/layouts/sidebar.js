@@ -569,6 +569,7 @@ import GroupIcon from "@mui/icons-material/Group";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import PersonIcon from '@mui/icons-material/Person';
 import HelpIcon from "@mui/icons-material/Help";
 import NoteAltIcon from "@mui/icons-material/NoteAlt";
 import StickyNote2Icon from "@mui/icons-material/StickyNote2";
@@ -576,6 +577,7 @@ import PriceCheckIcon from "@mui/icons-material/PriceCheck";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import MenuIcon from '@mui/icons-material/Menu';
 import ViewQuiltIcon from '@mui/icons-material/ViewQuilt';
+import WorkOffIcon from '@mui/icons-material/WorkOff';
 const drawerWidth = 240; // Full sidebar width
 const iconOnlyWidth = 60; // Width when showing icons only
 const Sidebar = () => {
@@ -666,7 +668,7 @@ const isActive = (route) => location.pathname === route;
       subOptions: [
         {
           name: "Employee Manager",
-          icon: <CurrencyRupeeRoundedIcon sx={{ color: "#fff" }} />,
+          icon: <PersonIcon sx={{ color: "#fff" }} />,
           route: "/layout/employee-manager",
         },
         {
@@ -676,12 +678,12 @@ const isActive = (route) => location.pathname === route;
         },
         {
           name: "Leave",
-          icon: <CategoryIcon sx={{ color: "#fff" }} />,
+          icon: <WorkOffIcon sx={{ color: "#fff" }} />,
           route: "/layout/ManageLeave",
         },
         {
           name: "Salary",
-          icon: <AttachMoneyIcon sx={{ color: "#fff" }} />,
+          icon: <CurrencyRupeeRoundedIcon sx={{ color: "#fff" }} />,
           route: "/layout/employee-salary-manager",
         },
         {
