@@ -16,7 +16,7 @@ const PreviewComponent = ({ formData }) => {
         }
 
         const response = await axios.get(
-          `https://pjsofttech.in:20443/findInstitutesby/Institutecode?institutecode=${getInstituteCode()}`
+          `http://localhost:8081/findInstitutesby/Institutecode?institutecode=${getInstituteCode()}`
         );
         setEmployeeDetails(response.data);
       } catch (error) {

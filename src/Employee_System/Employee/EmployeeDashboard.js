@@ -18,7 +18,7 @@
 //     useEffect(() => {
 //         const fetchInitialData = async () => {
 //             try {
-//                 const response = await fetch(`https://pjsofttech.in:10443/getNonDeleted?institutecode=${institutecode}`);
+//                 const response = await fetch(`http://localhost:8082/getNonDeleted?institutecode=${institutecode}`);
 //                 if (!response.ok) {
 //                     throw new Error(`HTTP error! status: ${response.status}`);
 //                 }
@@ -35,7 +35,7 @@
 //     useEffect(() => {
 //         const fetchStatusData = async (status) => {
 //             try {
-//                 const response = await fetch(`https://pjsofttech.in:10443/employees/status/${status}?institutecode=${institutecode}`);
+//                 const response = await fetch(`http://localhost:8082/employees/status/${status}?institutecode=${institutecode}`);
 //                 if (!response.ok) {
 //                     throw new Error(`HTTP error! status: ${response.status}`);
 //                 }
@@ -59,15 +59,15 @@
 
 //     useEffect(() => {
 //         const apiUrls = {
-//             'All': `https://pjsofttech.in:10443/getNonDeleted?institutecode=${institutecode}`,
-//             '7Days': `https://pjsofttech.in:10443/employees/last7days?institutecode=${institutecode}`,
-//             '30Days': `https://pjsofttech.in:10443/employees/lastMonth?institutecode=${institutecode}`,
-//             '365Days': `https://pjsofttech.in:10443/employees/lastYear?institutecode=${institutecode}`,
+//             'All': `http://localhost:8082/getNonDeleted?institutecode=${institutecode}`,
+//             '7Days': `http://localhost:8082/employees/last7days?institutecode=${institutecode}`,
+//             '30Days': `http://localhost:8082/employees/lastMonth?institutecode=${institutecode}`,
+//             '365Days': `http://localhost:8082/employees/lastYear?institutecode=${institutecode}`,
 //         };
 
 //         const fetchCustomDateRangeData = async (startDate, endDate) => {
 //             try {
-//                 const response = await fetch(`https://pjsofttech.in:10443/getNonDeleted?institutecode=${institutecode}`);
+//                 const response = await fetch(`http://localhost:8082/getNonDeleted?institutecode=${institutecode}`);
 //                 if (!response.ok) {
 //                     throw new Error(`HTTP error! status: ${response.status}`);
 //                 }
@@ -311,7 +311,7 @@ const EmployeeDashboard = () => {
     const fetchInitialData = async () => {
       try {
         const response = await fetch(
-          `https://pjsofttech.in:10443/getNonDeleted?institutecode=${institutecode}`
+          `http://localhost:8082/getNonDeleted?institutecode=${institutecode}`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -330,7 +330,7 @@ const EmployeeDashboard = () => {
     const fetchStatusData = async (status) => {
       try {
         const response = await fetch(
-          `https://pjsofttech.in:10443/employees/status/${status}?institutecode=${institutecode}`
+          `http://localhost:8082/employees/status/${status}?institutecode=${institutecode}`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -355,16 +355,16 @@ const EmployeeDashboard = () => {
 
   useEffect(() => {
     const apiUrls = {
-      All: `https://pjsofttech.in:10443/getNonDeleted?institutecode=${institutecode}`,
-      "7Days": `https://pjsofttech.in:10443/employees/last7days?institutecode=${institutecode}`,
-      "30Days": `https://pjsofttech.in:10443/employees/lastMonth?institutecode=${institutecode}`,
-      "365Days": `https://pjsofttech.in:10443/employees/lastYear?institutecode=${institutecode}`,
+      All: `http://localhost:8082/getNonDeleted?institutecode=${institutecode}`,
+      "7Days": `http://localhost:8082/employees/last7days?institutecode=${institutecode}`,
+      "30Days": `http://localhost:8082/employees/lastMonth?institutecode=${institutecode}`,
+      "365Days": `http://localhost:8082/employees/lastYear?institutecode=${institutecode}`,
     };
 
     const fetchCustomDateRangeData = async (startDate, endDate) => {
       try {
         const response = await fetch(
-          `https://pjsofttech.in:10443/getNonDeleted?institutecode=${institutecode}`
+          `http://localhost:8082/getNonDeleted?institutecode=${institutecode}`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

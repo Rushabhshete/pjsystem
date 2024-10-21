@@ -53,16 +53,16 @@ export default function CombineDashboard() {
           { data: totalRevenue },
         ] = await Promise.all([
           axios.get(
-            `https://pjsofttech.in:13443/getAdmissionsByTodayCount?institutecode=${institutecode}`
+            `http://localhost:8085/getAdmissionsByTodayCount?institutecode=${institutecode}`
           ),
           axios.get(
-            `https://pjsofttech.in:13443/TotalAdmission?institutecode=${institutecode}`
+            `http://localhost:8085/TotalAdmission?institutecode=${institutecode}`
           ),
           axios.get(
-            `https://pjsofttech.in:13443/AdmissionInToDaysRevenue?institutecode=${institutecode}`
+            `http://localhost:8085/AdmissionInToDaysRevenue?institutecode=${institutecode}`
           ),
           axios.get(
-            `https://pjsofttech.in:13443/TotalAdmissionRevenue?institutecode=${institutecode}`
+            `http://localhost:8085/TotalAdmissionRevenue?institutecode=${institutecode}`
           ),
         ]);
 
@@ -85,7 +85,7 @@ export default function CombineDashboard() {
       try {
         const institutecode = localStorage.getItem("institutecode"); // Get institute code from local storage
         const res = await axios.get(
-          `https://pjsofttech.in:13443/count/yearly?institutecode=${institutecode}&year=${selectedYear}`
+          `http://localhost:8085/count/yearly?institutecode=${institutecode}&year=${selectedYear}`
         );
         const data = res.data;
         const formattedData = [
@@ -125,7 +125,7 @@ export default function CombineDashboard() {
   const fetchTotalEnquiries = async () => {
     try {
       const response = await axios.get(
-        `https://pjsofttech.in:14443/get/getALLEnquiryByInstitutecode?institutecode=${institutecode}`
+        `http://localhost:8086/get/getALLEnquiryByInstitutecode?institutecode=${institutecode}`
       );
       setNumberFromApi(response.data.totalEnquiries);
     } catch (error) {
@@ -150,9 +150,9 @@ export default function CombineDashboard() {
   }, [selectedApi]);
 
   const apiUrls = {
-    "7Days": `https://pjsofttech.in:14443/numberOfEnquiry7days?institutecode=${institutecode}`,
-    "30Days": `https://pjsofttech.in:14443/numberOfEnquiry30days?institutecode=${institutecode}`,
-    "365Days": `https://pjsofttech.in:14443/numberOfEnquiry365days?institutecode=${institutecode}`,
+    "7Days": `http://localhost:8086/numberOfEnquiry7days?institutecode=${institutecode}`,
+    "30Days": `http://localhost:8086/numberOfEnquiry30days?institutecode=${institutecode}`,
+    "365Days": `http://localhost:8086/numberOfEnquiry365days?institutecode=${institutecode}`,
   };
 
   const months = [
@@ -171,7 +171,7 @@ export default function CombineDashboard() {
   ];
 
   useEffect(() => {
-    const apiUrl = `https://pjsofttech.in:14443/getenquiryCount?institutecode=${institutecode}`;
+    const apiUrl = `http://localhost:8086/getenquiryCount?institutecode=${institutecode}`;
 
     fetch(apiUrl)
       .then((response) => response.json())
@@ -188,7 +188,7 @@ export default function CombineDashboard() {
 
   const [sevenDaysApplication, setSevenDaysApplication] = useState(0);
   useEffect(() => {
-    const apiUrl = `https://pjsofttech.in:14443/numberOfEnquiry7days?institutecode=${institutecode}`;
+    const apiUrl = `http://localhost:8086/numberOfEnquiry7days?institutecode=${institutecode}`;
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
@@ -203,7 +203,7 @@ export default function CombineDashboard() {
   const [thirtyDaysApplication, setThirtyDaysApplication] = useState(0);
 
   useEffect(() => {
-    const apiUrl = `https://pjsofttech.in:14443/numberOfEnquiry30days?institutecode=${institutecode}`;
+    const apiUrl = `http://localhost:8086/numberOfEnquiry30days?institutecode=${institutecode}`;
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
@@ -219,7 +219,7 @@ export default function CombineDashboard() {
     useState(0);
 
   useEffect(() => {
-    const apiUrl = `https://pjsofttech.in:14443/numberOfEnquiry365days?institutecode=${institutecode}`;
+    const apiUrl = `http://localhost:8086/numberOfEnquiry365days?institutecode=${institutecode}`;
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
@@ -283,13 +283,13 @@ export default function CombineDashboard() {
       try {
         // Fetch today's enquiry count directly
         const todaysResponse = await axios.get(
-          `https://pjsofttech.in:14443/getenquiryCount/today?institutecode=${institutecode}`
+          `http://localhost:8086/getenquiryCount/today?institutecode=${institutecode}`
         );
         setTodaysApplications(todaysResponse.data);
         console.log("Data from todays:", todaysResponse.data);
         // Fetch all enquiries to calculate exam and source counts
         const allEnquiriesResponse = await axios.get(
-          `https://pjsofttech.in:14443/get/getALLEnquiryByInstitutecode?institutecode=${institutecode}`
+          `http://localhost:8086/get/getALLEnquiryByInstitutecode?institutecode=${institutecode}`
         );
         const allEnquiriesData = allEnquiriesResponse.data;
         setTotalApplications(allEnquiriesData.length); // Assuming you want the total count of all enquiries
@@ -322,7 +322,7 @@ export default function CombineDashboard() {
     const fetchSystemValues = async () => {
       try {
         const response = await axios.get(
-          `https://pjsofttech.in:20443/getSystemValueByInstitutecode?institutecode=${institutecode}`
+          `http://localhost:8081/getSystemValueByInstitutecode?institutecode=${institutecode}`
         );
         setSystemValues(response.data);
       } catch (error) {

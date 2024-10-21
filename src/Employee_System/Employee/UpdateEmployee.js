@@ -197,7 +197,7 @@ const UpdateEmployee = ({ user, onClose }) => {
   const fetchDepartments = async () => {
     try {
       const response = await axios.get(
-        `https://pjsofttech.in:10443/departments/allDepartment?institutecode=${institutecode}`
+        `http://localhost:8082/departments/allDepartment?institutecode=${institutecode}`
       );
       setDepartments(response.data);
     } catch (error) {
@@ -211,7 +211,7 @@ const UpdateEmployee = ({ user, onClose }) => {
   const loadCategory = async () => {
     try {
       const result = await axios.get(
-        `https://pjsofttech.in:10443/categories/all?institutecode=${institutecode}`
+        `http://localhost:8082/categories/all?institutecode=${institutecode}`
       );
       setCategory(result.data);
     } catch (error) {

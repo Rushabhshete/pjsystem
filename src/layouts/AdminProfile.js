@@ -156,7 +156,7 @@ const AdminProfile = () => {
         }
 
         const response = await axios.get(
-          `https://pjsofttech.in:20443/findInstitutesby/email?emailaddress=${email}`
+          `http://localhost:8081/findInstitutesby/email?emailaddress=${email}`
         );
         setEmployeeDetails(response.data);
         setLoading(false);
@@ -198,7 +198,7 @@ const AdminProfile = () => {
 
     try {
       const response = await axios.post(
-        `https://pjsofttech.in:20443/updateimage/${email}`,
+        `http://localhost:8081/updateimage/${email}`,
         formData,
         {
           headers: {

@@ -153,7 +153,7 @@ function Login1({ onLogin }) {
 
   const loginUser = async (institutecode, email, password) => {
     return axios.post(
-      `https://pjsofttech.in:20443/institutelogin?institutecode=${institutecode}&emailaddress=${email}&password=${password}`
+      `http://localhost:8081/institutelogin?institutecode=${institutecode}&emailaddress=${email}&password=${password}`
     );
   };
 

@@ -22,7 +22,7 @@ export default function TodaysNotification() {
       try {
         // Fetch notifications from the API
         const response = await axios.get(
-          `https://pjsofttech.in:20443/getTodaysNotification?institutecode=${institutecode}`
+          `http://localhost:8081/getTodaysNotification?institutecode=${institutecode}`
         );
 
         // Assuming the API returns an array of notifications

@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://pjsofttech.in:13443",
+  baseURL: "http://localhost:8085",
 });
 
 const admissionService = {

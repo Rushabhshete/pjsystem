@@ -34,7 +34,7 @@
 //   const fetchIncomeData = useCallback(async () => {
 //     try {
 //       const response = await axios.get(
-//         https://pjsofttech.in:15443/dashboard/incomes/totals?institutecode=${institutecode}
+//         http://localhost:8087/dashboard/incomes/totals?institutecode=${institutecode}
 //       );
 //       setIncomeData(response.data);
 //     } catch (error) {
@@ -45,7 +45,7 @@
 //   const fetchExpenseData = useCallback(async () => {
 //     try {
 //       const response = await axios.get(
-//         https://pjsofttech.in:15443/dashboard/expenses/totals?institutecode=${institutecode}
+//         http://localhost:8087/dashboard/expenses/totals?institutecode=${institutecode}
 //       );
 //       setExpenseData(response.data);
 //     } catch (error) {
@@ -56,7 +56,7 @@
 //   const fetchSavingsData = useCallback(async () => {
 //     try {
 //       const response = await axios.get(
-//         https://pjsofttech.in:15443/dashboard/savings?institutecode=${institutecode}
+//         http://localhost:8087/dashboard/savings?institutecode=${institutecode}
 //       );
 //       setSavingsData(response.data);
 //     } catch (error) {
@@ -74,10 +74,10 @@
 //     try {
 //       const [incomeResponse, expenseResponse] = await Promise.all([
 //         axios.get(
-//           https://pjsofttech.in:15443/income/total-monthly?year=${year}&institutecode=${institutecode}
+//           http://localhost:8087/income/total-monthly?year=${year}&institutecode=${institutecode}
 //         ),
 //         axios.get(
-//           https://pjsofttech.in:15443/expense/total-monthly?year=${year}&institutecode=${institutecode}
+//           http://localhost:8087/expense/total-monthly?year=${year}&institutecode=${institutecode}
 //         ),
 //       ]);
 
@@ -464,7 +464,7 @@ export default function IncomeCombineDash() {
     setIncomeError(null);
     try {
       const response = await axios.get(
-        `https://pjsofttech.in:15443/dashboard/incomes/totals?institutecode=${institutecode}`
+        `http://localhost:8087/dashboard/incomes/totals?institutecode=${institutecode}`
       );
       setIncomeData(response.data);
     } catch (error) {
@@ -481,7 +481,7 @@ export default function IncomeCombineDash() {
     setExpenseError(null);
     try {
       const response = await axios.get(
-        `https://pjsofttech.in:15443/dashboard/expenses/totals?institutecode=${institutecode}`
+        `http://localhost:8087/dashboard/expenses/totals?institutecode=${institutecode}`
       );
       setExpenseData(response.data);
     } catch (error) {
@@ -498,7 +498,7 @@ export default function IncomeCombineDash() {
     setSavingsError(null);
     try {
       const response = await axios.get(
-        `https://pjsofttech.in:15443/dashboard/savings?institutecode=${institutecode}`
+        `http://localhost:8087/dashboard/savings?institutecode=${institutecode}`
       );
       setSavingsData(response.data);
     } catch (error) {
@@ -516,10 +516,10 @@ export default function IncomeCombineDash() {
     try {
       const [incomeResponse, expenseResponse] = await Promise.all([
         axios.get(
-          `https://pjsofttech.in:15443/income/total-monthly?year=${year}&institutecode=${institutecode}`
+          `http://localhost:8087/income/total-monthly?year=${year}&institutecode=${institutecode}`
         ),
         axios.get(
-          `https://pjsofttech.in:15443/expense/total-monthly?year=${year}&institutecode=${institutecode}`
+          `http://localhost:8087/expense/total-monthly?year=${year}&institutecode=${institutecode}`
         ),
       ]);
 
