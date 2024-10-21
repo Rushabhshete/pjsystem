@@ -78,6 +78,47 @@
   text-align: center; /* Center the header */
 }
 
+/* SweetAlert2 Custom Styles */
+.swal2-popup {
+  width: 300px !important; /* Set width of the popup */
+  height: auto !important; /* Let height adjust based on content */
+  border-radius: 8px !important; /* Adjust border radius */
+  font-family: 'Poppins', sans-serif !important; /* Use Poppins font */
+  padding: 8px !important; /* Adjust padding */
+}
+
+.swal2-title {
+  font-size: 15px !important; /* Set title font size */
+  font-family: 'Poppins', sans-serif !important; /* Use Poppins font for the title */
+}
+
+.swal2-content {
+  font-size: 13px !important; /* Set content font size */
+  font-family: 'Poppins', sans-serif !important; /* Use Poppins font for the content */
+  padding: 8px 0 !important; /* Adjust content padding */
+}
+
+.swal2-actions {
+  margin-top: 10px !important; /* Add margin between content and buttons */
+}
+
+.swal2-confirm, .swal2-cancel {
+  font-size: 14px !important; /* Set button font size */
+  padding: 8px 20px !important; /* Adjust button padding */
+  border-radius: 6px !important; /* Adjust button border radius */
+}
+
+.swal2-icon {
+  width: 80px !important; /* Set icon width */
+  height: 80px !important; /* Set icon height */
+}
+
+.swal2-icon.swal2-warning {
+  color: #f1c40f !important; /* Adjust color for warning icon */
+}
+
+
+
 
 .income {
   color: #28a745; /* Green */
