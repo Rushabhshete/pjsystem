@@ -470,7 +470,7 @@ const Source = () => {
 
   return (
     <div>
-      <Grid container spacing={2} className="textField-root">
+      <Grid container spacing={2} className="textField-root" sx={{marginTop:"10px"}}>
         <Typography variant="h6" gutterBottom sx={{ marginTop: 3, whiteSpace: "nowrap" }}>
           Total Sources: {filteredSources.length}
         </Typography>
@@ -498,13 +498,13 @@ const Source = () => {
       </Grid>
 
       <Box mt={2}>
-        <TableContainer sx={{ width: "100%" }}>
-          <Table size="small" aria-label="source table" sx={{ width: "100%" }}>
-            <TableHead sx={{ backgroundColor: "#F2F2F2" }}>
+        <TableContainer >
+          <Table className="table-root">
+            <TableHead >
               <TableRow>
-                <TableCell><strong>Id</strong></TableCell>
-                <TableCell><strong>Source Name</strong></TableCell>
-                <TableCell><strong>Actions</strong></TableCell>
+                <TableCell>Id</TableCell>
+                <TableCell>Source Name</TableCell>
+                <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

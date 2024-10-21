@@ -196,7 +196,7 @@ const EmpDash = () => {
                         </Card>
                     </Grid>
                 </Grid>
-                <Grid item xs={12} md={4} container spacing={2}>
+                <Grid item xs={12} md={4} container spacing={1} className='textField-root'>
                     <Grid item xs={12}>
                         <FormControl fullWidth>
                             <TextField
@@ -204,6 +204,7 @@ const EmpDash = () => {
                                 label="Select"
                                 value={selectedApi}
                                 onChange={(e) => setSelectedApi(e.target.value)}
+                                size='small'
                             >
                                 <MenuItem value="All">All</MenuItem>
                                 <MenuItem value="7Days">Last 7 Days</MenuItem>
@@ -213,7 +214,7 @@ const EmpDash = () => {
                             </TextField>
                         </FormControl>
                         {selectedApi === 'byDateRange' && (
-                            <Grid container spacing={2} style={{ marginTop: '16px' }}>
+                            <Grid container spacing={1} style={{ marginTop: '16px' }}>
                                 <Grid item xs={6}>
                                     <FormControl fullWidth>
                                         <TextField
@@ -222,15 +223,17 @@ const EmpDash = () => {
                                             value={startDate}
                                             onChange={(e) => setStartDate(e.target.value)}
                                             InputLabelProps={{ shrink: true }}
+                                            size='small'
                                         />
                                     </FormControl>
                                 </Grid>
-                                <Grid item xs={6}>
+                                <Grid item xs={6} className='textField-root'>
                                     <FormControl fullWidth>
                                         <TextField
                                             type="date"
                                             label="End Date"
                                             value={endDate}
+                                            size='small'
                                             onChange={(e) => setEndDate(e.target.value)}
                                             InputLabelProps={{ shrink: true }}
                                         />

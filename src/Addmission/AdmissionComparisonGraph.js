@@ -71,7 +71,7 @@ const ComparisonGraph = () => {
     </Typography>
   </Grid>
 
-  <Grid item>
+  <Grid item xs={2.5}>
     <TextField
       select
       label="Year From"
@@ -79,7 +79,8 @@ const ComparisonGraph = () => {
       onChange={(e) => setYear1(e.target.value)}
       variant="outlined"
       fullWidth
-      style={{ minWidth: 120 }} 
+      size="small"
+      
     >
       {years.map((year) => (
         <MenuItem key={year} value={year}>
@@ -89,7 +90,7 @@ const ComparisonGraph = () => {
     </TextField>
   </Grid>
 
-  <Grid item>
+  <Grid item xs={2.5}>
     <TextField
       select
       label="Year To"
@@ -97,7 +98,8 @@ const ComparisonGraph = () => {
       onChange={(e) => setYear2(e.target.value)}
       variant="outlined"
       fullWidth
-      style={{ minWidth: 120 }} 
+      size="small"
+      
     >
       {years.map((year) => (
         <MenuItem key={year} value={year}>

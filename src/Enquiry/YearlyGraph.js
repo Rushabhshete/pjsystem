@@ -60,7 +60,7 @@ export default function YearlyGraph() {
 
   return (
     <div>
-     <Grid container justifyContent="space-evenly"  spacing={2} mt={2}>
+     <Grid container justifyContent="space-evenly"  spacing={2} mt={2} className='textField-root'>
      <Grid item>
           <Typography variant="body1" align="center" mt={1}>
             Yearly Enquiry Chart
@@ -73,6 +73,7 @@ export default function YearlyGraph() {
               value={year}
               onChange={handleYearChange}
               label="Year"
+              size='small'
             >
               {years.map((yr) => (
                 <MenuItem key={yr} value={yr}>

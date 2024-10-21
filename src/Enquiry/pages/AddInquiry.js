@@ -189,12 +189,12 @@ export default function AddEnquiry() {
           "Content-Type": "multipart/form-data",
         },
       });
-        // Show success alert
-        Swal.fire({
-          icon: "success",
-          title: "Success",
-          text: "Enquiry Added Successfully",
-        });
+      // Show success alert
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: "Enquiry Added Successfully",
+      });
       navigate("/layout/Enquiry-manager/report");
     } catch (error) {
       console.error(
@@ -202,8 +202,8 @@ export default function AddEnquiry() {
         error.response ? error.response.data : error.message
       );
       setOpenSnackbar(true);
-       // Show error alert
-       Swal.fire({
+      // Show error alert
+      Swal.fire({
         icon: "error",
         title: "Error",
         text: "Failed to add the enquiry. Please try again.",
@@ -218,7 +218,7 @@ export default function AddEnquiry() {
   };
   return (
     <div maxWidth="false" sx={{ padding: 2, width: "100%" }}>
-      <Box mt={1} textAlign="center" sx={{ width: "100%" }}>
+      <Box mt={4} textAlign="center" sx={{ width: "100%" }}>
         <Grid container spacing={2} className="textField-root">
           <Grid item xs={12} sm={4}>
             {" "}
@@ -394,9 +394,13 @@ export default function AddEnquiry() {
           >
             <IconButton
               onClick={handleAddClick}
-              style={{ color: showAdditionalFields ? "red" : "green" }} // Red for remove, green for add
+              style={{
+                color: showAdditionalFields ? "red" : "green",
+                fontSize: "14px",
+              }} // Red for remove, green for add
             >
               {showAdditionalFields ? <RemoveIcon /> : <AddIcon />}{" "}
+              {showAdditionalFields ? "Less Fields" : "More Fields"}
               {/* Toggle between Add and Remove icon */}
             </IconButton>
           </Grid>

@@ -1,11 +1,10 @@
 import React from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 
-// Base styles for the navbar items
 const navItemStyle = {
-  padding: "5px 10px",
+  padding: "3px 8px",
   cursor: "pointer",
-  fontSize: "16px",
+  fontSize: "14px",
   fontWeight: "bold",
   color: "#333",
   textAlign: "center",
@@ -14,26 +13,27 @@ const navItemStyle = {
   textDecoration: "none", // Remove underline
 };
 
-// Active item styles
+// Styles for active item
 const activeNavItemStyle = {
   ...navItemStyle,
-      backgroundColor: "#3498DB",
+  backgroundColor: "#3498DB",
   color: "white",
-  borderRadius: "35px",
+  borderRadius: "30px",
   transform: "scale(1.05)", // Slight increase for active state
   boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)", // Subtle shadow for active
 };
 
-// Subnavbar container style
+// Styles for the subnavbar container
 const subNavBarStyle = {
   display: "flex",
   justifyContent: "space-between",
-  marginBottom: "20px",
+  marginBottom: "15px",
   backgroundColor: "#f0f0f0",
-  padding: "10px",
-  borderRadius: "35px",
+  padding: "8px",
+  borderRadius: "30px",
   boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)", // Slight shadow for navbar
 };
+
 
 const EmployeeManagerLayout = () => {
   const location = useLocation();

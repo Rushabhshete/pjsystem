@@ -182,7 +182,6 @@
 //       toast.error("Error saving conduct"); // Optionally handle errors with a toast
 //     }
 //   };
-  
 
 //   const filteredConducts = conducts.filter((conduct) =>
 //     conduct.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -241,9 +240,9 @@
 //               color="primary"
 //               sx={{ marginTop: 1 }}
 //               onClick={() => handleOpenConductDialog(null)}
-              
+
 //             >
-//               Add 
+//               Add
 //             </Button>
 //           </Grid>
 //         </Grid>
@@ -316,7 +315,7 @@
 //           onSave={saveConduct}
 //           conduct={conductToEdit}
 //         />
-   
+
 //     </div>
 //   );
 // };
@@ -342,7 +341,7 @@ import {
   DialogContent,
   DialogTitle,
   TextField,
-  Box
+  Box,
 } from "@mui/material";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -365,7 +364,9 @@ const ConductDialog = ({ open, onClose, onSave, conduct }) => {
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>{conduct ? "Update Conduct" : "Add New Conduct"}</DialogTitle>
+      <DialogTitle>
+        {conduct ? "Update Conduct" : "Add New Conduct"}
+      </DialogTitle>
       <DialogContent>
         <Grid item className="textField-root">
           <TextField
@@ -427,14 +428,16 @@ const Conduct = () => {
 
     if (result.isConfirmed) {
       try {
-        await axios.delete(
-          `http://localhost:8086/deleteConduct/${conduct.id}`
-        );
+        await axios.delete(`http://localhost:8086/deleteConduct/${conduct.id}`);
         MySwal.fire("Deleted!", "Your conduct has been deleted.", "success");
         loadConducts();
       } catch (error) {
         console.error("Error deleting conduct:", error);
-        MySwal.fire("Error", "There was an error deleting the conduct", "error");
+        MySwal.fire(
+          "Error",
+          "There was an error deleting the conduct",
+          "error"
+        );
       }
     }
   };
@@ -481,7 +484,7 @@ const Conduct = () => {
 
   return (
     <div>
-      <Grid container spacing={2} className="textField-root">
+      <Grid container spacing={2} className="textField-root" sx={{marginTop:"10px"}}>
         <Typography
           variant="h6"
           gutterBottom
@@ -499,7 +502,6 @@ const Conduct = () => {
             fullWidth
           />
         </Grid>
-
         <Grid item xs={12} sm={2}>
           <Button
             variant="contained"
@@ -514,19 +516,13 @@ const Conduct = () => {
 
       {/* Conduct Table */}
       <Box mt={2}>
-        <TableContainer sx={{ width: "100%" }}>
-          <Table size="small" aria-label="conduct table" sx={{ width: "100%" }}>
-            <TableHead sx={{ backgroundColor: "#f2f2f2" }}>
+        <TableContainer>
+          <Table className="table-root">
+            <TableHead>
               <TableRow>
-                <TableCell>
-                  <strong>Id</strong>
-                </TableCell>
-                <TableCell>
-                  <strong>Conduct Name</strong>
-                </TableCell>
-                <TableCell>
-                  <strong>Actions</strong>
-                </TableCell>
+                <TableCell>Id</TableCell>
+                <TableCell>Conduct Name</TableCell>
+                <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
