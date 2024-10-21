@@ -394,10 +394,12 @@ export default function AddEnquiry() {
           >
             <IconButton
               onClick={handleAddClick}
-              style={{ color: showAdditionalFields ? "red" : "green" }} // Red for remove, green for add
+              style={{ color: showAdditionalFields ? "red" : "green", fontSize:'14px' }} // Red for remove, green for add
             >
-              {showAdditionalFields ? <RemoveIcon /> : <AddIcon />}{" "}
-              {/* Toggle between Add and Remove icon */}
+            {showAdditionalFields ? <RemoveIcon /> : <AddIcon />}{" "}
+{showAdditionalFields ? "Less Fields" : "More Fields"}
+
+               {/* Toggle between Add and Remove icon */}
             </IconButton>
           </Grid>
 

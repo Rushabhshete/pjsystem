@@ -708,52 +708,28 @@ export default function Report() {
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
           <TableContainer>
-            <Table>
-              <TableHead sx={{ backgroundColor: "#f2f2f2", align: "center" }}>
-                <TableRow sx={{ align: "center" }}>
-                  <TableCell>
-                    <strong>ID</strong>
-                  </TableCell>
-                  <TableCell>
-                    <strong>Date</strong>
-                  </TableCell>
-                  <TableCell>
-                    <strong>Name</strong>
-                  </TableCell>
-                  <TableCell>
-                    <strong>Phone</strong>
-                  </TableCell>
-                  <TableCell>
-                    <strong>Email</strong>
-                  </TableCell>
-                  <TableCell>
-                    <strong>Exam</strong>
-                  </TableCell>
-                  <TableCell>
-                    <strong>Source</strong>
-                  </TableCell>
-                  <TableCell>
-                    <strong>Conduct By</strong>
-                  </TableCell>
-                  <TableCell>
-                    <strong>Status</strong>
-                  </TableCell>
-                  <TableCell>
-                    <strong> CallBack Date & Time</strong>
-                  </TableCell>
-                  <TableCell>
-                    <strong>Remark</strong>
-                  </TableCell>
-                  <TableCell>
-                    <strong>Actions</strong>
-                  </TableCell>
+            <Table className="table-root">
+              <TableHead>
+                <TableRow>
+                  <TableCell>ID</TableCell>
+                  <TableCell>Date</TableCell>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Phone</TableCell>
+                  <TableCell>Email</TableCell>
+                  <TableCell>Exam</TableCell>
+                  <TableCell>Source</TableCell>
+                  <TableCell>Conduct By</TableCell>
+                  <TableCell>Status</TableCell>
+                  <TableCell>CallBack Date & Time</TableCell>
+                  <TableCell>Remark</TableCell>
+                  <TableCell>Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {filterInquiries().map((inquiry) => (
                   <TableRow key={inquiry.id}>
                     <TableCell>{inquiry.id}</TableCell>
-                    <TableCell style={{ whiteSpace: "nowrap" }}>
+                    <TableCell >
                       {inquiry.enquiryDate}
                     </TableCell>
                     <TableCell>{inquiry.name}</TableCell>
@@ -763,7 +739,7 @@ export default function Report() {
                     <TableCell>{inquiry.source_by}</TableCell>
                     <TableCell>{inquiry.conduct_by}</TableCell>
                     <TableCell
-                      sx={{ align: "center" }}
+                     
                       style={{
                         color:
                           inquiry.status1 === "Call Back"
@@ -788,8 +764,7 @@ export default function Report() {
                       </b>
                     </TableCell>
                     <TableCell
-                      sx={{ align: "center" }}
-                      style={{ alignItems: "center", flexDirection: "row" }}
+                     
                     >
                       <b>
                         {inquiry.status1 === "Call Back"
@@ -842,13 +817,12 @@ export default function Report() {
                         >
                           <InfoIcon />
                         </IconButton>
-                        <IconButton >
-                        <Delete
-                variant="contained"
-                color="error"
-                onClick={() => handleDelete(inquiry.id)}
-              >
-              </Delete>
+                        <IconButton>
+                          <Delete
+                            variant="contained"
+                            color="error"
+                            onClick={() => handleDelete(inquiry.id)}
+                          ></Delete>
                         </IconButton>
                       </Box>
                     </TableCell>
@@ -1174,7 +1148,6 @@ export default function Report() {
                         <TableCell>{selectedInquiry.annualIncome}</TableCell>
                       </TableRow>
                     )}
-                    
                   </TableBody>
                 </Table>
               </Box>

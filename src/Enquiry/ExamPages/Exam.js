@@ -37,7 +37,6 @@
 //     }
 //   }
 
- 
 // `;
 
 // const ConfirmDialog = ({ open, onClose, onConfirm, examName }) => (
@@ -198,7 +197,7 @@
 //               onClick={handleOpenAddDialog}
 //               sx={{ marginTop: 1 }}
 //             >
-//               Add 
+//               Add
 //             </Button>
 //           </Grid>
 //         </Grid>
@@ -238,12 +237,12 @@
 //         {/* Add Exam Dialog */}
 //         <Dialog open={openAddDialog} onClose={handleCloseAddDialog}>
 //           <DialogTitle>Add Exam</DialogTitle>
-//           <DialogContent > 
+//           <DialogContent >
 //             <DialogContentText>
 //               Add new exam.
 //             </DialogContentText>
 //             <form onSubmit={onAddExamSubmit} >
-//               <Grid item className="textField-root"> 
+//               <Grid item className="textField-root">
 //               <TextField
 //                 autoFocus
 //                 margin="dense"
@@ -265,8 +264,6 @@
 //             </form>
 //           </DialogContent>
 //         </Dialog>
-
-       
 
 //         {/* Confirm Delete Dialog */}
 //         <ConfirmDialog
@@ -368,13 +365,13 @@ const Exam = () => {
 
   const handleDeleteExam = (exam) => {
     MySwal.fire({
-      title: 'Are you sure?',
+      title: "Are you sure?",
       text: `Do you want to delete exam: ${exam.name}?`,
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
         deleteExam(exam.id);
@@ -386,9 +383,9 @@ const Exam = () => {
     try {
       await axios.delete(`http://localhost:8086/deleteExam/${examId}`);
       MySwal.fire({
-        title: 'Deleted!',
-        text: 'The exam has been deleted successfully.',
-        icon: 'success',
+        title: "Deleted!",
+        text: "The exam has been deleted successfully.",
+        icon: "success",
         timer: 1500,
         showConfirmButton: false,
       });
@@ -396,9 +393,9 @@ const Exam = () => {
     } catch (error) {
       console.error("Error deleting exam:", error);
       MySwal.fire({
-        title: 'Error!',
-        text: 'There was an error deleting the exam.',
-        icon: 'error',
+        title: "Error!",
+        text: "There was an error deleting the exam.",
+        icon: "error",
         timer: 2000,
         showConfirmButton: false,
       });
@@ -418,9 +415,9 @@ const Exam = () => {
     e.preventDefault();
     if (!exam.name) {
       MySwal.fire({
-        title: 'Error!',
-        text: 'Please fill out the necessary fields.',
-        icon: 'error',
+        title: "Error!",
+        text: "Please fill out the necessary fields.",
+        icon: "error",
         timer: 2000,
         showConfirmButton: false,
       });
@@ -433,9 +430,9 @@ const Exam = () => {
         exam
       );
       MySwal.fire({
-        title: 'Success!',
-        text: 'The exam has been added successfully.',
-        icon: 'success',
+        title: "Success!",
+        text: "The exam has been added successfully.",
+        icon: "success",
         timer: 1500,
         showConfirmButton: false,
       });
@@ -444,9 +441,9 @@ const Exam = () => {
     } catch (error) {
       console.error("There was an error adding the exam!", error);
       MySwal.fire({
-        title: 'Error!',
-        text: 'There was an error adding the exam.',
-        icon: 'error',
+        title: "Error!",
+        text: "There was an error adding the exam.",
+        icon: "error",
         timer: 2000,
         showConfirmButton: false,
       });
@@ -487,19 +484,13 @@ const Exam = () => {
       </Grid>
 
       <Box mt={2}>
-        <TableContainer sx={{ width: "100%" }}>
-          <Table size="small" aria-label="exam table" sx={{ width: "100%" }}>
-            <TableHead sx={{ backgroundColor: "#f2f2f2" }}>
+        <TableContainer>
+          <Table className="table-root">
+            <TableHead>
               <TableRow>
-                <TableCell>
-                  <strong>Id</strong>
-                </TableCell>
-                <TableCell>
-                  <strong>Exam Name</strong>
-                </TableCell>
-                <TableCell>
-                  <strong>Actions</strong>
-                </TableCell>
+                <TableCell>Id</TableCell>
+                <TableCell>Exam Name</TableCell>
+                <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
