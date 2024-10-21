@@ -17,7 +17,7 @@ export default function EmpIDCard({ id, onClose }) {
         }
 
         const response = await axios.get(
-          `http://localhost:8081/findInstitutesby/Institutecode?institutecode=${institutecode}`
+          `https://pjsofttech.in:20443/findInstitutesby/Institutecode?institutecode=${institutecode}`
         );
         setEmployeeDetails(response.data);
       } catch (error) {
@@ -33,7 +33,7 @@ export default function EmpIDCard({ id, onClose }) {
         try {
           console.log("Selected employee ID:", id);
           const result = await axios.get(
-            `http://localhost:8082/empById/${id}`
+            `https://pjsofttech.in:10443/empById/${id}`
           );
           setEmployee(result.data);
         } catch (error) {

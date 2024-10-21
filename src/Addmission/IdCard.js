@@ -13,7 +13,7 @@
 //                 try{
 //                     console.log("Selected Admission Id:", id);
 //                     const result = await axios.get(
-//                         `http://localhost:8085/admissions/${id}`
+//                         `https://pjsofttech.in:13443/admissions/${id}`
 //                     );
 //                     setAdmission(result.data);
 
@@ -52,7 +52,7 @@ export default function IdCard({ id, onClose }) {
         }
 
         const response = await axios.get(
-          `http://localhost:8081/findInstitutesby/Institutecode?institutecode=${institutecode}`
+          `https://pjsofttech.in:20443/findInstitutesby/Institutecode?institutecode=${institutecode}`
         );
         setEmployeeDetails(response.data);
       } catch (error) {
@@ -70,7 +70,7 @@ export default function IdCard({ id, onClose }) {
         try {
           console.log('Selected Admission Id:', id);
           const result = await axios.get(
-            `http://localhost:8085/admissions/${id}`
+            `https://pjsofttech.in:13443/admissions/${id}`
           );
           setAdmission(result.data);
         } catch (error) {

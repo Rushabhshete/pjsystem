@@ -78,7 +78,7 @@
 //     const fetchUsers = async () => {
 //       try {
 //         const response = await fetch(
-//           `http://localhost:8082/getAllHolidays?institutecode=${getInstituteCode()}`
+//           `https://pjsofttech.in:10443/getAllHolidays?institutecode=${getInstituteCode()}`
 //         );
 //         const result = await response.json();
 //         setUsers(result);
@@ -143,7 +143,7 @@
 //     } else {
 //       try {
 //         const response = await fetch(
-//           `http://localhost:8082/addHoliday?institutecode=${getInstituteCode()}`,
+//           `https://pjsofttech.in:10443/addHoliday?institutecode=${getInstituteCode()}`,
 //           {
 //             method: "POST",
 //             headers: {
@@ -162,7 +162,7 @@
 //           setSnackbarOpen(true);
 
 //           const updatedResponse = await fetch(
-//             `http://localhost:8082/getAllHolidays?institutecode=${getInstituteCode()}`
+//             `https://pjsofttech.in:10443/getAllHolidays?institutecode=${getInstituteCode()}`
 //           );
 //           const updatedUser = await updatedResponse.json();
 //           setUsers(updatedUser);
@@ -183,7 +183,7 @@
 
 //   const handleEditClickOpen = async (id) => {
 //     try {
-//       const response = await fetch(`http://localhost:8082/getHolidayById/${id}`);
+//       const response = await fetch(`https://pjsofttech.in:10443/getHolidayById/${id}`);
 //       const result = await response.json();
 //       setEditUser(result);
 //       setEditOpen(true);
@@ -220,7 +220,7 @@
 //     } else {
 //       try {
 //         const response = await fetch(
-//           `http://localhost:8082/updateHoliday/${id}`,
+//           `https://pjsofttech.in:10443/updateHoliday/${id}`,
 //           {
 //             method: "PUT",
 //             headers: {
@@ -236,7 +236,7 @@
 //         );
 //         if (response.ok) {
 //           const updatedResponse = await fetch(
-//             `http://localhost:8082/getAllHolidays?institutecode=${getInstituteCode()}`
+//             `https://pjsofttech.in:10443/getAllHolidays?institutecode=${getInstituteCode()}`
 //           );
 //           const updatedUser = await updatedResponse.json();
 //           setUsers(updatedUser);
@@ -256,14 +256,14 @@
 //   const handleDelete = async (id) => {
 //     try {
 //       const response = await fetch(
-//         `http://localhost:8082/deleteHoliday/${id}`,
+//         `https://pjsofttech.in:10443/deleteHoliday/${id}`,
 //         {
 //           method: "DELETE",
 //         }
 //       );
 //       if (response.ok) {
 //         const updatedResponse = await fetch(
-//           `http://localhost:8082/getAllHolidays?institutecode=${getInstituteCode()}`
+//           `https://pjsofttech.in:10443/getAllHolidays?institutecode=${getInstituteCode()}`
 //         );
 //         const updatedUser = await updatedResponse.json();
 //         setUsers(updatedUser);
@@ -621,7 +621,7 @@ const ManageHoliday = () => {
     const fetchUsers = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8082/getAllHolidays?institutecode=${getInstituteCode()}`
+          `https://pjsofttech.in:10443/getAllHolidays?institutecode=${getInstituteCode()}`
         );
         const result = await response.json();
         setUsers(result);
@@ -683,7 +683,7 @@ const ManageHoliday = () => {
     } else {
       try {
         const response = await fetch(
-          `http://localhost:8082/addHoliday?institutecode=${getInstituteCode()}`,
+          `https://pjsofttech.in:10443/addHoliday?institutecode=${getInstituteCode()}`,
           {
             method: "POST",
             headers: {
@@ -702,7 +702,7 @@ const ManageHoliday = () => {
           setSnackbarOpen(true);
   
           const updatedResponse = await fetch(
-            `http://localhost:8082/getAllHolidays?institutecode=${getInstituteCode()}`
+            `https://pjsofttech.in:10443/getAllHolidays?institutecode=${getInstituteCode()}`
           );
           const updatedUser = await updatedResponse.json();
           setUsers(updatedUser);
@@ -723,7 +723,7 @@ const ManageHoliday = () => {
 
   const handleEditClickOpen = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8082/getHolidayById/${id}`);
+      const response = await fetch(`https://pjsofttech.in:10443/getHolidayById/${id}`);
       const result = await response.json();
       setEditUser(result);
       setEditOpen(true);
@@ -760,7 +760,7 @@ const ManageHoliday = () => {
     } else {
       try {
         const response = await fetch(
-          `http://localhost:8082/updateHoliday/${id}`,
+          `https://pjsofttech.in:10443/updateHoliday/${id}`,
           {
             method: "PUT",
             headers: {
@@ -776,7 +776,7 @@ const ManageHoliday = () => {
         );
         if (response.ok) {
           const updatedResponse = await fetch(
-            `http://localhost:8082/getAllHolidays?institutecode=${getInstituteCode()}`
+            `https://pjsofttech.in:10443/getAllHolidays?institutecode=${getInstituteCode()}`
           );
           const updatedUser = await updatedResponse.json();
           setUsers(updatedUser);
@@ -796,14 +796,14 @@ const ManageHoliday = () => {
   const handleDelete = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:8082/deleteHoliday/${id}`,
+        `https://pjsofttech.in:10443/deleteHoliday/${id}`,
         {
           method: "DELETE",
         }
       );
       if (response.ok) {
         const updatedResponse = await fetch(
-          `http://localhost:8082/getAllHolidays?institutecode=${getInstituteCode()}`
+          `https://pjsofttech.in:10443/getAllHolidays?institutecode=${getInstituteCode()}`
         );
         const updatedUser = await updatedResponse.json();
         setUsers(updatedUser);

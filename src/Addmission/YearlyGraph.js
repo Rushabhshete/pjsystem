@@ -45,7 +45,7 @@
 //       try {
 //         const institutecode = localStorage.getItem("institutecode");
 //         const res = await axios.get(
-//           `http://localhost:8085/admissioncountofperdaybymonth?institutecode=${institutecode}&month=${selectedMonth}&year=${selectedYear}`
+//           `https://pjsofttech.in:13443/admissioncountofperdaybymonth?institutecode=${institutecode}&month=${selectedMonth}&year=${selectedYear}`
 //         );
 //         const data = res.data || {}; // Default to empty object
 
@@ -75,7 +75,7 @@
 //       try {
 //         const institutecode = localStorage.getItem("institutecode") || null;
 //         const res = await axios.get(
-//           `http://localhost:8085/getRevenueBySpecificDates?institutecode=${institutecode}&year=${selectedYear}&month=${selectedMonth}`
+//           `https://pjsofttech.in:13443/getRevenueBySpecificDates?institutecode=${institutecode}&year=${selectedYear}&month=${selectedMonth}`
 //         );
 //         const data = res.data || {}; // Default to empty object
 
@@ -249,7 +249,7 @@ const YearlyGraph = () => {
       try {
         const institutecode = localStorage.getItem("institutecode");
         const res = await axios.get(
-          `http://localhost:8085/admissioncountofperdaybymonth?institutecode=${institutecode}&month=${selectedMonth + 1}&year=${selectedYear}`
+          `https://pjsofttech.in:13443/admissioncountofperdaybymonth?institutecode=${institutecode}&month=${selectedMonth + 1}&year=${selectedYear}`
         );
         const data = res.data || {}; // Default to empty object
 
@@ -282,7 +282,7 @@ const YearlyGraph = () => {
       try {
         const institutecode = localStorage.getItem("institutecode") || null;
         const res = await axios.get(
-          `http://localhost:8085/getRevenueBySpecificDates?institutecode=${institutecode}&year=${selectedYear}&month=${selectedMonth + 1}`
+          `https://pjsofttech.in:13443/getRevenueBySpecificDates?institutecode=${institutecode}&year=${selectedYear}&month=${selectedMonth + 1}`
         );
         const data = res.data || {}; // Default to empty object
 

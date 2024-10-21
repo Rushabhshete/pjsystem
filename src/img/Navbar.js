@@ -55,7 +55,7 @@ const Navbar = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8081/adminemail?adminemail=${getEmail()}`
+        `https://pjsofttech.in:20443/adminemail?adminemail=${getEmail()}`
       );
       if (response.ok) {
         const data = await response.json();

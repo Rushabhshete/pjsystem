@@ -64,7 +64,7 @@ function ForgotPassword() {
     setMessage("");
     try {
       await axios.post(
-        `http://localhost:8081/forgotPassword?email=${encodeURIComponent(email)}`
+        `https://pjsofttech.in:20443/forgotPassword?email=${encodeURIComponent(email)}`
       );
       localStorage.setItem("email", email); // Save email to localStorage
       setStep(2);
@@ -85,7 +85,7 @@ function ForgotPassword() {
     try {
       const storedEmail = localStorage.getItem("email"); // Retrieve email from localStorage
       const response = await axios.post(
-        `http://localhost:8081/verifyOTP?email=${encodeURIComponent(storedEmail)}&otp=${encodeURIComponent(otp)}`
+        `https://pjsofttech.in:20443/verifyOTP?email=${encodeURIComponent(storedEmail)}&otp=${encodeURIComponent(otp)}`
       );
 
       if (response.data === "OTP verified successfully") {
@@ -111,7 +111,7 @@ function ForgotPassword() {
     setMessage("");
     try {
       const storedEmail = localStorage.getItem("email"); // Retrieve email from localStorage
-      const url = `http://localhost:8081/resetpassword/institute?email=${encodeURIComponent(storedEmail)}&password=${encodeURIComponent(newPassword)}&confirmPassword=${encodeURIComponent(confirmPassword)}`;
+      const url = `https://pjsofttech.in:20443/resetpassword/institute?email=${encodeURIComponent(storedEmail)}&password=${encodeURIComponent(newPassword)}&confirmPassword=${encodeURIComponent(confirmPassword)}`;
 
       await axios.put(url);
       // Show Toastify success message

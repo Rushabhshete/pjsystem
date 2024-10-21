@@ -31,7 +31,7 @@ const InfoEmployee = ({ user, onClose }) => {
         }
 
         const response = await axios.get(
-          `http://localhost:8081/findInstitutesby/Institutecode?institutecode=${institutecode}`
+          `https://pjsofttech.in:20443/findInstitutesby/Institutecode?institutecode=${institutecode}`
         );
         setEmployeeDetails(response.data);
       } catch (error) {

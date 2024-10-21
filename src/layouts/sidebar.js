@@ -77,7 +77,7 @@
 //     const fetchData = async () => {
 //       try {
 //         const response = await fetch(
-//           `http://localhost:8081/getSystemValueByInstitutecode?institutecode=${institutecode()}`
+//           `https://pjsofttech.in:20443/getSystemValueByInstitutecode?institutecode=${institutecode()}`
 //         );
 //         const data = await response.json();
 //         setSystemValues(data);
@@ -595,7 +595,7 @@ const Sidebar = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8081/getSystemValueByInstitutecode?institutecode=${institutecode()}`
+          `https://pjsofttech.in:20443/getSystemValueByInstitutecode?institutecode=${institutecode()}`
         );
         const data = await response.json();
         setSystemValues(data);

@@ -71,7 +71,7 @@ const Header = () => {
         }
 
         const response = await axios.get(
-          `http://localhost:8081/findInstitutesby/Institutecode?institutecode=${institutecode}`
+          `https://pjsofttech.in:20443/findInstitutesby/Institutecode?institutecode=${institutecode}`
         );
         setEmployeeDetails(response.data);
         setLoading(false);
@@ -90,7 +90,7 @@ const Header = () => {
       try {
         // Replace with your actual API endpoint
         const response = await axios.get(
-          `http://localhost:8081/getTodaysNotification?institutecode=${institutecode}`
+          `https://pjsofttech.in:20443/getTodaysNotification?institutecode=${institutecode}`
         );
         if (response.data.length > 0) {
           setNotifications(response.data);

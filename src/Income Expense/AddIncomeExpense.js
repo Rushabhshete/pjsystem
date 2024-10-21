@@ -103,7 +103,7 @@ const AddIncomeExpense = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
+          `https://pjsofttech.in:15443/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
         );
         setUsers(response.data);
         setFilteredUsers(response.data); // Initialize with all users
@@ -121,7 +121,7 @@ const AddIncomeExpense = () => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8087/categories/getAllCategoriesByInstitutecode?institutecode=${getInstituteCode()}`
+          `https://pjsofttech.in:15443/categories/getAllCategoriesByInstitutecode?institutecode=${getInstituteCode()}`
         );
         setCategories(response.data);
       } catch (error) {
@@ -170,7 +170,7 @@ const AddIncomeExpense = () => {
         }
 
         const response = await axios.get(
-          `http://localhost:8081/findInstitutesby/Institutecode?institutecode=${getInstituteCode()}`
+          `https://pjsofttech.in:20443/findInstitutesby/Institutecode?institutecode=${getInstituteCode()}`
         );
         setEmployeeDetails(response.data);
       } catch (error) {
@@ -257,8 +257,8 @@ const AddIncomeExpense = () => {
 
     const apiUrl =
       formData.type === "Income"
-        ? `http://localhost:8087/incomes/save?institutecode=${getInstituteCode()}`
-        : `http://localhost:8087/expenses/save?institutecode=${getInstituteCode()}`;
+        ? `https://pjsofttech.in:15443/incomes/save?institutecode=${getInstituteCode()}`
+        : `https://pjsofttech.in:15443/expenses/save?institutecode=${getInstituteCode()}`;
 
     try {
       const response = await axios.post(apiUrl, integerFormData);
@@ -271,8 +271,8 @@ const AddIncomeExpense = () => {
       // Determine the GET API URL based on the type
       const getApiUrl =
         formData.type === "Income"
-          ? `http://localhost:8087/incomes/getIncomeById/${submittedId}`
-          : `http://localhost:8087/expenses/getExpenseById/${submittedId}`;
+          ? `https://pjsofttech.in:15443/incomes/getIncomeById/${submittedId}`
+          : `https://pjsofttech.in:15443/expenses/getExpenseById/${submittedId}`;
 
       // Fetch the data using the ID
       const getResponse = await axios.get(getApiUrl);

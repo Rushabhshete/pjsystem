@@ -24,7 +24,7 @@ const MonthlyGraph = () => {
       try {
         const institutecode = localStorage.getItem("institutecode"); // Get institute code from local storage
         const res = await axios.get(
-          `http://localhost:8085/count/monthly?institutecode=${institutecode}&year=${selectedYear}`
+          `https://pjsofttech.in:13443/count/monthly?institutecode=${institutecode}&year=${selectedYear}`
         );
 
         const data = res.data;

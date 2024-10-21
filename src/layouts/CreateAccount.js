@@ -300,7 +300,7 @@ const CreateAccount = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8081/saveinstitude",
+        "https://pjsofttech.in:20443/saveinstitude",
         dataToSubmit
       );
       setIsSaveSuccessful(true);
@@ -323,7 +323,7 @@ const CreateAccount = () => {
 
       try {
         const response = await axios.post(
-          `http://localhost:8081/uploadimage/${email}`,
+          `https://pjsofttech.in:20443/uploadimage/${email}`,
           formDataImage,
           {
             headers: {
@@ -358,7 +358,7 @@ const CreateAccount = () => {
   const handleGetInstituteCode = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8081/findInstitutesby/email?emailaddress=${formData.emailaddress}`
+        `https://pjsofttech.in:20443/findInstitutesby/email?emailaddress=${formData.emailaddress}`
       );
 
       if (response.data && response.data.institutecode) {

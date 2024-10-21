@@ -76,12 +76,12 @@ const SalaryDashBoard = () => {
   const fetchEmployeesByMonthYear = async (month, year) => {
     try {
       const [totalEmployeesResponse, paidEmployeesResponse, pendingEmployeesResponse, grossSalaryResponse, paidAmountResponse, pendingAmountResponse] = await Promise.all([
-        axios.get('http://localhost:8082/salaries/salarycountbymonthyear', { params: { month, year, institutecode } }),
-        axios.get('http://localhost:8082/salaries/Paidcountbyyearmonth', { params: { month, year , institutecode} }),
-        axios.get('http://localhost:8082/salaries/Pendingcountbyyearmonth', { params: { month, year, institutecode } }),
-        axios.get('http://localhost:8082/salaries/totalwithdrawalbymonthyear', { params: { month, year , institutecode} }),
-        axios.get('http://localhost:8082/salaries/paidamountbymonthandyear', { params: { month, year, institutecode } }),
-        axios.get('http://localhost:8082/salaries/pendingamountbymonthandyear', { params: { month, year, institutecode } })
+        axios.get('https://pjsofttech.in:10443/salaries/salarycountbymonthyear', { params: { month, year, institutecode } }),
+        axios.get('https://pjsofttech.in:10443/salaries/Paidcountbyyearmonth', { params: { month, year , institutecode} }),
+        axios.get('https://pjsofttech.in:10443/salaries/Pendingcountbyyearmonth', { params: { month, year, institutecode } }),
+        axios.get('https://pjsofttech.in:10443/salaries/totalwithdrawalbymonthyear', { params: { month, year , institutecode} }),
+        axios.get('https://pjsofttech.in:10443/salaries/paidamountbymonthandyear', { params: { month, year, institutecode } }),
+        axios.get('https://pjsofttech.in:10443/salaries/pendingamountbymonthandyear', { params: { month, year, institutecode } })
       ]);
       setTotalEmployees(totalEmployeesResponse.data);
       setPaidEmployees(paidEmployeesResponse.data);
@@ -96,7 +96,7 @@ const SalaryDashBoard = () => {
 
   const fetchTotalEmployeesByYear = async (year) => {
     try {
-      const response = await axios.get('http://localhost:8082/salaries/salarycountbyyear', { params: { year, institutecode } });
+      const response = await axios.get('https://pjsofttech.in:10443/salaries/salarycountbyyear', { params: { year, institutecode } });
       setTotalEmployees(response.data);
       setPaidEmployees(null);
       setPendingEmployees(null);
@@ -114,7 +114,7 @@ const SalaryDashBoard = () => {
 
   const fetchChartData = async (year) => {
     try {
-      const response = await axios.get(`http://localhost:8082/salaries/salariesbyYear?year=${year}&institutecode=${institutecode}`);
+      const response = await axios.get(`https://pjsofttech.in:10443/salaries/salariesbyYear?year=${year}&institutecode=${institutecode}`);
       const data = response.data;
       const formattedData = months.map(month => ({
         name: month.name,
@@ -129,7 +129,7 @@ const SalaryDashBoard = () => {
   useEffect(() => {
     const fetchData = async (month, year) => {
       try {
-        const response = await axios.get(`http://localhost:8082/salaries/compareSalaryByMonth?month=${month}&year=${year}&institutecode=${institutecode}`);
+        const response = await axios.get(`https://pjsofttech.in:10443/salaries/compareSalaryByMonth?month=${month}&year=${year}&institutecode=${institutecode}`);
         setChartData(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -164,7 +164,7 @@ const SalaryDashBoard = () => {
   useEffect(() => {
     const fetchComparisonData = async (startYear, endYear) => {
       try {
-        const response = await axios.get(`http://localhost:8082/salaries/yearlyFinalNetSalaryComparison`, {
+        const response = await axios.get(`https://pjsofttech.in:10443/salaries/yearlyFinalNetSalaryComparison`, {
           params: {
             institutecode: `${institutecode}`,  // Add your actual institutecode here
             years: [startYear, endYear]  // Pass both selected years in an array

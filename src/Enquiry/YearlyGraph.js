@@ -31,7 +31,7 @@ export default function YearlyGraph() {
 
   const fetchData = async (selectedYear) => {
     try {
-      const response = await axios.get('http://localhost:8086/getYearlyEnquiryCountOfAllMonths', {
+      const response = await axios.get('https://pjsofttech.in:14443/getYearlyEnquiryCountOfAllMonths', {
         params: {
           year: selectedYear,
           institutecode: institutecode,

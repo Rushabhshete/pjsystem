@@ -75,11 +75,11 @@
 
 //   const handleUpload = async (type) => {
 //     const uploadEndpoints = {
-//       idProof: `http://localhost:8082/${email}/uploadIdProof`,
-//       resume: `http://localhost:8082/${email}/uploadResume`,
-//       addressProof: `http://localhost:8082/${email}/uploadAddressProof`,
-//       employeePhoto: `http://localhost:8082/${email}/uploadImage`,
-//       experienceLetter: `http://localhost:8082/${email}/uploadExperienceLetter`
+//       idProof: `https://pjsofttech.in:10443/${email}/uploadIdProof`,
+//       resume: `https://pjsofttech.in:10443/${email}/uploadResume`,
+//       addressProof: `https://pjsofttech.in:10443/${email}/uploadAddressProof`,
+//       employeePhoto: `https://pjsofttech.in:10443/${email}/uploadImage`,
+//       experienceLetter: `https://pjsofttech.in:10443/${email}/uploadExperienceLetter`
 //     };
 
 //     const file = localFormData[type];
@@ -302,11 +302,11 @@ const Upload = ({ email, setFormData }) => {
 
   const handleUpload = async (type) => {
     const uploadEndpoints = {
-      idProof: `http://localhost:8082/${email}/uploadIdProof`,
-      resume: `http://localhost:8082/${email}/uploadResume`,
-      addressProof: `http://localhost:8082/${email}/uploadAddressProof`,
-      employeePhoto: `http://localhost:8082/${email}/uploadImage`,
-      experienceLetter: `http://localhost:8082/${email}/uploadExperienceLetter`
+      idProof: `https://pjsofttech.in:10443/${email}/uploadIdProof`,
+      resume: `https://pjsofttech.in:10443/${email}/uploadResume`,
+      addressProof: `https://pjsofttech.in:10443/${email}/uploadAddressProof`,
+      employeePhoto: `https://pjsofttech.in:10443/${email}/uploadImage`,
+      experienceLetter: `https://pjsofttech.in:10443/${email}/uploadExperienceLetter`
     };
 
     const file = localFormData[type];
