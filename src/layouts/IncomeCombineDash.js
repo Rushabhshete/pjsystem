@@ -902,6 +902,7 @@ export default function IncomeCombineDash() {
   <Grid item>
     <TextField
       select
+      size="small"
       label="Year"
       value={year}
       onChange={handleYearChange}

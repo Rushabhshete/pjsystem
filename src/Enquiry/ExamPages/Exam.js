@@ -451,8 +451,8 @@ const Exam = () => {
   };
 
   return (
-    <div>
-      <Grid container spacing={2}>
+    <div sx={{marginTop:"10px"}}>
+      <Grid container spacing={2}sx={{marginTop:"10px"}}>
         <Typography
           variant="h6"
           gutterBottom
@@ -461,7 +461,7 @@ const Exam = () => {
           Total Exams: {filteredExams.length}
         </Typography>
 
-        <Grid item xs={12} sm={1.6}>
+        <Grid item xs={12} sm={1.6} className="textField-root">
           <TextField
             label="Search Exam"
             variant="outlined"
@@ -478,7 +478,7 @@ const Exam = () => {
             onClick={handleOpenAddDialog}
             sx={{ marginTop: 1 }}
           >
-            Add
+            Add Exam/Course 
           </Button>
         </Grid>
       </Grid>

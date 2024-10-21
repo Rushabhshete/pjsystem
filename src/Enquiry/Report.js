@@ -228,6 +228,7 @@ export default function Report() {
             timer: 1500,
           });
           //onClose(); // Close the form/modal
+          loadUsers();
         } catch (error) {
           console.error("Error deleting enquiry:", error);
           Swal.fire({

@@ -353,21 +353,7 @@ export default function CombineDashboard() {
 
   return (
     <div>
-      {/* <PopTypography
-        variant="h5"
-        gutterBottom
-        sx={{
-          fontWeight: "bold",
-          color: "#fff",
-          textAlign: "center",
-          backgroundColor: "#24A0ED",
-          borderRadius: "150px",
-          padding: "10px",
-          marginBottom: "20px",
-        }}
-      >
-        Main Dashboard
-      </PopTypography> */}
+ 
       {incomeandexpense && <IncomeCombineDash />}
       {employeemanagementsystem && <EmpDash />}
       <Grid container spacing={2} justifyContent="center">
