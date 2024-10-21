@@ -44,7 +44,7 @@ const EmpDetails = ({ empID }) => {
 
   // const fetchUsers = async () => {
   //   try {
-  //     const response = await axios.get(`https://pjsofttech.in:10443/getAllemp?institutecode=${institutecode}`);
+  //     const response = await axios.get(`http://localhost:8082/getAllemp?institutecode=${institutecode}`);
   //     const formattedUsers = response.data.map(user => ({
   //       empID: user.empID,
   //       fullName: user.fullName,
@@ -63,7 +63,7 @@ const EmpDetails = ({ empID }) => {
   const fetchUsers = async () => {
     const status = 'Joined'; // Set the desired status
     try {
-        const response = await axios.get(`https://pjsofttech.in:10443/employees/status/${status}?institutecode=${institutecode}`);
+        const response = await axios.get(`http://localhost:8082/employees/status/${status}?institutecode=${institutecode}`);
         const formattedUsers = response.data.map(user => ({
             empID: user.empID,
             fullName: user.fullName,
@@ -82,7 +82,7 @@ const EmpDetails = ({ empID }) => {
 
   const fetchAllEmployees = async () => {
     try {
-      const response = await axios.get(`https://pjsofttech.in:10443/getAllemp?institutecode=${institutecode}`);
+      const response = await axios.get(`http://localhost:8082/getAllemp?institutecode=${institutecode}`);
       const formattedUsers = response.data.map(user => ({
         empID: user.empID,
         fullName: user.fullName,
@@ -101,7 +101,7 @@ const EmpDetails = ({ empID }) => {
 
   const fetchDepartments = async () => {
     try {
-      const response = await axios.get(`https://pjsofttech.in:10443/departments/allDepartment?institutecode=${institutecode}`);
+      const response = await axios.get(`http://localhost:8082/departments/allDepartment?institutecode=${institutecode}`);
       setDepartments(response.data);
     } catch (error) {
       console.error('Error fetching departments:', error);
@@ -110,7 +110,7 @@ const EmpDetails = ({ empID }) => {
 
   const handleSearch = async (empID) => {
     try {
-      const response = await axios.get(`https://pjsofttech.in:10443/empById/${empID}`);
+      const response = await axios.get(`http://localhost:8082/empById/${empID}`);
       const usersData = Array.isArray(response.data) ? response.data : [response.data];
       setFilteredUsers(usersData);
     } catch (error) {
@@ -206,7 +206,7 @@ const EmpDetails = ({ empID }) => {
 
   const fetchCategoryNames = async () => {
     try {
-      const response = await axios.get(`https://pjsofttech.in:10443/categories/all?institutecode=${institutecode}`);
+      const response = await axios.get(`http://localhost:8082/categories/all?institutecode=${institutecode}`);
       setCategoryNames(response.data.map(category => category.categoryName));
     } catch (error) {
       console.error('Error fetching category names:', error);
@@ -223,7 +223,7 @@ const EmpDetails = ({ empID }) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get(`https://pjsofttech.in:10443/salaries/byCategoryName/${categoryName}&institutecode=${institutecode}`);
+      const response = await axios.get(`http://localhost:8082/salaries/byCategoryName/${categoryName}&institutecode=${institutecode}`);
       setUsers(response.data);
     } catch (error) {
       console.error('Error fetching salary by Category Name:', error);

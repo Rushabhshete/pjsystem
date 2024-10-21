@@ -116,7 +116,7 @@ const UpdateEnquiry = ({ id, onClose }) => {
   const loadExams = async () => {
     try {
       const response = await axios.get(
-        `https://pjsofttech.in:14443/getAllExam?institutecode=${institutecode}`
+        `http://localhost:8086/getAllExam?institutecode=${institutecode}`
       );
       setExamOptions(response.data);
     } catch (error) {
@@ -138,7 +138,7 @@ const UpdateEnquiry = ({ id, onClose }) => {
   const loadSources = async () => {
     try {
       const sources = await axios.get(
-        `https://pjsofttech.in:14443/getAllSource?institutecode=${institutecode}`
+        `http://localhost:8086/getAllSource?institutecode=${institutecode}`
       );
       setSourceOptions(sources.data);
     } catch (error) {
@@ -149,7 +149,7 @@ const UpdateEnquiry = ({ id, onClose }) => {
   const loadConducts = async () => {
     try {
       const conducted = await axios.get(
-        `https://pjsofttech.in:14443/get/getAllConductModels?institutecode=${institutecode}`
+        `http://localhost:8086/get/getAllConductModels?institutecode=${institutecode}`
       );
       setConductedBy(conducted.data);
     } catch (error) {
@@ -169,7 +169,7 @@ const UpdateEnquiry = ({ id, onClose }) => {
         try {
           console.log("Selected Inquiry ID:", id);
           const result = await axios.get(
-            `https://pjsofttech.in:14443/get/enquiry/${id}`
+            `http://localhost:8086/get/enquiry/${id}`
           );
           setEnquiry(result.data); // Set the enquiry data in state
           setSelectedState(result.data.state); // Set selectedState based on enquiry data
@@ -222,7 +222,7 @@ const UpdateEnquiry = ({ id, onClose }) => {
 
     try {
       // Update the enquiry via PUT request
-      await axios.put(`https://pjsofttech.in:14443/updateenquiry/${id}`, formData, {
+      await axios.put(`http://localhost:8086/updateenquiry/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data", // Important for form data
         },

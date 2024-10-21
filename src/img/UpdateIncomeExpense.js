@@ -123,8 +123,8 @@ const UpdateIncomeExpense = ({ open, data, handleClose }) => {
 
     const url =
       formData.type === "Income"
-        ? `https://pjsofttech.in:15443/incomes/updateIncomeBy/${formData.id}`
-        : `https://pjsofttech.in:15443/expenses/updateExpenseBy/${formData.id}`;
+        ? `http://localhost:8087/incomes/updateIncomeBy/${formData.id}`
+        : `http://localhost:8087/expenses/updateExpenseBy/${formData.id}`;
 
     try {
       console.log("Sending request to:", url);
@@ -145,7 +145,7 @@ const UpdateIncomeExpense = ({ open, data, handleClose }) => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
-          `https://pjsofttech.in:15443/categories/getAllCategoriesByEmail?email=${getEmail()}`
+          `http://localhost:8087/categories/getAllCategoriesByEmail?email=${getEmail()}`
         );
         setCategories(response.data);
       } catch (error) {

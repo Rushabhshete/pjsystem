@@ -354,7 +354,7 @@ const IncomeExpenseDashboard = () => {
     const fetchIncomeData = async () => {
       try {
         const response = await fetch(
-          `https://pjsofttech.in:15443/dashboard/incomes/totals?institutecode=${getInstituteCode()}`
+          `http://localhost:8087/dashboard/incomes/totals?institutecode=${getInstituteCode()}`
         );
         const data = await response.json();
         setIncomeData(data);
@@ -366,7 +366,7 @@ const IncomeExpenseDashboard = () => {
     const fetchExpenseData = async () => {
       try {
         const response = await fetch(
-          `https://pjsofttech.in:15443/dashboard/expenses/totals?institutecode=${getInstituteCode()}`
+          `http://localhost:8087/dashboard/expenses/totals?institutecode=${getInstituteCode()}`
         );
         const data = await response.json();
         setExpenseData(data);
@@ -378,7 +378,7 @@ const IncomeExpenseDashboard = () => {
     const fetchSavingsData = async () => {
       try {
         const response = await fetch(
-          `https://pjsofttech.in:15443/dashboard/savings?institutecode=${getInstituteCode()}`
+          `http://localhost:8087/dashboard/savings?institutecode=${getInstituteCode()}`
         );
         const data = await response.json();
         setSavingsData(data);
@@ -390,7 +390,7 @@ const IncomeExpenseDashboard = () => {
     const fetchMonthlyIncome = async () => {
       try {
         const response = await fetch(
-          `https://pjsofttech.in:15443/income/total-monthly?year=${year}&institutecode=${getInstituteCode()}`
+          `http://localhost:8087/income/total-monthly?year=${year}&institutecode=${getInstituteCode()}`
         );
         const data = await response.json();
         const incomeArray = Array(12).fill(0);
@@ -406,7 +406,7 @@ const IncomeExpenseDashboard = () => {
     const fetchMonthlyExpense = async () => {
       try {
         const response = await fetch(
-          `https://pjsofttech.in:15443/expense/total-monthly?year=${year}&institutecode=${getInstituteCode()}`
+          `http://localhost:8087/expense/total-monthly?year=${year}&institutecode=${getInstituteCode()}`
         );
         const data = await response.json();
         const expenseArray = Array(12).fill(0);
@@ -432,10 +432,10 @@ const IncomeExpenseDashboard = () => {
       try {
         const [incomeResponse, expenseResponse] = await Promise.all([
           fetch(
-            `https://pjsofttech.in:15443/dashboard/totalIncomeByCategory?year=${year}&month=${month}&institutecode=${getInstituteCode()}`
+            `http://localhost:8087/dashboard/totalIncomeByCategory?year=${year}&month=${month}&institutecode=${getInstituteCode()}`
           ),
           fetch(
-            `https://pjsofttech.in:15443/dashboard/totalExpenseByCategory?year=${year}&month=${month}&institutecode=${getInstituteCode()}`
+            `http://localhost:8087/dashboard/totalExpenseByCategory?year=${year}&month=${month}&institutecode=${getInstituteCode()}`
           ),
         ]);
         const incomeData = await incomeResponse.json();
@@ -611,10 +611,10 @@ const IncomeExpenseDashboard = () => {
         const [pendingIncomeResponse, pendingExpenseResponse] =
           await Promise.all([
             fetch(
-              `https://pjsofttech.in:15443/dashboard/income/pending?institutecode=${getInstituteCode()}`
+              `http://localhost:8087/dashboard/income/pending?institutecode=${getInstituteCode()}`
             ),
             fetch(
-              `https://pjsofttech.in:15443/dashboard/expense/pending?institutecode=${getInstituteCode()}`
+              `http://localhost:8087/dashboard/expense/pending?institutecode=${getInstituteCode()}`
             ),
           ]);
 

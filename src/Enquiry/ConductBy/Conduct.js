@@ -117,7 +117,7 @@
 //   const loadConducts = async () => {
 //     try {
 //       const response = await axios.get(
-//         `https://pjsofttech.in:14443/get/getAllConductModels?institutecode=${institutecode}`
+//         `http://localhost:8086/get/getAllConductModels?institutecode=${institutecode}`
 //       );
 //       setConducts(response.data);
 //     } catch (error) {
@@ -138,7 +138,7 @@
 //   const confirmDeleteConduct = async () => {
 //     try {
 //       await axios.delete(
-//         `https://pjsofttech.in:14443/deleteConduct/${conductToDelete.id}`
+//         `http://localhost:8086/deleteConduct/${conductToDelete.id}`
 //       );
 //       toast.success("Conduct Deleted Successfully");
 //       loadConducts();
@@ -163,14 +163,14 @@
 //       if (conductToEdit) {
 //         // Update existing conduct
 //         await axios.put(
-//           `https://pjsofttech.in:14443/updateConduct/${conductToEdit.id}`,
+//           `http://localhost:8086/updateConduct/${conductToEdit.id}`,
 //           newConduct
 //         );
 //         toast.success("Conduct Updated Successfully");
 //       } else {
 //         // Create new conduct
 //         await axios.post(
-//           `https://pjsofttech.in:14443/save/conduct_by?institutecode=${institutecode}`,
+//           `http://localhost:8086/save/conduct_by?institutecode=${institutecode}`,
 //           newConduct
 //         );
 //         toast.success("Conduct Added Successfully");
@@ -406,7 +406,7 @@ const Conduct = () => {
   const loadConducts = async () => {
     try {
       const response = await axios.get(
-        `https://pjsofttech.in:14443/get/getAllConductModels?institutecode=${institutecode}`
+        `http://localhost:8086/get/getAllConductModels?institutecode=${institutecode}`
       );
       setConducts(response.data);
     } catch (error) {
@@ -428,7 +428,7 @@ const Conduct = () => {
 
     if (result.isConfirmed) {
       try {
-        await axios.delete(`https://pjsofttech.in:14443/deleteConduct/${conduct.id}`);
+        await axios.delete(`http://localhost:8086/deleteConduct/${conduct.id}`);
         MySwal.fire("Deleted!", "Your conduct has been deleted.", "success");
         loadConducts();
       } catch (error) {
@@ -458,14 +458,14 @@ const Conduct = () => {
       if (conductToEdit) {
         // Update existing conduct
         await axios.put(
-          `https://pjsofttech.in:14443/updateConduct/${conductToEdit.id}`,
+          `http://localhost:8086/updateConduct/${conductToEdit.id}`,
           newConduct
         );
         MySwal.fire("Success", "Conduct updated successfully!", "success");
       } else {
         // Create new conduct
         await axios.post(
-          `https://pjsofttech.in:14443/save/conduct_by?institutecode=${institutecode}`,
+          `http://localhost:8086/save/conduct_by?institutecode=${institutecode}`,
           newConduct
         );
         MySwal.fire("Success", "Conduct added successfully!", "success");

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const USER_API_URL = 'https://pjsofttech.in:10443';
+const USER_API_URL = 'http://localhost:8082';
 
 class UserService {
   

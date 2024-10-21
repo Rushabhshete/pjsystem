@@ -47,7 +47,7 @@
 //   // Function to fetch departments
 //   const fetchDepartments = async () => {
 //     try {
-//       const response = await axios.get(`https://pjsofttech.in:10443/departments/allDepartment?institutecode=${institutecode}`);
+//       const response = await axios.get(`http://localhost:8082/departments/allDepartment?institutecode=${institutecode}`);
 //       setDepartments(response.data);
 //     } catch (error) {
 //       console.error('Error fetching departments:', error);
@@ -64,7 +64,7 @@
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
 //     try {
-//       const response = await axios.post(`https://pjsofttech.in:10443/departments/addDepartment?institutecode=${institutecode}`, { department });
+//       const response = await axios.post(`http://localhost:8082/departments/addDepartment?institutecode=${institutecode}`, { department });
 //       toast.success('Department added successfully');
 //       setDepartment(''); // Reset the form
 //       fetchDepartments(); // Refresh the list
@@ -92,7 +92,7 @@
 
 //   const handleEditSubmit = async () => {
 //     try {
-//       await axios.put(`https://pjsofttech.in:10443/departments/updateDepartment/${currentDepartment.id}`, { department: updatedDepartmentName });
+//       await axios.put(`http://localhost:8082/departments/updateDepartment/${currentDepartment.id}`, { department: updatedDepartmentName });
 //       toast.success('Department updated successfully');
 //       setOpenEditDialog(false); // Close dialog
 //       fetchDepartments(); // Refresh the departments list
@@ -103,7 +103,7 @@
 
 //   const handleDeleteSubmit = async () => {
 //     try {
-//       await axios.delete(`https://pjsofttech.in:10443/departments/deleteDepartment/${currentDepartment.id}`);
+//       await axios.delete(`http://localhost:8082/departments/deleteDepartment/${currentDepartment.id}`);
 //       toast.success('Department deleted successfully');
 //       setOpenDeleteDialog(false); // Close dialog
 //       fetchDepartments(); // Refresh the departments list
@@ -360,7 +360,7 @@ const Department = () => {
 
   const fetchDepartments = async () => {
     try {
-      const response = await axios.get(`https://pjsofttech.in:10443/departments/allDepartment?institutecode=${institutecode}`);
+      const response = await axios.get(`http://localhost:8082/departments/allDepartment?institutecode=${institutecode}`);
       setDepartments(response.data);
     } catch (error) {
       console.error('Error fetching departments:', error);
@@ -378,7 +378,7 @@ const Department = () => {
 
   const handleAddSubmit = async () => {
     try {
-      await axios.post(`https://pjsofttech.in:10443/departments/addDepartment?institutecode=${institutecode}`, { department });
+      await axios.post(`http://localhost:8082/departments/addDepartment?institutecode=${institutecode}`, { department });
       toast.success('Department added successfully');
       setOpenAddDialog(false);
       setDepartment('');
@@ -390,7 +390,7 @@ const Department = () => {
 
   // const handleEditSubmit = async () => {
   //   try {
-  //     await axios.put(`https://pjsofttech.in:10443/departments/updateDepartment/${currentDepartment.id}`, { department: updatedDepartmentName });
+  //     await axios.put(`http://localhost:8082/departments/updateDepartment/${currentDepartment.id}`, { department: updatedDepartmentName });
   //     toast.success('Department updated successfully');
   //     setOpenEditDialog(false);
   //     fetchDepartments();
@@ -401,7 +401,7 @@ const Department = () => {
 
   const handleDeleteSubmit = async () => {
     try {
-      await axios.delete(`https://pjsofttech.in:10443/departments/deleteDepartment/${currentDepartment.id}`);
+      await axios.delete(`http://localhost:8082/departments/deleteDepartment/${currentDepartment.id}`);
       toast.success('Department deleted successfully');
       setOpenDeleteDialog(false);
       fetchDepartments();
