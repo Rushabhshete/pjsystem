@@ -114,7 +114,7 @@ const SalaryTable = ({ id, initialStatus }) => {
     const fetchDepartments = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8082/departments/allDepartment?institutecode=${institutecode}`
+          `https://pjsofttech.in:10443/departments/allDepartment?institutecode=${institutecode}`
         );
         setDepartments(response.data);
       } catch (error) {
@@ -126,7 +126,7 @@ const SalaryTable = ({ id, initialStatus }) => {
     const fetchEmployeeCategories = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8082/categories/all?institutecode=${institutecode}`
+          `https://pjsofttech.in:10443/categories/all?institutecode=${institutecode}`
         );
         setEmployeeCategories(response.data);
       } catch (error) {
@@ -179,7 +179,7 @@ const SalaryTable = ({ id, initialStatus }) => {
   
       if (result.isConfirmed) {
         try {
-          await axios.delete(`http://localhost:8082/salaries/softDeleteSalaryById/${rowToDelete}`);
+          await axios.delete(`https://pjsofttech.in:10443/salaries/softDeleteSalaryById/${rowToDelete}`);
           // Update the state to remove the deleted salary from the list
           setSalaries(salaries.filter((salary) => salary.id !== rowToDelete));
           Swal.fire("Salary deleted successfully");
@@ -372,9 +372,9 @@ const SalaryTable = ({ id, initialStatus }) => {
     setError(null);
     try {
       // Build URL based on payment date or all data
-      let url = `http://localhost:8082/salaries/all?institutecode=${institutecode}`;
+      let url = `https://pjsofttech.in:10443/salaries/all?institutecode=${institutecode}`;
       if (paymentDate) {
-        url = `http://localhost:8082/salaries/paymentdate?paymentDate=${paymentDate}&institutecode=${institutecode}`;
+        url = `https://pjsofttech.in:10443/salaries/paymentdate?paymentDate=${paymentDate}&institutecode=${institutecode}`;
       }
 
       const response = await axios.get(url);
@@ -435,7 +435,7 @@ const SalaryTable = ({ id, initialStatus }) => {
     setError(null);
     try {
       const response = await axios.get(
-        `http://localhost:8082/salaries/byEmployeeIdAndMonthAndYear?empID=${empID}&month=${month}&year=${year}&institutecode=${institutecode}`
+        `https://pjsofttech.in:10443/salaries/byEmployeeIdAndMonthAndYear?empID=${empID}&month=${month}&year=${year}&institutecode=${institutecode}`
       );
       setSalaries(response.data);
     } catch (error) {
@@ -454,7 +454,7 @@ const SalaryTable = ({ id, initialStatus }) => {
     setError(null);
     try {
       const response = await axios.get(
-        `http://localhost:8082/salaries/all?institutecode=${institutecode}`
+        `https://pjsofttech.in:10443/salaries/all?institutecode=${institutecode}`
       );
       const filteredSalaries = response.data.filter(
         (salary) => salary.month === month && salary.year === year
@@ -496,7 +496,7 @@ const SalaryTable = ({ id, initialStatus }) => {
     const updatedTransactionId = transactionIdInputs[id];
     try {
       await axios.put(
-        `http://localhost:8082/salaries/${id}/transaction?transactionID=${updatedTransactionId}`
+        `https://pjsofttech.in:10443/salaries/${id}/transaction?transactionID=${updatedTransactionId}`
       );
       fetchData();
       Swal.fire("Transaction ID updated successfully");
@@ -514,9 +514,9 @@ const SalaryTable = ({ id, initialStatus }) => {
   //   setLoading(true);
   //   setError(null);
   //   try {
-  //     let url = `http://localhost:8082/salaries/all?institutecode=${institutecode}`;
+  //     let url = `https://pjsofttech.in:10443/salaries/all?institutecode=${institutecode}`;
   //     if (paymentDate) {
-  //       url = `http://localhost:8082/salaries/paymentdate?paymentDate=${paymentDate}&institutecode=${institutecode}`;
+  //       url = `https://pjsofttech.in:10443/salaries/paymentdate?paymentDate=${paymentDate}&institutecode=${institutecode}`;
   //     }
   //     const response = await axios.get(url);
   //     setSalaries(response.data);
@@ -572,7 +572,7 @@ const SalaryTable = ({ id, initialStatus }) => {
     try {
       const today = new Date().toISOString().slice(0, 10); // Get today's date in YYYY-MM-DD format
       const response = await axios.put(
-        `http://localhost:8082/salaries/${id}/updatePaymentDate?status=Paid&paymentDate=${today}`
+        `https://pjsofttech.in:10443/salaries/${id}/updatePaymentDate?status=Paid&paymentDate=${today}`
       );
 
       if (response.status === 200) {

@@ -89,20 +89,20 @@
   
 //         // if (filter === 'All') {
 //         //   response = await axios.get(
-//         //     `http://localhost:8082/joinedEmployeesList?institutecode=${instituteCode}`
+//         //     `https://pjsofttech.in:10443/joinedEmployeesList?institutecode=${instituteCode}`
 //         //   );
 //         // } else 
 //         if (filter === 'Today') {
 //           response = await axios.get(
-//             `http://localhost:8082/today?institutecode=${instituteCode}`
+//             `https://pjsofttech.in:10443/today?institutecode=${instituteCode}`
 //           );
 //         } else if (filter === 'Yesterday') {
 //           response = await axios.get(
-//             `http://localhost:8082/getAttendenceByyesterday?institutecode=${instituteCode}`
+//             `https://pjsofttech.in:10443/getAttendenceByyesterday?institutecode=${instituteCode}`
 //           );
 //         } else if (filter === 'Custom Date' && startDate && endDate) {
 //           response = await axios.get(
-//             `http://localhost:8082/getAttendenceBYycustomDate?institutecode=${instituteCode}&startDate=${startDate}&endDate=${endDate}`
+//             `https://pjsofttech.in:10443/getAttendenceBYycustomDate?institutecode=${instituteCode}&startDate=${startDate}&endDate=${endDate}`
 //           );
 //         }
 
@@ -391,7 +391,7 @@ const TodaysAttendance = () => {
       
       // Updated API call
       response = await axios.get(
-        `http://localhost:8082/presentandabsent?institutecode=${instituteCode}&filter=${filter}${
+        `https://pjsofttech.in:10443/presentandabsent?institutecode=${instituteCode}&filter=${filter}${
           filter === 'custom' && startDate && endDate ? `&startDate=${startDate}&endDate=${endDate}` : ''}`
       );
   

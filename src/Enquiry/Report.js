@@ -107,13 +107,13 @@ export default function Report() {
   }, [startDate, endDate]);
 
   const loadUsers = async (start = "", end = "") => {
-    let url = `http://localhost:8086/get/getALLEnquiryByInstitutecode?institutecode=${getInstituteCode()}`;
+    let url = `https://pjsofttech.in:14443/get/getALLEnquiryByInstitutecode?institutecode=${getInstituteCode()}`;
 
     // Update URL based on date, month and year filters
     if (start && end) {
-      url = `http://localhost:8086/enquiryBetweenDates?startDate=${start}&endDate=${end}&institutecode=${getInstituteCode()}`;
+      url = `https://pjsofttech.in:14443/enquiryBetweenDates?startDate=${start}&endDate=${end}&institutecode=${getInstituteCode()}`;
     } else if (selectedYear && selectedMonth) {
-      url = `http://localhost:8086/enquiryByMonthAndYear?month=${selectedMonth}&year=${selectedYear}&institutecode=${getInstituteCode()}`;
+      url = `https://pjsofttech.in:14443/enquiryByMonthAndYear?month=${selectedMonth}&year=${selectedYear}&institutecode=${getInstituteCode()}`;
     }
 
     try {
@@ -133,7 +133,7 @@ export default function Report() {
   const loadExams = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8086/getAllExam?institutecode=${getInstituteCode()}`
+        `https://pjsofttech.in:14443/getAllExam?institutecode=${getInstituteCode()}`
       );
       setExamOptions(response.data);
     } catch (error) {
@@ -144,7 +144,7 @@ export default function Report() {
   const loadSources = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8086/getAllSource?institutecode=${getInstituteCode()}`
+        `https://pjsofttech.in:14443/getAllSource?institutecode=${getInstituteCode()}`
       );
       setSourceOptions(response.data);
     } catch (error) {
@@ -155,7 +155,7 @@ export default function Report() {
   const loadConducts = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8086/get/getAllConductModels?institutecode=${getInstituteCode()}`
+        `https://pjsofttech.in:14443/get/getAllConductModels?institutecode=${getInstituteCode()}`
       );
       setConductedBy(response.data);
     } catch (error) {
@@ -218,7 +218,7 @@ export default function Report() {
       if (result.isConfirmed) {
         console.log("Confirmed delete"); // Debug log
         try {
-          await axios.delete(`http://localhost:8086/deleteenquiry/${id}`);
+          await axios.delete(`https://pjsofttech.in:14443/deleteenquiry/${id}`);
           console.log("Enquiry deleted successfully"); // Debug log
           Swal.fire({
             icon: "success",
@@ -458,7 +458,7 @@ export default function Report() {
 
   const handleSendSms = async () => {
     try {
-      await axios.post("http://localhost:8086/sendSms", {
+      await axios.post("https://pjsofttech.in:14443/sendSms", {
         mobile: smsData.mobile,
         content: smsData.content,
       });

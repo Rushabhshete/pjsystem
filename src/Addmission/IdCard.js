@@ -13,7 +13,7 @@
 //                 try{
 //                     console.log("Selected Admission Id:", id);
 //                     const result = await axios.get(
-//                         `http://localhost:8085/admissions/${id}`
+//                         `https://pjsofttech.in:13443/admissions/${id}`
 //                     );
 //                     setAdmission(result.data);
 
@@ -70,7 +70,7 @@ export default function IdCard({ id, onClose }) {
         try {
           console.log('Selected Admission Id:', id);
           const result = await axios.get(
-            `http://localhost:8085/admissions/${id}`
+            `https://pjsofttech.in:13443/admissions/${id}`
           );
           setAdmission(result.data);
         } catch (error) {

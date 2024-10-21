@@ -46,16 +46,16 @@ const Dashboard = () => {
                 resRevenue365Days,
                 resTotalRevenue,
             ] = await Promise.all([
-                axios.get(`http://localhost:8085/getAdmissionsByTodayCount?institutecode=${institutecode()}`),
-                axios.get(`http://localhost:8085/getAdmissionsBy7daysCount?institutecode=${institutecode()}`),
-                axios.get(`http://localhost:8085/getAdmissionsBy30DaysCount?institutecode=${institutecode()}`),
-                axios.get(`http://localhost:8085/getAdmissionsBy365DaysCount?institutecode=${institutecode()}`),
-                axios.get(`http://localhost:8085/TotalAdmission?institutecode=${institutecode()}`),
-                axios.get(`http://localhost:8085/AdmissionInToDaysRevenue?institutecode=${institutecode()}`),
-                axios.get(`http://localhost:8085/AdmissionIn7DaysRevenue?institutecode=${institutecode()}`),
-                axios.get(`http://localhost:8085/AdmissionIn30DaysRevenue?institutecode=${institutecode()}`),
-                axios.get(`http://localhost:8085/AdmissionIn365DaysRevenue?institutecode=${institutecode()}`),
-                axios.get(`http://localhost:8085/TotalAdmissionRevenue?institutecode=${institutecode()}`),
+                axios.get(`https://pjsofttech.in:13443/getAdmissionsByTodayCount?institutecode=${institutecode()}`),
+                axios.get(`https://pjsofttech.in:13443/getAdmissionsBy7daysCount?institutecode=${institutecode()}`),
+                axios.get(`https://pjsofttech.in:13443/getAdmissionsBy30DaysCount?institutecode=${institutecode()}`),
+                axios.get(`https://pjsofttech.in:13443/getAdmissionsBy365DaysCount?institutecode=${institutecode()}`),
+                axios.get(`https://pjsofttech.in:13443/TotalAdmission?institutecode=${institutecode()}`),
+                axios.get(`https://pjsofttech.in:13443/AdmissionInToDaysRevenue?institutecode=${institutecode()}`),
+                axios.get(`https://pjsofttech.in:13443/AdmissionIn7DaysRevenue?institutecode=${institutecode()}`),
+                axios.get(`https://pjsofttech.in:13443/AdmissionIn30DaysRevenue?institutecode=${institutecode()}`),
+                axios.get(`https://pjsofttech.in:13443/AdmissionIn365DaysRevenue?institutecode=${institutecode()}`),
+                axios.get(`https://pjsofttech.in:13443/TotalAdmissionRevenue?institutecode=${institutecode()}`),
             ]);
 
             // Update state with fetched data or default to 0 if null/undefined

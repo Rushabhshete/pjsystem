@@ -50,7 +50,7 @@ const AdmissionForm = () => {
     const fetchGuide = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8085/api/conductBy/getAllConductBy?institutecode=${institutecode}`
+          `https://pjsofttech.in:13443/api/conductBy/getAllConductBy?institutecode=${institutecode}`
         );
         setGuide(response.data);
       } catch (error) {
@@ -67,7 +67,7 @@ const AdmissionForm = () => {
     const fetchSources = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8085/api/sourceBy/getAll?institutecode=${institutecode}`
+          `https://pjsofttech.in:13443/api/sourceBy/getAll?institutecode=${institutecode}`
         );
         setSources(response.data);
       } catch (error) {
@@ -84,7 +84,7 @@ const AdmissionForm = () => {
     const fetchCourses = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8085/getAllCourse?institutecode=${institutecode}`
+          `https://pjsofttech.in:13443/getAllCourse?institutecode=${institutecode}`
         );
         setCourses(response.data);
       } catch (error) {
@@ -136,7 +136,7 @@ const AdmissionForm = () => {
     try {
       const { feesReceipt, studentPhoto, ...dataToSubmit } = formData; // exclude files from the initial submission
       await axios.post(
-        `http://localhost:8085/saveAdmission?institutecode=${institutecode}`,
+        `https://pjsofttech.in:13443/saveAdmission?institutecode=${institutecode}`,
         dataToSubmit
       );
       toast.success("Admission form submitted successfully");
@@ -568,7 +568,7 @@ const AdmissionForm = () => {
                   onClick={() =>
                     handleFileUpload(
                       "studentPhoto",
-                      `http://localhost:8085/saveStudentPhoto/${formData.email}`
+                      `https://pjsofttech.in:13443/saveStudentPhoto/${formData.email}`
                     )
                   }
                   disabled={!isFormSubmitted}

@@ -18,7 +18,7 @@ const ViewCourse = () => {
     const fetchCourses = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8085/getAllCourse"
+          "https://pjsofttech.in:13443/getAllCourse"
         );
         setCourses(response.data);
       } catch (error) {

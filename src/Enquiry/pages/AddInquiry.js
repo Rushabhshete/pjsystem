@@ -102,17 +102,17 @@ export default function AddEnquiry() {
         const [examsResponse, sourcesResponse, conductsResponse] =
           await Promise.all([
             axios.get(
-              `http://localhost:8086/getAllExam?institutecode=${localStorage.getItem(
+              `https://pjsofttech.in:14443/getAllExam?institutecode=${localStorage.getItem(
                 "institutecode"
               )}`
             ),
             axios.get(
-              `http://localhost:8086/getAllSource?institutecode=${localStorage.getItem(
+              `https://pjsofttech.in:14443/getAllSource?institutecode=${localStorage.getItem(
                 "institutecode"
               )}`
             ),
             axios.get(
-              `http://localhost:8086/get/getAllConductModels?institutecode=${localStorage.getItem(
+              `https://pjsofttech.in:14443/get/getAllConductModels?institutecode=${localStorage.getItem(
                 "institutecode"
               )}`
             ),
@@ -184,7 +184,7 @@ export default function AddEnquiry() {
       formData.append("institutecode", localStorage.getItem("institutecode"));
 
       // Send the form data to the API endpoint
-      await axios.post(`http://localhost:8086/save/enquiry`, formData, {
+      await axios.post(`https://pjsofttech.in:14443/save/enquiry`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

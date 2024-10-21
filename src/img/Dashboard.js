@@ -50,7 +50,7 @@ const Dashboard = () => {
     const fetchIncomeData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8087/dashboard/incomes/totals?email=${getEmail()}`
+          `https://pjsofttech.in:15443/dashboard/incomes/totals?email=${getEmail()}`
         );
         const data = await response.json();
         setIncomeData(data);
@@ -62,7 +62,7 @@ const Dashboard = () => {
     const fetchExpenseData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8087/dashboard/expenses/totals?email=${getEmail()}`
+          `https://pjsofttech.in:15443/dashboard/expenses/totals?email=${getEmail()}`
         );
         const data = await response.json();
         setExpenseData(data);
@@ -74,7 +74,7 @@ const Dashboard = () => {
     const fetchSavingsData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8087/dashboard/savings?email=${getEmail()}`
+          `https://pjsofttech.in:15443/dashboard/savings?email=${getEmail()}`
         );
         const data = await response.json();
         setSavingsData(data);
@@ -86,7 +86,7 @@ const Dashboard = () => {
     const fetchMonthlyIncome = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8087/income/total-monthly?year=${year}&adminemail=${getEmail()}`
+          `https://pjsofttech.in:15443/income/total-monthly?year=${year}&adminemail=${getEmail()}`
         );
         const data = await response.json();
         const incomeArray = Array(12).fill(0);
@@ -102,7 +102,7 @@ const Dashboard = () => {
     const fetchMonthlyExpense = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8087/expense/total-monthly?year=${year}&adminemail=${getEmail()}`
+          `https://pjsofttech.in:15443/expense/total-monthly?year=${year}&adminemail=${getEmail()}`
         );
         const data = await response.json();
         const expenseArray = Array(12).fill(0);
@@ -126,7 +126,7 @@ const Dashboard = () => {
     const fetchIncomeCategories = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8087/dashboard/incomes?email=${getEmail()}`
+          `https://pjsofttech.in:15443/dashboard/incomes?email=${getEmail()}`
         );
         const data = await response.json();
         setIncomeCategories(data);
@@ -138,7 +138,7 @@ const Dashboard = () => {
     const fetchExpenseCategories = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8087/dashboard/expenses?email=${getEmail()}`
+          `https://pjsofttech.in:15443/dashboard/expenses?email=${getEmail()}`
         );
         const data = await response.json();
         setExpenseCategories(data);

@@ -88,7 +88,7 @@
 //   const loadExams = async () => {
 //     try {
 //       const response = await axios.get(
-//         `http://localhost:8086/getAllExam?institutecode=${institutecode}`
+//         `https://pjsofttech.in:14443/getAllExam?institutecode=${institutecode}`
 //       );
 //       setExams(response.data);
 //       setFilteredExams(response.data);
@@ -116,7 +116,7 @@
 
 //   const confirmDeleteExam = async () => {
 //     try {
-//       await axios.delete(`http://localhost:8086/deleteExam/${examToDelete.id}`);
+//       await axios.delete(`https://pjsofttech.in:14443/deleteExam/${examToDelete.id}`);
 //       loadExams();
 //       toast.success("Exam Deleted Successfully");
 //       setOpenConfirmDialog(false);
@@ -146,7 +146,7 @@
 
 //     try {
 //       await axios.post(
-//         `http://localhost:8086/saveExam?institutecode=${institutecode}`,
+//         `https://pjsofttech.in:14443/saveExam?institutecode=${institutecode}`,
 //         exam
 //       );
 //       // setSnackbarMessage("Exam added successfully!");
@@ -347,7 +347,7 @@ const Exam = () => {
   const loadExams = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8086/getAllExam?institutecode=${institutecode}`
+        `https://pjsofttech.in:14443/getAllExam?institutecode=${institutecode}`
       );
       setExams(response.data);
       setFilteredExams(response.data);
@@ -381,7 +381,7 @@ const Exam = () => {
 
   const deleteExam = async (examId) => {
     try {
-      await axios.delete(`http://localhost:8086/deleteExam/${examId}`);
+      await axios.delete(`https://pjsofttech.in:14443/deleteExam/${examId}`);
       MySwal.fire({
         title: "Deleted!",
         text: "The exam has been deleted successfully.",
@@ -426,7 +426,7 @@ const Exam = () => {
 
     try {
       await axios.post(
-        `http://localhost:8086/saveExam?institutecode=${institutecode}`,
+        `https://pjsofttech.in:14443/saveExam?institutecode=${institutecode}`,
         exam
       );
       MySwal.fire({

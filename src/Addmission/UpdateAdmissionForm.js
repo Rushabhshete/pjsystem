@@ -33,7 +33,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate, onClose }) => {
     const fetchSources = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8085/api/sourceBy/getAll?institutecode=${institutecode}`
+          `https://pjsofttech.in:13443/api/sourceBy/getAll?institutecode=${institutecode}`
         );
         setSources(response.data);
       } catch (error) {
@@ -44,7 +44,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate, onClose }) => {
     const fetchCourses = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8085/getAllCourse?institutecode=${institutecode}`
+          `https://pjsofttech.in:13443/getAllCourse?institutecode=${institutecode}`
         );
         setCourses(response.data);
       } catch (error) {
@@ -55,7 +55,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate, onClose }) => {
     const fetchGuides = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8085/api/conductBy/getAllConductBy?institutecode=${institutecode}`
+          `https://pjsofttech.in:13443/api/conductBy/getAllConductBy?institutecode=${institutecode}`
         );
         setGuides(response.data);
       } catch (error) {
@@ -104,7 +104,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate, onClose }) => {
     event.preventDefault();
     try {
       await axios.put(
-        `http://localhost:8085/updateAdmission/${formData.id}`,
+        `https://pjsofttech.in:13443/updateAdmission/${formData.id}`,
         formData
       );
       toast.success("Admission updated successfully!");
@@ -148,7 +148,7 @@ const UpdateAdmissionForm = ({ admission, onUpdate, onClose }) => {
 
     try {
       await axios.put(
-        `http://localhost:8085/updateStudentImage/${formData.email}`,
+        `https://pjsofttech.in:13443/updateStudentImage/${formData.email}`,
         uploadData,
         {
           headers: {
