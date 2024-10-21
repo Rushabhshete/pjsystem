@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { TextField, Button, Grid, Typography, Box, MenuItem, Snackbar, SnackbarContent } from '@mui/material';
 import { styled } from '@mui/system';
+import Swal from 'sweetalert2'; // Import SweetAlert2
 
 const months = [
   { value: 1, label: 'January' },
@@ -26,8 +27,6 @@ const currentYear = new Date().getFullYear();
 const years = Array.from(new Array(yearsAhead + yearsBehind + 1), (val, index) => currentYear - yearsBehind + index);
 
 export default function AddSalary() {
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
   const [institutecode, setInstituteCode] = useState(localStorage.getItem('institutecode') || '');
 
   const navigate = useNavigate();
@@ -90,14 +89,25 @@ export default function AddSalary() {
         transactionId: employee.transactionId,
       });
 
-      // Show success message and navigate to SalaryList after 2 seconds
-      setSnackbarMessage('Salary added successfully!');
-      setOpenSnackbar(true);
+         // Show success message using SweetAlert2
+         await Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Salary added successfully!',
+          confirmButtonText: 'OK',
+        });
       setTimeout(() => {
         navigate('/layout/employee-salary-manager/salary-list');
       }, 2000);
     } catch (error) {
       console.error('Error adding salary:', error);
+        // Show error message using SweetAlert2
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Failed to add salary. Please try again.',
+          confirmButtonText: 'OK',
+        });
     }
   };
 
@@ -125,22 +135,6 @@ export default function AddSalary() {
 
     loadEmployee();
   }, [empID], [institutecode]);
-
-  const PopTypography = styled(Typography)`
-    @keyframes pop {
-      0% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.1);
-      }
-      100% {
-        transform: scale(1);
-      }
-    }
-   
-  `;
-
   return (
     <Grid container justifyContent="center">
       <Grid item xs={10} md={6}>
@@ -290,20 +284,6 @@ export default function AddSalary() {
           </form>
         </Box>
       </Grid>
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={3000} // Adjust duration as needed
-        onClose={() => setOpenSnackbar(false)}
-      >
-        <SnackbarContent
-          message={snackbarMessage}
-          sx={{
-            backgroundColor: '#43a047', // Light green background
-            color: '#fff', // White text color
-            fontWeight: 'bold',
-          }}
-        />
-      </Snackbar>
     </Grid>
   );
 }

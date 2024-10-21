@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect, useState, useRef } from "react";
+import Swal from "sweetalert2";
 import {
   Table,
   TableBody,
@@ -25,8 +26,6 @@ import {
 import axios from "axios";
 import { Box } from "@mui/system";
 import { useReactToPrint } from "react-to-print";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import logo from "../Salary/logo.jpg";
 import { Modal } from "reactstrap";
 import { ModalHeader } from "react-bootstrap";
@@ -120,7 +119,7 @@ const SalaryTable = ({ id, initialStatus }) => {
         setDepartments(response.data);
       } catch (error) {
         console.error("Error fetching departments:", error);
-        toast.error("Failed to fetch departments");
+        Swal.fire("Failed to fetch departments");
       }
     };
 
@@ -132,7 +131,7 @@ const SalaryTable = ({ id, initialStatus }) => {
         setEmployeeCategories(response.data);
       } catch (error) {
         console.error("Error fetching employee categories:", error);
-        toast.error("Failed to fetch employee categories");
+        Swal.fire("Failed to fetch employee categories");
       }
     };
 
@@ -151,9 +150,11 @@ const SalaryTable = ({ id, initialStatus }) => {
   };
 
   const handleOpenConfirmDeleteDialog = () => {
-    setShowInfoPopup(false); // Close info dialog
+    // Close info dialog if necessary
+    setShowInfoPopup(false); 
     setRowToDelete(infoPopupData.id); // Set the row to delete
-    setShowConfirmDeleteDialog(true); // Open confirmation dialog
+    // Trigger SweetAlert2 confirmation directly
+    handleDelete();
   };
 
   const handleCloseConfirmDeleteDialog = () => {
@@ -161,24 +162,38 @@ const SalaryTable = ({ id, initialStatus }) => {
     setRowToDelete(null);
   };
 
+
   const handleDelete = async () => {
     if (rowToDelete) {
-      try {
-        await axios.delete(
-          `http://localhost:8082/salaries/softDeleteSalaryById/${rowToDelete}`
-        );
-        setSalaries(salaries.filter((salary) => salary.id !== rowToDelete));
-        toast.success("Row deleted successfully");
-      } catch (error) {
-        console.error("Error deleting row:", error);
-        toast.error("Failed to delete row");
-      } finally {
-        setRowToDelete(null);
-        handleCloseConfirmDeleteDialog();
+      // Show SweetAlert2 confirmation dialog
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "Do you really want to delete this salary record? This action cannot be undone!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "Cancel"
+      });
+  
+      if (result.isConfirmed) {
+        try {
+          await axios.delete(`http://localhost:8082/salaries/softDeleteSalaryById/${rowToDelete}`);
+          // Update the state to remove the deleted salary from the list
+          setSalaries(salaries.filter((salary) => salary.id !== rowToDelete));
+          Swal.fire("Salary deleted successfully");
+          fetchData();
+        } catch (error) {
+          console.error("Error deleting Salary:", error);
+          Swal.fire("Failed to delete Salary");
+        } finally {
+          setRowToDelete(null);
+        }
       }
     }
   };
-
+  
   // Function to convert numeric value to words
   const numberToWords = (num) => {
     const units = [
@@ -338,7 +353,7 @@ const SalaryTable = ({ id, initialStatus }) => {
 
   React.useEffect(() => {
     if (showPaidMessage) {
-      toast.error("Status is still pending. Please wait for it to get paid.");
+      Swal.fire("Status is still pending. Please wait for it to get paid.");
     }
   }, [showPaidMessage]);
 
@@ -484,14 +499,14 @@ const SalaryTable = ({ id, initialStatus }) => {
         `http://localhost:8082/salaries/${id}/transaction?transactionID=${updatedTransactionId}`
       );
       fetchData();
-      toast.success("Transaction ID updated successfully");
+      Swal.fire("Transaction ID updated successfully");
       setTransactionIdInputs((prevState) => ({
         ...prevState,
         [id]: "",
       }));
     } catch (error) {
       console.error("Error updating transaction ID:", error);
-      toast.error("Failed to update transaction ID");
+      Swal.fire("Failed to update transaction ID");
     }
   };
 
@@ -551,7 +566,7 @@ const SalaryTable = ({ id, initialStatus }) => {
     const salaryToUpdate = salaries.find((salary) => salary.id === id);
 
     if (salaryToUpdate.status === "Paid") {
-      toast.error("This salary has already been marked as Paid.");
+      Swal.fire("This salary has already been marked as Paid.");
       return; // Exit the function early to prevent further execution.
     }
     try {
@@ -570,7 +585,7 @@ const SalaryTable = ({ id, initialStatus }) => {
         );
         setShowConfirmationDialog(false);
 
-        toast.success("Payment processed successfully!");
+        Swal.fire("Payment processed successfully!");
       } else {
         console.error("Failed to update payment status:", response);
         setError("Failed to update payment status");
@@ -586,7 +601,6 @@ const SalaryTable = ({ id, initialStatus }) => {
 
   return (
     <div>
-      <ToastContainer />
       <Grid container spacing={2} alignItems="center" mt={2}>
         <Grid item xs={12} md={2}>
           <TextField
@@ -973,18 +987,18 @@ const SalaryTable = ({ id, initialStatus }) => {
             </>
           )}
         </DialogContent>
-        <DialogActions>
-          {infoPopupData && infoPopupData.status === "Pending" && (
-            <Button color="error" onClick={handleOpenConfirmDeleteDialog}>
-              Delete
-            </Button>
-          )}
-          <Button onClick={handleCloseInfoPopup}>Close</Button>
-        </DialogActions>
+      <DialogActions>
+  {infoPopupData && infoPopupData.status === "Pending" && (
+    <Button color="error" onClick={handleOpenConfirmDeleteDialog}>
+      Delete
+    </Button>
+  )}
+  <Button onClick={handleCloseInfoPopup}>Close</Button>
+</DialogActions>
       </Dialog>
 
       {/* Confirmation Dialog for Deletion */}
-      <Dialog
+      {/* <Dialog
         open={showConfirmDeleteDialog}
         onClose={handleCloseConfirmDeleteDialog}
       >
@@ -1000,7 +1014,7 @@ const SalaryTable = ({ id, initialStatus }) => {
             Delete
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
 
       <Dialog
         open={showConfirmationDialog}

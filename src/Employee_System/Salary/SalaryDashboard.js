@@ -15,6 +15,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { ResponsiveBar } from '@nivo/bar'; // Import Nivo bar chart
 import { ResponsivePie } from '@nivo/pie'; // Import Nivo pie chart
+import qs from 'qs';
+
 
 const theme = createTheme({
   palette: {
@@ -158,32 +160,40 @@ const SalaryDashBoard = () => {
   const [selectedStartYear, setSelectedStartYear] = useState(currentYear - 1);
   const [selectedEndYear, setSelectedEndYear] = useState(currentYear);
   const [comparisonData, setComparisonData] = useState(null);
-
+  
   useEffect(() => {
     const fetchComparisonData = async (startYear, endYear) => {
       try {
         const response = await axios.get(`http://localhost:8082/salaries/yearlyFinalNetSalaryComparison`, {
-          params: {institutecode, startYear, endYear }
+          params: {
+            institutecode: `${institutecode}`,  // Add your actual institutecode here
+            years: [startYear, endYear]  // Pass both selected years in an array
+          },
+          paramsSerializer: params => {
+            return qs.stringify(params, { arrayFormat: "repeat" });  // To serialize `years[]` as repeated params
+          }
         });
+  
         setComparisonData(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-
+  
     if (selectedStartYear && selectedEndYear) {
       fetchComparisonData(selectedStartYear, selectedEndYear);
     }
-  }, [selectedStartYear, selectedEndYear, institutecode]);
-
+  }, [selectedStartYear, selectedEndYear]);
+  
   const handleStartYearChange = (event) => {
     setSelectedStartYear(event.target.value);
   };
-
+  
   const handleEndYearChange = (event) => {
     setSelectedEndYear(event.target.value);
   };
-
+  
+  // Formatting the comparison data for the chart
   const formattedComparisonData = comparisonData ? [
     { name: `Year ${selectedStartYear}`, value: comparisonData[selectedStartYear] },
     { name: `Year ${selectedEndYear}`, value: comparisonData[selectedEndYear] }
@@ -360,69 +370,71 @@ const SalaryDashBoard = () => {
         </Grid>
 
         {/* Yearly Comparison Pie Chart */}
-        <Grid item xs={12} sm={6} className="textField-root">
-          <Paper elevation={3} style={{ padding: '16px', height: '550px' }}>
-            <Box display="flex" justifyContent="center" alignItems="center" gap={3} mt={2}>
-              <Typography variant="body1" gutterBottom align="center" mr={2}>
-                Yearly Comparison Chart
-              </Typography>
-              <FormControl variant="outlined">
-                <InputLabel>Select Start Year</InputLabel>
-                <Select
-                  value={selectedStartYear}
-                  onChange={handleStartYearChange}
-                  label="Select Start Year"
-                >
-                  {years.map((year) => (
-                    <MenuItem key={year} value={year}>
-                      {year}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <FormControl variant="outlined">
-                <InputLabel>Select End Year</InputLabel>
-                <Select
-                  value={selectedEndYear}
-                  onChange={handleEndYearChange}
-                  label="Select End Year"
-                >
-                  {years.map((year) => (
-                    <MenuItem key={year} value={year}>
-                      {year}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Box>
+  <Grid item xs={12} sm={6} className="textField-root">
+    <Paper elevation={3} style={{ padding: '16px', height: '550px' }}>
+      <Box display="flex" justifyContent="center" alignItems="center" gap={3} mt={2}>
+        <Typography variant="body1" gutterBottom align="center" mr={2}>
+          Yearly Comparison Chart
+        </Typography>
+        <FormControl variant="outlined">
+          <InputLabel>Select Start Year</InputLabel>
+          <Select
+            value={selectedStartYear}
+            onChange={handleStartYearChange}
+            label="Select Start Year"
+          >
+            {years.map((year) => (
+              <MenuItem key={year} value={year}>
+                {year}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl variant="outlined">
+          <InputLabel>Select End Year</InputLabel>
+          <Select
+            value={selectedEndYear}
+            onChange={handleEndYearChange}
+            label="Select End Year"
+          >
+            {years.map((year) => (
+              <MenuItem key={year} value={year}>
+                {year}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
 
-            <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <div style={{ height: 400, width: "100%" }}>
-                <ResponsivePie
-                  data={formattedComparisonData}
-                  margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
-                  innerRadius={0.5}
-                  padAngle={0.7}
-                  cornerRadius={3}
-                  colors={["#FF6F61","#FF6F61"]}  // Color logic for bars
-                  borderWidth={1}
-                  borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
-                  arcLinkLabelsSkipAngle={10}
-                  arcLinkLabelsTextColor="#333333"
-                  arcLinkLabelsThickness={2}
-                  arcLinkLabelsColor={{ from: 'color' }}
-                  arcLabelsSkipAngle={10}
-                  arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
-                  tooltip={({ datum }) => (
-                    <div>
-                      <strong>{datum.label}</strong>: {datum.value}
-                    </div>
-                  )}
-                />
-              </div>
-            </Box>
-          </Paper>
-        </Grid>
+    <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+  <div style={{ height: 400, width: "100%" }}>
+    <ResponsivePie
+      data={formattedComparisonData}
+      margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+      innerRadius={0.5}
+      padAngle={0.7}
+      cornerRadius={3}
+      // Dynamically apply colors based on the data index
+      colors={['#FF6F61', '#3498DB', '#F1C40F', '#2ECC71']}  // Provide an array of colors for dynamic data
+      borderWidth={1}
+      borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
+      arcLinkLabelsSkipAngle={10}
+      arcLinkLabelsTextColor="#333333"
+      arcLinkLabelsThickness={2}
+      arcLinkLabelsColor={{ from: 'color' }}
+      arcLabelsSkipAngle={10}
+      arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
+      tooltip={({ datum }) => (
+        <div>
+          <strong>{datum.name}</strong>: {datum.value}
+        </div>
+      )}
+    />
+  </div>
+</Box>
+
+    </Paper>
+  </Grid>
       </Grid>
 
       {/* Monthly Final Net Salary Chart */}
