@@ -18,7 +18,7 @@
 //         }
 
 //         const res = await axios.get(
-//           `https://pjsofttech.in:13443/getNumberOfAdmissionsBySourceAndInstitutecode?institutecode=${institutecode}`
+//           `http://localhost:8085/getNumberOfAdmissionsBySourceAndInstitutecode?institutecode=${institutecode}`
 //         );
 //         const data = res.data;
 //         console.log(data); // Debugging: Log API response
@@ -108,7 +108,7 @@ const SourceByGraph = () => {
         }
 
         const res = await axios.get(
-          `https://pjsofttech.in:13443/getNumberOfAdmissionsBySourceAndInstitutecode?institutecode=${institutecode}`
+          `http://localhost:8085/getNumberOfAdmissionsBySourceAndInstitutecode?institutecode=${institutecode}`
         );
         const data = res.data;
         console.log(data); // Debugging: Log API response

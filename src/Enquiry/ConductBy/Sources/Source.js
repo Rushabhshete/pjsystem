@@ -104,7 +104,7 @@
 //   const loadSources = async () => {
 //     try {
 //       const response = await axios.get(
-//         `https://pjsofttech.in:14443/getAllSource?institutecode=${institutecode}`
+//         `http://localhost:8086/getAllSource?institutecode=${institutecode}`
 //       );
 //       setSources(response.data);
 //       setFilteredSources(response.data); // Initially set filtered sources to all sources
@@ -129,7 +129,7 @@
 //   const confirmDeleteSource = async () => {
 //     try {
 //       await axios.delete(
-//         `https://pjsofttech.in:14443/delete/source/${sourceToDelete.id}`
+//         `http://localhost:8086/delete/source/${sourceToDelete.id}`
 //       );
 //       toast.success("Source Deleted Successfully");
 //       loadSources();
@@ -151,14 +151,14 @@
 //     try {
 //       if (isUpdate) {
 //         await axios.put(
-//           `https://pjsofttech.in:14443/update/source/${source.id}`,
+//           `http://localhost:8086/update/source/${source.id}`,
 //           source
 //         );
 //         // setSnackbarMessage("Source updated successfully");
 //         toast.success("Source Updated Successfully");
 //       } else {
 //         await axios.post(
-//           `https://pjsofttech.in:14443/save/source?institutecode=${institutecode}`,
+//           `http://localhost:8086/save/source?institutecode=${institutecode}`,
 //           source
 //         );
 //         toast.success("Source Added Successfully");
@@ -413,7 +413,7 @@ const Source = () => {
   const loadSources = async () => {
     try {
       const response = await axios.get(
-        `https://pjsofttech.in:14443/getAllSource?institutecode=${institutecode}`
+        `http://localhost:8086/getAllSource?institutecode=${institutecode}`
       );
       setSources(response.data);
       setFilteredSources(response.data); // Initially set filtered sources to all sources
@@ -431,7 +431,7 @@ const Source = () => {
 
   const handleDeleteSource = async (source) => {
     try {
-      await axios.delete(`https://pjsofttech.in:14443/delete/source/${source.id}`);
+      await axios.delete(`http://localhost:8086/delete/source/${source.id}`);
       loadSources();
     } catch (error) {
       console.error("Error deleting source:", error);
@@ -452,11 +452,11 @@ const Source = () => {
   const handleSaveSource = async (source) => {
     try {
       if (isUpdate) {
-        await axios.put(`https://pjsofttech.in:14443/update/source/${source.id}`, source);
+        await axios.put(`http://localhost:8086/update/source/${source.id}`, source);
         Swal.fire("Updated!", "Source updated successfully", "success");
       } else {
         await axios.post(
-          `https://pjsofttech.in:14443/save/source?institutecode=${institutecode}`,
+          `http://localhost:8086/save/source?institutecode=${institutecode}`,
           source
         );
         Swal.fire("Added!", "Source added successfully", "success");

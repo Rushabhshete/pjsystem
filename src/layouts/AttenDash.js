@@ -48,9 +48,9 @@ const AttenDash = () => {
   const fetchEmployeesByMonthYear = async (month, year) => {
     try {
       const [totalEmployeeResponse, paidEmployeesResponse, pendingEmployeesResponse] = await Promise.all([
-        axios.get('https://pjsofttech.in:10443/salaries/salarycountbymonthyear', { params: { month, year, institutecode } }),
-        axios.get('https://pjsofttech.in:10443/salaries/Paidcountbyyearmonth', { params: { month, year , institutecode} }),
-        axios.get('https://pjsofttech.in:10443/salaries/Pendingcountbyyearmonth', { params: { month, year, institutecode } }),
+        axios.get('http://localhost:8082/salaries/salarycountbymonthyear', { params: { month, year, institutecode } }),
+        axios.get('http://localhost:8082/salaries/Paidcountbyyearmonth', { params: { month, year , institutecode} }),
+        axios.get('http://localhost:8082/salaries/Pendingcountbyyearmonth', { params: { month, year, institutecode } }),
       ]);
       setTotalEmployee(totalEmployeeResponse.data);
       setPaidEmployees(paidEmployeesResponse.data);
@@ -62,7 +62,7 @@ const AttenDash = () => {
 
   const fetchTotalEmployeesByYear = async (year) => {
     try {
-      const response = await axios.get('https://pjsofttech.in:10443/salaries/salarycountbyyear', { params: { year, institutecode } });
+      const response = await axios.get('http://localhost:8082/salaries/salarycountbyyear', { params: { year, institutecode } });
       setTotalEmployee(response.data);
       setPaidEmployees(null);
       setPendingEmployees(null);

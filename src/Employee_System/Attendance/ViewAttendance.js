@@ -366,12 +366,12 @@ const ViewAttendance = () => {
     try {
       let response = {};
       if (period === 'dateRange' && fromDate && toDate) {
-        const url = `https://pjsofttech.in:10443/adminesideforcustomrange/${empID}?startDate=${fromDate}&endDate=${toDate}`;
+        const url = `http://localhost:8082/adminesideforcustomrange/${empID}?startDate=${fromDate}&endDate=${toDate}`;
         response = await fetch(url).then((res) => res.json());
       } else {
-        let url = `https://pjsofttech.in:10443/adminsidelast7days/${empID}`;
-        if (period === 'lastMonth') url = `https://pjsofttech.in:10443/adminsidelast30days/${empID}`;
-        else if (period === 'last365') url = `https://pjsofttech.in:10443/adminsidelast365days/${empID}`;
+        let url = `http://localhost:8082/adminsidelast7days/${empID}`;
+        if (period === 'lastMonth') url = `http://localhost:8082/adminsidelast30days/${empID}`;
+        else if (period === 'last365') url = `http://localhost:8082/adminsidelast365days/${empID}`;
         
         response = await fetch(url).then((res) => res.json());
       }

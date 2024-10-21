@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_BASE_URL = 'https://pjsofttech.in:10443'; // Adjust the base URL as per your backend configuration
+const API_BASE_URL = 'http://localhost:8082'; // Adjust the base URL as per your backend configuration
 
 const getInstituteCode = () => {
   return localStorage.getItem('institutecode');

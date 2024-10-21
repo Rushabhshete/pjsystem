@@ -137,7 +137,7 @@ const EmployeeList = () => {
     if (confirmation) {
       try {
         const response = await axios.put(
-          `https://pjsofttech.in:10443/updateEmployeeStatus/${empID}`,
+          `http://localhost:8082/updateEmployeeStatus/${empID}`,
           {
             status: "Terminated", // Or whatever status you want to set
           }

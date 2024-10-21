@@ -118,7 +118,7 @@ const UserComponent = () => {
   const loadCategory = async () => {
     try {
       const result = await axios.get(
-        `https://pjsofttech.in:10443/categories/all?institutecode=${institutecode}`
+        `http://localhost:8082/categories/all?institutecode=${institutecode}`
       );
       setCategory(result.data);
     } catch (error) {
@@ -153,7 +153,7 @@ const UserComponent = () => {
       };
 
       const response = await fetch(
-        `https://pjsofttech.in:10443/addEmp?institutecode=${institutecode}`,
+        `http://localhost:8082/addEmp?institutecode=${institutecode}`,
         {
           method: "POST",
           headers: {

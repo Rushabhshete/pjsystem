@@ -56,7 +56,7 @@ const AddmissionSource = () => {
         throw new Error("No institutecode found in local storage");
       }
       const response = await axios.get(
-        `https://pjsofttech.in:13443/api/sourceBy/getAll?institutecode=${institutecode}`
+        `http://localhost:8085/api/sourceBy/getAll?institutecode=${institutecode}`
       );
       setSources(response.data);
     } catch (error) {
@@ -78,7 +78,7 @@ const AddmissionSource = () => {
         throw new Error("No institutecode found in local storage");
       }
       await axios.post(
-        `https://pjsofttech.in:13443/api/sourceBy/saveSourceBy?institutecode=${institutecode}`,
+        `http://localhost:8085/api/sourceBy/saveSourceBy?institutecode=${institutecode}`,
         { sourceBy: sourceName }
       );
       toast.success("Source Added Successfully");
@@ -97,7 +97,7 @@ const AddmissionSource = () => {
   //       throw new Error("No institutecode found in local storage");
   //     }
   //     await axios.put(
-  //       `https://pjsofttech.in:13443/api/sourceBy/updateSourceBy/${selectedSourceId}`,
+  //       `http://localhost:8085/api/sourceBy/updateSourceBy/${selectedSourceId}`,
   //       {
   //         sourceBy: updateSourceName,
   //         institutecode: institutecode // Include institutecode if required
@@ -114,7 +114,7 @@ const AddmissionSource = () => {
   const handleDeleteSource = async () => {
     try {
       await axios.delete(
-        `https://pjsofttech.in:13443/api/sourceBy/deleteSourceBy/${selectedSourceId}`
+        `http://localhost:8085/api/sourceBy/deleteSourceBy/${selectedSourceId}`
       );
       toast.success("Source Deleted Successfully");
       fetchSources(); // Refresh the source list
