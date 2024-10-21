@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { CircularProgress, Grid, MenuItem, Select, Typography, FormControl, InputLabel } from "@mui/material";
+import {
+  CircularProgress,
+  Grid,
+  MenuItem,
+  Select,
+  Typography,
+  FormControl,
+  InputLabel,
+  TextField,
+} from "@mui/material";
 import { Chart } from "react-google-charts";
 
 const CourseByGraph = () => {
@@ -71,40 +80,48 @@ const CourseByGraph = () => {
   return (
     <div>
       {/* Dropdowns for Month and Year */}
-      <Grid container spacing={2} justifyContent="center" alignItems={"center"} style={{ marginBottom: "20px" }}>
-      <Typography variant="body1">Admissions by Course</Typography>
-        <Grid item>
-          <FormControl>
-            <InputLabel>Month</InputLabel>
-            <Select
-              value={month}
-              onChange={(e) => setMonth(e.target.value)}
-              label="Month"
-            >
-              {months.map((monthOption) => (
-                <MenuItem key={monthOption.value} value={monthOption.value}>
-                  {monthOption.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+      <Grid
+        container
+        spacing={2}
+        justifyContent="center"
+        alignItems={"center"}
+        style={{ marginBottom: "20px" }}
+        className="textField-root"
+      >
+        <Typography variant="body1">Admissions by Course</Typography>
+
+        <Grid item xs={12} md={3}>
+          <TextField
+            select
+            value={month}
+            onChange={(e) => setMonth(e.target.value)}
+            label="Month"
+            fullWidth
+            size="small"
+          >
+            {months.map((monthOption) => (
+              <MenuItem key={monthOption.value} value={monthOption.value}>
+                {monthOption.label}
+              </MenuItem>
+            ))}
+          </TextField>
         </Grid>
 
-        <Grid item>
-          <FormControl>
-            <InputLabel>Year</InputLabel>
-            <Select
-              value={year}
-              onChange={(e) => setYear(e.target.value)}
-              label="Year"
-            >
-              {years.map((yearOption) => (
-                <MenuItem key={yearOption} value={yearOption}>
-                  {yearOption}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+        <Grid item xs={12} md={3}>
+          <TextField
+            select
+            value={year}
+            onChange={(e) => setYear(e.target.value)}
+            label="Year"
+            fullWidth
+            size="small"
+          >
+            {years.map((yearOption) => (
+              <MenuItem key={yearOption} value={yearOption}>
+                {yearOption}
+              </MenuItem>
+            ))}
+          </TextField>
         </Grid>
       </Grid>
 
@@ -117,11 +134,9 @@ const CourseByGraph = () => {
           loader={<div>Loading Chart...</div>}
           data={chartData}
           options={{
-          //  title: "Admissions by Course",
+            //  title: "Admissions by Course",
             is3D: true,
-            colors: [
-              "#3498DB", "#FF6F61", "#F9E79F"
-            ],
+            colors: ["#3498DB", "#FF6F61", "#F9E79F"],
           }}
         />
       </Grid>

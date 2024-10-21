@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { CircularProgress, Grid, MenuItem, Select, Typography, FormControl, InputLabel, Paper } from "@mui/material";
+import { CircularProgress, Grid, MenuItem, Select, Typography, FormControl, InputLabel, Paper, TextField } from "@mui/material";
 import { Chart } from "react-google-charts";
 
 const RevenueByCourse = () => {
@@ -69,41 +69,47 @@ const RevenueByCourse = () => {
   return (
     <Paper elevation={3} style={{ padding: "20px", marginTop: "20px" }}>
       {/* Dropdowns for Month and Year */}
-      <Grid container spacing={2} justifyContent="center" alignItems={"center"} style={{ marginBottom: "20px" }}>
+      <Grid container spacing={2} justifyContent="center" alignItems={"center"} style={{ marginBottom: "20px" }} className="textField-root">
       <Typography variant="body1" gutterBottom>
         Revenue By Course
       </Typography>
         <Grid item xs={12} md={1.5}>
           <FormControl fullWidth>
-            <InputLabel>Month</InputLabel>
-            <Select
+         
+            <TextField
+            select
               value={month}
               onChange={(e) => setMonth(e.target.value)}
               label="Month"
+              fullWidth
+              size="small"
             >
               {months.map((monthOption) => (
                 <MenuItem key={monthOption.value} value={monthOption.value}>
                   {monthOption.label}
                 </MenuItem>
               ))}
-            </Select>
+            </TextField>
           </FormControl>
         </Grid>
 
         <Grid item xs={12} md={1.5}>
           <FormControl fullWidth>
-            <InputLabel>Year</InputLabel>
-            <Select
+          
+            <TextField
+            select
               value={year}
               onChange={(e) => setYear(e.target.value)}
               label="Year"
+              fullWidth
+              size="small"
             >
               {years.map((yearOption) => (
                 <MenuItem key={yearOption} value={yearOption}>
                   {yearOption}
                 </MenuItem>
               ))}
-            </Select>
+            </TextField>
           </FormControl>
         </Grid>
       </Grid>

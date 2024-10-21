@@ -132,21 +132,7 @@ const Dashboard = () => {
 `;
   return (
     <div maxWidth="xl" style={{ padding: '2px' }}>
-       {/* <PopTypography
-        variant="h5"
-        gutterBottom
-        sx={{
-          fontWeight: "bold",
-          color: "#fff",
-          textAlign: "center",
-          backgroundColor: "#24A0ED",
-          borderRadius: "150px",
-          padding: "10px",
-          marginBottom: "20px",
-        }}
-      >
-        Admission Dashboard
-      </PopTypography> */}
+   
       <Grid container spacing={2} alignItems="flex-end" justifyContent="center">
         {data.map((item, index) => (
           <Grid key={index} item  xs={12} sm={6} md={2.4}>

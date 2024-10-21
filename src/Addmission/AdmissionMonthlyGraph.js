@@ -83,6 +83,7 @@ const MonthlyGraph = () => {
             onChange={(e) => setSelectedYear(e.target.value)}
             variant="outlined"
             fullWidth
+            size="small"
           >
             {years.map((year) => (
               <MenuItem key={year} value={year}>

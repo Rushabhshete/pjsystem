@@ -502,11 +502,27 @@ export default function DashBoard() {
           {/* Monthly Inquiry Count Chart */}
           <Grid item xs={12} sm={6} style={{ padding: "16px" }}>
       <Paper elevation={3} style={{ padding: "16px", height: "100%" }}>
-        <Grid container alignItems="center" justifyContent="center" gap={1}>
+        <Grid container alignItems="center" justifyContent="center" gap={2}>
           <Grid item>
             <Typography variant="body1">Monthly Inquiry Count Chart</Typography>
           </Grid>
-          <Grid item style={{ display: "flex" }}>
+          <Grid item >
+           
+            <TextField
+              select
+              value={month}
+              onChange={handleMonthChange}
+              label="Month"
+              size="small"
+            >
+              {Array.from({ length: 12 }, (v, k) => (
+                <MenuItem key={k + 1} value={k + 1}>
+                  {new Date(0, k).toLocaleString("default", { month: "long" })}
+                </MenuItem>
+              ))}
+            </TextField>
+            </Grid>
+            <Grid >
             <TextField
               select
               size="small"
@@ -524,22 +540,8 @@ export default function DashBoard() {
                 );
               })}
             </TextField>
-            <TextField
-              select
-              value={month}
-              onChange={handleMonthChange}
-              label="Month"
-              size="small"
-            >
-              {Array.from({ length: 12 }, (v, k) => (
-                <MenuItem key={k + 1} value={k + 1}>
-                  {new Date(0, k).toLocaleString("default", { month: "long" })}
-                </MenuItem>
-              ))}
-            </TextField>
           </Grid>
         </Grid>
-
         {/* Nivo ResponsiveLine Chart */}
         <div style={{ height: "400px", marginTop: "16px" }}>
   {chartData.length ? (
@@ -600,7 +602,7 @@ export default function DashBoard() {
 
         <Paper elevation={3} style={{ padding: "15px" }}>
           <Grid
-            mt={4}
+         
             align={"left"}
             display={"inline-flex"}
             fullWidth
@@ -637,8 +639,8 @@ export default function DashBoard() {
 
           <Grid
             container
-            mt={1}
-            spacing={3}
+           
+            spacing={1}
             justifyContent="center"
             className="textField-root"
           >

@@ -311,25 +311,8 @@ const YearlyGraph = () => {
   return (
     <div>
       {/* Year and Month Select */}
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6} className="textField-root">
-          <TextField
-            select
-            label="Select Year"
-            value={selectedYear}
-            onChange={(e) => setSelectedYear(e.target.value)}
-            variant="outlined"
-            margin="dense"
-            fullWidth
-          >
-            {years.map((year) => (
-              <MenuItem key={year} value={year}>
-                {year}
-              </MenuItem>
-            ))}
-          </TextField>
-        </Grid>
-        <Grid item xs={12} sm={6} className="textField-root">
+      <Grid container spacing={3} justifyContent="center">
+      <Grid item xs={12} sm={2} className="textField-root">
           <TextField
             select
             label="Select Month"
@@ -338,6 +321,7 @@ const YearlyGraph = () => {
             variant="outlined"
             margin="dense"
             fullWidth
+            size="small"
           >
             {monthNames.map((month, index) => (
               <MenuItem key={index} value={index}>
@@ -346,6 +330,25 @@ const YearlyGraph = () => {
             ))}
           </TextField>
         </Grid>
+        <Grid item xs={12} sm={2} className="textField-root">
+          <TextField
+            select
+            label="Select Year"
+            value={selectedYear}
+            onChange={(e) => setSelectedYear(e.target.value)}
+            variant="outlined"
+            margin="dense"
+            fullWidth
+            size="small"
+          >
+            {years.map((year) => (
+              <MenuItem key={year} value={year}>
+                {year}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Grid>
+       
       </Grid>
 
       {/* Graphs in the same row */}

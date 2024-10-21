@@ -60,9 +60,9 @@ export default function YearlyGraph() {
 
   return (
     <div>
-     <Grid container justifyContent="space-evenly"  spacing={2} mt={2} className='textField-root'>
+     <Grid container justifyContent="space-evenly"  spacing={2}  className='textField-root'>
      <Grid item>
-          <Typography variant="body1" align="center" mt={1}>
+          <Typography variant="body1" align="center" >
             Yearly Enquiry Chart
           </Typography>
         </Grid>
