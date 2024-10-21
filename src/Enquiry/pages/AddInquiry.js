@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import Swal from "sweetalert2"; // Import SweetAlert2
 import axios from "axios";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -189,8 +189,12 @@ export default function AddEnquiry() {
           "Content-Type": "multipart/form-data",
         },
       });
-      toast.success("Enquiry Added Successfully");
-      // Use navigate to go to the report page
+        // Show success alert
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Enquiry Added Successfully",
+        });
       navigate("/layout/Enquiry-manager/report");
     } catch (error) {
       console.error(
@@ -198,6 +202,12 @@ export default function AddEnquiry() {
         error.response ? error.response.data : error.message
       );
       setOpenSnackbar(true);
+       // Show error alert
+       Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Failed to add the enquiry. Please try again.",
+      });
     }
   };
 
@@ -206,51 +216,9 @@ export default function AddEnquiry() {
     setOpen(false);
     //navigate("/layout/report");
   };
-
-  const PopTypography = styled(Typography)`
-    @keyframes pop {
-      0% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.1);
-      }
-      100% {
-        transform: scale(1);
-      }
-    }
-  `;
-
   return (
     <div maxWidth="false" sx={{ padding: 2, width: "100%" }}>
-      <ToastContainer
-        autoClose={1000}
-        position="top-right"
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       <Box mt={1} textAlign="center" sx={{ width: "100%" }}>
-        {/* <PopTypography
-          variant="h5"
-          gutterBottom
-          sx={{
-            fontWeight: "bold",
-            color: "#fff",
-            textAlign: "center",
-            backgroundColor: "#24A0ED",
-            borderRadius: "150px",
-            padding: "10px",
-            marginBottom: "20px",
-          }}
-        >
-          Add Enquiry
-        </PopTypography> */}
-
         <Grid container spacing={2} className="textField-root">
           <Grid item xs={12} sm={4}>
             {" "}

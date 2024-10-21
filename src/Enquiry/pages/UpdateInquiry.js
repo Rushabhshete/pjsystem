@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 import axios from "axios";
 import {
   Container,
@@ -26,7 +27,6 @@ import DownloadIcon from "@mui/icons-material/Download";
 import CancelIcon from "@mui/icons-material/Cancel";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import { toast, ToastContainer } from "react-toastify";
 import { stateOptions } from "./EnquiryDropdown";
 
 const PopTypography = styled(Typography)`
@@ -228,14 +228,25 @@ const UpdateEnquiry = ({ id, onClose }) => {
         },
       });
 
-      toast.success("Enquiry Updated Successfully");
+       // Show success message using SweetAlert2
+    Swal.fire({
+      icon: "success",
+      title: "Enquiry Updated Successfully",
+      showConfirmButton: false,
+      timer: 2000,
+    });
 
       // Close the form and refresh the page
       onClose(); // This will close the form/modal
-      navigate(0); // This will refresh the page
+     // navigate(0); // This will refresh the page
     } catch (error) {
       console.error("Error updating enquiry:", error);
-      toast.error("Error updating enquiry: " + error.message);
+        // Show error message using SweetAlert2
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: `Error updating enquiry: ${error.message}`,
+    });
     }
   };
 
@@ -243,29 +254,6 @@ const UpdateEnquiry = ({ id, onClose }) => {
   const handleEnquiryDateClick = () => {
     enquiryDateRef.current.focus();
   };
-
-  const handleDelete = async () => {
-    try {
-      await axios.delete(`http://localhost:8086/deleteenquiry/${id}`);
-      toast.success("Enquiry Deleted Successfully");
-      //  navigate("/layout/report");
-      // Close the form and refresh the page
-      onClose(); // This will close the form/modal
-      //  navigate(0); // This will refresh the page
-    } catch (error) {
-      console.error("Error deleting enquiry:", error);
-    }
-  };
-
-  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-  const handleDeleteDialogOpen = () => {
-    setOpenDeleteDialog(true);
-  };
-
-  const handleDeleteDialogClose = () => {
-    setOpenDeleteDialog(false);
-  };
-
   useEffect(() => {
     const fetchEmployeeDetails = async () => {
       try {
@@ -292,17 +280,6 @@ const UpdateEnquiry = ({ id, onClose }) => {
 
   return (
     <Container maxWidth="false" sx={{ padding: 2, width: "100%" }}>
-      <ToastContainer
-        autoClose={1000} // Toast will close automatically after 5 seconds
-        position="top-right" // Position of the toast
-        hideProgressBar={false} // Show or hide the progress bar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       <Box textAlign="center" sx={{ width: "100%" }}>
         <Box component="form" onSubmit={onSubmit}>
           <Grid container spacing={2} className="textField-root">
@@ -739,15 +716,6 @@ const UpdateEnquiry = ({ id, onClose }) => {
             </Button> */}
             <Box display="flex" gap={1}>
               <Button
-                sx={{ mt: 2, mr: 2 }}
-                variant="contained"
-                color="error"
-                onClick={handleDeleteDialogOpen}
-                startIcon={<DeleteIcon />}
-              >
-                Delete
-              </Button>
-              <Button
                 type="submit"
                 variant="contained"
                 color="primary"
@@ -777,30 +745,6 @@ const UpdateEnquiry = ({ id, onClose }) => {
         message={snackbarMessage}
       />
 
-      {/* Delete Confirmation Dialog */}
-      <Dialog open={openDeleteDialog} onClose={handleDeleteDialogClose}>
-        <DialogTitle align="center" sx={{ backgroundColor: "#f5f5f5" }}>
-          <strong style={{ color: "#d32f2f" }}>Delete Enquiry</strong>
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText sx={{ mb: 2 }}>
-            <strong>Are you sure you want to delete this enquiry?</strong>
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions sx={{ padding: "16px 24px" }}>
-          <Button onClick={handleDeleteDialogClose} color="primary">
-            Cancel
-          </Button>
-          <Button
-            onClick={handleDelete}
-            variant="contained"
-            color="error"
-            startIcon={<DeleteIcon />}
-          >
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
     </Container>
   );
 };

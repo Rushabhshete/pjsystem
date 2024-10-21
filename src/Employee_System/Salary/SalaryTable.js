@@ -588,7 +588,7 @@ const SalaryTable = ({ id, initialStatus }) => {
     <div>
       <ToastContainer />
       <Grid container spacing={2} alignItems="center" mt={2}>
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12} md={2}>
           <TextField
             label="Search by Employee Name"
             variant="outlined"
@@ -600,7 +600,7 @@ const SalaryTable = ({ id, initialStatus }) => {
         </Grid>
 
         {/* UI components for filtering */}
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12} sm={6} md={2}>
           <TextField
             select
             label="Select Department"
@@ -622,7 +622,7 @@ const SalaryTable = ({ id, initialStatus }) => {
         </Grid>
 
         {/* Category Dropdown */}
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12} sm={6} md={2}>
           <TextField
             select
             label="Select Category"
@@ -644,7 +644,7 @@ const SalaryTable = ({ id, initialStatus }) => {
         </Grid>
 
         {/* Status Filter */}
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12} sm={6} md={2}>
           <TextField
             select
             label="Select Status"
@@ -667,7 +667,7 @@ const SalaryTable = ({ id, initialStatus }) => {
         </Grid>
 
         {/* Month Selector */}
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12} sm={6} md={2}>
           <TextField
             select
             label="Select Month"
@@ -689,7 +689,7 @@ const SalaryTable = ({ id, initialStatus }) => {
         </Grid>
 
         {/* Year Selector */}
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid item xs={12} sm={6} md={2}>
           <TextField
             select
             label="Select Year"
@@ -711,7 +711,7 @@ const SalaryTable = ({ id, initialStatus }) => {
         </Grid>
 
         {/* Total salaries display */}
-        <Grid item xs={12} sm={6} md={3} container>
+        <Grid item xs={12} sm={6} md={2} container>
           <Typography variant="h6" align="right" padding={"5px"} fullWidth>
             Total salaries: {salaries.length}
           </Typography>

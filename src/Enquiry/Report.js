@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { saveAs } from "file-saver";
+import Swal from "sweetalert2"; // Import SweetAlert2
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import {
@@ -33,6 +34,7 @@ import InfoIcon from "@mui/icons-material/Info"; // Importing InfoIcon
 import { styled } from "@mui/system";
 import html2pdf from "html2pdf.js"; // Importing html2pdf.js
 import UpdateEnquiry from "../Enquiry/pages/UpdateInquiry";
+import { Delete } from "@mui/icons-material";
 
 export default function Report() {
   const navigate = useNavigate();
@@ -197,6 +199,47 @@ export default function Report() {
   const closeViewInquiry = () => {
     setViewInquiryOpen(false);
     setInquiryDetail(null);
+  };
+
+  const handleDelete = async (id) => {
+    console.log("Delete button clicked"); // Debug log
+    // Show the confirmation dialog
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you really want to delete this enquiry? This action cannot be undone!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+    }).then(async (result) => {
+      console.log("Confirmation dialog result:", result); // Debug log
+      if (result.isConfirmed) {
+        console.log("Confirmed delete"); // Debug log
+        try {
+          await axios.delete(`http://localhost:8086/deleteenquiry/${id}`);
+          console.log("Enquiry deleted successfully"); // Debug log
+          Swal.fire({
+            icon: "success",
+            title: "Deleted!",
+            text: "The enquiry has been deleted.",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          //onClose(); // Close the form/modal
+        } catch (error) {
+          console.error("Error deleting enquiry:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: `Error deleting enquiry: ${error.message}`,
+          });
+        }
+      } else {
+        console.log("Delete action cancelled"); // Debug log
+      }
+    });
   };
 
   // Month and year change handlers
@@ -798,6 +841,14 @@ export default function Report() {
                           onClick={() => handleViewInquiry(inquiry)}
                         >
                           <InfoIcon />
+                        </IconButton>
+                        <IconButton >
+                        <Delete
+                variant="contained"
+                color="error"
+                onClick={() => handleDelete(inquiry.id)}
+              >
+              </Delete>
                         </IconButton>
                       </Box>
                     </TableCell>
