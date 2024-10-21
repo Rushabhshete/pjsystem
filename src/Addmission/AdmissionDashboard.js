@@ -108,11 +108,12 @@ const Dashboard = () => {
     { label: "Total Admissions", value: totalAdmissions || 0, color: "#FF6F61" }, // Purple
     
     // Revenue Data
-    { label: "Today's Revenue ", value: ToDaysRevenue || 0, color: "#F9E79F" }, // Deep Orange
-    { label: "7 Day's Revenue", value: revenue7Days || 0, color: "#FF6F61" }, // Teal
-    { label: "30 Day's Revenue", value: revenue30Days || 0 , color: "#3498DB" }, // Indigo
-    { label: "365 Day's Revenue", value: revenue365Days || 0, color: "#F9E79F" }, // Brown
-    { label: "Total Revenue", value: totalRevenue || 0, color : "#FF6F61" }, // Orange
+    { label: "Today's Revenue ", value: `₹${ToDaysRevenue || 0}`, color: "#F9E79F" }, // Deep Orange
+    { label: "7 Day's Revenue", value: `₹${revenue7Days || 0}`, color: "#FF6F61" }, // Teal
+    { label: "30 Day's Revenue", value: `₹${revenue30Days || 0}`, color: "#3498DB" }, // Indigo
+    { label: "365 Day's Revenue", value: `₹${revenue365Days || 0}`, color: "#F9E79F" }, // Brown
+    { label: "Total Revenue", value: `₹${totalRevenue || 0}`, color : "#FF6F61" }, // Orange
+    
   ];
   const PopTypography = styled(Typography)`
   @keyframes pop {

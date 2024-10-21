@@ -303,13 +303,13 @@ const AddCourse = () => {
       </Grid>
 
       <Box mt={2}>
-        <TableContainer sx={{ width: "100%" }}>
-          <Table size="small" aria-label="course table" sx={{ width: "100%" }}>
+        <TableContainer >
+          <Table className="table-root">
             <TableHead sx={{ backgroundColor: "#f2f2f2" }}>
               <TableRow>
-                <StyledTableHeader>ID</StyledTableHeader>
-                <StyledTableHeader>Course Name</StyledTableHeader>
-                <StyledTableHeader>Actions</StyledTableHeader>
+                <TableCell>ID</TableCell>
+                <TableCell>Course Name</TableCell>
+                <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

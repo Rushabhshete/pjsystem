@@ -4,7 +4,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp"; // Import WhatsApp Icon
 import InfoIcon from "@mui/icons-material/Info"; // Importing InfoIcon
-import BadgeIcon from '@mui/icons-material/Badge';
+import BadgeIcon from "@mui/icons-material/Badge";
 import {
   Table,
   TableBody,
@@ -502,7 +502,7 @@ const StudentList = () => {
       <Grid container spacing={2} className="textField-root">
         <Grid item xs={8} sm={1.6} md={2}>
           <TextField
-          size="small"
+            size="small"
             select
             fullWidth
             variant="outlined"
@@ -522,7 +522,7 @@ const StudentList = () => {
           <>
             <Grid item xs={8} sm={1.6} md={2}>
               <TextField
-              size="small"
+                size="small"
                 type="date"
                 label="Start Date"
                 value={startDate}
@@ -533,7 +533,7 @@ const StudentList = () => {
             </Grid>
             <Grid item xs={8} sm={1.6} md={2}>
               <TextField
-              size="small"
+                size="small"
                 type="date"
                 label="End Date"
                 fullWidth
@@ -546,7 +546,7 @@ const StudentList = () => {
         )}
         <Grid item xs={8} sm={1.6} md={2}>
           <TextField
-          size="small"
+            size="small"
             select
             fullWidth
             label="Source"
@@ -563,7 +563,7 @@ const StudentList = () => {
         </Grid>
         <Grid item xs={8} sm={1.6} md={2}>
           <TextField
-          size="small"
+            size="small"
             select
             fullWidth
             label="Course"
@@ -580,7 +580,7 @@ const StudentList = () => {
         </Grid>
         <Grid item xs={8} sm={1.6} md={2}>
           <TextField
-          size="small"
+            size="small"
             select
             fullWidth
             label="Guide"
@@ -597,7 +597,7 @@ const StudentList = () => {
         </Grid>
         <Grid item xs={8} sm={1.6} md={2}>
           <TextField
-          size="small"
+            size="small"
             select
             fullWidth
             label="Payment Mode"
@@ -613,7 +613,7 @@ const StudentList = () => {
         </Grid>
         <Grid item xs={8} sm={1.6} md={2}>
           <TextField
-          size="small"
+            size="small"
             select
             fullWidth
             label="Status" // New dropdown for status
@@ -628,7 +628,7 @@ const StudentList = () => {
         </Grid>
         <Grid item xs={8} sm={1.6} md={2}>
           <TextField
-          size="small"
+            size="small"
             label="Search by Student Name"
             value={searchQuery}
             fullWidth
@@ -710,30 +710,24 @@ const StudentList = () => {
 
       <TableContainer style={{ marginTop: "10px" }}>
         <Table style={{ overflowX: "hidden" }} className="table-root">
-          <TableHead
-            style={{ backgroundColor: "#f2f2f2", justifyContent: "center" }}
-          >
+          <TableHead>
             <TableRow>
-              <TableCell style={{ fontWeight: "bold" }}>ID</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Name</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Mobile</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Email</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Course</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Source</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Duration</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Join Date</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Due Date</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Total</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Paid</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Pending</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Pay Mode</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>
-                Txn ID
-              </TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Status</TableCell>
-              <TableCell style={{ fontWeight: "bold", textAlign: "center" }}>
-                Actions
-              </TableCell>
+              <TableCell>ID</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Mobile</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Course</TableCell>
+              <TableCell>Source</TableCell>
+              <TableCell>Duration</TableCell>
+              <TableCell>Join Date</TableCell>
+              <TableCell>Due Date</TableCell>
+              <TableCell>Total</TableCell>
+              <TableCell>Paid</TableCell>
+              <TableCell>Pending</TableCell>
+              <TableCell>Pay Mode</TableCell>
+              <TableCell>Txn ID</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -757,9 +751,9 @@ const StudentList = () => {
                 {/* {inquiry.status1 === "Call Back"
                           ? `${inquiry.callBackDate} ${inquiry.callBackTime}`
                           : "-----"} */}
-                <TableCell>{admission.totalFees}</TableCell>
-                <TableCell>{admission.paidFees}</TableCell>
-                <TableCell>{admission.pendingFees}</TableCell>
+                <TableCell>₹{admission.totalFees || 0}</TableCell>
+                <TableCell>₹{admission.paidFees || 0}</TableCell>
+                <TableCell>₹{admission.pendingFees || 0}</TableCell>
                 <TableCell>{admission.paymentMode}</TableCell>
                 <TableCell>{admission.transactionid}</TableCell>
                 <TableCell
@@ -818,7 +812,9 @@ const StudentList = () => {
                     color="secondary"
                     onClick={() => handleOpenDialog(admission.id)}
                   >
-                    <Tooltip><BadgeIcon/></Tooltip>
+                    <Tooltip>
+                      <BadgeIcon />
+                    </Tooltip>
                   </IconButton>
                 </TableCell>
               </TableRow>
@@ -834,7 +830,7 @@ const StudentList = () => {
         fullWidth
       >
         <DialogTitle textAlign={"center"}>Id Card</DialogTitle>
-        <DialogContent style={{width:'auto', padding:'20px'}}>
+        <DialogContent style={{ width: "auto", padding: "20px" }}>
           <IdCard
             id={selectedAdmissionId}
             onClose={() => setDialogOpen(false)}
@@ -1043,7 +1039,7 @@ const StudentList = () => {
                       <TableCell sx={{ fontWeight: "bold" }}>
                         Total Fees:
                       </TableCell>
-                      <TableCell>{selectedPrintAdmission.totalFees}</TableCell>
+                      <TableCell>₹{selectedPrintAdmission.totalFees}</TableCell>
                     </TableRow>
                   )}
                   {selectedPrintAdmission.paidFees && (
@@ -1051,7 +1047,7 @@ const StudentList = () => {
                       <TableCell sx={{ fontWeight: "bold" }}>
                         Paid Fees:
                       </TableCell>
-                      <TableCell>{selectedPrintAdmission.paidFees}</TableCell>
+                      <TableCell>₹{selectedPrintAdmission.paidFees}</TableCell>
                     </TableRow>
                   )}
                   {selectedPrintAdmission.pendingFees &&
@@ -1061,7 +1057,7 @@ const StudentList = () => {
                           Pending Fees:
                         </TableCell>
                         <TableCell>
-                          {selectedPrintAdmission.pendingFees}
+                          ₹{selectedPrintAdmission.pendingFees}
                         </TableCell>
                       </TableRow>
                     )}
@@ -1238,7 +1234,7 @@ const StudentList = () => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="body2">
-                    <strong>Total Fees:</strong> {admissionDetail.totalFees}
+                    <strong>Total Fees:</strong> ₹{admissionDetail.totalFees}
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -1249,12 +1245,13 @@ const StudentList = () => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="body2">
-                    <strong>Paid Fees:</strong> {admissionDetail.paidFees}
+                    <strong>Paid Fees:</strong> ₹{admissionDetail.paidFees}
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="body2">
-                    <strong>Pending Fees:</strong> {admissionDetail.pendingFees}
+                    <strong>Pending Fees:</strong> ₹
+                    {admissionDetail.pendingFees}
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>

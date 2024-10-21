@@ -221,13 +221,13 @@ const AddGuide = () => {
       </Grid>
 
       <Box mt={2}>
-        <TableContainer sx={{ width: "100%" }}>
-          <Table size="small" aria-label="source table" sx={{ width: "100%" }}>
-            <TableHead sx={{ backgroundColor: "#f2f2f2" }}>
+        <TableContainer >
+          <Table className="table-root">
+            <TableHead >
               <TableRow>
-                <TableCell style={{ fontWeight: "bold" }}>ID</TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>Guide Name</TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>
+                <TableCell >ID</TableCell>
+                <TableCell >Guide Name</TableCell>
+                <TableCell >
                   Actions
                 </TableCell>
               </TableRow>

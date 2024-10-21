@@ -534,7 +534,7 @@ export default function CombineDashboard() {
                     }}
                   >
                     <Typography variant="h7">Today's Revenue</Typography>
-                    <Typography variant="h5">{data.todayRevenue}</Typography>
+                    <Typography variant="h5">₹{data.todayRevenue}</Typography>
                   </Box>
                 </Grid>
 
@@ -562,7 +562,7 @@ export default function CombineDashboard() {
                     }}
                   >
                     <Typography variant="h7">Total Revenue</Typography>
-                    <Typography variant="h5">{data.totalRevenue}</Typography>
+                    <Typography variant="h5">₹{data.totalRevenue}</Typography>
                   </Box>
                 </Grid>
               </Grid>

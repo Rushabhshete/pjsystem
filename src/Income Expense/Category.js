@@ -16,7 +16,8 @@ import {
   DialogTitle,
   DialogContent,
   Dialog,
-  DialogActions,Divider
+  DialogActions,
+  Divider,
 } from "@mui/material";
 import html2pdf from "html2pdf.js"; // Importing html2pdf.js
 import numberToWords from "number-to-words";
@@ -88,8 +89,6 @@ const Category = () => {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(false);
   const [openReceipt, setOpenReceipt] = useState(false);
-
-  
 
   const [categoryIdToDelete, setCategoryIdToDelete] = useState(null);
   const handleUpdatedData = (updatedData) => {
@@ -169,7 +168,6 @@ const Category = () => {
     document.body.removeChild(link);
   };
 
-
   const exportToPDF = () => {
     const doc = new jsPDF("landscape");
     const pageWidth = doc.internal.pageSize.getWidth();
@@ -183,7 +181,7 @@ const Category = () => {
     doc.setFontSize(16);
     const heading = `${employeeDetails.institutename || "Guest"}`;
     const headingWidth = doc.getTextWidth(heading);
-    
+
     // Subheading
     doc.setFontSize(12);
     const subheading = `${category} Report`;
@@ -197,13 +195,28 @@ const Category = () => {
     const startY = topMargin; // Start from a smaller margin
 
     // Add institute image
-    doc.addImage(image, 'JPEG', (pageWidth - imageWidth) / 2, startY, imageWidth, imageHeight); // Center the image
+    doc.addImage(
+      image,
+      "JPEG",
+      (pageWidth - imageWidth) / 2,
+      startY,
+      imageWidth,
+      imageHeight
+    ); // Center the image
 
     // Center the heading
-    doc.text(heading, (pageWidth - headingWidth) / 2, startY + imageHeight + spacing); // Position below the image
+    doc.text(
+      heading,
+      (pageWidth - headingWidth) / 2,
+      startY + imageHeight + spacing
+    ); // Position below the image
 
     // Center the subheading
-    doc.text(subheading, (pageWidth - subheadingWidth) / 2, startY + imageHeight + spacing + 16); // Position below the heading
+    doc.text(
+      subheading,
+      (pageWidth - subheadingWidth) / 2,
+      startY + imageHeight + spacing + 16
+    ); // Position below the heading
 
     // Define table headers and rows
     const headers = [
@@ -283,8 +296,14 @@ const Category = () => {
     // Calculate totals and summary as before...
     const totalAmount = filteredData.reduce((sum, row) => sum + row.amount, 0);
     const total = filteredData.reduce((sum, row) => sum + row.total, 0);
-    const totalPaid = filteredData.reduce((sum, row) => sum + row.payingAmount, 0);
-    const totalPending = filteredData.reduce((sum, row) => sum + row.pendingAmount, 0);
+    const totalPaid = filteredData.reduce(
+      (sum, row) => sum + row.payingAmount,
+      0
+    );
+    const totalPending = filteredData.reduce(
+      (sum, row) => sum + row.pendingAmount,
+      0
+    );
     const totalInWords = toTitleCase(numberToWords.toWords(total));
 
     const additionalFields = [
@@ -296,7 +315,10 @@ const Category = () => {
     ];
 
     const summaryHeaders = [["Summary", ""]];
-    const summaryRows = additionalFields.map((field) => [field.label, field.value]);
+    const summaryRows = additionalFields.map((field) => [
+      field.label,
+      field.value,
+    ]);
 
     // Add the summary table to the PDF
     doc.autoTable({
@@ -319,10 +341,7 @@ const Category = () => {
 
     // Save the PDF
     doc.save(`Complete_${category}_List.pdf`);
-};
-
-
-
+  };
 
   // Function to convert string to title case
   const toTitleCase = (str) => {
@@ -621,25 +640,25 @@ const Category = () => {
     setOpenReceipt(true);
   };
 
-
   const downloadReceipt = () => {
     const receiptElement = document.getElementById("receipt");
-    
-    // Ensure that images are fully loaded before creating the PDF
-    html2pdf().from(receiptElement).set({
-      margin: 0.2,
-      filename: "receipt.pdf",
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: {
-        scale: 2,
-        logging: true, // Set this to true to get logs about image loading
-        useCORS: true, // Enables cross-origin loading for images
-      },
-      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-    }).save();
-  };
-  
 
+    // Ensure that images are fully loaded before creating the PDF
+    html2pdf()
+      .from(receiptElement)
+      .set({
+        margin: 0.2,
+        filename: "receipt.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: {
+          scale: 2,
+          logging: true, // Set this to true to get logs about image loading
+          useCORS: true, // Enables cross-origin loading for images
+        },
+        jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+      })
+      .save();
+  };
 
   return (
     <div>
@@ -675,7 +694,7 @@ const Category = () => {
         <Grid item xs={6} md={1.8}>
           <FormControl fullWidth>
             <TextField
-            size="small"
+              size="small"
               select
               label="Type"
               value={category}
@@ -689,7 +708,7 @@ const Category = () => {
         <Grid item xs={6} md={1.8}>
           <FormControl fullWidth>
             <TextField
-             size="small"
+              size="small"
               select
               label="Date Range"
               value={dateRange}
@@ -709,7 +728,7 @@ const Category = () => {
             <Grid item xs={6} md={1.8}>
               <FormControl fullWidth>
                 <TextField
-                 size="small"
+                  size="small"
                   type="date"
                   label="Start Date"
                   value={customDateStart}
@@ -721,7 +740,7 @@ const Category = () => {
             <Grid item xs={6} md={1.8}>
               <FormControl fullWidth>
                 <TextField
-                 size="small"
+                  size="small"
                   type="date"
                   label="End Date"
                   value={customDateEnd}
@@ -735,7 +754,7 @@ const Category = () => {
         <Grid item xs={6} md={1.8}>
           <FormControl fullWidth>
             <TextField
-             size="small"
+              size="small"
               select
               label="Bill Type"
               value={billType}
@@ -753,7 +772,7 @@ const Category = () => {
         <Grid item xs={6} md={1.8}>
           <FormControl fullWidth>
             <TextField
-             size="small"
+              size="small"
               select
               label="Category"
               value={categoryType}
@@ -771,7 +790,7 @@ const Category = () => {
         <Grid item xs={6} md={1.8}>
           <FormControl fullWidth>
             <TextField
-             size="small"
+              size="small"
               select
               label="Payment Method"
               value={paymentMethod}
@@ -789,7 +808,7 @@ const Category = () => {
         <Grid item xs={6} md={1.8}>
           <FormControl fullWidth>
             <TextField
-             size="small"
+              size="small"
               select
               label="Paid Using"
               value={paidBy}
@@ -807,7 +826,7 @@ const Category = () => {
         <Grid item xs={6} md={1.8}>
           <FormControl fullWidth>
             <TextField
-             size="small"
+              size="small"
               label="Search By User Name"
               value={searchUser}
               onChange={handleSearchUserChange}
@@ -817,7 +836,7 @@ const Category = () => {
         <Grid item xs={6} md={1.8}>
           <FormControl fullWidth>
             <TextField
-             size="small"
+              size="small"
               label="Search By Amount"
               value={amount}
               onChange={handleAmountChange}
@@ -828,7 +847,7 @@ const Category = () => {
         <Grid item xs={6} md={1.8}>
           <FormControl fullWidth>
             <TextField
-             size="small"
+              size="small"
               label="Search By Status"
               value={searchStatus}
               onChange={handleStatusChange}
@@ -893,75 +912,30 @@ const Category = () => {
         onConfirm={handleDelete}
       />
       <Table className="table-root">
-        <TableHead
-          style={{
-            backgroundColor: "#f2f2f2",
-            justifyContent: "center",
-          }}
-        >
-          <TableRow className="MuiTableRow-root">
-            {/* <StyledTableCell style={{ fontWeight: "bold" }}>
+        <TableHead>
+          <TableRow>
+            {/* <StyledTableCell >
               Type
             </StyledTableCell> */}
-            <StyledTableCell style={{ fontWeight: "bold" }}>ID</StyledTableCell>
-            <StyledTableCell style={{ fontWeight: "bold" }}>
-              User
-            </StyledTableCell>
-            <StyledTableCell style={{ fontWeight: "bold" }}>
-              Date
-            </StyledTableCell>
-            <StyledTableCell style={{ fontWeight: "bold" }}>
-              Phone No.
-            </StyledTableCell>
-            <StyledTableCell style={{ fontWeight: "bold" }}>
-              Amount
-            </StyledTableCell>
-            <StyledTableCell
-              style={{ fontWeight: "bold", whiteSpace: "nowrap" }}
-            >
-              GST Amount
-            </StyledTableCell>
-            <StyledTableCell style={{ fontWeight: "bold" }}>
-              Total (+GST)
-            </StyledTableCell>
-            <StyledTableCell style={{ fontWeight: "bold" }}>
-              Paid
-            </StyledTableCell>
-            <StyledTableCell style={{ fontWeight: "bold" }}>
-              Pending
-            </StyledTableCell>
-            <StyledTableCell
-              style={{ fontWeight: "bold", whiteSpace: "nowrap" }}
-            >
-              Due Date
-            </StyledTableCell>
-            <StyledTableCell
-              style={{ fontWeight: "bold", whiteSpace: "nowrap" }}
-            >
-              Bill Type
-            </StyledTableCell>
-            <StyledTableCell
-              style={{ fontWeight: "bold", whiteSpace: "nowrap" }}
-            >
-              Category Type
-            </StyledTableCell>
-            <StyledTableCell
-              style={{ fontWeight: "bold", whiteSpace: "nowrap" }}
-            >
-              Paid Using
-            </StyledTableCell>
-            <StyledTableCell
-              style={{ fontWeight: "bold", whiteSpace: "nowrap" }}
-            >
-              Invoice No
-            </StyledTableCell>
-            <StyledTableCell style={{ fontWeight: "bold" }}>
-              Status
-            </StyledTableCell>
+            <TableCell>ID</TableCell>
+            <TableCell>User</TableCell>
+            <TableCell>Date</TableCell>
+            <TableCell>Phone</TableCell>
+            <TableCell>Amt</TableCell>
+            <TableCell>GST Amt</TableCell>
+            <TableCell>Total(+Gst)</TableCell>
+            <TableCell>Paid</TableCell>
+            <TableCell>Pending</TableCell>
+            <TableCell>Due Date</TableCell>
+            <TableCell>Bill Type</TableCell>
+            <TableCell>Category Type</TableCell>
+            <TableCell>Paid Using</TableCell>
+            <TableCell>Invoice No</TableCell>
+            <TableCell>Status</TableCell>
 
-            <StyledTableCell style={{ fontWeight: "bold", textAlign:'center'}}>
+            <TableCell >
               Actions
-            </StyledTableCell>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -969,42 +943,37 @@ const Category = () => {
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((row) => (
               <TableRow key={row.id}>
-                {/* <StyledTableCell>{row.type}</StyledTableCell> */}
-                <StyledTableCell style={{ whiteSpace: "nowrap" }}>
-                  {row.id}
-                </StyledTableCell>
-                <StyledTableCell style={{ whiteSpace: "nowrap" }}>
+                {/* <TableCell>{row.type}</TableCell> */}
+                <TableCell style={{ whiteSpace: "nowrap" }}>{row.id}</TableCell>
+                <TableCell style={{ whiteSpace: "nowrap" }}>
                   {row.user}
-                </StyledTableCell>
-                <StyledTableCell style={{ whiteSpace: "nowrap" }}>
+                </TableCell>
+                <TableCell style={{ whiteSpace: "nowrap" }}>
                   {" "}
                   {row.date}
-                </StyledTableCell>
-                <StyledTableCell style={{ whiteSpace: "nowrap" }}>
+                </TableCell>
+                <TableCell style={{ whiteSpace: "nowrap" }}>
                   {row.phoneNumber}
-                </StyledTableCell>
-                <StyledTableCell> ₹{row.amount}</StyledTableCell>
-                <StyledTableCell>₹{row.total - row.amount}</StyledTableCell>
-                <StyledTableCell>₹{row.total}</StyledTableCell>
-                <StyledTableCell>₹{row.payingAmount}</StyledTableCell>
-                <StyledTableCell>
+                </TableCell>
+                <TableCell> ₹{row.amount}</TableCell>
+                <TableCell>₹{row.total - row.amount}</TableCell>
+                <TableCell>₹{row.total}</TableCell>
+                <TableCell>₹{row.payingAmount}</TableCell>
+                <TableCell>
                   {row.pendingAmount === 0 ? "NA" : `₹${row.pendingAmount}`}
-                </StyledTableCell>
-                <StyledTableCell style={{ whiteSpace: "nowrap" }}>
+                </TableCell>
+                <TableCell style={{ whiteSpace: "nowrap" }}>
                   {row.duedate ? row.duedate : "NA"}
-                </StyledTableCell>
+                </TableCell>
 
-                <StyledTableCell>{row.billType}</StyledTableCell>
-                <StyledTableCell>{row.category}</StyledTableCell>
-                <StyledTableCell>{row.paidBy}</StyledTableCell>
-                <StyledTableCell>{row.invoiceNo}</StyledTableCell>
-                <StyledTableCell
-                  paymentMethod={row.paymentMethod}
-                  style={{ fontWeight: "bold" }}
-                >
+                <TableCell>{row.billType}</TableCell>
+                <TableCell>{row.category}</TableCell>
+                <TableCell>{row.paidBy}</TableCell>
+                <TableCell>{row.invoiceNo}</TableCell>
+                <TableCell paymentMethod={row.paymentMethod}>
                   {row.paymentMethod}
-                </StyledTableCell>
-                <StyledTableCell style={{ whiteSpace: "nowrap" }}>
+                </TableCell>
+                <TableCell style={{ whiteSpace: "nowrap" }}>
                   <IconButton onClick={() => handleEdit(row)} color="primary">
                     <EditIcon />
                   </IconButton>
@@ -1049,7 +1018,7 @@ const Category = () => {
                   >
                     <PrintIcon />
                   </IconButton>
-                </StyledTableCell>
+                </TableCell>
               </TableRow>
             ))}
         </TableBody>
@@ -1062,8 +1031,6 @@ const Category = () => {
           handleUpdatedData={handleUpdatedData}
         />
       )}
-
-      
 
       <Dialog
         open={openReceipt}
@@ -1119,7 +1086,11 @@ const Category = () => {
                     <img
                       src={employeeDetails.instituteimage}
                       alt="Institute Logo"
-                      style={{ maxWidth: "100px", maxHeight: "100px", borderRadius:'50%'}} // Adjust size as needed
+                      style={{
+                        maxWidth: "100px",
+                        maxHeight: "100px",
+                        borderRadius: "50%",
+                      }} // Adjust size as needed
                     />
                   </Box>
                 )}
@@ -1147,7 +1118,7 @@ const Category = () => {
 
                 <Typography component="span">
                   <Typography component="span" sx={{ fontWeight: "bold" }}>
-                  {selectedRow.type} Receipt
+                    {selectedRow.type} Receipt
                   </Typography>
                 </Typography>
 
@@ -1174,101 +1145,71 @@ const Category = () => {
                   }}
                 >
                   <TableRow>
-                    <TableCell sx={{  fontWeight: "bold" }}>
-                      Name:
-                    </TableCell>
-                    <TableCell sx={{  }}>
-                      {selectedRow.user}
-                    </TableCell>
+                    <TableCell sx={{ fontWeight: "bold" }}>Name:</TableCell>
+                    <TableCell sx={{}}>{selectedRow.user}</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell sx={{  fontWeight: "bold" }}>
-                      Phone No:
-                    </TableCell>
-                    <TableCell sx={{  }}>
-                      {selectedRow.phoneNumber}
-                    </TableCell>
+                    <TableCell sx={{ fontWeight: "bold" }}>Phone No:</TableCell>
+                    <TableCell sx={{}}>{selectedRow.phoneNumber}</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell sx={{  fontWeight: "bold" }}>
+                    <TableCell sx={{ fontWeight: "bold" }}>
                       Category Type:
                     </TableCell>
-                    <TableCell sx={{  }}>
-                      {selectedRow.category}
-                    </TableCell>
+                    <TableCell sx={{}}>{selectedRow.category}</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell sx={{   fontWeight: "bold" }}>
+                    <TableCell sx={{ fontWeight: "bold" }}>
                       Particular:
                     </TableCell>
-                    <TableCell sx={{  }}>
+                    <TableCell sx={{}}>
                       {selectedRow.particular || "-"}
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell sx={{  fontWeight: "bold" }}>
+                    <TableCell sx={{ fontWeight: "bold" }}>
                       Payment Mode:
                     </TableCell>
-                    <TableCell sx={{  }}>
-                      {selectedRow.paidBy}
-                    </TableCell>
+                    <TableCell sx={{}}>{selectedRow.paidBy}</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell sx={{  fontWeight: "bold" }}>
+                    <TableCell sx={{ fontWeight: "bold" }}>
                       Transaction ID:
                     </TableCell>
-                    <TableCell sx={{  }}>
+                    <TableCell sx={{}}>
                       {selectedRow.transactionId || "-"}
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell sx={{   fontWeight: "bold" }}>
-                      Due Date:
-                    </TableCell>
-                    <TableCell sx={{  }}>
+                    <TableCell sx={{ fontWeight: "bold" }}>Due Date:</TableCell>
+                    <TableCell sx={{}}>
                       {selectedRow.duedate || "N/A"}
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell sx={{  fontWeight: "bold" }}>
-                      Amount:
-                    </TableCell>
-                    <TableCell sx={{  }}>
-                      ₹{selectedRow.amount}
-                    </TableCell>
+                    <TableCell sx={{ fontWeight: "bold" }}>Amount:</TableCell>
+                    <TableCell sx={{}}>₹{selectedRow.amount}</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell sx={{   fontWeight: "bold" }}>
-                      GST (%):
-                    </TableCell>
-                    <TableCell sx={{  }}>
+                    <TableCell sx={{ fontWeight: "bold" }}>GST (%):</TableCell>
+                    <TableCell sx={{}}>
                       {selectedRow.gst}% (₹
                       {(selectedRow.gst / 100) * selectedRow.amount})
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell sx={{  fontWeight: "bold" }}>
-                      Paid:
-                    </TableCell>
-                    <TableCell sx={{  }}>
-                      ₹{selectedRow.payingAmount}
-                    </TableCell>
+                    <TableCell sx={{ fontWeight: "bold" }}>Paid:</TableCell>
+                    <TableCell sx={{}}>₹{selectedRow.payingAmount}</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell sx={{   fontWeight: "bold" }}>
-                      Pending:
-                    </TableCell>
-                    <TableCell sx={{  }}>
-                      ₹{selectedRow.pendingAmount}
-                    </TableCell>
+                    <TableCell sx={{ fontWeight: "bold" }}>Pending:</TableCell>
+                    <TableCell sx={{}}>₹{selectedRow.pendingAmount}</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell sx={{  fontWeight: "bold" }}>
+                    <TableCell sx={{ fontWeight: "bold" }}>
                       Total Amount (+GST):
                     </TableCell>
-                    <TableCell sx={{  }}>
-                      ₹{selectedRow.total}
-                    </TableCell>
+                    <TableCell sx={{}}>₹{selectedRow.total}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>

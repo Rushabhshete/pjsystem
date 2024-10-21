@@ -38,7 +38,6 @@ function Category() {
     localStorage.getItem("institutecode") || ""
   );
 
-
   const fetchData = async () => {
     setLoading(true);
     setError(null);
@@ -113,7 +112,6 @@ function Category() {
     setShowInfoModal(true);
   };
 
-
   const [formData, setFormData] = useState({
     categoryName: "",
     bonusPercentage: "",
@@ -183,7 +181,7 @@ function Category() {
                 variant="outlined"
               />
             </Grid>
-           
+
             <Grid item xs={12} sm={4}>
               <TextField
                 required
@@ -359,7 +357,12 @@ function Category() {
                 variant="outlined"
               />
             </Grid>
-            <Grid container justifyContent="center" alignItems="center" marginTop={3}>
+            <Grid
+              container
+              justifyContent="center"
+              alignItems="center"
+              marginTop={3}
+            >
               <Grid item xs={1}>
                 <Button type="submit" variant="contained" color="primary">
                   Submit
@@ -374,92 +377,44 @@ function Category() {
         {loading && <CircularProgress />}
         {error && <Alert severity="error">{error}</Alert>}
         <TableContainer component={Paper} sx={{ marginTop: "20px" }}>
-          <Table>
-            <TableHead sx={{ background: "#f2f2f2" }}>
+          <Table className="table-root">
+            <TableHead>
               <TableRow>
                 {/* <TableCell>
-                  <Typography variant="subtitle2" fontWeight="bold">
+                  <Typography  >
                     ID
                   </Typography>
                 </TableCell> */}
-                <TableCell>
-                  <Typography variant="subtitle2" fontWeight="bold">
-                    Category Name
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="subtitle2" fontWeight="bold">
-                    HRA Percentage
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="subtitle2" fontWeight="bold">
-                    TA Percentage
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="subtitle2" fontWeight="bold">
-                    Incentive Percentage
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="subtitle2" fontWeight="bold">
-                    SPI Percentage
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="subtitle2" fontWeight="bold">
-                    Medical Percentage
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="subtitle2" fontWeight="bold">
-                    PF Percentage
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="subtitle2" fontWeight="bold">
-                    ESIC Percentage
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="subtitle2" fontWeight="bold">
-                    Professional Tax Percentage
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="subtitle2" fontWeight="bold">
-                    Income Tax Percentage
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="subtitle2" fontWeight="bold">
-                    Total Paid Leaves
-                  </Typography>
-                </TableCell>
-                <TableCell sx={{ textAlign: "center" }}>
-                  <Typography variant="subtitle2" fontWeight="bold">
-                    Actions
-                  </Typography>
-                </TableCell>
+                <TableCell>Category</TableCell>
+                <TableCell>HRA %</TableCell>
+                <TableCell>TA %</TableCell>
+                <TableCell>Incentive %</TableCell>
+                <TableCell>SPI %</TableCell>
+                <TableCell>Medical %</TableCell>
+                <TableCell>PF %</TableCell>
+                <TableCell>ESIC %</TableCell>
+                <TableCell>Professional Tax %</TableCell>
+                <TableCell>Income Tax %</TableCell>
+                <TableCell>Total Paid Leaves</TableCell>
+                <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {categories.map((category) => (
                 <TableRow key={category.id}>
                   {/* <TableCell>{category.id}</TableCell> */}
-                  <TableCell>{ category. categoryName}</TableCell>
-                  <TableCell>{category. hraPercentage}%</TableCell>
-                  <TableCell>{category. taPercentage}%</TableCell>
-                  <TableCell>{category. incentivePercentage}%</TableCell>
-                  <TableCell>{category. spiPercentage}%</TableCell>
-                  <TableCell>{category. medicalAllowancePercentage}%</TableCell>
-                  <TableCell>{category. pfPercentage}%</TableCell>
-                  <TableCell>{category. esicPercentage}%</TableCell>
-                  <TableCell>{category. professionalTaxPercentage}%</TableCell>
-                  <TableCell>{category. incomeTaxPercentage}%</TableCell>
-                  <TableCell>{ category. totalPaidLeave}</TableCell>
-                  <TableCell sx={{ whiteSpace: "nowrap" }}>
+                  <TableCell>{category.categoryName}</TableCell>
+                  <TableCell>{category.hraPercentage}%</TableCell>
+                  <TableCell>{category.taPercentage}%</TableCell>
+                  <TableCell>{category.incentivePercentage}%</TableCell>
+                  <TableCell>{category.spiPercentage}%</TableCell>
+                  <TableCell>{category.medicalAllowancePercentage}%</TableCell>
+                  <TableCell>{category.pfPercentage}%</TableCell>
+                  <TableCell>{category.esicPercentage}%</TableCell>
+                  <TableCell>{category.professionalTaxPercentage}%</TableCell>
+                  <TableCell>{category.incomeTaxPercentage}%</TableCell>
+                  <TableCell>{category.totalPaidLeave}</TableCell>
+                  <TableCell>
                     <IconButton
                       onClick={() => handleInfo(category)}
                       color="primary"
@@ -641,7 +596,7 @@ function Category() {
               </Grid>{" "}
             </Form>
           </Modal.Body>
-        </Modal> 
+        </Modal>
 
         {/* Info Modal */}
         <Modal show={showInfoModal} onHide={() => setShowInfoModal(false)}>

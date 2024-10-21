@@ -888,7 +888,7 @@ const AddUser = () => {
         onConfirm={handleDelete}
       />
       <TableContainer>
-        <Table sx={{ minWidth: 250, justifyContent: "center", marginTop: 3 }}>
+        <Table className="table-root">
           <TableHead>
             <TableRow>
               <TableCell
@@ -901,20 +901,12 @@ const AddUser = () => {
                 ID
               </TableCell>
               <TableCell
-                sx={{
-                  padding: "4px",
-                  fontWeight: "bold",
-                  backgroundColor: "#f5f5f5",
-                }}
+               
               >
                 User Name
               </TableCell>
               <TableCell
-                sx={{
-                  padding: "4px",
-                  fontWeight: "bold",
-                  backgroundColor: "#f5f5f5",
-                }}
+               
               >
                 Actions
               </TableCell>
@@ -923,9 +915,9 @@ const AddUser = () => {
           <TableBody>
             {filteredUsers.map((user) => (
               <TableRow key={user.id}>
-                <TableCell sx={{ padding: "4px" }}>{user.id}</TableCell>
-                <TableCell sx={{ padding: "4px" }}>{user.userName}</TableCell>
-                <TableCell sx={{ padding: "4px" }}>
+                <TableCell>{user.id}</TableCell>
+                <TableCell>{user.userName}</TableCell>
+                <TableCell>
                   {/* <Button
                     onClick={() => handleEditClickOpen(user.id)}
                     color="primary"

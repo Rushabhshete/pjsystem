@@ -771,6 +771,7 @@ const IncomeExpenseDashboard = () => {
                 label="Year"
                 value={year}
                 onChange={handleYearChange}
+                size="small"
               >
                 {years.map((year) => (
                   <MenuItem key={year} value={year}>
@@ -808,6 +809,7 @@ const IncomeExpenseDashboard = () => {
                 value={year}
                 onChange={handleYearChange}
                 fullWidth
+                size="small"
               >
                 {years.map((year) => (
                   <MenuItem key={year} value={year}>
@@ -823,6 +825,7 @@ const IncomeExpenseDashboard = () => {
                 value={month}
                 onChange={handleMonthChange}
                 fullWidth
+                size="small"
               >
                 {months.map((month, index) => (
                   <MenuItem key={month} value={index + 1}>

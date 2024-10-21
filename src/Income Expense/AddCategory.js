@@ -396,37 +396,21 @@ const AddCategory = () => {
       </Snackbar>
 
       <TableContainer>
-        <Table sx={{ minWidth: 250, marginTop: 3, justifyContent: "center" }}>
-          <TableHead style={{ backgroundColor: "#f2f2f2" }}>
+        <Table className="table-root">
+          <TableHead >
             <TableRow>
               <TableCell
-                style={{
-                  fontWeight: "bold",
-                  padding: "4px",
-                  fontWeight: "bold",
-                  backgroundColor: "#f5f5f5",
-                }}
+               
               >
                 ID
               </TableCell>
               <TableCell
-                style={{
-                  fontWeight: "bold",
-                  padding: "4px",
-                  fontWeight: "bold",
-                  backgroundColor: "#f5f5f5",
-                }}
+               
               >
                 Category Name
               </TableCell>
               <TableCell
-                style={{
-                  fontWeight: "bold",
-                  whiteSpace: "nowrap",
-                  padding: "4px",
-                  fontWeight: "bold",
-                  backgroundColor: "#f5f5f5",
-                }}
+               
               >
                 Actions
               </TableCell>
@@ -435,11 +419,11 @@ const AddCategory = () => {
           <TableBody>
             {filteredCategories.map((category) => (
               <TableRow key={category.id}>
-                <TableCell sx={{ padding: "4px" }}>{category.id}</TableCell>
-                <TableCell sx={{ padding: "4px" }}>
+                <TableCell>{category.id}</TableCell>
+                <TableCell>
                   {category.categoryName}
                 </TableCell>
-                <TableCell style={{ whiteSpace: "nowrap", padding: "4px" }}>
+                <TableCell >
                   {/* <Button
                     variant="contained"
                     color="primary"

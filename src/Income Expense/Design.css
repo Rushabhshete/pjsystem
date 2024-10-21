@@ -1,78 +1,81 @@
-.textField-root .MuiInputBase-root {
-  background-color: #fff; /* Set background color for input field */
-  border: #000000;
-  border-radius: 8px; /* Set border radius */
-  font-size: 14px; /* Adjust font size for input field */
-  font-family: 'Poppins', sans-serif; /* Ensure Poppins is used */
+.textField-root .MuiInputBase-root { 
+  background-color: #fff; 
+  border: #000000; 
+  border-radius: 8px; 
+  font-size: 14px; 
+  font-family: 'Poppins', sans-serif;
 }
 
-.textField-root .MuiOutlinedInput-notchedOutline {
-  border: 1px solid #bbb9b9; /* Set border color and thickness */
-  font-family: 'Poppins', sans-serif; /* Ensure Poppins is used */
+.textField-root .MuiOutlinedInput-notchedOutline { 
+  border: 1px solid #bbb9b9; 
+  font-family: 'Poppins', sans-serif;
 }
 
-.textField-root .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
-  border-color: #000000; /* Change border color on hover */
-  font-family: 'Poppins', sans-serif; /* Ensure Poppins is used */
+.textField-root .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline { 
+  border-color: #000000; 
+  font-family: 'Poppins', sans-serif;
 }
 
-.textField-root .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-  border-color: #6200ea; /* Change border color when focused */
-  font-family: 'Poppins', sans-serif; /* Ensure Poppins is used */
+.textField-root .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline { 
+  border-color: #6200ea; 
+  font-family: 'Poppins', sans-serif;
 }
 
-.textField-root .MuiInputLabel-outlined.Mui-focused {
-  background-image: linear-gradient(88.8deg, rgb(239, 171, 245) 13.4%, rgb(196, 181, 249) 76.3%); /* Background color for the label when focused */
-  padding: 0 20px; /* Padding to ensure the label text is not cut off */
-  border-radius: 10px; /* Border radius for the label background */
-  color: #333;
-  font-size: 14px; /* Adjust font size for label */
-  font-family: 'Poppins', sans-serif; /* Ensure Poppins is used */
+.textField-root .MuiInputLabel-outlined.Mui-focused { 
+  background-image: linear-gradient(88.8deg, rgb(239, 171, 245) 13.4%, rgb(196, 181, 249) 76.3%); 
+  padding: 0 20px; 
+  border-radius: 10px; 
+  color: #333; 
+  font-size: 14px; 
+  font-family: 'Poppins', sans-serif;
 }
 
-/* Optional: Set font size for unfocused label */
-.textField-root .MuiInputLabel-outlined {
-  font-size: 14px; /* Adjust font size for unfocused label */
-  font-family: 'Poppins', sans-serif; /* Ensure Poppins is used */
+.textField-root .MuiInputLabel-outlined { 
+  font-size: 14px; 
+  font-family: 'Poppins', sans-serif;
 }
 
-/* Ensure Poppins is used for all MUI components */
-.MuiButton-root,
-.MuiTypography-root,
-.MuiDialogTitle-root,
-.MuiDialogContent-root,
-.MuiMenuItem-root,
-.MuiFormControl-root,
-.MuiTableCell-root,
-.MuiTableRow-root {
-  font-family: 'Poppins', sans-serif; /* Ensure Poppins is used */
+.MuiButton-root, .MuiTypography-root, .MuiDialogTitle-root, .MuiDialogContent-root, .MuiMenuItem-root, .MuiFormControl-root, .MuiTableCell-root, .MuiTableRow-root { 
+  font-family: 'Poppins', sans-serif;
 }
 
-
-/* Styles for the Table and its cells */
-.table-root .MuiTableCell-root {
-  font-size: 12px; /* Adjust font size for table cells (reduced size) */
-  padding: 4px 4px 4px 4px; /* Adjust padding if necessary */
-  font-family: 'Poppins', sans-serif; /* Ensure Poppins is used */
+.table-root .MuiTableCell-root { 
+  font-size: 12px; 
+  padding: 4px; 
+  font-family: 'Poppins', sans-serif;
 }
 
-.table-root .MuiTableHead-root .MuiTableCell-root {
-  font-weight: bold; /* Keep bold for header */
- 
+.table-root .MuiTableHead-root .MuiTableCell-root { 
+  font-weight: bold; 
+  font-size: 14px; 
+  white-space: nowrap; 
+  text-align: center;
+}
+
+.table-root .MuiTableHead-root { 
+  text-align: center; 
+  background-color: #f2f2f2;
+}
+
+.table-root .MuiTableCell-root { 
   white-space: nowrap;
 }
 
-.table-root .MuiTableHead-root{
-  text-align: center;
-}
-/* Vertical lines */
-.table-root .MuiTableCell-root {
- /* Vertical line between columns */
- white-space: nowrap;
+.table-root .MuiTableCell-root:last-child { 
+  border-right: none;
 }
 
-.table-root .MuiTableCell-root:last-child {
-  border-right: none; /* Remove right border from the last column */
+.table-root .MuiTableRow-root { 
+  font-weight: bold; 
+  text-align: left; /* Align text to the left */
+}
+
+.table-root .MuiTableCell-root { 
+  text-align: left; /* Align table cell content to the left */
+}
+
+.table-root .MuiTableCell-root, .table-root .MuiTableHead-root { 
+  text-align: center; /* Center the header */
 }
 
 

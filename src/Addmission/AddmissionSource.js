@@ -214,13 +214,13 @@ const AddmissionSource = () => {
       </Grid>
 
       <Box mt={2}>
-      <TableContainer sx={{ width: "100%" }}>
-        <Table size="small" aria-label="source table" sx={{ width: "100%" }}>
-          <TableHead sx={{ backgroundColor: "#f2f2f2" }}>
-            <TableRow>
-              <StyledTableHeader>ID</StyledTableHeader>
-              <StyledTableHeader>Source Name</StyledTableHeader>
-              <StyledTableHeader>Actions</StyledTableHeader>
+      <TableContainer >
+        <Table className="table-root">
+          <TableHead >
+            <TableRow >
+              <TableCell>ID</TableCell>
+              <TableCell>Source Name</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
