@@ -342,6 +342,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { styled } from '@mui/system';
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+// Initialize SweetAlert2
+const MySwal = withReactContent(Swal);
 
 const Department = () => {
   const [department, setDepartment] = useState('');
@@ -364,7 +369,7 @@ const Department = () => {
       setDepartments(response.data);
     } catch (error) {
       console.error('Error fetching departments:', error);
-      toast.error('Failed to fetch departments');
+      MySwal.fire("Error","Failed to Fetch Department","error");
     }
   };
 
@@ -379,12 +384,12 @@ const Department = () => {
   const handleAddSubmit = async () => {
     try {
       await axios.post(`http://localhost:8082/departments/addDepartment?institutecode=${institutecode}`, { department });
-      toast.success('Department added successfully');
+      MySwal.fire("Success", "Department Added Successfully", "success");
       setOpenAddDialog(false);
       setDepartment('');
       fetchDepartments();
     } catch (error) {
-      toast.error('Failed to add department');
+      MySwal.fire("Error","Failed to add department","error");
     }
   };
 
@@ -399,15 +404,26 @@ const Department = () => {
   //   }
   // };
 
-  const handleDeleteSubmit = async () => {
+  const handleDeleteSubmit = async (id) => {
+    const { isConfirmed } = await MySwal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+    });
+
+    if (isConfirmed) {
     try {
-      await axios.delete(`http://localhost:8082/departments/deleteDepartment/${currentDepartment.id}`);
-      toast.success('Department deleted successfully');
+      await axios.delete(`http://localhost:8082/departments/deleteDepartment/${id}`);
+      MySwal.fire("Success", "Department Deleted Successfully", "success");
       setOpenDeleteDialog(false);
       fetchDepartments();
     } catch (error) {
-      toast.error('Failed to delete department');
+      MySwal.fire("Error","Failed to delete department","error");
     }
+  }
   };
 
   return (
@@ -470,8 +486,7 @@ const Department = () => {
                   </Button> */}
                   <Button  size="small"
                         variant="contained" color="error" onClick={() => {
-                    setCurrentDepartment(department);
-                    setOpenDeleteDialog(true);
+                          handleDeleteSubmit(department.id);
                   }} >
                     Delete
                   </Button>

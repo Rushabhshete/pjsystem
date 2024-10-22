@@ -564,6 +564,11 @@ import { styled } from "@mui/system";
 import MuiAlert from "@mui/material/Alert";
 import Calendar from 'react-awesome-calendar';  // Import the calendar
 import { Edit, Delete } from '@mui/icons-material'; // Import Material Icons
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+// Initialize SweetAlert2
+const MySwal = withReactContent(Swal);
 
 const Alert = React.forwardRef((props, ref) => (
   <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
@@ -698,8 +703,7 @@ const ManageHoliday = () => {
         );
   
         if (response.ok) {
-          setSnackbarMessage("User added successfully");
-          setSnackbarOpen(true);
+          MySwal.fire("Success", "User Added Successfully", "success");
   
           const updatedResponse = await fetch(
             `http://localhost:8082/getAllHolidays?institutecode=${getInstituteCode()}`
@@ -717,6 +721,7 @@ const ManageHoliday = () => {
       } catch (error) {
         console.error("Error adding holidayName: ", error);
         setError("Failed to add holidayName");
+
       }
     }
   };
@@ -780,8 +785,7 @@ const ManageHoliday = () => {
           );
           const updatedUser = await updatedResponse.json();
           setUsers(updatedUser);
-          setSnackbarMessage("User updated successfully");
-          setSnackbarOpen(true);
+          MySwal.fire("Success", "Holiday Updated Successfully", "success");
           handleEditClose();
         } else {
           setError("Failed to update user");
@@ -789,34 +793,44 @@ const ManageHoliday = () => {
       } catch (error) {
         console.error("Error updating user: ", error);
         setError("Failed to update user");
+        MySwal.fire("Error","Failed to update user","error");
       }
     }
   };
 
   const handleDelete = async (id) => {
-    try {
-      const response = await fetch(
-        `http://localhost:8082/deleteHoliday/${id}`,
-        {
-          method: "DELETE",
+    MySwal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const response = await fetch(`http://localhost:8082/deleteHoliday/${id}`, {
+            method: "DELETE",
+          });
+  
+          if (response.ok) {
+            const updatedResponse = await fetch(
+              `http://localhost:8082/getAllHolidays?institutecode=${getInstituteCode()}`
+            );
+            const updatedUser = await updatedResponse.json();
+            setUsers(updatedUser);
+            MySwal.fire("Deleted!", "The holiday has been deleted.", "success");
+          } else {
+            MySwal.fire("Error", "Failed to delete the holiday.", "error");
+          }
+        } catch (error) {
+          MySwal.fire("Error", "An error occurred while deleting the holiday.", "error");
         }
-      );
-      if (response.ok) {
-        const updatedResponse = await fetch(
-          `http://localhost:8082/getAllHolidays?institutecode=${getInstituteCode()}`
-        );
-        const updatedUser = await updatedResponse.json();
-        setUsers(updatedUser);
-        setSnackbarMessage("User deleted successfully");
-        setSnackbarOpen(true);
-        setUserIdToDelete(null);
-      } else {
-        console.error("Failed to delete user");
       }
-    } catch (error) {
-      console.error("Error deleting user: ", error);
-    }
+    });
   };
+  
 
   const PopTypography = styled(Typography)`
     @keyframes pop {
@@ -903,9 +917,15 @@ const ManageHoliday = () => {
                   <Button onClick={() => handleEditClickOpen(user.id)} color="primary">
                     <Edit />
                   </Button>
-                  <Button onClick={() => { setUserIdToDelete(user.id); setConfirmOpen(true); }} color="error">
-                    <Delete />
-                  </Button>
+                  <Button
+  onClick={() => {
+    handleDelete(user.id);
+  }}
+  color="error"
+>
+  <Delete />
+</Button>
+
                 </TableCell>
               </TableRow>
             ))}

@@ -28,6 +28,11 @@ import Userservice from "./Userservice";
 import { toast } from "react-toastify";
 import BadgeIcon from "@mui/icons-material/Badge";
 import axios from "axios";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+// Initialize SweetAlert2
+const MySwal = withReactContent(Swal);
 
 const EmployeeList = () => {
   const [users, setUsers] = useState([]);
@@ -92,7 +97,7 @@ const EmployeeList = () => {
         setUniqueDesignations(designations);
       } catch (error) {
         console.error("Error fetching users:", error);
-        toast.error("Error fetching users.");
+        MySwal.fire("Error","Failed to  fetching users","error");
       }
     };
 
@@ -131,10 +136,16 @@ const EmployeeList = () => {
   ]);
 
   const handleCancel = async (empID) => {
-    const confirmation = window.confirm(
-      "Are You Sure You Want To Terminate This Employee?"
-    );
-    if (confirmation) {
+    MySwal.fire({
+      title: "Are you sure?",
+      text: "Do you want to terminate this employee?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, terminate!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
       try {
         const response = await axios.put(
           `http://localhost:8082/updateEmployeeStatus/${empID}`,
@@ -143,14 +154,15 @@ const EmployeeList = () => {
           }
         );
         if (response.status === 200) {
-          // toast.success('Employee status updated successfully.');
+          MySwal.fire("Success", "Employee Status Updated Successfully", "success");
         }
         fetchUsers(); // Refresh users after status update
       } catch (error) {
         console.error("Error updating employee status:", error);
-        toast.error("Error updating employee status.");
+        MySwal.fire("Error","Error updating employee status","error");
       }
     }
+    });
   };
 
   useEffect(() => {
@@ -160,7 +172,7 @@ const EmployeeList = () => {
         setUsers(response.data);
         setFilteredUsers(response.data);
       } catch (error) {
-        toast.error("Error fetching users.");
+        MySwal.fire("Error","Error fetching users","error");
       }
     };
     fetchUsers();
@@ -201,19 +213,26 @@ const EmployeeList = () => {
   };
 
   const handleDelete = async (userId) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this employee?"
-    );
-    if (confirmDelete) {
+    MySwal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
       try {
         await Userservice.deleteUser(userId);
         const updatedUsers = users.filter((user) => user.empID !== userId);
         setUsers(updatedUsers);
-        toast.success("Employee deleted successfully");
+        MySwal.fire("Success", "Employee Deleted Successfully", "success");
       } catch (error) {
-        toast.error("Error deleting employee.");
+        MySwal.fire("Error","Failed to Delete Employee","error");
       }
     }
+  });
   };
 
   const handleCloseIDDialog = () => {

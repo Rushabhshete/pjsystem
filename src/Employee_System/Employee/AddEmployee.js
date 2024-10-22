@@ -10,6 +10,7 @@ import EmployeeDetails from "../Employee/EmployeeDetails";
 import PreviewComponent from "../Employee/PreviewComponent"; // Import PreviewComponent
 //import '../../CSS/asterick.css';
 import { styled } from "@mui/system";
+import Swal from "sweetalert2"; // Import SweetAlert2
 
 const UserComponent = () => {
   const [user, setUser] = useState([]);
@@ -168,6 +169,7 @@ const UserComponent = () => {
         const result = await response.json();
         setEmail(result.email);
         console.log("Generated emailAddress:", result.email);
+        Swal.fire("Success", "Employee added successfully!", "success");
         setCurrentPage(3); // Move to document upload page
       } else {
         const errorMessage = await response.text();
@@ -184,7 +186,7 @@ const UserComponent = () => {
     // Assuming you have the logic to upload the document
     // Once the document is uploaded, we can move to the preview page
     setCurrentPage(4);
-    toast.success("Form submitted successfully!");
+    Swal.fire("Success", "Form submitted successfully!", "success");
   };
 
   const validateForm = () => {
@@ -239,10 +241,18 @@ const UserComponent = () => {
     return true;
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (currentPage === 2) {
-      if (window.confirm("Are you sure you want to submit the form?")) {
+      if (await Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to submit the form?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Submit",
+        cancelButtonText: "Cancel",
+      }).then(result => result.isConfirmed)) {
         await handleSubmitData();
       }
     } else if (currentPage === 3) {

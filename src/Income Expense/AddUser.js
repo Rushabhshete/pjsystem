@@ -494,6 +494,11 @@ import {
 import { styled } from "@mui/system";
 import MuiAlert from "@mui/material/Alert";
 import { toast, ToastContainer } from "react-toastify";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+// Initialize SweetAlert2
+const MySwal = withReactContent(Swal);
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -613,7 +618,7 @@ const AddUser = () => {
         );
 
         if (response.ok) {
-          toast.success("User added successfully");
+          MySwal.fire("Success", "User Added Successfully", "success");
 
           const updatedResponse = await fetch(
             `http://localhost:8087/users/getAllUserByinstitutecode?institutecode=${getInstituteCode()}`
@@ -626,12 +631,12 @@ const AddUser = () => {
           handleClose();
         } else {
           setError("Failed to add user");
-          toast.error("Failed to add user");
+          MySwal.fire("Error","Failed to add user","error");
         }
       } catch (error) {
         console.error("Error adding user: ", error);
         setError("Failed to add user");
-        toast.error("Failed to add user");
+        MySwal.fire("Error","Failed to add user","error");
       }
     }
   };
@@ -700,10 +705,26 @@ const AddUser = () => {
   //   }
   // };
 
-  const handleDelete = async () => {
+  const handleDeleteClick = (id) => {
+    MySwal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleDelete(id); // Proceed with deletion if confirmed
+      }
+    });
+  };
+
+  const handleDelete = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:8087/users/delete/${userIdToDelete}`,
+        `http://localhost:8087/users/delete/${id}`,
         {
           method: "DELETE",
         }
@@ -714,8 +735,7 @@ const AddUser = () => {
         );
         const updatedUser = await updatedResponse.json();
         setUsers(updatedUser);
-        setSnackbarMessage("User deleted successfully");
-        setSnackbarOpen(true);
+        MySwal.fire("Deleted!", "User has been deleted.", "success"); // Success message
         setUserIdToDelete(null);
       } else {
         console.error("Failed to delete user");
@@ -928,8 +948,8 @@ const AddUser = () => {
                   </Button> */}
                   <Button
                     onClick={() => {
-                      setUserIdToDelete(user.id);
-                      setConfirmOpen(true);
+                      handleDeleteClick(user.id);
+                      // setConfirmOpen(true);
                     }}
                     color="error"
                     variant="contained"

@@ -138,14 +138,16 @@ import {
   MenuItem,
   Typography,
   Grid,
+  Button,
 } from "@mui/material";
-import { ResponsiveBar } from '@nivo/bar';
+import { ResponsiveBar } from "@nivo/bar";
 
 const MonthlyGraph = () => {
   const currentYear = new Date().getFullYear();
   const [selectedYear, setSelectedYear] = useState(currentYear);
   const [chartData, setChartData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showAdmissions, setShowAdmissions] = useState(true); // To toggle between graphs
 
   // Create an array for years from 5 years in the past to 5 years in the future
   const years = Array.from({ length: 11 }, (_, i) => currentYear - 5 + i);
@@ -175,11 +177,10 @@ const MonthlyGraph = () => {
           "DEC",
         ];
 
-        // Format the data to include both admissionsCount and revenue for each month
         const formattedData = months.map((month) => ({
           month,
-          admissions: data[month]?.admissionsCount || 0,
-          revenue: data[month]?.revenue || 0,
+          admissionsCount: data[month]?.admissionsCount || 0, // admissions count
+          revenue: data[month]?.revenue || 0, // revenue
         }));
 
         setChartData(formattedData);
@@ -192,6 +193,11 @@ const MonthlyGraph = () => {
 
     fetchMonthlyData();
   }, [selectedYear]);
+
+  // Toggle between the two graphs
+  const toggleGraph = () => {
+    setShowAdmissions((prev) => !prev);
+  };
 
   if (loading) {
     return <CircularProgress />;
@@ -207,8 +213,9 @@ const MonthlyGraph = () => {
         className="textField-root"
       >
         <Typography variant="body1">
-          Monthly Admissions & Revenue
+          {showAdmissions ? "Monthly Admissions" : "Monthly Revenue"}
         </Typography>
+
         <Grid item xs={12} md={3}>
           <TextField
             select
@@ -226,58 +233,50 @@ const MonthlyGraph = () => {
             ))}
           </TextField>
         </Grid>
+
+        {/* Button to toggle between the graphs */}
+        <Grid item xs={12} md={3}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={toggleGraph}
+            style={{ float: "right" }}
+          >
+            {showAdmissions ? "Revenue" : "Admissions"}
+          </Button>
+        </Grid>
       </Grid>
-      <div style={{ height: '400px' }}>
+
+      <div style={{ height: "400px", marginTop: "20px" }}>
         <ResponsiveBar
           data={chartData}
-          keys={['admissions', 'revenue']} // Keys for admissions and revenue
-          indexBy="month" // The key for the x-axis labels (months)
+          keys={showAdmissions ? ["admissionsCount"] : ["revenue"]} // Toggle keys between admissionsCount and revenue
+          indexBy="month" // The key for the x-axis labels
           margin={{ top: 50, right: 50, bottom: 50, left: 60 }}
           padding={0.3}
-          colors={['#FF6F61', '#6FA4FF']} // Colors for admissions and revenue
+          colors={showAdmissions ? "#FF6F61" : "#3498DB"} // Color based on the graph
           axisBottom={{
             tickSize: 5,
             tickPadding: 5,
             tickRotation: -20,
-            legend: 'Month',
-            legendPosition: 'middle',
+            legend: "Month",
+            legendPosition: "middle",
             legendOffset: 32,
           }}
           axisLeft={{
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'Value',
-            legendPosition: 'middle',
+            legend: showAdmissions
+              ? "Number of Admissions"
+              : "Revenue (in INR)", // Axis label changes based on graph
+            legendPosition: "middle",
             legendOffset: -40,
           }}
           labelSkipWidth={12}
           labelSkipHeight={12}
-          labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
-          legends={[
-            {
-              dataFrom: 'keys',
-              anchor: 'bottom-right',
-              direction: 'column',
-              justify: false,
-              translateX: 120,
-              translateY: 0,
-              itemsSpacing: 2,
-              itemWidth: 100,
-              itemHeight: 20,
-              itemDirection: 'left-to-right',
-              itemOpacity: 0.85,
-              symbolSize: 20,
-              effects: [
-                {
-                  on: 'hover',
-                  style: {
-                    itemOpacity: 1
-                  }
-                }
-              ]
-            }
-          ]}
+          labelTextColor={{ from: "color", modifiers: [["darker", 1.6]] }}
+          legends={[]}
         />
       </div>
     </div>

@@ -195,19 +195,9 @@ import {
   TextField,
   MenuItem,
   Grid,
-  Paper,
   Typography,
 } from "@mui/material";
-import {
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  CartesianGrid,
-} from "recharts";
+import { ResponsiveBar } from "@nivo/bar";
 
 const YearlyGraph = () => {
   const currentYear = new Date().getFullYear();
@@ -312,7 +302,7 @@ const YearlyGraph = () => {
     <div>
       {/* Year and Month Select */}
       <Grid container spacing={3} justifyContent="center">
-      <Grid item xs={12} sm={2} className="textField-root">
+        <Grid item xs={12} sm={2} className="textField-root">
           <TextField
             select
             label="Select Month"
@@ -348,50 +338,105 @@ const YearlyGraph = () => {
             ))}
           </TextField>
         </Grid>
-       
       </Grid>
 
       {/* Graphs in the same row */}
       <Grid container spacing={3} style={{ marginTop: "20px" }}>
         {/* Revenue Graph */}
         <Grid item xs={12} sm={6}>
-          <Typography variant="body1" align="center" marginBottom={'10px'}>
+          <Typography variant="body1" align="center" marginBottom={"10px"}>
             Daily Revenue for {monthNames[selectedMonth]} {selectedYear}
           </Typography>
           {revenueLoading ? (
             <CircularProgress />
           ) : (
-            <ResponsiveContainer width="100%" height={400}>
-              <BarChart data={revenueData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="Revenue" fill="#FF6F61" />
-              </BarChart>
-            </ResponsiveContainer>
+            <div style={{ height: 400 }}>
+              <ResponsiveBar
+                data={revenueData}
+                keys={["Revenue"]}
+                indexBy="date"
+                margin={{ top: 50, right: 5, bottom: 50, left: 60 }}
+                padding={0.3}
+                valueScale={{ type: "linear" }}
+                indexScale={{ type: "band", round: true }}
+                colors={["#FF6F61"]}
+                borderColor={{
+                  from: "color",
+                  modifiers: [["darker", 1.6]],
+                }}
+                axisTop={null}
+                axisRight={null}
+                axisBottom={{
+                  tickSize: 5,
+                  tickPadding: 5,
+                  tickRotation: -45,
+                  legendPosition: "middle",
+                  legendOffset: 32,
+                }}
+                axisLeft={{
+                  tickSize: 5,
+                  tickPadding: 5,
+                  tickRotation: 0,
+                  legend: "Revenue",
+                  legendPosition: "middle",
+                  legendOffset: -55,
+                }}
+                tooltip={({ indexValue, value }) => (
+                  <div>
+                    <strong>{indexValue}:</strong> ${value}
+                  </div>
+                )}
+              />
+            </div>
           )}
         </Grid>
 
         {/* Admissions Graph */}
         <Grid item xs={12} sm={6}>
-          <Typography variant="body1" align="center" marginBottom={'10px'}>
+          <Typography variant="body1" align="center" marginBottom={"10px"}>
             Daily Admissions for {monthNames[selectedMonth]} {selectedYear}
           </Typography>
           {loading ? (
             <CircularProgress />
           ) : (
-            <ResponsiveContainer width="100%" height={400}>
-              <BarChart data={chartData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="Admissions" fill="#3498DB" />
-              </BarChart>
-            </ResponsiveContainer>
+            <div style={{ height: 400 }}>
+              <ResponsiveBar
+                data={chartData}
+                keys={["Admissions"]}
+                indexBy="date"
+                margin={{ top: 50, right: 5, bottom: 50, left: 60 }}
+                padding={0.3}
+                valueScale={{ type: "linear" }}
+                indexScale={{ type: "band", round: true }}
+                colors={["#3498DB"]}
+                borderColor={{
+                  from: "color",
+                  modifiers: [["darker", 1.6]],
+                }}
+                axisTop={null}
+                axisRight={null}
+                axisBottom={{
+                  tickRotation: -45, // Rotate the labels by -45 degrees
+                  tickSize: 5,
+                  tickPadding: 5,
+                  legendPosition: "middle",
+                  legendOffset: 32,
+                }}
+                axisLeft={{
+                  tickSize: 5,
+                  tickPadding: 5,
+                  tickRotation: 0,
+                  legend: "Admissions",
+                  legendPosition: "middle",
+                  legendOffset: -40,
+                }}
+                tooltip={({ indexValue, value }) => (
+                  <div>
+                    <strong>{indexValue}:</strong> {value} Admissions
+                  </div>
+                )}
+              />
+            </div>
           )}
         </Grid>
       </Grid>

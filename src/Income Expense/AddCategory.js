@@ -230,7 +230,6 @@ const AddCategory = () => {
   // };
 
   const handleDeleteClick = (id) => {
-    setCategoryIdToDelete(id)
     MySwal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -246,10 +245,10 @@ const AddCategory = () => {
     });
   };
 
-  const handleDelete = async () => {
+  const handleDelete = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:8087/categories/delete/${categoryIdToDelete}`,
+        `http://localhost:8087/categories/delete/${id}`,
         {
           method: "DELETE",
         }
