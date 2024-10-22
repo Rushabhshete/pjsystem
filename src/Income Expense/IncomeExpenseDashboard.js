@@ -41,24 +41,6 @@ ChartJS.register(
   ArcElement
 );
 
-// Individual Card Components
-const InfoCard = ({ title, value, color }) => (
-  <Grid item xs={12} sm={6} md={2.4}>
-    <Paper
-      elevation={3}
-      sx={{
-        padding: 2,
-        backgroundColor: color,
-        borderRadius: 2,
-        fontWeight: "bold",
-        boxShadow: 3,
-      }}
-    >
-      <Typography variant="h7">{title}</Typography>
-      <Typography variant="h4">₹{value}</Typography>
-    </Paper>
-  </Grid>
-);
 
 const IncomeExpenseDashboard = () => {
   const [year, setYear] = useState(new Date().getFullYear());
@@ -651,8 +633,6 @@ const IncomeExpenseDashboard = () => {
     fetchPendingData();
   }, []);
 
-
-
   const incomePieData = {
     labels: Object.keys(incomeCategories),
     datasets: [
@@ -694,7 +674,7 @@ const IncomeExpenseDashboard = () => {
   const formattedCountUp = (value) => (
     <CountUp end={value} duration={2.5} formattingFn={formatValue} />
   );
- 
+
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
   };
@@ -745,7 +725,6 @@ const IncomeExpenseDashboard = () => {
             <Bar data={overallData} options={overallOptions} />
           </Paper>
         </Grid>
-
         <Grid
           item
           xs={12}
@@ -882,3 +861,4 @@ const IncomeExpenseDashboard = () => {
 };
 
 export default IncomeExpenseDashboard;
+

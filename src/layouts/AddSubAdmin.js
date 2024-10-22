@@ -186,7 +186,7 @@ const [subadminToDelete, setSubadminToDelete] = useState(null);
           </PopTypography>
         </Grid>
       <form onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} className='textField-root'>
           <Grid item xs={12} md={6}>
             <TextField
               label="Subadmin Name"
@@ -261,17 +261,14 @@ const [subadminToDelete, setSubadminToDelete] = useState(null);
         <Box sx={{ marginTop: 3 }}>
   
           <TableContainer component={Paper}>
-            <Table>
-              <TableHead style={{
-            backgroundColor: "#f2f2f2",
-            justifyContent: "center",
-          }}>
+            <Table className='table-root'>
+              <TableHead >
                 <TableRow>
-                  <TableCell style={{ fontWeight: "bold" }}>ID</TableCell>
-                  <TableCell style={{ fontWeight: "bold" }}>Sub Admin Name</TableCell>
-                  <TableCell style={{ fontWeight: "bold" }}>Email Address</TableCell>
-                  <TableCell style={{ fontWeight: "bold" }}>Institute Code</TableCell>
-                  <TableCell style={{ fontWeight: "bold" }}>Action</TableCell>
+                  <TableCell>ID</TableCell>
+                  <TableCell>Sub Admin Name</TableCell>
+                  <TableCell>Email Address</TableCell>
+                  <TableCell>Institute Code</TableCell>
+                  <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

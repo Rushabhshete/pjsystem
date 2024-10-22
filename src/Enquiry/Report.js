@@ -721,7 +721,7 @@ export default function Report() {
                   <TableCell>Source</TableCell>
                   <TableCell>Conduct By</TableCell>
                   <TableCell>Status</TableCell>
-                  <TableCell>CallBack Date & Time</TableCell>
+                  <TableCell>CallBack(D:T)</TableCell>
                   <TableCell>Remark</TableCell>
                   <TableCell>Actions</TableCell>
                 </TableRow>
@@ -730,9 +730,7 @@ export default function Report() {
                 {filterInquiries().map((inquiry) => (
                   <TableRow key={inquiry.id}>
                     <TableCell>{inquiry.id}</TableCell>
-                    <TableCell >
-                      {inquiry.enquiryDate}
-                    </TableCell>
+                    <TableCell>{inquiry.enquiryDate}</TableCell>
                     <TableCell>{inquiry.name}</TableCell>
                     <TableCell>{inquiry.mobile}</TableCell>
                     <TableCell>{inquiry.email}</TableCell>
@@ -740,7 +738,6 @@ export default function Report() {
                     <TableCell>{inquiry.source_by}</TableCell>
                     <TableCell>{inquiry.conduct_by}</TableCell>
                     <TableCell
-                     
                       style={{
                         color:
                           inquiry.status1 === "Call Back"
@@ -764,9 +761,7 @@ export default function Report() {
                         <strong>{inquiry.status1}</strong>
                       </b>
                     </TableCell>
-                    <TableCell
-                     
-                    >
+                    <TableCell>
                       <b>
                         {inquiry.status1 === "Call Back"
                           ? `${inquiry.callBackDate} ${inquiry.callBackTime}`

@@ -13,7 +13,7 @@ const Layout = () => {
         <Box component="main" sx={{ flexGrow: 1, p: 3, marginTop:"10px"}}>
           <Outlet /> {/* This will render the nested routes */}
           <Typography variant="body2" align="center" sx={{ marginTop: 5 }}>
-            Pjsofttech Pvt. Ltd.{" "}
+            PJSOFTTECH Pvt. Ltd.{" "}
             <Typography component="span" variant="body2" sx={{ color: "red" }}>
               © All Rights Reserved
             </Typography>

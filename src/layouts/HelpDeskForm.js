@@ -8,7 +8,8 @@ import {
   Button,
   MenuItem,
   FormControl,
-  InputLabel
+  InputLabel,
+  FormLabel
 } from "@mui/material";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
@@ -66,10 +67,10 @@ const HelpDeskForm = ({ open, onClose }) => {
 
   return (
     <>
-      <Dialog open={open} onClose={onClose} maxWidth="lg">
-        <DialogTitle>Help Desk Form</DialogTitle>
-        <DialogContent>
-          <FormControl fullWidth margin="dense">
+      <Dialog open={open} onClose={onClose} >
+        <DialogTitle textAlign="center">Help Desk Form</DialogTitle>
+        <DialogContent className="textField-root">
+          <FormControl fullWidth margin="dense" >
             <TextField
               label="Select System"
               name="systemName"
@@ -113,16 +114,16 @@ const HelpDeskForm = ({ open, onClose }) => {
             onChange={handleChange}
             required
           />
-          <FormControl fullWidth margin="dense">
-     
-            <input
-              type="file"
-              name="image" // This should match the name in your backend @RequestParam
-              label="Upload Image"
-              onChange={handleChange}
-              required
-            />
-          </FormControl>
+         <FormControl fullWidth margin="dense">
+  <FormLabel>Upload Screenshot</FormLabel>
+  <input
+    type="file"
+    name="image" // This should match the name in your backend @RequestParam
+    onChange={handleChange}
+    required
+  />
+</FormControl>
+
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose} color="secondary">

@@ -15,6 +15,9 @@
   border-color: #000000; 
   font-family: 'Poppins', sans-serif;
 }
+.textField-root .MuiInputLabel-asterisk {
+  color: red; /* Set asterisk color to red */
+}
 
 .textField-root .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline { 
   border-color: #3498DB; 

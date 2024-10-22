@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Fab } from '@mui/material';
-import AnnouncementIcon from '@mui/icons-material/Announcement';
 import HelpDeskForm from './HelpDeskForm';
-
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 const FloatingHelpDeskButton = () => {
     const [open, setOpen] = useState(false);
 
@@ -39,7 +38,7 @@ const FloatingHelpDeskButton = () => {
                 }}
                 
             >
-                <AnnouncementIcon />
+                <HelpOutlineIcon />
             </Fab>
             <HelpDeskForm open={open} onClose={handleClose} />
         </>

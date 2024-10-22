@@ -602,7 +602,7 @@ const SalaryTable = ({ id, initialStatus }) => {
 
   return (
     <div>
-      <Grid container spacing={2} alignItems="center" mt={2}>
+      <Grid container spacing={2} alignItems="center" mt={2} className="textField-root">
         <Grid item xs={12} md={2}>
           <TextField
             label="Search by Employee Name"

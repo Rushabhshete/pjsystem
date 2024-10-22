@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   TextField,
   Button,
@@ -17,20 +17,23 @@ import {
   DialogTitle,
   IconButton,
   Box,
-} from '@mui/material';
-import { ToastContainer, toast } from 'react-toastify';
-import axios from 'axios';
-import 'react-toastify/dist/ReactToastify.css';
+  Grid,
+} from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
+import "react-toastify/dist/ReactToastify.css";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function AddNotice() {
-  const [noticeName, setNoticeName] = useState('');
-  const [noticeDescription, setNoticeDescription] = useState('');
+  const [noticeName, setNoticeName] = useState("");
+  const [noticeDescription, setNoticeDescription] = useState("");
   const [notices, setNotices] = useState([]);
-  const [createdAt, setCreatedAt] = useState(new Date().toISOString().split('T')[0]);
+  const [createdAt, setCreatedAt] = useState(
+    new Date().toISOString().split("T")[0]
+  );
   const [selectedNotice, setSelectedNotice] = useState(null);
-  const institutecode = localStorage.getItem("institutecode")
+  const institutecode = localStorage.getItem("institutecode");
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [noticeToDelete, setNoticeToDelete] = useState(null);
@@ -41,7 +44,9 @@ export default function AddNotice() {
 
   const fetchNotices = async () => {
     try {
-      const response = await axios.get(`http://localhost:8082/notices/getallByInstitutecode?institutecode=${institutecode}`);
+      const response = await axios.get(
+        `http://localhost:8082/notices/getallByInstitutecode?institutecode=${institutecode}`
+      );
       setNotices(response.data);
     } catch (error) {
       console.error("Error fetching notices:", error);
@@ -51,46 +56,61 @@ export default function AddNotice() {
   // New function to convert notices to CSV and trigger download
   const downloadCSV = () => {
     const csvRows = [];
-    const headers = ['Notice ID', 'Notice Name', 'Description', 'Created At'];
-    csvRows.push(headers.join(','));
+    const headers = ["Notice ID", "Notice Name", "Description", "Created At"];
+    csvRows.push(headers.join(","));
 
     // Add the data rows
-    notices.forEach(notice => {
-      const values = [notice.nid, notice.noticeName, notice.noticeDescription, notice.createdAt];
-      csvRows.push(values.join(','));
+    notices.forEach((notice) => {
+      const values = [
+        notice.nid,
+        notice.noticeName,
+        notice.noticeDescription,
+        notice.createdAt,
+      ];
+      csvRows.push(values.join(","));
     });
 
-    const csvString = csvRows.join('\n');
-    const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+    const csvString = csvRows.join("\n");
+    const blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.setAttribute('href', url);
-    link.setAttribute('download', 'notices.csv');
-    link.style.visibility = 'hidden';
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", "notices.csv");
+    link.style.visibility = "hidden";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
   const handleAddNotice = async () => {
-    const newNotice = { noticeName, noticeDescription, createdAt, institutecode };
-
+    const newNotice = {
+      noticeName,
+      noticeDescription,
+      createdAt,
+      institutecode,
+    };
     try {
-      await axios.post(`http://localhost:8082/notices/addnotice?institutecode=${institutecode}`, newNotice);
+      await axios.post(
+        `http://localhost:8082/notices/addnotice?institutecode=${institutecode}`,
+        newNotice
+      );
       toast.success("Notice sent successfully!");
       fetchNotices(); // Refresh the notice list
-      setNoticeName('');
-      setNoticeDescription('');
+      setNoticeName(""); // Clear noticeName field
+      setNoticeDescription(""); // Clear noticeDescription field
     } catch (error) {
       console.error("Error creating notice:", error);
       toast.error("Failed to send notice.");
     }
   };
+  
 
   const handleDeleteNotice = async () => {
     if (noticeToDelete) {
       try {
-        await axios.delete(`http://localhost:8082/notices/deleteNotice/${noticeToDelete}`);
+        await axios.delete(
+          `http://localhost:8082/notices/deleteNotice/${noticeToDelete}`
+        );
         toast.success("Notice deleted successfully!");
         fetchNotices(); // Refresh the notice list
         setOpenConfirmDialog(false);
@@ -106,21 +126,30 @@ export default function AddNotice() {
     setSelectedNotice(notice);
     setNoticeName(notice.noticeName);
     setNoticeDescription(notice.noticeDescription);
-    setCreatedAt(notice.createdAt.split('T')[0]);
+    setCreatedAt(notice.createdAt.split("T")[0]);
     setOpenEditDialog(true);
   };
 
   const handleUpdateNotice = async () => {
-    const updatedNotice = { id: selectedNotice.nid, noticeName, noticeDescription, createdAt, institutecode };
+    const updatedNotice = {
+      id: selectedNotice.nid,
+      noticeName,
+      noticeDescription,
+      createdAt,
+      institutecode,
+    };
 
     try {
-      await axios.put(`http://localhost:8082/notices/updateNotice/${selectedNotice.nid}`, updatedNotice);
+      await axios.put(
+        `http://localhost:8082/notices/updateNotice/${selectedNotice.nid}`,
+        updatedNotice
+      );
       toast.success("Notice updated successfully!");
       fetchNotices(); // Refresh the notice list
       setOpenEditDialog(false);
       setSelectedNotice(null);
-      setNoticeName('');
-      setNoticeDescription('');
+      setNoticeName("");
+      setNoticeDescription("");
     } catch (error) {
       console.error("Error updating notice:", error);
       toast.error("Failed to update notice.");
@@ -144,48 +173,63 @@ export default function AddNotice() {
 
   return (
     <div>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }} className="textField-root">
-        <TextField
-          label="Notice Name"
-          value={noticeName}
-          onChange={(e) => setNoticeName(e.target.value)}
-          fullWidth
-          margin="normal"
-          size="small"
-        />
-        <TextField
-          label="Notice Description"
-          value={noticeDescription}
-          onChange={(e) => setNoticeDescription(e.target.value)}
-          fullWidth
-          multiline
-          rows={4}
-          margin="normal"
-          size="small"
-        />
-        <TextField
-          label="Created At"
-          type="date"
-          value={createdAt}
-          onChange={(e) => setCreatedAt(e.target.value)}
-          fullWidth
-          margin="normal"
-          size="small"
-        />
-      </Box>
-      <Box sx={{ display: 'flex', alignItems: 'center', marginTop: 2 }}>
-      
-        <Button variant="contained" color="primary" onClick={handleAddNotice} sx={{ mr: 2 }}>
+      <Grid spacing={1} className="textField-root">
+        <Grid xs={12} md={6}>
+          <TextField
+            label="Notice Name"
+            value={noticeName}
+            onChange={(e) => setNoticeName(e.target.value)}
+            fullWidth
+            margin="normal"
+            size="small"
+          />
+        </Grid>
+        <Grid xs={12} md={6}>
+          <TextField
+            label="Created At"
+            type="date"
+            value={createdAt}
+            onChange={(e) => setCreatedAt(e.target.value)}
+            fullWidth
+            margin="normal"
+            size="small"
+          />
+        </Grid>
+        <Grid xs={12} md={6}>
+          <TextField
+            label="Notice Description"
+            value={noticeDescription}
+            onChange={(e) => setNoticeDescription(e.target.value)}
+            fullWidth
+            multiline
+            rows={4}
+            margin="normal"
+            size="small"
+          />
+        </Grid>
+      </Grid>
+      <Box sx={{ display: "flex", alignItems: "center", marginTop: 2 }}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleAddNotice}
+          sx={{ mr: 2 }}
+        >
           Send Notice
         </Button>
-        <Button variant="contained" color="secondary" onClick={downloadCSV} sx={{ mr: 2 }}>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={downloadCSV}
+          sx={{ mr: 2 }}
+        >
           Download CSV
         </Button>
-        <Typography >Total Notices: {notices.length}</Typography>
+        <Typography>Total Notices: {notices.length}</Typography>
       </Box>
 
-      <TableContainer sx={{ marginTop: '1%' }}>
-        <Table className='table-root'>
+      <TableContainer sx={{ marginTop: "1%" }}>
+        <Table className="table-root">
           <TableHead>
             <TableRow>
               <TableCell>Notice ID</TableCell>
@@ -227,7 +271,7 @@ export default function AddNotice() {
       {/* Edit Dialog */}
       <Dialog open={openEditDialog} onClose={handleCloseEditDialog}>
         <DialogTitle>Edit Notice</DialogTitle>
-        <DialogContent className='textField-root'>
+        <DialogContent className="textField-root">
           <TextField
             label="Notice Name"
             value={noticeName}
@@ -254,8 +298,12 @@ export default function AddNotice() {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseEditDialog} color="primary">Cancel</Button>
-          <Button onClick={handleUpdateNotice} color="secondary">Update</Button>
+          <Button onClick={handleCloseEditDialog} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleUpdateNotice} color="secondary">
+            Update
+          </Button>
         </DialogActions>
       </Dialog>
 
@@ -266,8 +314,12 @@ export default function AddNotice() {
           Are you sure you want to delete this notice?
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseConfirmDialog} color="primary">Cancel</Button>
-          <Button onClick={handleDeleteNotice} color="secondary">Delete</Button>
+          <Button onClick={handleCloseConfirmDialog} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleDeleteNotice} color="secondary">
+            Delete
+          </Button>
         </DialogActions>
       </Dialog>
 
