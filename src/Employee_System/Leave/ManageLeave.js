@@ -253,7 +253,7 @@ const filteredLeaveRequests = leaveRequests.filter(request =>
                   <TableCell>{request.reasondescription}</TableCell>
                   <TableCell sx={{
           fontWeight: 'bold',
-          color: request.status === 'Approved' ? '#90ee90' : 
+          color: request.status === 'Approved' ? 'green' : 
           request.status === 'Pending' ? 'orange' : 
           request.status === 'Rejected' ? 'red' : 'inherit',
         }}>{request.status}</TableCell>
@@ -261,7 +261,7 @@ const filteredLeaveRequests = leaveRequests.filter(request =>
                     {/* Approve Button */}
                     <IconButton
                       aria-label="approve"
-                      color="primary"
+                      color="success"
                       onClick={() => handleUpdateStatus(request.id, 'Approved')}
                     >
                       <CheckCircleOutlineIcon />

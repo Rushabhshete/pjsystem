@@ -30,6 +30,9 @@ import { Button } from "@mui/material";
 import "jspdf-autotable";
 import jsPDF from "jspdf";
 import "jspdf-autotable"; // Import autoTable plugin
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
 import {
   paymentMethodOption,
   paidByOptions,
@@ -67,6 +70,8 @@ const AlertDialog = ({ open, onClose, onConfirm }) => (
     </DialogActions>
   </Dialog>
 );
+// Initialize SweetAlert2
+const MySwal = withReactContent(Swal);
 const Category = () => {
   const [category, setCategory] = useState("Income");
   const [dateRange, setDateRange] = useState("All");
@@ -575,19 +580,30 @@ const Category = () => {
     setPopupOpen(true);
   };
   const handleDeleteClick = (id) => {
-    setCategoryIdToDelete(id);
-    setConfirmOpen(true);
+    MySwal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleDelete(id); // Proceed with deletion if confirmed
+      }
+    });
   };
 
   const handleDelete = async (id) => {
     const url =
       category === "Income"
-        ? `http://localhost:8087/incomes/deleteIncome/${categoryIdToDelete}`
-        : `http://localhost:8087/expenses/deleteExpense/${categoryIdToDelete}`;
+        ? `http://localhost:8087/incomes/deleteIncome/${id}`
+        : `http://localhost:8087/expenses/deleteExpense/${id}`;
     try {
       await axios.delete(url);
       fetchData();
-      toast.success("Deleted Successfully");
+      MySwal.fire("Deleted!", "Deleted Successfully.", "success"); // Success message
     } catch (error) {
       console.error("Error deleting item: ", error);
     }

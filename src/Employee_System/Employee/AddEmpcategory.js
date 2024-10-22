@@ -26,6 +26,12 @@ import { Modal, Form } from "react-bootstrap";
 import "react-toastify/dist/ReactToastify.css";
 // import '../css/asterick.css';
 import axios from "axios";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+// Initialize SweetAlert2
+const MySwal = withReactContent(Swal);
+
 function Category() {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -78,29 +84,35 @@ function Category() {
       setShowUpdateModal(false);
       await fetchData();
       setSelectedCategory(null);
-      // toast.success('Category updated successfully');
+      MySwal.fire("Success", "Category Updated Successfully", "success");
     } catch (error) {
       console.error("Error updating category:", error);
       setError("Failed to update category");
-      toast.error("Failed to update category");
+      MySwal.fire("Error","Failed to update category","error");
     }
   };
 
   const handleDelete = async (id) => {
-    const confirmation = window.confirm(
-      "Are you sure you want to delete this category?"
-    );
-    if (confirmation && id) {
+   // Show confirmation dialog using SweetAlert2
+  const { isConfirmed } = await Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, delete it!',
+    cancelButtonText: 'No, cancel!',
+  });
+    if (isConfirmed && id) {
       try {
         await axios.delete(
           `http://localhost:8082/categories/delete/employeecategory/${id}`
         );
         await fetchData();
-        // toast.success('Category deleted successfully');
+        MySwal.fire("Success", "Category Deleted Successfully", "success");
       } catch (error) {
         console.error("Error deleting category:", error);
         setError("Failed to delete category");
-        toast.error("Failed to delete category");
+        MySwal.fire("Error","Failed to delete category","error");
       }
     } else {
       console.error("Invalid id:", id);
@@ -142,7 +154,7 @@ function Category() {
         formData
       );
       console.log("Form submitted successfully:", response.data);
-      // toast.success('Form submitted successfully');
+      MySwal.fire("Success", "Form Submitted Successfully", "success");
       fetchData(); // Show success toast
     } catch (error) {
       console.error("Error submitting the form:", error);
@@ -156,7 +168,7 @@ function Category() {
         console.log("Error message:", error.message);
       }
       console.log("Error config:", error.config);
-      toast.error("Failed to submit form"); // Show error toast
+      MySwal.fire("Error","Failed to Submit Form","error");
     }
   };
 

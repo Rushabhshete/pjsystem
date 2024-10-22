@@ -170,6 +170,7 @@
 
 // export default ComparisonGraph;
 
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
@@ -177,20 +178,20 @@ import {
   TextField,
   MenuItem,
   Typography,
-  Grid
+  Grid,
+  Button
 } from "@mui/material";
-import { ResponsiveBar } from '@nivo/bar'; // Import Nivo's ResponsiveBar
+import { ResponsiveBar } from '@nivo/bar';
 
 const ComparisonGraph = () => {
   const currentYear = new Date().getFullYear();
-  
-  // Adjusted to include the past 5 years and the next 5 years
   const years = Array.from({ length: 11 }, (_, i) => currentYear - 5 + i);
-  
+
   const [year1, setYear1] = useState(currentYear - 1);
   const [year2, setYear2] = useState(currentYear);
   const [chartData, setChartData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [graphType, setGraphType] = useState("admissions"); // Toggle between 'admissions' and 'revenue'
 
   useEffect(() => {
     const fetchComparisonData = async () => {
@@ -207,13 +208,14 @@ const ComparisonGraph = () => {
           "JUL", "AUG", "SEP", "OCT", "NOV", "DEC",
         ];
 
-        // Format data to include both admissionsCount and revenue for both years
         const formattedData = months.map((month) => ({
           month,
-          [`admissions_${year1}`]: data[month]?.[`admissionsCount_${year1}`] || 0,
-          [`admissions_${year2}`]: data[month]?.[`admissionsCount_${year2}`] || 0,
-          [`revenue_${year1}`]: data[month]?.[`revenue_${year1}`] || 0,
-          [`revenue_${year2}`]: data[month]?.[`revenue_${year2}`] || 0,
+          [year1]: graphType === "admissions"
+            ? Number(data[month][`admissionsCount_${year1}`]) || 0
+            : Number(data[month][`revenue_${year1}`]) || 0,
+          [year2]: graphType === "admissions"
+            ? Number(data[month][`admissionsCount_${year2}`]) || 0
+            : Number(data[month][`revenue_${year2}`]) || 0,
         }));
 
         setChartData(formattedData);
@@ -225,7 +227,7 @@ const ComparisonGraph = () => {
     };
 
     fetchComparisonData();
-  }, [year1, year2]);
+  }, [year1, year2, graphType]);
 
   if (loading) {
     return <CircularProgress />;
@@ -233,16 +235,10 @@ const ComparisonGraph = () => {
 
   return (
     <div>
-      <Grid
-        container
-        spacing={2}
-        justifyContent="center"
-        alignItems="center"
-        className="textField-root"
-      >
+      <Grid container spacing={2} justifyContent="center" alignItems="center">
         <Grid item>
           <Typography variant="body1" marginLeft="10px">
-            Comparison of Admissions & Revenue
+            Comparison of {graphType === "admissions" ? "Admissions" : "Revenue"}
           </Typography>
         </Grid>
 
@@ -281,16 +277,27 @@ const ComparisonGraph = () => {
             ))}
           </TextField>
         </Grid>
+
+        {/* Button to toggle between Admissions and Revenue */}
+        <Grid item xs={2}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setGraphType((prev) => (prev === "admissions" ? "revenue" : "admissions"))}
+          >
+            {graphType === "admissions" ? "Revenue" : "Admission"}
+          </Button>
+        </Grid>
       </Grid>
 
       <div style={{ height: '400px' }}>
         <ResponsiveBar
           data={chartData}
-          keys={[`admissions_${year1}`, `admissions_${year2}`, `revenue_${year1}`, `revenue_${year2}`]} // Add keys for admissions and revenue for both years
+          keys={[year1, year2]} // Use the years for bar data
           indexBy="month" // The months are on the x-axis
-          margin={{ top: 40, right: 80, bottom: 50, left: 60 }} // Adjust margins as needed
+          margin={{ top: 40, right: 80, bottom: 50, left: 60 }}
           padding={0.3}
-          colors={['#3498DB', '#FF6F61', '#A9DFBF', '#F39C12']} // Assign different colors for admissions and revenue
+          colors={graphType === "admissions" ? ["#3498DB", "#FF6F61"] : ["#3498DB", "#FF6F61"]} // Different colors for different graphs
           axisBottom={{
             tickSize: 5,
             tickPadding: 5,
@@ -303,7 +310,7 @@ const ComparisonGraph = () => {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'Value',
+            legend: graphType === "admissions" ? "Number of Admissions" : "Revenue",
             legendPosition: 'middle',
             legendOffset: -40,
           }}
