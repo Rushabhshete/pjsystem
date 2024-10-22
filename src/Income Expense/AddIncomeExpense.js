@@ -36,6 +36,12 @@ import axios from "axios";
 import { debounce } from "lodash"; // Import debounce function from lodash
 import jsPDF from "jspdf"; // Import jsPDF from jspdf
 import numberToWords from "number-to-words";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+// Initialize SweetAlert2
+const MySwal = withReactContent(Swal);
+
 // Custom styles for Dialog
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   fontWeight: "bold",
@@ -244,6 +250,7 @@ const AddIncomeExpense = () => {
       debouncedSearch.cancel();
     };
   }, [searchTerm, users, debouncedSearch]);
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     const integerFormData = {
@@ -279,11 +286,13 @@ const AddIncomeExpense = () => {
       const fetchedData = getResponse.data;
 
       console.log("Fetched Data:", fetchedData); // Log the fetched data
+      MySwal.fire("Success", "Form Submitted Successfully", "success");
 
-      setSubmittedData(fetchedData); // Store the fetched data for display
+
+     // Store the fetched data for display
       setOpenDialog(true);
+      setSubmittedData(fetchedData);
 
-      toast.success("Form submitted and data fetched successfully!");
 
       // Reset form data
       setFormData({
@@ -308,7 +317,7 @@ const AddIncomeExpense = () => {
       setSearchTerm("");
       setShowGst(false);
     } catch (error) {
-      toast.error("Error submitting form or fetching data. Please try again.");
+      MySwal.fire("Error", "Error While Submitting the form", "error");
     }
   };
 

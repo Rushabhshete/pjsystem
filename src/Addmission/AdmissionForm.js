@@ -9,8 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import Swal from 'sweetalert2'; // Import SweetAlert2
 import { styled } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 
@@ -139,12 +138,23 @@ const AdmissionForm = () => {
         `http://localhost:8085/saveAdmission?institutecode=${institutecode}`,
         dataToSubmit
       );
-      toast.success("Admission form submitted successfully");
+       // Show success message using SweetAlert2
+       await Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'Form Submitted successfully!',
+        confirmButtonText: 'OK',
+      });
       setIsFormSubmitted(true); // mark form as submitted
       setIsFormSaved(true); // mark form as saved
     } catch (error) {
       console.error("Error submitting form:", error);
-      toast.error("Error submitting form");
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Failed to Submitting Form. Please try again.',
+        confirmButtonText: 'OK',
+      });
     }
   };
 
@@ -156,7 +166,7 @@ const AdmissionForm = () => {
     const file = formData[fieldName];
 
     if (!file) {
-      toast.error("No file selected");
+      Swal.fire("No file selected");
       return;
     }
 
@@ -169,10 +179,10 @@ const AdmissionForm = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      toast.success(`${fieldName} uploaded successfully`);
+      Swal.fire(`${fieldName} uploaded successfully`);
     } catch (error) {
       console.error(`Error uploading ${fieldName}:`, error);
-      toast.error(`Only JPG and JPEG files are allowed for ${fieldName}`);
+      Swal.fire(`Only JPG and JPEG files are allowed for ${fieldName}`);
     }
   };
 
@@ -202,19 +212,6 @@ const AdmissionForm = () => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
   };
 
-  const PopTypography = styled(Typography)`
-    @keyframes pop {
-      0% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.1);
-      }
-      100% {
-        transform: scale(1);
-      }
-    }
-  `;
   return (
     <>
          <div maxWidth="lg" className="required-asterisk">
@@ -598,17 +595,6 @@ const AdmissionForm = () => {
           </Grid>
         </form>
       </div>
-      <ToastContainer
-        autoClose={1000} // Toast will close automatically after 5 seconds
-        position="top-right" // Position of the toast
-        hideProgressBar={false} // Show or hide the progress bar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
     </>
   );
 };
