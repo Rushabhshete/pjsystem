@@ -133,7 +133,7 @@ const filteredLeaveRequests = leaveRequests.filter(request =>
     Manage Leave
   </Typography> */}
     <div style={{ padding: '20px' }}>
-      <Grid container spacing={2} alignItems="center" sx={{ marginBottom: 2 }}>
+      <Grid container spacing={2} alignItems="center" sx={{ marginBottom: 2 }} className='textField-root'>
         <Grid item xs={3}>
           <FormControl fullWidth>
             <TextField
@@ -141,6 +141,7 @@ const filteredLeaveRequests = leaveRequests.filter(request =>
               onChange={(e) => handleFilterChange(e.target.value)}
               select 
               label="Select"
+              size='small'
             >
               <MenuItem value="all">All</MenuItem>
               <MenuItem value="last7Days">Last 7 Days</MenuItem>
@@ -158,6 +159,7 @@ const filteredLeaveRequests = leaveRequests.filter(request =>
                 label="Start Date"
                 type="date"
                 fullWidth
+                size='small'
                 InputLabelProps={{ shrink: true }}
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
@@ -168,6 +170,7 @@ const filteredLeaveRequests = leaveRequests.filter(request =>
                 label="End Date"
                 type="date"
                 fullWidth
+                size='small'
                 InputLabelProps={{ shrink: true }}
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
@@ -183,6 +186,7 @@ const filteredLeaveRequests = leaveRequests.filter(request =>
               onChange={(e) => setCategoryFilter(e.target.value)}
               displayEmpty
               select 
+              size='small'
               label="Category"
             >
               <MenuItem value="">All Categories</MenuItem>
@@ -200,6 +204,7 @@ const filteredLeaveRequests = leaveRequests.filter(request =>
               onChange={(e) => setStatusFilter(e.target.value)}
               displayEmpty
               select
+              size='small'
               label="Status"
             >
                <MenuItem value="">All Statuses</MenuItem>
@@ -215,6 +220,7 @@ const filteredLeaveRequests = leaveRequests.filter(request =>
             fullWidth
             label="Search by Full Name"
             variant="outlined"
+            size='small'
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -222,18 +228,18 @@ const filteredLeaveRequests = leaveRequests.filter(request =>
       </Grid>
 
       <Grid item xs={12}>
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead sx={{ backgroundColor: '#f2f2f2' }}>
+        <TableContainer >
+          <Table className='table-root'>
+            <TableHead >
               <TableRow>
-                <TableCell sx={{ fontWeight: 'bold' }}>Employee ID</TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }}>Name</TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }}>Category</TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }}>From Date</TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }}>To Date</TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }}>Reason</TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }}>Status</TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }}>Actions</TableCell>
+                <TableCell>Employee ID</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell>Category</TableCell>
+                <TableCell>From Date</TableCell>
+                <TableCell>To Date</TableCell>
+                <TableCell>Reason</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

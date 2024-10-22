@@ -144,7 +144,7 @@ export default function AddNotice() {
 
   return (
     <div>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }} className="textField-root">
         <TextField
           label="Notice Name"
           value={noticeName}
@@ -174,24 +174,25 @@ export default function AddNotice() {
         />
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', marginTop: 2 }}>
+      
         <Button variant="contained" color="primary" onClick={handleAddNotice} sx={{ mr: 2 }}>
           Send Notice
         </Button>
         <Button variant="contained" color="secondary" onClick={downloadCSV} sx={{ mr: 2 }}>
           Download CSV
         </Button>
-        <Typography>Total Notices: {notices.length}</Typography>
+        <Typography >Total Notices: {notices.length}</Typography>
       </Box>
 
       <TableContainer sx={{ marginTop: '1%' }}>
-        <Table size="small" aria-label="exam table" sx={{ width: "100%" }}>
-          <TableHead sx={{ backgroundColor: "#f2f2f2" }}>
+        <Table className='table-root'>
+          <TableHead>
             <TableRow>
-              <TableCell sx={{ fontWeight: 'bold' }}>Notice ID</TableCell>
-              <TableCell sx={{ fontWeight: 'bold' }}>Notice Name</TableCell>
-              <TableCell sx={{ fontWeight: 'bold' }}>Description</TableCell>
-              <TableCell sx={{ fontWeight: 'bold' }}>Created At</TableCell>
-              <TableCell sx={{ fontWeight: 'bold' }}>Actions</TableCell>
+              <TableCell>Notice ID</TableCell>
+              <TableCell>Notice Name</TableCell>
+              <TableCell>Description</TableCell>
+              <TableCell>Created At</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -226,7 +227,7 @@ export default function AddNotice() {
       {/* Edit Dialog */}
       <Dialog open={openEditDialog} onClose={handleCloseEditDialog}>
         <DialogTitle>Edit Notice</DialogTitle>
-        <DialogContent>
+        <DialogContent className='textField-root'>
           <TextField
             label="Notice Name"
             value={noticeName}

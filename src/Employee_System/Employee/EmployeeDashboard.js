@@ -497,11 +497,12 @@ const EmployeeDashboard = () => {
               </Card>
             </Grid>
           </Grid>
-          <Grid item xs={12} md={4} container spacing={2} className="table-root">
+          <Grid item xs={12} md={4} container spacing={2} className="textField-root">
             <Grid item xs={12}>
               <FormControl fullWidth>
                 <TextField
                   select
+                  size="small"
                   label="Select"
                   value={selectedApi}
                   onChange={(e) => setSelectedApi(e.target.value)}
@@ -514,12 +515,13 @@ const EmployeeDashboard = () => {
                 </TextField>
               </FormControl>
               {selectedApi === "byDateRange" && (
-                <Grid container spacing={2} style={{ marginTop: "16px" }}>
+                <Grid container spacing={2} style={{ marginTop: "10px" }}>
                   <Grid item xs={6}>
                     <FormControl fullWidth>
                       <TextField
                         type="date"
                         label="Start Date"
+                        size="small"
                         value={startDate}
                         onChange={(e) => setStartDate(e.target.value)}
                         InputLabelProps={{ shrink: true }}
@@ -529,6 +531,7 @@ const EmployeeDashboard = () => {
                   <Grid item xs={6}>
                     <FormControl fullWidth>
                       <TextField
+                      size="small"
                         type="date"
                         label="End Date"
                         value={endDate}

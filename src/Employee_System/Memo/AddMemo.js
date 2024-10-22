@@ -154,7 +154,7 @@ export default function AddMemo() {
 
   return (
     <div>
-      <Grid container spacing={2} alignItems="center" mb={2}>
+      <Grid container spacing={2} alignItems="center" mb={2} className="textField-root">
         <Grid item xs={6} sm={3}>
           <FormControl fullWidth size="small">
             <InputLabel>Department</InputLabel>
@@ -210,16 +210,16 @@ export default function AddMemo() {
       </Grid>
 
       <TableContainer>
-        <Table size="small" aria-label="exam table" sx={{ width: "100%" }}>
-          <TableHead sx={{ backgroundColor: "#f2f2f2" }}>
+        <Table className="table-root">
+          <TableHead >
             <TableRow>
-              <TableCell sx={{ fontWeight: "bold" }}>Employee ID</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Full Name</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Email</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Department</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Category</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Work Location</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Add Memo</TableCell>
+              <TableCell >Employee ID</TableCell>
+              <TableCell >Full Name</TableCell>
+              <TableCell >Email</TableCell>
+              <TableCell >Department</TableCell>
+              <TableCell >Category</TableCell>
+              <TableCell >Work Location</TableCell>
+              <TableCell >Add Memo</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -248,7 +248,7 @@ export default function AddMemo() {
 
       <Dialog open={openDialog} onClose={resetForm}>
         <DialogTitle>Add Memo for {selectedEmployee?.fullName}</DialogTitle>
-        <DialogContent>
+        <DialogContent className="textField-root">
           <TextField
             autoFocus
             margin="dense"

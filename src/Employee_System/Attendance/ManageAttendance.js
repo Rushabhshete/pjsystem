@@ -79,7 +79,7 @@ const ManageAttendance = () => {
     <>
       
       <Box sx={{ padding: { xs: 2, sm: 4 } }}>
-        <Grid container spacing={2} sx={{ marginBottom: 2 }}>
+        <Grid container spacing={2}  className='textField-root'>
           <Grid item xs={12} sm={4}>
             <TextField
               fullWidth
@@ -87,12 +87,14 @@ const ManageAttendance = () => {
               variant="outlined"
               value={searchQuery}
               onChange={handleSearch}
-              sx={{ marginBottom: 2 }}
+             
+              size='small'
             />
           </Grid>
           <Grid item xs={12} sm={3}>
             <TextField
               fullWidth
+              size='small'
               label="Start Date"
               type="date"
               InputLabelProps={{
@@ -105,6 +107,7 @@ const ManageAttendance = () => {
           <Grid item xs={12} sm={3}>
             <TextField
               fullWidth
+              size='small'
               label="End Date"
               type="date"
               InputLabelProps={{
@@ -116,16 +119,16 @@ const ManageAttendance = () => {
           </Grid>
         </Grid>
 
-        <TableContainer component={Paper} sx={{ marginTop: 2 }}>
-          <Table>
-            <TableHead sx={{ backgroundColor: '#f2f2f2' }}>
+        <TableContainer  sx={{ marginTop: 2 }}>
+          <Table className='table-root'>
+            <TableHead >
               <TableRow>
-                <TableCell sx={{ fontWeight: 'bold' }}>EmpID</TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }}>Name</TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }}>Mobile Number</TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }}>Email Id</TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }}>Joining Date</TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }}>Actions</TableCell>
+                <TableCell >EmpID</TableCell>
+                <TableCell >Name</TableCell>
+                <TableCell >Mobile Number</TableCell>
+                <TableCell >Email Id</TableCell>
+                <TableCell >Joining Date</TableCell>
+                <TableCell >Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -137,8 +140,7 @@ const ManageAttendance = () => {
                   <TableCell>{employee.email}</TableCell>
                   <TableCell>{new Date(employee.joiningDate).toLocaleDateString("en-GB")}</TableCell>
                   <TableCell>
-                    <Grid container spacing={1}>
-                      <Grid item>
+                 
                         <Button
                           variant="contained"
                           color="primary"
@@ -146,8 +148,7 @@ const ManageAttendance = () => {
                         >
                           View
                         </Button>
-                      </Grid>
-                    </Grid>
+                    
                   </TableCell>
                 </TableRow>
               ))}

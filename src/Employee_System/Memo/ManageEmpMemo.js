@@ -126,6 +126,14 @@ export default function ManageEmpMemo() {
   return (
     <div>
       {/* Search Bar */}
+      <Grid container spacing={2} className="textField-root">
+      
+<Grid xs={12} md={2} >
+        <Typography variant="h6" gutterBottom sx={{ marginTop: 3, whiteSpace: "nowrap" }}>
+          Total Memos: {filteredMemos.length}
+        </Typography>
+      </Grid>
+      <Grid xs={12} md={3} >
       <TextField
         label="Search Memos"
         variant="outlined"
@@ -133,24 +141,19 @@ export default function ManageEmpMemo() {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
-
-      <Grid>
-        <Typography variant="h6" gutterBottom sx={{ marginTop: 3, whiteSpace: "nowrap" }}>
-          Total Memos: {filteredMemos.length}
-        </Typography>
+</Grid>
       </Grid>
-
       <TableContainer>
-        <Table size="small" aria-label="exam table" sx={{ width: "100%" }}>
-          <TableHead sx={{ backgroundColor: "#f2f2f2" }}>
+        <Table className="table-root">
+          <TableHead >
             <TableRow>
-              <TableCell sx={{ fontWeight: "bold" }}>Memo ID</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Created At</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Memo Name</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Full Name</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Description</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Email</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Action</TableCell>
+              <TableCell>Memo ID</TableCell>
+              <TableCell>Created At</TableCell>
+              <TableCell>Memo Name</TableCell>
+              <TableCell>Full Name</TableCell>
+              <TableCell>Description</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -178,7 +181,7 @@ export default function ManageEmpMemo() {
 
       <Dialog open={openEditDialog} onClose={handleCloseEditDialog}>
         <DialogTitle>Edit Memo</DialogTitle>
-        <DialogContent>
+        <DialogContent className="textField-root">
           <TextField
             autoFocus
             margin="dense"
