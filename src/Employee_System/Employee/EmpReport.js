@@ -509,22 +509,22 @@ const createTable = (doc, startY) => {
               onRowsPerPageChange={handleChangeRowsPerPage}
               labelRowsPerPage="Rows per Page"
             />
-            <TableContainer component={Paper}>
-              <Table>
-                <TableHead sx={{ background: '#f2f2f2'}}>
+            <TableContainer>
+              <Table className="table-root">
+                <TableHead >
                   <TableRow>
-                    <TableCell><Typography variant="subtitle2" fontWeight="bold">ID</Typography></TableCell>
-                    <TableCell><Typography variant="subtitle2" fontWeight="bold">Full Name</Typography></TableCell>
-                    <TableCell><Typography variant="subtitle2" fontWeight="bold">Email</Typography></TableCell>
-                    <TableCell><Typography variant="subtitle2" fontWeight="bold">Mobile No</Typography></TableCell>
-                    <TableCell><Typography variant="subtitle2" fontWeight="bold">Parent No</Typography></TableCell>
-                    <TableCell><Typography variant="subtitle2" fontWeight="bold">City</Typography></TableCell>
-                    <TableCell><Typography variant="subtitle2" fontWeight="bold">Department</Typography></TableCell>
-                    <TableCell><Typography variant="subtitle2" fontWeight="bold">Category</Typography></TableCell>
-                    <TableCell><Typography variant="subtitle2" fontWeight="bold">Designation</Typography></TableCell>
-                    <TableCell><Typography variant="subtitle2" fontWeight="bold">Employee Type</Typography></TableCell>
-                    <TableCell><Typography variant="subtitle2" fontWeight="bold">Duty Type</Typography></TableCell>
-                    <TableCell><Typography variant="subtitle2" fontWeight="bold">Shift</Typography></TableCell>
+                    <TableCell>ID</TableCell>
+                    <TableCell>Full Name</TableCell>
+                    <TableCell>Email</TableCell>
+                    <TableCell>Mobile No</TableCell>
+                    <TableCell>Parent No</TableCell>
+                    <TableCell>City</TableCell>
+                    <TableCell>Department</TableCell>
+                    <TableCell>Category</TableCell>
+                    <TableCell>Designation</TableCell>
+                    <TableCell>Employee Type</TableCell>
+                    <TableCell>Duty Type</TableCell>
+                    <TableCell>Shift</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>

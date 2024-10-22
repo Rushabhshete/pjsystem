@@ -15,6 +15,7 @@ const navItemStyle = {
   flex: 1,
   transition: "background-color 0.3s ease, color 0.3s ease",
   textDecoration: "none", // Remove underline
+  
 };
 
 // Styles for active item
@@ -25,6 +26,7 @@ const activeNavItemStyle = {
   borderRadius: "30px",
   transform: "scale(1.05)", // Slight increase for active state
   boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)", // Subtle shadow for active
+  
 };
 
 // Styles for the subnavbar container
@@ -36,6 +38,7 @@ const subNavBarStyle = {
   padding: "8px",
   borderRadius: "30px",
   boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)", // Slight shadow for navbar
+  marginBottom:"30px"
 };
 
 

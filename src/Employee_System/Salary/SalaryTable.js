@@ -151,7 +151,7 @@ const SalaryTable = ({ id, initialStatus }) => {
 
   const handleOpenConfirmDeleteDialog = () => {
     // Close info dialog if necessary
-    setShowInfoPopup(false); 
+    setShowInfoPopup(false);
     setRowToDelete(infoPopupData.id); // Set the row to delete
     // Trigger SweetAlert2 confirmation directly
     handleDelete();
@@ -161,7 +161,6 @@ const SalaryTable = ({ id, initialStatus }) => {
     setShowConfirmDeleteDialog(false);
     setRowToDelete(null);
   };
-
 
   const handleDelete = async () => {
     if (rowToDelete) {
@@ -174,12 +173,14 @@ const SalaryTable = ({ id, initialStatus }) => {
         confirmButtonColor: "#d33",
         cancelButtonColor: "#3085d6",
         confirmButtonText: "Yes, delete it!",
-        cancelButtonText: "Cancel"
+        cancelButtonText: "Cancel",
       });
-  
+
       if (result.isConfirmed) {
         try {
-          await axios.delete(`http://localhost:8082/salaries/softDeleteSalaryById/${rowToDelete}`);
+          await axios.delete(
+            `http://localhost:8082/salaries/softDeleteSalaryById/${rowToDelete}`
+          );
           // Update the state to remove the deleted salary from the list
           setSalaries(salaries.filter((salary) => salary.id !== rowToDelete));
           Swal.fire("Salary deleted successfully");
@@ -193,7 +194,7 @@ const SalaryTable = ({ id, initialStatus }) => {
       }
     }
   };
-  
+
   // Function to convert numeric value to words
   const numberToWords = (num) => {
     const units = [
@@ -732,133 +733,66 @@ const SalaryTable = ({ id, initialStatus }) => {
         </Grid>
       </Grid>
 
-      <Box mt={4} width={"100%"}>
-        <TableContainer overFlowX={"auto"}>
+      <Box mt={4} >
+        <TableContainer >
           <Table className="table-root">
-            <TableHead sx={{ backgroundColor: "#f2f2f2" }}>
-              <TableRow >
-                <TableCell >
-                  Salary Id
-                </TableCell>
-                <TableCell >
-                  Emp Id
-                </TableCell>
-                <TableCell >
-                  Emp Name
-                </TableCell>
-                <TableCell >
-                  Category
-                </TableCell>
-                <TableCell >
-                  Department
-                </TableCell>
-                <TableCell >
-                  Basic Salary
-                </TableCell>
-                <TableCell >
-                  Working Days
-                </TableCell>
-                <TableCell >
-                  HRA 
-                </TableCell>
-                <TableCell >
-                  TA
-                </TableCell>
-                <TableCell >
-                  Incentive
-                </TableCell>
-                <TableCell >
-                  SPI
-                </TableCell>
-                <TableCell >
-                  Medi Allowance
-                </TableCell>
-                <TableCell >
-                  Salary Before Taxes
-                </TableCell>
-                <TableCell >
-                  PF
-                </TableCell>
-                <TableCell >
-                  ESIC
-                </TableCell>
-                <TableCell >
-                  Prof Tax
-                </TableCell>
-                <TableCell >
-                  Income Tax
-                </TableCell>
-                <TableCell >
-                  Deducts
-                </TableCell>
-                <TableCell >
-                  Net Salary
-                </TableCell>
-                <TableCell >
-                  Month
-                </TableCell>
-                <TableCell >
-                  Year
-                </TableCell>
-                <TableCell >
-                  Payment Date
-                </TableCell>
-                <TableCell >
-                  Status
-                </TableCell>
-                <TableCell >
-                  Transaction ID
-                </TableCell>
-                <TableCell >
-                  Action
-                </TableCell>
-                <TableCell >
-                  Payslip
-                </TableCell>
-                <TableCell >
-                  Info
-                </TableCell>
+            <TableHead >
+              <TableRow>
+                <TableCell>Salary Id</TableCell>
+                <TableCell>Emp Id</TableCell>
+                <TableCell>Emp Name</TableCell>
+                <TableCell>Category</TableCell>
+                <TableCell>Department</TableCell>
+                <TableCell>Basic Salary</TableCell>
+                <TableCell>Working Days</TableCell>
+                <TableCell>HRA</TableCell>
+                <TableCell>TA</TableCell>
+                <TableCell>Incentive</TableCell>
+                <TableCell>SPI</TableCell>
+                <TableCell>Medi Allowance</TableCell>
+                <TableCell>Salary Before Taxes</TableCell>
+                <TableCell>PF</TableCell>
+                <TableCell>ESIC</TableCell>
+                <TableCell>Prof Tax</TableCell>
+                <TableCell>Income Tax</TableCell>
+                <TableCell>Deducts</TableCell>
+                <TableCell>Net Salary</TableCell>
+                <TableCell>Month</TableCell>
+                <TableCell>Year</TableCell>
+                <TableCell>Payment Date</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell>Transaction ID</TableCell>
+                <TableCell>Action</TableCell>
+                <TableCell>Payslip</TableCell>
+                <TableCell>Info</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody  >
+            <TableBody>
               {salaries.map((salary) => (
-                <TableRow  key={salary.id}>
-                  <TableCell >{salary.id}</TableCell>
-                  <TableCell >{salary.empID}</TableCell>
-                  <TableCell >{salary.fullName}</TableCell>
-                  <TableCell >
-                    {salary.employeecategory}
-                  </TableCell>
-                  <TableCell >{salary.department}</TableCell>
-                  <TableCell >{salary.basicSalary}</TableCell>
-                  <TableCell >{salary.workingDays}</TableCell>
-                  <TableCell >{salary.hraAllowance}</TableCell>
-                  <TableCell >{salary.taAllowance}</TableCell>
-                  <TableCell >{salary.incentive}</TableCell>
-                  <TableCell >{salary.spi}</TableCell>
-                  <TableCell >
-                    {salary.medicalAllowance}
-                  </TableCell>
-                  <TableCell >
-                    {salary.netSalaryBeforeTaxes}
-                  </TableCell>
-                  <TableCell >{salary.pf}</TableCell>
-                  <TableCell >{salary.esic}</TableCell>
-                  <TableCell >
-                    {salary.professionalTax}
-                  </TableCell>
-                  <TableCell >{salary.incomeTax}</TableCell>
-                  <TableCell >{salary.deductions}</TableCell>
-                  <TableCell >
-                    {salary.finalNetSalary}
-                  </TableCell>
-                  <TableCell >
-                    {monthNames[salary.month - 1]}
-                  </TableCell>
-                  <TableCell >{salary.year}</TableCell>
-                  <TableCell >{salary.paymentDate}</TableCell>
+                <TableRow key={salary.id}>
+                  <TableCell>{salary.id}</TableCell>
+                  <TableCell>{salary.empID}</TableCell>
+                  <TableCell>{salary.fullName}</TableCell>
+                  <TableCell>{salary.employeecategory}</TableCell>
+                  <TableCell>{salary.department}</TableCell>
+                  <TableCell>{salary.basicSalary}</TableCell>
+                  <TableCell>{salary.workingDays}</TableCell>
+                  <TableCell>{salary.hraAllowance}</TableCell>
+                  <TableCell>{salary.taAllowance}</TableCell>
+                  <TableCell>{salary.incentive}</TableCell>
+                  <TableCell>{salary.spi}</TableCell>
+                  <TableCell>{salary.medicalAllowance}</TableCell>
+                  <TableCell>{salary.netSalaryBeforeTaxes}</TableCell>
+                  <TableCell>{salary.pf}</TableCell>
+                  <TableCell>{salary.esic}</TableCell>
+                  <TableCell>{salary.professionalTax}</TableCell>
+                  <TableCell>{salary.incomeTax}</TableCell>
+                  <TableCell>{salary.deductions}</TableCell>
+                  <TableCell>{salary.finalNetSalary}</TableCell>
+                  <TableCell>{monthNames[salary.month - 1]}</TableCell>
+                  <TableCell>{salary.year}</TableCell>
+                  <TableCell>{salary.paymentDate}</TableCell>
                   <TableCell
-                    
                     style={{
                       color: salary.status === "Pending" ? "red" : "green",
                     }}
@@ -987,14 +921,14 @@ const SalaryTable = ({ id, initialStatus }) => {
             </>
           )}
         </DialogContent>
-      <DialogActions>
-  {infoPopupData && infoPopupData.status === "Pending" && (
-    <Button color="error" onClick={handleOpenConfirmDeleteDialog}>
-      Delete
-    </Button>
-  )}
-  <Button onClick={handleCloseInfoPopup}>Close</Button>
-</DialogActions>
+        <DialogActions>
+          {infoPopupData && infoPopupData.status === "Pending" && (
+            <Button color="error" onClick={handleOpenConfirmDeleteDialog}>
+              Delete
+            </Button>
+          )}
+          <Button onClick={handleCloseInfoPopup}>Close</Button>
+        </DialogActions>
       </Dialog>
 
       {/* Confirmation Dialog for Deletion */}
@@ -1097,7 +1031,8 @@ const SalaryTable = ({ id, initialStatus }) => {
                       <strong>Mobile : </strong>
                       {employeeDetails.phonenumber}
                     </Typography>
-                  </Box><Box
+                  </Box>
+                  <Box
                     sx={{
                       mt: 0, // Reduced margin-top to bring the addresses closer
                     }}
@@ -1135,7 +1070,7 @@ const SalaryTable = ({ id, initialStatus }) => {
                 justifyContent: "space-between", // Evenly space the items
                 gap: "20px", // Gap between the data elements for spacing
                 backgroundColor: "#f3e5f5", // Light purple background
-                marginTop:'10px'
+                marginTop: "10px",
               }}
             >
               <Typography component="span">
@@ -1185,122 +1120,158 @@ const SalaryTable = ({ id, initialStatus }) => {
             </Box>
 
             <Grid container spacing={2}>
-  <Grid item xs={6}>
-    <Box
-      sx={{
-        // border: "1px solid black",
-        padding: 2,
-      }}
-    >
-      <Typography variant="h6" style={{ fontWeight: "bold",  borderBottom: "1px solid black"}}>
-        Earnings
-      </Typography>
-      {earnings.map((earning, index) => (
-        <Box
-          key={index}
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            padding: "8px 0",
-           
-          }}
-        >
-          <Typography>{earning.label}</Typography>
-          <Typography>₹{earning.amount}</Typography>
-        </Box>
-      ))}
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          padding: "8px 0",
-          fontWeight: "bold",
-        }}
-      >
-        <Typography>Total Earnings</Typography>
-        <Typography>
-          ₹{earnings.reduce((acc, earning) => acc + earning.amount, 0)}
-        </Typography>
-      </Box>
-    </Box>
-  </Grid>
+              <Grid item xs={6}>
+                <Box
+                  sx={{
+                    // border: "1px solid black",
+                    padding: 2,
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    style={{
+                      fontWeight: "bold",
+                      borderBottom: "1px solid black",
+                    }}
+                  >
+                    Earnings
+                  </Typography>
+                  {earnings.map((earning, index) => (
+                    <Box
+                      key={index}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        padding: "8px 0",
+                      }}
+                    >
+                      <Typography>{earning.label}</Typography>
+                      <Typography>₹{earning.amount}</Typography>
+                    </Box>
+                  ))}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      padding: "8px 0",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    <Typography>Total Earnings</Typography>
+                    <Typography>
+                      ₹
+                      {earnings.reduce(
+                        (acc, earning) => acc + earning.amount,
+                        0
+                      )}
+                    </Typography>
+                  </Box>
+                </Box>
+              </Grid>
 
-  <Grid item xs={6}>
-    <Box
-      sx={{
-        // border: "1px solid black",
-        padding: 2,
-      }}
-    >
-      <Typography variant="h6" style={{ fontWeight: "bold", borderBottom: "1px solid black", }}>
-        Deductions
-      </Typography>
-      {deductions.map((deduction, index) => (
-        <Box
-          key={index}
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            padding: "8px 0"
-          }}
-        >
-          <Typography>{deduction.label}</Typography>
-          <Typography>₹{deduction.amount}</Typography>
-        </Box>
-      ))}
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          padding: "8px 0",
-          fontWeight: "bold",
-        }}
-      >
-        <Typography>Net Salary</Typography>
-        <Typography>₹ {selectedSalary.finalNetSalary}</Typography>
-      </Box>
-    </Box>
-  </Grid>
-</Grid>
-{/* <Divider/> */}
+              <Grid item xs={6}>
+                <Box
+                  sx={{
+                    // border: "1px solid black",
+                    padding: 2,
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    style={{
+                      fontWeight: "bold",
+                      borderBottom: "1px solid black",
+                    }}
+                  >
+                    Deductions
+                  </Typography>
+                  {deductions.map((deduction, index) => (
+                    <Box
+                      key={index}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        padding: "8px 0",
+                      }}
+                    >
+                      <Typography>{deduction.label}</Typography>
+                      <Typography>₹{deduction.amount}</Typography>
+                    </Box>
+                  ))}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      padding: "8px 0",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    <Typography>Net Salary</Typography>
+                    <Typography>₹ {selectedSalary.finalNetSalary}</Typography>
+                  </Box>
+                </Box>
+              </Grid>
+            </Grid>
+            {/* <Divider/> */}
 
-<Box sx={{ marginTop: '15px', padding: '5px', borderBottom:'3px solid purple', borderTop:'3px solid purple' }}>
-      {/* Grid Container for Labels and Values */}
-      <Grid container spacing={1} alignItems="center">
-        {/* Label Column */}
-        <Grid item xs={6}>
-          <Typography align="left"><strong>Total Earnings:</strong></Typography>
-        </Grid>
-        {/* Value Column */}
-        <Grid item xs={6}>
-        <Typography align="right">
-            ₹ {earnings.reduce((acc, earning) => acc + earning.amount, 0)}
-          </Typography>
-        </Grid>
+            <Box
+              sx={{
+                marginTop: "15px",
+                padding: "5px",
+                borderBottom: "3px solid purple",
+                borderTop: "3px solid purple",
+              }}
+            >
+              {/* Grid Container for Labels and Values */}
+              <Grid container spacing={1} alignItems="center">
+                {/* Label Column */}
+                <Grid item xs={6}>
+                  <Typography align="left">
+                    <strong>Total Earnings:</strong>
+                  </Typography>
+                </Grid>
+                {/* Value Column */}
+                <Grid item xs={6}>
+                  <Typography align="right">
+                    ₹{" "}
+                    {earnings.reduce((acc, earning) => acc + earning.amount, 0)}
+                  </Typography>
+                </Grid>
 
-        <Grid item xs={6}>
-          <Typography align="left"><strong>Total Deductions:</strong></Typography>
-        </Grid>
-        <Grid item xs={6}>
-        <Typography align="right">₹ {selectedSalary.deductions}</Typography>
-        </Grid>
+                <Grid item xs={6}>
+                  <Typography align="left">
+                    <strong>Total Deductions:</strong>
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography align="right">
+                    ₹ {selectedSalary.deductions}
+                  </Typography>
+                </Grid>
 
-        <Grid item xs={6}>
-          <Typography align="left"><strong>Final Net Salary:</strong></Typography>
-        </Grid>
-        <Grid item xs={6}>
-          <Typography align="right">₹ {selectedSalary.finalNetSalary}</Typography>
-        </Grid>
+                <Grid item xs={6}>
+                  <Typography align="left">
+                    <strong>Final Net Salary:</strong>
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography align="right">
+                    ₹ {selectedSalary.finalNetSalary}
+                  </Typography>
+                </Grid>
 
-        <Grid item xs={6} >
-          <Typography align="left"><strong>Salary In Words:</strong></Typography>
-        </Grid>
-        <Grid item xs={6}>
-          <Typography align="right">₹ {numberToWords(selectedSalary.finalNetSalary)} Only</Typography>
-        </Grid>
-
-      </Grid>
-    </Box>
+                <Grid item xs={6}>
+                  <Typography align="left">
+                    <strong>Salary In Words:</strong>
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography align="right">
+                    ₹ {numberToWords(selectedSalary.finalNetSalary)} Only
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Box>
 
             {/* <Typography
               variant="body1"
@@ -1310,51 +1281,55 @@ const SalaryTable = ({ id, initialStatus }) => {
               ₹ {numberToWords(selectedSalary.finalNetSalary)} Only
             </Typography> */}
 
-<Box
-      sx={{
-        borderBottom: '3px solid purple',
-        padding: '5px',
-        marginTop: '10px',
-      }}
-    >
-      {/* Grid Container for Labels and Values */}
-      <Grid container spacing={1} alignItems="center">
-        {/* Payment Date Row */}
-        <Grid item xs={6}>
-          <Typography variant="body1" align="left">
-            <strong>Payment Date:</strong>
-          </Typography>
-        </Grid>
-        <Grid item xs={6}>
-          <Typography variant="body1" align="right">
-            {selectedSalary.paymentDate}
-          </Typography>
-        </Grid>
+            <Box
+              sx={{
+                borderBottom: "3px solid purple",
+                padding: "5px",
+                marginTop: "10px",
+              }}
+            >
+              {/* Grid Container for Labels and Values */}
+              <Grid container spacing={1} alignItems="center">
+                {/* Payment Date Row */}
+                <Grid item xs={6}>
+                  <Typography variant="body1" align="left">
+                    <strong>Payment Date:</strong>
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="body1" align="right">
+                    {selectedSalary.paymentDate}
+                  </Typography>
+                </Grid>
 
-        {/* Transaction ID Row */}
-        <Grid item xs={6}>
-          <Typography variant="body1" align="left">
-            <strong>Transaction ID:</strong>
-          </Typography>
-        </Grid>
-        <Grid item xs={6}>
-          <Typography variant="body1" align="right">
-            {selectedSalary.transactionId}
-          </Typography>
-        </Grid>
-      </Grid>
-    </Box>
-
-            
+                {/* Transaction ID Row */}
+                <Grid item xs={6}>
+                  <Typography variant="body1" align="left">
+                    <strong>Transaction ID:</strong>
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="body1" align="right">
+                    {selectedSalary.transactionId}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Box>
 
             <Grid container spacing={2} mt={10}>
               <Grid item xs={12} sm={6}>
-                <Typography variant="body1" style={{ textAlign: "center", borderTop:'0.5px solid gray' }}>
+                <Typography
+                  variant="body1"
+                  style={{ textAlign: "center", borderTop: "0.5px solid gray" }}
+                >
                   <strong>Employer Sign</strong>
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Typography variant="body1" style={{ textAlign: "center" , borderTop:'0.5px solid gray' }}>
+                <Typography
+                  variant="body1"
+                  style={{ textAlign: "center", borderTop: "0.5px solid gray" }}
+                >
                   <strong>Employee Sign</strong>
                 </Typography>
               </Grid>

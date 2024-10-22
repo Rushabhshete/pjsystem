@@ -1,50 +1,64 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import { TextField, Button, Grid, Typography, Box, MenuItem, Snackbar, SnackbarContent } from '@mui/material';
-import { styled } from '@mui/system';
-import Swal from 'sweetalert2'; // Import SweetAlert2
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import {
+  TextField,
+  Button,
+  Grid,
+  Typography,
+  Box,
+  MenuItem,
+  Snackbar,
+  SnackbarContent,
+} from "@mui/material";
+import { styled } from "@mui/system";
+import Swal from "sweetalert2"; // Import SweetAlert2
 
 const months = [
-  { value: 1, label: 'January' },
-  { value: 2, label: 'February' },
-  { value: 3, label: 'March' },
-  { value: 4, label: 'April' },
-  { value: 5, label: 'May' },
-  { value: 6, label: 'June' },
-  { value: 7, label: 'July' },
-  { value: 8, label: 'August' },
-  { value: 9, label: 'September' },
-  { value: 10, label: 'October' },
-  { value: 11, label: 'November' },
-  { value: 12, label: 'December' },
+  { value: 1, label: "January" },
+  { value: 2, label: "February" },
+  { value: 3, label: "March" },
+  { value: 4, label: "April" },
+  { value: 5, label: "May" },
+  { value: 6, label: "June" },
+  { value: 7, label: "July" },
+  { value: 8, label: "August" },
+  { value: 9, label: "September" },
+  { value: 10, label: "October" },
+  { value: 11, label: "November" },
+  { value: 12, label: "December" },
 ];
 
 const yearsAhead = 5;
 const yearsBehind = 5;
 
 const currentYear = new Date().getFullYear();
-const years = Array.from(new Array(yearsAhead + yearsBehind + 1), (val, index) => currentYear - yearsBehind + index);
+const years = Array.from(
+  new Array(yearsAhead + yearsBehind + 1),
+  (val, index) => currentYear - yearsBehind + index
+);
 
 export default function AddSalary() {
-  const [institutecode, setInstituteCode] = useState(localStorage.getItem('institutecode') || '');
+  const [institutecode, setInstituteCode] = useState(
+    localStorage.getItem("institutecode") || ""
+  );
 
   const navigate = useNavigate();
   const { empID } = useParams();
 
   const [employee, setEmployee] = useState({
-    institutecode:'',
-    fullName: '',
-    salary: '',
-    department: '',
-    employeecategory: '',
-    transactionId: '',
+    institutecode: "",
+    fullName: "",
+    salary: "",
+    department: "",
+    employeecategory: "",
+    transactionId: "",
   });
 
-  const [date, setDate] = useState('');
-  const [daysOfMonth, setDaysOfMonth] = useState('');
-  const [month, setMonth] = useState('');
-  const [year, setYear] = useState('');
+  const [date, setDate] = useState("");
+  const [daysOfMonth, setDaysOfMonth] = useState("");
+  const [month, setMonth] = useState("");
+  const [year, setYear] = useState("");
 
   const { fullName, salary, department, employeecategory } = employee;
 
@@ -72,7 +86,9 @@ export default function AddSalary() {
     e.preventDefault();
 
     // Construct paymentDate in YYYY-MM-DD format
-    const paymentDate = `${year}-${month.toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`;
+    const paymentDate = `${year}-${month.toString().padStart(2, "0")}-${date
+      .toString()
+      .padStart(2, "0")}`;
 
     try {
       // Add salary for the employee using axios POST request
@@ -89,58 +105,64 @@ export default function AddSalary() {
         transactionId: employee.transactionId,
       });
 
-         // Show success message using SweetAlert2
-         await Swal.fire({
-          icon: 'success',
-          title: 'Success!',
-          text: 'Salary added successfully!',
-          confirmButtonText: 'OK',
-        });
+      // Show success message using SweetAlert2
+      await Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "Salary added successfully!",
+        confirmButtonText: "OK",
+      });
       setTimeout(() => {
-        navigate('/layout/employee-salary-manager/salary-list');
+        navigate("/layout/employee-salary-manager/salary-list");
       }, 2000);
     } catch (error) {
-      console.error('Error adding salary:', error);
-        // Show error message using SweetAlert2
-        Swal.fire({
-          icon: 'error',
-          title: 'Error!',
-          text: 'Failed to add salary. Please try again.',
-          confirmButtonText: 'OK',
-        });
+      console.error("Error adding salary:", error);
+      // Show error message using SweetAlert2
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: "Failed to add salary. Please try again.",
+        confirmButtonText: "OK",
+      });
     }
   };
 
-  useEffect(() => {
-    const loadEmployee = async () => {
-      if (!empID) {
-        console.error('Employee ID is undefined.');
-        return;
-      }
+  useEffect(
+    () => {
+      const loadEmployee = async () => {
+        if (!empID) {
+          console.error("Employee ID is undefined.");
+          return;
+        }
 
-      try {
-        const response = await axios.get(`http://localhost:8082/empById/${empID}`);
-        const fetchedEmployee = response.data;
-        setEmployee({
-          fullName: fetchedEmployee.fullName,
-          salary: fetchedEmployee.salary,
-          department: fetchedEmployee.department,
-          employeecategory: fetchedEmployee.employeecategory,
-          transactionId: fetchedEmployee.transactionId,
-        });
-      } catch (error) {
-        console.error('There was an error fetching the employee!', error);
-      }
-    };
+        try {
+          const response = await axios.get(
+            `http://localhost:8082/empById/${empID}`
+          );
+          const fetchedEmployee = response.data;
+          setEmployee({
+            fullName: fetchedEmployee.fullName,
+            salary: fetchedEmployee.salary,
+            department: fetchedEmployee.department,
+            employeecategory: fetchedEmployee.employeecategory,
+            transactionId: fetchedEmployee.transactionId,
+          });
+        } catch (error) {
+          console.error("There was an error fetching the employee!", error);
+        }
+      };
 
-    loadEmployee();
-  }, [empID], [institutecode]);
+      loadEmployee();
+    },
+    [empID],
+    [institutecode]
+  );
   return (
     <Grid container justifyContent="center">
       <Grid item xs={10} md={6}>
         <Box mt={4}>
           <form onSubmit={onSubmit} mt={2}>
-            <Grid container spacing={2} mt={2}>
+            <Grid container spacing={2} mt={2} className="textField-root">
               <Grid item xs={12}>
                 <TextField
                   id="empID"
@@ -268,14 +290,19 @@ export default function AddSalary() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <Button variant="contained" color="secondary" component={Link} to="/layout/employee-salary-manager/add-detail">
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  component={Link}
+                  to="/layout/employee-salary-manager/add-detail"
+                >
                   Cancel
                 </Button>
                 <Button
                   type="submit"
                   variant="contained"
                   color="primary"
-                  style={{ marginLeft: '10px' }}
+                  style={{ marginLeft: "10px" }}
                 >
                   Add Salary
                 </Button>

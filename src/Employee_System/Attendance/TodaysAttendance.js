@@ -460,7 +460,7 @@ const TodaysAttendance = () => {
 
   return (
     <>
-    <Container>
+    <Container className='textField-root'>
       <Grid container spacing={2} sx={{ marginBottom: 3 }}>
         <Grid item xs={12} md={3}>
           <Card sx={{ backgroundColor: '#F9E79F', borderRadius:"10px", fontWeight:'bold' }}>
@@ -498,13 +498,14 @@ const TodaysAttendance = () => {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={3} >
           <TextField
             fullWidth
             label="Search by name"
             variant="outlined"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            size='small'
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
@@ -514,6 +515,7 @@ const TodaysAttendance = () => {
               onChange={(e) => setStatusFilter(e.target.value)}
               label="Status"
               select
+              size='small'
             >
               <MenuItem value="All">All</MenuItem>
               <MenuItem value="Present">Present</MenuItem>
@@ -528,6 +530,7 @@ const TodaysAttendance = () => {
               value={timeFilter}
               onChange={(e) => setTimeFilter(e.target.value)}
               label="Filter by"
+              size='small'
             >
               {filterOptions.map((option) => (
                 <MenuItem key={option} value={option}>
@@ -545,6 +548,7 @@ const TodaysAttendance = () => {
                 type='date'
                 label="Start Date"
                 variant="outlined"
+                size='small'
                 value={startDate}
                 InputLabelProps={{ shrink: true }}
                 onChange={(e) => setStartDate(e.target.value)}
@@ -557,6 +561,7 @@ const TodaysAttendance = () => {
                 label="End Date"
                 variant="outlined"
                 value={endDate}
+                size='small'
                 InputLabelProps={{ shrink: true }}
                 onChange={(e) => setEndDate(e.target.value)}
               />
@@ -566,21 +571,21 @@ const TodaysAttendance = () => {
         )}
       </Grid>
 
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead sx={{ backgroundColor: '#f2f2f2' }}>
+      <TableContainer >
+        <Table className='table-root'>
+          <TableHead>
             <TableRow>
-              <TableCell sx={{ fontWeight: 'bold' }}>EmpID</TableCell>
-              <TableCell sx={{ fontWeight: 'bold' }}>Name</TableCell>
-              <TableCell sx={{ fontWeight: 'bold' }}>Date</TableCell>
-              <TableCell sx={{ fontWeight: 'bold' }}>Shift</TableCell>
-              <TableCell sx={{ fontWeight: 'bold' }}>Login</TableCell>
-              <TableCell sx={{ fontWeight: 'bold' }}>Break In</TableCell>
-              <TableCell sx={{ fontWeight: 'bold' }}>Break Out</TableCell>
-              <TableCell sx={{ fontWeight: 'bold' }}>Break Minutes</TableCell>
-              <TableCell sx={{ fontWeight: 'bold' }}>Logout</TableCell>
-              <TableCell sx={{ fontWeight: 'bold' }}>Total Minutes</TableCell>
-              <TableCell sx={{ fontWeight: 'bold' }}>Status</TableCell>
+              <TableCell>EmpID</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Date</TableCell>
+              <TableCell>Shift</TableCell>
+              <TableCell>Login</TableCell>
+              <TableCell>Break In</TableCell>
+              <TableCell>Break Out</TableCell>
+              <TableCell>Break Minutes</TableCell>
+              <TableCell>Logout</TableCell>
+              <TableCell>Total Minutes</TableCell>
+              <TableCell>Status</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
