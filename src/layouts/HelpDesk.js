@@ -145,23 +145,20 @@ const HelpDesk = () => {
         </Box>
       ) : accountData.length > 0 ? (
         <TableContainer component={Paper}>
-          <Table>
+          <Table className="table-root">
             <TableHead
-              style={{
-                backgroundColor: "#f2f2f2",
-                justifyContent: "center",
-              }}
+             
             >
               <TableRow>
-                <TableCell sx={{ fontWeight: "bold" }}>Ticket ID</TableCell>
-                <TableCell sx={{ fontWeight: "bold" }}>
+                <TableCell >Ticket ID</TableCell>
+                <TableCell >
                   Issue Raised Date & Time
                 </TableCell>
-                <TableCell sx={{ fontWeight: "bold" }}>System Name</TableCell>
-                <TableCell sx={{ fontWeight: "bold" }}>Issue</TableCell>
-                <TableCell sx={{ fontWeight: "bold" }}>Status</TableCell>
-                <TableCell sx={{ fontWeight: "bold" }}>Description</TableCell>
-                <TableCell sx={{ fontWeight: "bold" }}>Chat</TableCell>
+                <TableCell >System Name</TableCell>
+                <TableCell >Issue</TableCell>
+                <TableCell >Status</TableCell>
+                <TableCell >Description</TableCell>
+                <TableCell >Chat</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
