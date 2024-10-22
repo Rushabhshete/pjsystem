@@ -36,6 +36,10 @@ import { Link } from "react-router-dom";
 import PrintIcon from "@mui/icons-material/Print";
 import html2pdf from "html2pdf.js"; // Importing html2pdf.js
 import IdCard from "./IdCard";
+import Swal from "sweetalert2"; // Import SweetAlert2
+import withReactContent from "sweetalert2-react-content";
+
+const MySwal = withReactContent(Swal); // Initialize SweetAlert2
 
 const DownloadButton = styled(Button)(({ theme }) => ({
   margin: theme.spacing(1),
@@ -454,25 +458,40 @@ const StudentList = () => {
     );
     setSelectedAdmission(null); // Close the popup after updating
   };
-  const handleDeleteClick = (id) => {
-    setAdmissionIdToDelete(id);
-    setConfirmOpen(true);
-  };
-
-  const handleDelete = async () => {
-    try {
-      await axios.delete(
-        `http://localhost:8085/deleteAdmission/${admissionIdToDelete}`
-      );
-      setAdmissions((prevAdmissions) =>
-        prevAdmissions.filter(
-          (admission) => admission.id !== admissionIdToDelete
-        )
-      );
-    } catch (error) {
-      console.error("Error deleting admission:", error);
+ // Delete confirmation using SweetAlert2
+const handleDeleteClick = (id) => {
+  MySwal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Yes, delete it!"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      handleDelete(id); // Proceed with deletion if confirmed
     }
-  };
+  });
+};
+
+// Delete function with SweetAlert2 success/error notifications
+const handleDelete = async (id) => {
+  try {
+    await axios.delete(
+      `http://localhost:8085/deleteAdmission/${id}`
+    );
+    setAdmissions((prevAdmissions) =>
+      prevAdmissions.filter(
+        (admission) => admission.id !== id
+      )
+    );
+    MySwal.fire("Deleted!", "Admission has been deleted.", "success"); // Success message
+  } catch (error) {
+    console.error("Error deleting admission:", error);
+    MySwal.fire("Error", "Failed to delete admission.", "error"); // Error message
+  }
+};
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));

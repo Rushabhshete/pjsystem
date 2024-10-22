@@ -16,6 +16,11 @@ import { PhotoCamera } from "@mui/icons-material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+// Initialize SweetAlert2
+const MySwal = withReactContent(Swal);
 
 const UpdateAdmissionForm = ({ admission, onUpdate, onClose }) => {
   const navigate = useNavigate();
@@ -107,13 +112,13 @@ const UpdateAdmissionForm = ({ admission, onUpdate, onClose }) => {
         `http://localhost:8085/updateAdmission/${formData.id}`,
         formData
       );
-      toast.success("Admission updated successfully!");
+      MySwal.fire("Success", "Admission Updated Successfully", "success");
       if (onUpdate) {
         onUpdate(formData); // Trigger the onUpdate callback
       }
       handleClose(); // Close the popup on success
     } catch (error) {
-      toast.error("Error updating admission.");
+      MySwal.fire("Error","Error updating admission.","error");
       console.error("Error updating admission:", error);
     }
   };

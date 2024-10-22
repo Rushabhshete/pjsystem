@@ -20,6 +20,11 @@ import { styled } from "@mui/system";
 import MuiAlert from "@mui/material/Alert";
 import "./Design.css";
 import { toast, ToastContainer } from "react-toastify";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+// Initialize SweetAlert2
+const MySwal = withReactContent(Swal);
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -138,7 +143,7 @@ const AddCategory = () => {
           }
         );
         if (response.ok) {
-          toast.success("Category added successfully");
+          MySwal.fire("Success", "Category Added Successfully", "success");
   
           const updatedResponse = await fetch(
             `http://localhost:8087/categories/getAllCategoriesByInstitutecode?institutecode=${encodeURIComponent(
@@ -151,12 +156,12 @@ const AddCategory = () => {
           setError("");
           handleClose();
         } else {
-          toast.error("Failed to add category");
+          MySwal.fire("Error","Failed to add category","error");
           setError("Failed to add category");
         }
       } catch (error) {
         console.error("Error adding category: ", error);
-        toast.error("Failed to add category");
+       MySwal.fire("Error","Failed to add category","error");
         setError("Failed to add category");
       }
     }
@@ -225,8 +230,20 @@ const AddCategory = () => {
   // };
 
   const handleDeleteClick = (id) => {
-    setCategoryIdToDelete(id);
-    setConfirmOpen(true);
+    setCategoryIdToDelete(id)
+    MySwal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleDelete(id); // Proceed with deletion if confirmed
+      }
+    });
   };
 
   const handleDelete = async () => {
@@ -246,8 +263,7 @@ const AddCategory = () => {
         );
         const updatedCategory = await updatedResponse.json();
         setCategories(updatedCategory);
-        setSnackbarMessage("Category deleted successfully");
-        setSnackbarOpen(true);
+        MySwal.fire("Deleted!", "Category has been deleted.", "success"); // Success message
       } else {
         console.error("Failed to delete category");
       }
