@@ -176,46 +176,44 @@ export default function Bill() {
       </Typography>
 
       <TableContainer>
-        <Table>
-          <TableHead
-            style={{ backgroundColor: "#f2f2f2", justifyContent: "center" }}
-          >
+        <Table className="table-root">
+          <TableHead>
             <TableRow>
-              <TableCell sx={{ fontWeight: "bold" }}>
-                Subscription Start at
-              </TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>
-                Subscription End at
-              </TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Institute Code</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Institute Name</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Owner Name</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>
-                Institute Mobile No.
-              </TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Plan</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>GST No.</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Amount</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Transaction Id.</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Invoice No.</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Status</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Bill</TableCell>
+              <TableCell>Invoice No.</TableCell>
+              <TableCell>Owner Name</TableCell>
+              <TableCell>Institute Code</TableCell>
+              <TableCell>Institute Name</TableCell>
+              <TableCell>Mobile</TableCell>
+              <TableCell>Subscription Start at</TableCell>
+              <TableCell>Subscription End at</TableCell>
+
+              <TableCell>Plan</TableCell>
+
+              <TableCell>Amount</TableCell>
+              <TableCell>GST No.</TableCell>
+              <TableCell>TNX Id.</TableCell>
+
+              <TableCell>Status</TableCell>
+              <TableCell>Bill</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {instituteData && (
               <TableRow key={instituteData.id}>
+                <TableCell>{instituteData.invoiceNo}</TableCell>
+                <TableCell>{instituteData.ownerName}</TableCell>
+                <TableCell>{instituteData.institutecode}</TableCell>
+                <TableCell>{instituteData.institutename}</TableCell>   <TableCell>{instituteData.mobilenumber}</TableCell>
                 <TableCell>{instituteData.subscriptstartDate}</TableCell>
                 <TableCell>{instituteData.subscriptendDate}</TableCell>
-                <TableCell>{instituteData.institutecode}</TableCell>
-                <TableCell>{instituteData.institutename}</TableCell>
-                <TableCell>{instituteData.ownerName}</TableCell>
-                <TableCell>{instituteData.mobilenumber}</TableCell>
+
+             
                 <TableCell>{instituteData.plan}</TableCell>
-                <TableCell>{instituteData.gstNo}</TableCell>
+
                 <TableCell>{instituteData.amount}</TableCell>
+                <TableCell>{instituteData.gstNo}</TableCell>
                 <TableCell>{instituteData.transactionId}</TableCell>
-                <TableCell>{instituteData.invoiceNo}</TableCell>
+
                 <TableCell sx={{ color: "green", fontWeight: "bold" }}>
                   Paid
                 </TableCell>

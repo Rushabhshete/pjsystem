@@ -123,28 +123,14 @@ const HelpDesk = () => {
 
   return (
     <Box sx={{ padding: 3 }}>
-      <PopTypography
-        variant="h5"
-        gutterBottom
-        sx={{
-          fontWeight: "bold",
-          color: "#fff",
-          textAlign: "center",
-          backgroundColor: "#24A0ED",
-          borderRadius: "150px",
-          padding: "10px",
-          marginBottom: "20px",
-        }}
-      >
-        Issue/Ticket
-      </PopTypography>
+  
 
       {loading ? (
-        <Box style={{ display: "flex", justifyContent: "center" }}>
+        <Box >
           <CircularProgress />
         </Box>
       ) : accountData.length > 0 ? (
-        <TableContainer component={Paper}>
+        <TableContainer >
           <Table className="table-root">
             <TableHead
              
