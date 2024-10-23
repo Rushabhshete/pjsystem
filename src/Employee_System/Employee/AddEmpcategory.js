@@ -611,7 +611,7 @@ function Category() {
         </Modal>
 
         {/* Info Modal */}
-        <Modal show={showInfoModal} onHide={() => setShowInfoModal(false)}>
+        <Modal  style={{ marginTop: "100px", marginLeft: "90px" }} show={showInfoModal} onHide={() => setShowInfoModal(false)}>
           <Typography
             variant="h6"
             gutterBottom

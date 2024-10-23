@@ -340,6 +340,52 @@ export default function DashBoard() {
     };
     fetchEnquiries();
   }, [institutecode]);
+  // const examChartData = [
+  //   ["Exam", "Enquiry Count", { role: "style" }],
+  //   ...(examData.length
+  //     ? examData.map(([ex, count], index) => {
+  //         const colors = ["#F9E79F", "#FF6F61", "#3498DB"];
+  //         return [ex, count, colors[index % colors.length]];
+  //       })
+  //     : [["No Data", 0, "color:#DDD"]]),
+  // ];
+  // const examChartOptions = {
+  //   label: { title: "Enquiry Count" },
+  //   xAxis: {
+  //     title: "Enquiry Count",
+  //     ticks: Array.from(
+  //       { length: Math.max(...examData.map(([_, count]) => count)) + 1 },
+  //       (_, i) => i
+  //     ),
+  //   },
+  //   yAxis: { title: "Exam" },
+  //   legend: "none",
+  //   chartArea: { width: "70%", height: "70%" },
+  //   bar: { groupWidth: "75%" },
+  // };
+  // const sourceChartData = [
+  //   ["Source By", "Enquiry Count", { role: "style" }],
+  //   ...(sourceData.length
+  //     ? sourceData.map(([sr, count], index) => {
+  //         const colors = ["#F9E79F", "#FF6F61", "#3498DB"];
+  //         return [sr, count, colors[index % colors.length]];
+  //       })
+  //     : [["No Data", 0, "color:#DDD"]]),
+  // ];
+  // const sourceChartOptions = {
+  //   xAxis: {
+  //     title: "Enquiry Count",
+  //     ticks: Array.from(
+  //       { length: Math.max(...sourceData.map(([_, count]) => count)) + 1 },
+  //       (_, i) => i
+  //     ),
+  //   },
+  //   yAxis: { title: "Sourcen By" },
+  //   legend: "none",
+  //   chartArea: { width: "70%", height: "70%" },
+  //   bar: { groupWidth: "75%" },
+  // };
+
   const examChartData = [
     ["Exam", "Enquiry Count", { role: "style" }],
     ...(examData.length
@@ -349,20 +395,20 @@ export default function DashBoard() {
         })
       : [["No Data", 0, "color:#DDD"]]),
   ];
+  
   const examChartOptions = {
     label: { title: "Enquiry Count" },
-    xAxis: {
-      title: "Enquiry Count",
-      ticks: Array.from(
-        { length: Math.max(...examData.map(([_, count]) => count)) + 1 },
-        (_, i) => i
-      ),
+    hAxis: {
+      // title: "Enquiry Count",
+      textPosition: "none", // Hide x-axis labels
+      ticks: [],            // Remove x-axis ticks
     },
-    yAxis: { title: "Exam" },
+    vAxis: { title: "Exam" },
     legend: "none",
     chartArea: { width: "70%", height: "70%" },
     bar: { groupWidth: "75%" },
   };
+  
   const sourceChartData = [
     ["Source By", "Enquiry Count", { role: "style" }],
     ...(sourceData.length
@@ -372,19 +418,19 @@ export default function DashBoard() {
         })
       : [["No Data", 0, "color:#DDD"]]),
   ];
+  
   const sourceChartOptions = {
-    xAxis: {
-      title: "Enquiry Count",
-      ticks: Array.from(
-        { length: Math.max(...sourceData.map(([_, count]) => count)) + 1 },
-        (_, i) => i
-      ),
+    hAxis: {
+      // title: "Enquiry Count",
+      textPosition: "none", // Hide x-axis labels
+      ticks: [],            // Remove x-axis ticks
     },
-    yAxis: { title: "Sourcen By" },
+    vAxis: { title: "Source By" },
     legend: "none",
     chartArea: { width: "70%", height: "70%" },
     bar: { groupWidth: "75%" },
   };
+  
   // Transform data to match Nivo's format
   const chartData = perData.length
   ? [

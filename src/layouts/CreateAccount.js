@@ -683,7 +683,7 @@ const CreateAccount = () => {
                               justifyContent: "space-between",
                             }}
                           >
-                            <span>Lifetime Support 24/7</span>
+                            <span>24/7 Support</span>
                             <span>
                               {renderFeatureIcon(featureList[index].support)}
                             </span>

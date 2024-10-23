@@ -603,7 +603,7 @@ const SalaryTable = ({ id, initialStatus }) => {
   return (
     <div>
       <Grid container spacing={2} alignItems="center" mt={2} className="textField-root">
-        <Grid item xs={12} md={2}>
+        <Grid item xs={12} md={1.7}>
           <TextField
             label="Search by Employee Name"
             variant="outlined"
@@ -615,7 +615,7 @@ const SalaryTable = ({ id, initialStatus }) => {
         </Grid>
 
         {/* UI components for filtering */}
-        <Grid item xs={12} sm={6} md={2}>
+        <Grid item xs={12} sm={6} md={1.7}>
           <TextField
             select
             label="Select Department"
@@ -637,7 +637,7 @@ const SalaryTable = ({ id, initialStatus }) => {
         </Grid>
 
         {/* Category Dropdown */}
-        <Grid item xs={12} sm={6} md={2}>
+        <Grid item xs={12} sm={6} md={1.7}>
           <TextField
             select
             label="Select Category"
@@ -659,7 +659,7 @@ const SalaryTable = ({ id, initialStatus }) => {
         </Grid>
 
         {/* Status Filter */}
-        <Grid item xs={12} sm={6} md={2}>
+        <Grid item xs={12} sm={6} md={1.7}>
           <TextField
             select
             label="Select Status"
@@ -682,7 +682,7 @@ const SalaryTable = ({ id, initialStatus }) => {
         </Grid>
 
         {/* Month Selector */}
-        <Grid item xs={12} sm={6} md={2}>
+        <Grid item xs={12} sm={6} md={1.7}>
           <TextField
             select
             label="Select Month"
@@ -704,7 +704,7 @@ const SalaryTable = ({ id, initialStatus }) => {
         </Grid>
 
         {/* Year Selector */}
-        <Grid item xs={12} sm={6} md={2}>
+        <Grid item xs={12} sm={6} md={1.7}>
           <TextField
             select
             label="Select Year"

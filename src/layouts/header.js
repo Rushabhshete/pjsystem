@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import TodaysNotification from "./TodaysNotification";
-import './header.css';
+import "./header.css";
+import Swal from "sweetalert2"; // Import SweetAlert2
 import {
   AppBar,
   Toolbar,
@@ -135,7 +136,21 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    setOpenLogoutDialog(true);
+    handleClose(); // Close the dropdown menu immediately
+    // SweetAlert2 confirmation dialog for logout
+    Swal.fire({
+      title: "Are you sure you want to logout?",
+      text: "This will clear your session and local storage data.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, logout!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleLogoutConfirm(); // Perform the logout if confirmed
+      }
+    });
   };
 
   const handleLogoutConfirm = () => {
@@ -264,53 +279,53 @@ const Header = () => {
             </IconButton>
 
             <Menu
-  id="menu-notifications"
-  anchorEl={notificationsAnchorEl}
-  anchorOrigin={{
-    vertical: "top",
-    horizontal: "right",
-  }}
-  keepMounted
-  transformOrigin={{
-    vertical: "top",
-    horizontal: "right",
-  }}
-  open={Boolean(notificationsAnchorEl)}
-  onClose={handleNotificationsClose}
-  className="speech-bubble"
->
-  {loadingNotifications ? (
-    <MenuItem>Loading notifications...</MenuItem>
-  ) : (
-    notifications.map((notification, index) => (
-      <MenuItem key={index}>
-        <Typography variant="body2">
-          {notification.message.length > messageLimit
-            ? `${notification.message.substring(0, messageLimit)}...`
-            : notification.message}
-        </Typography>
-        {notification.message.length > messageLimit && (
-          <Link
-            to="/layout/todaysNotifications"
-            style={{
-              textDecoration: "none",
-              color: "inherit",
-              marginLeft: "8px",
-              color:'blue',
-              fontSize:'13px'
-              
-            }}
-            onClick={handleNotificationsClose}
-          >
-            Read More
-          </Link>
-        )}
-      </MenuItem>
-    ))
-  )}
-</Menu>
-
-
+              id="menu-notifications"
+              anchorEl={notificationsAnchorEl}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(notificationsAnchorEl)}
+              onClose={handleNotificationsClose}
+              className="speech-bubble"
+            >
+              {loadingNotifications ? (
+                <MenuItem>Loading notifications...</MenuItem>
+              ) : (
+                notifications.map((notification, index) => (
+                  <MenuItem key={index}>
+                    <Typography variant="body2">
+                      {notification.message.length > messageLimit
+                        ? `${notification.message.substring(
+                            0,
+                            messageLimit
+                          )}...`
+                        : notification.message}
+                    </Typography>
+                    {notification.message.length > messageLimit && (
+                      <Link
+                        to="/layout/todaysNotifications"
+                        style={{
+                          textDecoration: "none",
+                          color: "inherit",
+                          marginLeft: "8px",
+                          color: "blue",
+                          fontSize: "13px",
+                        }}
+                        onClick={handleNotificationsClose}
+                      >
+                        Read More
+                      </Link>
+                    )}
+                  </MenuItem>
+                ))
+              )}
+            </Menu>
 
             <IconButton
               size="large"
@@ -343,7 +358,7 @@ const Header = () => {
           </Grid>
         </Grid>
       </Toolbar>
-      <Dialog
+      {/* <Dialog
         open={openLogoutDialog}
         onClose={handleLogoutCancel}
         aria-labelledby="logout-dialog-title"
@@ -366,7 +381,7 @@ const Header = () => {
             Logout
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
 
       <Snackbar
         open={showSnackbar}

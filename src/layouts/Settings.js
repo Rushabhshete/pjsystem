@@ -47,7 +47,7 @@ const plans = [
         ],
         included: false,
       },
-      { feature: "Entry Limit", included: "10000" },
+      { feature: "Entry Limit", included: "5000" },
       { feature: "24x7 Support", included: true },
       { feature: "Cloud Storage", included: true },
       { feature: "Advance Security Layer", included: true },
