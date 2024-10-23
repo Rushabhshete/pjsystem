@@ -394,7 +394,7 @@ export default function CombineDashboard() {
                 borderRadius: 2,
               }}
             >
-              <Grid container spacing={2} justifyContent="center">
+              <Grid container spacing={2} justifyContent="center" mb={4.5}>
                 <Grid item xs={12} md={6}>
                   <Box
                     sx={{
