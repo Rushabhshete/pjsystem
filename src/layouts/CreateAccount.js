@@ -101,11 +101,11 @@ const CreateAccount = () => {
     if (selectedCard === 0) {
       amountPerMonth = 1; // Demo / Free plan
     } else if (selectedCard === 1) {
-      amountPerMonth = 499; // Basic plan
+      amountPerMonth = 699; // Basic plan
     } else if (selectedCard === 2) {
-      amountPerMonth = 699; // Premium plan
+      amountPerMonth = 899; // Premium plan
     } else if (selectedCard === 3) {
-      amountPerMonth = 999; // Business plan
+      amountPerMonth = 1299; // Business plan
     } else {
       return { finalAmount: 0, amountPerMonth: 0, gstAmount: 0 };
     }
@@ -1028,12 +1028,12 @@ const CreateAccount = () => {
                       <Grid item xs={12}>
                         <Grid
                           container
-                          spacing={2}
+                          spacing={1}
                           justifyContent="space-between"
-                          marginLeft="3%"
+                         
                         >
                           {" "}
-                          <Grid item xs={4}>
+                          <Grid item xs={5}>
                             <FormControlLabel
                               control={
                                 <Checkbox
@@ -1043,11 +1043,11 @@ const CreateAccount = () => {
                                   color="primary"
                                 />
                               }
-                              label="Student System (School & College)"
+                              label="Student System(School & College)"
                               style={{ whiteSpace: "nowrap" }}
                             />
                           </Grid>
-                          <Grid item xs={4}>
+                          <Grid item xs={3}>
                             <FormControlLabel
                               control={
                                 <Checkbox
@@ -1085,7 +1085,7 @@ const CreateAccount = () => {
                           marginLeft="3%"
                         >
                           {" "}
-                          <Grid item xs={4}>
+                          <Grid item xs={6}>
                             <FormControlLabel
                               control={
                                 <Checkbox
@@ -1098,7 +1098,7 @@ const CreateAccount = () => {
                               label="Admission System(Classroom & Institute)"
                             />
                           </Grid>
-                          <Grid item xs={4}>
+                          <Grid item xs={3}>
                             <FormControlLabel
                               control={
                                 <Checkbox
@@ -1111,7 +1111,7 @@ const CreateAccount = () => {
                               label="Enquiry System"
                             />
                           </Grid>
-                          <Grid item xs={4}>
+                          <Grid item xs={3}>
                             <FormControlLabel
                               control={
                                 <Checkbox
