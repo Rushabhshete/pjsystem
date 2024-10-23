@@ -772,21 +772,7 @@ const AddUser = () => {
         draggable
         pauseOnHover
       />
-      {/* <PopTypography
-        variant="h5"
-        gutterBottom
-        sx={{
-          fontWeight: "bold",
-          color: "#fff",
-          textAlign: "center",
-          backgroundColor: "#24A0ED",
-          borderRadius: "150px",
-          padding: "10px",
-          marginBottom: "20px",
-        }}
-      >
-        Add User
-      </PopTypography> */}
+   
       <Grid container spacing={2} className="textField-root">
         <Typography
           variant="h6"
@@ -810,7 +796,7 @@ const AddUser = () => {
             onClick={handleClickOpen}
             sx={{ marginTop: 1 }}
           >
-            Add
+            ADD USER
           </Button>
         </Grid>
       </Grid>

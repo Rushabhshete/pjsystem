@@ -336,7 +336,7 @@ const AddCategory = () => {
             onClick={handleClickOpen}
             sx={{ marginTop: 1 }}
           >
-            Add
+            Add CATEGORY
           </Button>
         </Grid>
       </Grid>

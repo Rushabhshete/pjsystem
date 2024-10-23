@@ -476,7 +476,7 @@ function Category() {
           </Typography>
           <Modal.Body>
             <Form onSubmit={handleSubmit}>
-              <Grid container spacing={2}>
+              <Grid container spacing={2} className="textField-root">
                 <Grid item xs={12} sm={4}>
                   <TextField
                     fullWidth
@@ -491,7 +491,7 @@ function Category() {
                 <Grid item xs={12} sm={4}>
                   <TextField
                     type="number"
-                    label="HRA Percentage"
+                    label="HRA %"
                     name="hraPercentage"
                     value={selectedCategory?.hraPercentage || ""}
                     onChange={handleInputChange}
@@ -502,7 +502,7 @@ function Category() {
                   <TextField
                     type="number"
                     name="taPercentage"
-                    label="TA Percentage"
+                    label="TA %"
                     value={selectedCategory?.taPercentage || ""}
                     onChange={handleInputChange}
                     required
@@ -511,7 +511,7 @@ function Category() {
                 <Grid item xs={12} sm={4}>
                   <TextField
                     type="number"
-                    label="Incentive Percentage"
+                    label="Incentive %"
                     name="incentivePercentage"
                     value={selectedCategory?.incentivePercentage || ""}
                     onChange={handleInputChange}
@@ -522,7 +522,7 @@ function Category() {
                   <TextField
                     type="number"
                     name="spiPercentage"
-                    label="SPI Percentage"
+                    label="SPI %"
                     value={selectedCategory?.spiPercentage || ""}
                     onChange={handleInputChange}
                     required
@@ -531,7 +531,7 @@ function Category() {
                 <Grid item xs={12} sm={4}>
                   <TextField
                     type="number"
-                    label="Medical Allowance Percentage"
+                    label="Medical Allowance %"
                     name="medicalAllowancePercentage"
                     value={selectedCategory?.medicalAllowancePercentage || ""}
                     onChange={handleInputChange}
@@ -542,7 +542,7 @@ function Category() {
                   <TextField
                     type="number"
                     name="pfPercentage"
-                    label="PF Percentage"
+                    label="PF %"
                     value={selectedCategory?.pfPercentage || ""}
                     onChange={handleInputChange}
                     required
@@ -552,7 +552,7 @@ function Category() {
                   <TextField
                     type="number"
                     name="esicPercentage"
-                    label="ESIC Percentage"
+                    label="ESIC %"
                     value={selectedCategory?.esicPercentage || ""}
                     onChange={handleInputChange}
                     required
@@ -562,7 +562,7 @@ function Category() {
                   <TextField
                     type="number"
                     name="professionalTaxPercentage"
-                    label="Professional Tax Percentage"
+                    label="Professional Tax %"
                     value={selectedCategory?.professionalTaxPercentage || ""}
                     onChange={handleInputChange}
                     required
@@ -572,7 +572,7 @@ function Category() {
                   <TextField
                     type="number"
                     name="incomeTaxPercentage"
-                    label="Income Tax Percentage"
+                    label="Income Tax %"
                     value={selectedCategory?.incomeTaxPercentage || ""}
                     onChange={handleInputChange}
                     required
@@ -592,7 +592,7 @@ function Category() {
                   <Grid item>
                     <Box display="flex" justifyContent="center" mt={2}>
                       <Button
-                        color="secondary"
+                        color="primary"
                         variant="contained"
                         onClick={() => setShowUpdateModal(false)}
                         style={{ marginRight: "10px" }}

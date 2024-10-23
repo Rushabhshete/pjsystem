@@ -429,12 +429,12 @@ import {
 } from "@mui/material";
 import CountUp from "react-countup";
 import axios from "axios";
-import { ResponsiveLine } from '@nivo/line';
+import { ResponsiveLine } from "@nivo/line";
 import { ResponsiveBar } from "@nivo/bar";
 
 export default function IncomeCombineDash() {
   const [year, setYear] = useState(new Date().getFullYear());
-  
+
   // Income Data States
   const [incomeData, setIncomeData] = useState({});
   const [incomeLoading, setIncomeLoading] = useState(true);
@@ -529,7 +529,7 @@ export default function IncomeCombineDash() {
       // Populate incomeArray
       Object.keys(incomeResponse.data).forEach((month) => {
         const monthIndex = parseInt(month, 10) - 1; // Assuming months are 1-based
-        if (monthIndex >=0 && monthIndex < 12) {
+        if (monthIndex >= 0 && monthIndex < 12) {
           incomeArray[monthIndex] = incomeResponse.data[month];
         }
       });
@@ -537,7 +537,7 @@ export default function IncomeCombineDash() {
       // Populate expenseArray
       Object.keys(expenseResponse.data).forEach((month) => {
         const monthIndex = parseInt(month, 10) - 1; // Assuming months are 1-based
-        if (monthIndex >=0 && monthIndex < 12) {
+        if (monthIndex >= 0 && monthIndex < 12) {
           expenseArray[monthIndex] = expenseResponse.data[month];
         }
       });
@@ -618,8 +618,18 @@ export default function IncomeCombineDash() {
 
   // Monthly data labels
   const monthLabels = [
-    "Jan", "Feb", "March", "April", "May", "June",
-    "July", "Aug", "Sept", "Oct", "Nov", "Dec",
+    "Jan",
+    "Feb",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "Aug",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec",
   ];
 
   // Nivo data for Line Chart
@@ -644,9 +654,9 @@ export default function IncomeCombineDash() {
 
   // Data for Line Chart can have undefined x or y
   // Ensure that x and y are valid
-  const cleanedNivoData = nivoData.map(series => ({
+  const cleanedNivoData = nivoData.map((series) => ({
     ...series,
-    data: series.data.map(point => ({
+    data: series.data.map((point) => ({
       x: point.x || `Month ${point.x}`,
       y: point.y !== undefined && point.y !== null ? point.y : 0,
     })),
@@ -659,7 +669,7 @@ export default function IncomeCombineDash() {
         sx={{
           display: "flex",
           alignItems: "center",
-        //  width: "100%",
+          //  width: "100%",
           marginBottom: 2,
         }}
       >
@@ -708,7 +718,7 @@ export default function IncomeCombineDash() {
                 ) : incomeError ? (
                   <Alert severity="error">{incomeError}</Alert>
                 ) : (
-                  <Typography variant="h5">
+                  <Typography variant="h6">
                     ₹{formattedCountUp(todayIncome)}
                   </Typography>
                 )}
@@ -721,7 +731,6 @@ export default function IncomeCombineDash() {
                   padding: "16px",
                   backgroundColor: "#FF6F61",
                   borderRadius: "10px",
-               
                 }}
               >
                 <Typography variant="h7">Total Income</Typography>
@@ -730,7 +739,7 @@ export default function IncomeCombineDash() {
                 ) : incomeError ? (
                   <Alert severity="error">{incomeError}</Alert>
                 ) : (
-                  <Typography variant="h5">
+                  <Typography variant="h6">
                     ₹{formattedCountUp(incomeData.total || 0)}
                   </Typography>
                 )}
@@ -743,7 +752,6 @@ export default function IncomeCombineDash() {
                   padding: "16px",
                   backgroundColor: "#3498DB",
                   borderRadius: "10px",
-               
                 }}
               >
                 <Typography variant="h7">Today's Expense</Typography>
@@ -752,7 +760,7 @@ export default function IncomeCombineDash() {
                 ) : expenseError ? (
                   <Alert severity="error">{expenseError}</Alert>
                 ) : (
-                  <Typography variant="h5">
+                  <Typography variant="h6">
                     ₹{formattedCountUp(todayExpense)}
                   </Typography>
                 )}
@@ -773,7 +781,7 @@ export default function IncomeCombineDash() {
                 ) : expenseError ? (
                   <Alert severity="error">{expenseError}</Alert>
                 ) : (
-                  <Typography variant="h5">
+                  <Typography variant="h6">
                     ₹{formattedCountUp(expenseData.total || 0)}
                   </Typography>
                 )}
@@ -786,7 +794,6 @@ export default function IncomeCombineDash() {
                   padding: "16px",
                   backgroundColor: "#FF6F61",
                   borderRadius: "10px",
-               
                 }}
               >
                 <Typography variant="h7">Today's {todaytext}</Typography>
@@ -795,7 +802,7 @@ export default function IncomeCombineDash() {
                 ) : incomeError || expenseError ? (
                   <Alert severity="error">{incomeError || expenseError}</Alert>
                 ) : (
-                  <Typography variant="h5">
+                  <Typography variant="h6">
                     ₹{formattedCountUp(todayBalance)}
                   </Typography>
                 )}
@@ -808,7 +815,6 @@ export default function IncomeCombineDash() {
                   padding: "16px",
                   backgroundColor: "#3498DB",
                   borderRadius: "10px",
-               
                 }}
               >
                 <Typography variant="h7">Total {savingsText}</Typography>
@@ -817,7 +823,7 @@ export default function IncomeCombineDash() {
                 ) : savingsError ? (
                   <Alert severity="error">{savingsError}</Alert>
                 ) : (
-                  <Typography variant="h5">
+                  <Typography variant="h6">
                     ₹{formattedCountUp(savingsData)}
                   </Typography>
                 )}
@@ -828,12 +834,24 @@ export default function IncomeCombineDash() {
           {/* Chart Section */}
           <Grid container spacing={2} sx={{ marginTop: "20px" }}>
             {/* Nivo BarChart replacing Recharts BarChart */}
-            <Grid item xs={12} sm={6} sx={{ height: { xs: "400px", sm: "450px" } }}>
-    <Typography variant="body1" align="center"  gutterBottom >
-      Overall Income & Expense Comparison
-    </Typography>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              sx={{ height: { xs: "400px", sm: "450px" } }}
+            >
+              <Typography variant="body1" align="center" gutterBottom>
+                Overall Income & Expense Comparison
+              </Typography>
               {incomeLoading || expenseLoading ? (
-                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100%",
+                  }}
+                >
                   <CircularProgress />
                 </Box>
               ) : incomeError || expenseError ? (
@@ -843,7 +861,7 @@ export default function IncomeCombineDash() {
                   data={overallData}
                   keys={["Income", "Expense"]} // Data keys to map bars
                   indexBy="category" // Grouped by "category"
-       groupMode="grouped"
+                  groupMode="grouped"
                   margin={{ top: 20, right: 20, bottom: 50, left: 60 }}
                   padding={0.3}
                   colors={({ id }) => (id === "Income" ? "#3498DB" : "#FF6F61")} // Custom colors for bars
@@ -854,13 +872,15 @@ export default function IncomeCombineDash() {
                   )}
                   labelSkipWidth={12}
                   labelSkipHeight={12}
-                  labelTextColor={{ from: "color", modifiers: [["darker", 1.6]] }}
+                  labelTextColor={{
+                    from: "color",
+                    modifiers: [["darker", 1.6]],
+                  }}
                   legends={[
                     {
                       dataFrom: "keys",
                       anchor: "bottom-right",
-                    
-                 
+
                       direction: "column",
                       justify: false,
                       translateX: 120,
@@ -874,12 +894,12 @@ export default function IncomeCombineDash() {
                     tooltip: {
                       container: {
                         background: "white", // Tooltip background remains white
-                        color: "black",      // Tooltip text color set to black
+                        color: "black", // Tooltip text color set to black
                       },
                     },
                     labels: {
                       text: {
-                        fill: "black",        // Label text color changes to black
+                        fill: "black", // Label text color changes to black
                       },
                     },
                   }}
@@ -891,34 +911,41 @@ export default function IncomeCombineDash() {
             <Grid item xs={12} md={6} className="textField-root">
               {/* Year Selection Dropdown */}
               <Grid container alignItems="center" justifyContent="space-evenly">
-  {/* Year Income & Expense Comparison Text */}
-  <Grid item>
-    <Typography variant="body1" align="center" gutterBottom>
-      {year} Income & Expense Comparison
-    </Typography>
-  </Grid>
+                {/* Year Income & Expense Comparison Text */}
+                <Grid item>
+                  <Typography variant="body1" align="center" gutterBottom>
+                    {year} Income & Expense Comparison
+                  </Typography>
+                </Grid>
 
-  {/* Year Selection Dropdown */}
-  <Grid item>
-    <TextField
-      select
-      size="small"
-      label="Year"
-      value={year}
-      onChange={handleYearChange}
-      sx={{ minWidth: 120 }}
-    >
-      {years.map((yr) => (
-        <MenuItem key={yr} value={yr}>
-          {yr}
-        </MenuItem>
-      ))}
-    </TextField>
-  </Grid>
-</Grid>
+                {/* Year Selection Dropdown */}
+                <Grid item>
+                  <TextField
+                    select
+                    size="small"
+                    label="Year"
+                    value={year}
+                    onChange={handleYearChange}
+                    sx={{ minWidth: 120 }}
+                  >
+                    {years.map((yr) => (
+                      <MenuItem key={yr} value={yr}>
+                        {yr}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+              </Grid>
 
               {monthlyLoading ? (
-                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '400px' }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "400px",
+                  }}
+                >
                   <CircularProgress />
                 </Box>
               ) : monthlyError ? (
@@ -928,36 +955,38 @@ export default function IncomeCombineDash() {
                   <ResponsiveLine
                     data={cleanedNivoData}
                     margin={{ top: 10, right: 10, bottom: 30, left: 60 }}
-                    xScale={{ type: 'point' }} // Set the x scale type to point
+                    xScale={{ type: "point" }} // Set the x scale type to point
                     yScale={{
-                      type: 'linear',
-                      min: 'auto',
-                      max: 'auto',
+                      type: "linear",
+                      min: "auto",
+                      max: "auto",
                       stacked: false,
                       reverse: false,
                     }}
                     axisTop={null}
                     axisRight={null}
                     axisBottom={{
-                      orient: 'bottom',
+                      orient: "bottom",
                       tickSize: 5,
-                 
+
                       tickPadding: 5,
                       tickRotation: 0,
-                   //   legend: 'Month',
+                      //   legend: 'Month',
                       legendOffset: 36,
-                      legendPosition: 'middle',
+                      legendPosition: "middle",
                     }}
                     axisLeft={{
-                      orient: 'left',
+                      orient: "left",
                       tickSize: 5,
                       tickPadding: 5,
                       tickRotation: 0,
                       //legend: 'Amount',
                       legendOffset: -40,
-                      legendPosition: 'middle',
+                      legendPosition: "middle",
                     }}
-                    colors={({ id }) => (id === "Income" ? "#3498DB" : "#FF6F61")}
+                    colors={({ id }) =>
+                      id === "Income" ? "#3498DB" : "#FF6F61"
+                    }
                     pointSize={10}
                     pointBorderWidth={2}
                     pointLabelYOffset={-12}
@@ -970,24 +999,24 @@ export default function IncomeCombineDash() {
                     enableSlices="x"
                     legends={[
                       {
-                        anchor: 'top-right',
-                        direction: 'column',
+                        anchor: "top-right",
+                        direction: "column",
                         justify: false,
                         translateX: 100,
                         translateY: 0,
                         itemsSpacing: 0,
-                        itemDirection: 'left-to-right',
+                        itemDirection: "left-to-right",
                         itemWidth: 80,
                         itemHeight: 20,
                         itemOpacity: 0.75,
                         symbolSize: 12,
-                        symbolShape: 'circle',
-                        symbolBorderColor: 'rgba(0, 0, 0, .5)',
+                        symbolShape: "circle",
+                        symbolBorderColor: "rgba(0, 0, 0, .5)",
                         effects: [
                           {
-                            on: 'hover',
+                            on: "hover",
                             style: {
-                              itemBackground: 'rgba(0, 0, 0, .03)',
+                              itemBackground: "rgba(0, 0, 0, .03)",
                               itemOpacity: 1,
                             },
                           },

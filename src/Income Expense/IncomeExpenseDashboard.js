@@ -323,7 +323,7 @@ const IncomeExpenseDashboard = () => {
           }}
         >
           <Typography variant="h7">{card.title}</Typography>
-          <Typography variant="h5">
+          <Typography variant="h6">
             ₹{formattedCountUp(card.value || 0)}
           </Typography>
         </Paper>

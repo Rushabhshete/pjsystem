@@ -235,7 +235,7 @@ const ComparisonGraph = () => {
 
   return (
     <div>
-      <Grid container spacing={2} justifyContent="center" alignItems="center">
+      <Grid container spacing={2} justifyContent="center" alignItems="center" className="textField-root">
         <Grid item>
           <Typography variant="body1" marginLeft="10px">
             Comparison of {graphType === "admissions" ? "Admissions" : "Revenue"}
@@ -244,7 +244,7 @@ const ComparisonGraph = () => {
 
         <Grid item xs={2.5}>
           <TextField
-            select
+            select  
             label="Year From"
             value={year1}
             onChange={(e) => setYear1(e.target.value)}
