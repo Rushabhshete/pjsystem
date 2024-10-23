@@ -354,12 +354,16 @@ const ConductDialog = ({ open, onClose, onSave, conduct }) => {
   useEffect(() => {
     if (conduct) {
       setName(conduct.name);
+    } else {
+      setName(""); // Reset form when no conduct is being edited
     }
-  }, [conduct]);
+  }, [conduct, open]);
 
   const handleSave = () => {
     const newConduct = { name };
     onSave(newConduct);
+    // Reset the name field after saving
+    setName(""); // **Reset name field after save**
   };
 
   return (
@@ -380,7 +384,13 @@ const ConductDialog = ({ open, onClose, onSave, conduct }) => {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="primary">
+      <Button
+          onClick={() => {
+            onClose();
+            setName(""); // **Reset name field when the dialog is closed**
+          }}
+          color="primary"
+        >
           Cancel
         </Button>
         <Button onClick={handleSave} color="primary">

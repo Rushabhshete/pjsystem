@@ -363,11 +363,16 @@ const SourceDialog = ({ open, onClose, source, onSave, isUpdate }) => {
   const [name, setName] = useState(source ? source.name : "");
   
   useEffect(() => {
-    if (source) setName(source.name);
+    if (source) {
+      setName(source.name);
+    } else {
+      setName(""); // Reset form when no source is selected (for add new source)
+    }
   }, [source]);
   
   const handleSave = () => {
     onSave({ ...source, name });
+    setName(""); // Reset the name field after save
     onClose();
   };
 
@@ -386,7 +391,7 @@ const SourceDialog = ({ open, onClose, source, onSave, isUpdate }) => {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="primary">Cancel</Button>
+      <Button onClick={() => { setName(""); onClose(); }} color="primary">Cancel</Button>
         <Button onClick={handleSave} color="primary">Save</Button>
       </DialogActions>
     </Dialog>
