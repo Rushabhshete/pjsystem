@@ -269,7 +269,7 @@ const MonthlyGraph = () => {
             tickRotation: 0,
             legend: showAdmissions
               ? "Number of Admissions"
-              : "Revenue (in INR)", // Axis label changes based on graph
+              : "", // Axis label changes based on graph
             legendPosition: "middle",
             legendOffset: -40,
           }}

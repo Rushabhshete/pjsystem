@@ -25,6 +25,7 @@ import {
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import CampaignIcon from "@mui/icons-material/Campaign";
+import AdsClickIcon from '@mui/icons-material/AdsClick';
 import logo from "../img/logo.jpg";
 import { keyframes } from "@mui/system";
 
@@ -46,6 +47,7 @@ const Header = () => {
   const messageLimit = 50; // Define the character limit for "Read More"
 
   const [anchorEl, setAnchorEl] = useState(null);
+  const [adsAnchorEl, setAdsAnchorEl] = useState(null); // For AdsClickIcon dropdown
   const [notificationsAnchorEl, setNotificationsAnchorEl] = useState(null);
   const [employeeDetails, setEmployeeDetails] = useState(null);
   const [notifications, setNotifications] = useState([]);
@@ -130,6 +132,14 @@ const Header = () => {
     setAnchorEl(null);
   };
 
+  const handleAdsClick = (event) => {
+    setAdsAnchorEl(event.currentTarget); // Open the dropdown for AdsClickIcon
+  };
+
+  const handleAdsClose = () => {
+    setAdsAnchorEl(null); // Close the AdsClickIcon dropdown
+  };
+
   const handleProfileClick = () => {
     handleClose(); // Close the menu
     navigate("/layout/Admin-Profile"); // Navigate to the AdminProfile route
@@ -183,6 +193,11 @@ const Header = () => {
 
   const handleSnackbarClose = () => {
     setShowSnackbar(false);
+  };
+
+  const handleAdsMenuItemClick = (route) => {
+    navigate(route); // Navigate to the specified route
+    handleAdsClose(); // Close the dropdown after navigating
   };
 
   return (
@@ -243,6 +258,41 @@ const Header = () => {
             justifyContent="flex-end"
             alignItems="center"
           >
+            {/* AdsClickIcon with dropdown */}
+            <IconButton
+              onClick={handleAdsClick}
+              color="inherit"
+            >
+              <AdsClickIcon />
+            </IconButton>
+            <Menu
+              anchorEl={adsAnchorEl}
+              open={Boolean(adsAnchorEl)}
+              onClose={handleAdsClose}
+            >
+              <MenuItem onClick={() => handleAdsMenuItemClick("/layout/Enquiry-manager/add-inquiry")}>
+                Add Enquiry
+              </MenuItem>
+              <MenuItem onClick={() => handleAdsMenuItemClick("/layout/Admission-manager/admission-form")}>
+                Add Admission
+              </MenuItem>
+              <MenuItem onClick={() => handleAdsMenuItemClick("/layout/income-expense-manager/add-income-expense")}>
+                Add Income/Expense
+              </MenuItem>
+              <MenuItem onClick={() => handleAdsMenuItemClick("/layout/employee-manager/add-employee")}>
+                Add Employee
+              </MenuItem>
+              <MenuItem onClick={() => handleAdsMenuItemClick("/layout/attendance-manager")}>
+              Attendance
+              </MenuItem>
+              <MenuItem onClick={() => handleAdsMenuItemClick("/layout/ManageLeave")}>
+              Leave
+              </MenuItem>
+              <MenuItem onClick={() => handleAdsMenuItemClick("/layout/employee-salary-manager/add-detail")}>
+              Salary
+              </MenuItem>
+            </Menu>
+
             <IconButton
               size="large"
               aria-label="notifications"

@@ -383,7 +383,7 @@ const YearlyGraph = () => {
                 }}
                 tooltip={({ indexValue, value }) => (
                   <div>
-                    <strong>{indexValue}:</strong> ${value}
+                    <strong>{indexValue}:</strong> ₹{value}
                   </div>
                 )}
               />

@@ -310,7 +310,7 @@ const ComparisonGraph = () => {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: graphType === "admissions" ? "Number of Admissions" : "Revenue",
+            legend: graphType === "admissions" ? "Number of Admissions" : "",
             legendPosition: 'middle',
             legendOffset: -40,
           }}
